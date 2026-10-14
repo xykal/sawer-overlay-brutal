@@ -75,8 +75,8 @@ jobs:
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v9.0.${{ github.run_number }}-floating-signed
-          name: "v9.0 Floating Signed — Bubble Pas Keluar + Overlay Di Luar APK"
+          tag_name: v10.0.${{ github.run_number }}-super-gampang-final
+          name: "v10.0 Super Gampang Final — Bubble Pas Keluar + Overlay Di Luar APK"
           body: |
             ## 🔥 SawerOverlay v9 FINAL — Signed Resmi + Floating Overlay Beneran
 
