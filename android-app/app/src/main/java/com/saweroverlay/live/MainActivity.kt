@@ -376,6 +376,21 @@ class MainActivity : AppCompatActivity() {
         }
 
         @JavascriptInterface
+        fun setBubbleAlpha(alpha: Int) {
+            // Save bubble transparency
+            getSharedPreferences("brutal_studio_v3", MODE_PRIVATE).edit().putInt("bubble_alpha", alpha).apply()
+            val intent = Intent(this@MainActivity, FloatingOverlayService::class.java).apply {
+                putExtra("bubble_alpha", alpha)
+            }
+            startService(intent)
+        }
+
+        @JavascriptInterface
+        fun saveProfiles(profilesJson: String) {
+            getSharedPreferences("brutal_studio_v3", MODE_PRIVATE).edit().putString("profiles", profilesJson).apply()
+        }
+
+        @JavascriptInterface
         fun hapticFeedback() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 vibrator?.vibrate(VibrationEffect.createOneShot(20, 80))

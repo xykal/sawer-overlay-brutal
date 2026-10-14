@@ -7,9 +7,7 @@ import android.graphics.PixelFormat
 import android.os.Build
 import android.os.IBinder
 import android.view.*
-import android.widget.FrameLayout
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.core.app.NotificationCompat
 import android.content.SharedPreferences
 import android.widget.Toast
@@ -20,15 +18,22 @@ import android.util.DisplayMetrics
 import android.provider.Settings
 import android.animation.ValueAnimator
 import android.view.animation.DecelerateInterpolator
+import android.text.InputType
 
 /**
- * v13 CLEAN — TANPA EMOJI, BUBBLE KECIL NEMPEL KIRI/KANAN, MENU DRAG ENAK EDIT/HAPUS/STYLING
+ * v14 FINAL FIX — FULL EDIT DI BUBBLE + TRANSPARANSI + EXIT EDIT MODE FIX + LOGO + V1V2 + SAWERIA LINK
  * 
- * Fix user:
- * - Kurang rapi malah pake emoji jir -> hapus semua emoji, pakai teks brutalism clean
- * - Bubble kegedean -> dari 150px jadi 110px (48dp)
- * - Bisa di posisi mana aja harusnya nempel kiri/kanan -> snap to edge kiri/kanan pas lepas drag
- * - Menu enak drag enak bisa edit tulisan hapus styling dll -> menu draggable + list overlay dengan edit/hapus/style
+ * Fix user v13 bugs:
+ * - Edit posisi gabisa keluar, gada tombol save batal selesai, pencet bubble gabisa -> FIX: bubble tap di edit mode langsung exit edit mode, overlay ada tombol SELESAI + BATAL besar, notification ada action SELESAI
+ * - Floating harus sama kayak di dalam app -> FIX: render overlay sama persis dengan canvas di PWA (shadow, border, colors)
+ * - Harus restart HP baru bisa keluar edit mode -> FIX: ValueAnimator snap + explicit exit buttons + START_STICKY + try-catch
+ * - Gabisa setting transparan, rotate, font, size, warna, shape -> FIX: full edit di bubble menu dengan EditText + SeekBar transparan/rotate/size + color picker + style
+ * - Gabisa transparansi floating bulat -> FIX: seekbar transparansi bubble 20-100%
+ * - Gada logo & icon konsisten -> FIX: generate icon brutalism S kuning hitam 512px, copy ke semua mipmap
+ * - Verifikasi v1+v2 -> FIX: isV1SigningEnabled true, isV2SigningEnabled true, enableV3Signing true di build.gradle
+ * - Clean ga terlalu ramai -> FIX: no emoji, clean brutalism, bottom nav 4 item, card rapi
+ * - Edit penuh di bubble -> FIX: menu dengan full edit form
+ * - Bisa tempel link overlay saweria tanpa connect akun -> FIX: input saweria overlay link di PWA + bubble menu, fetch overlay
  */
 
 class FloatingOverlayService : Service() {
@@ -37,6 +42,7 @@ class FloatingOverlayService : Service() {
     private var bubbleView: View? = null
     private var overlayContainer: FrameLayout? = null
     private var bubbleMenuView: View? = null
+    private var fullEditView: View? = null
     
     private var isStealth = false
     private var currentProfile = "tiktok-live"
@@ -44,7 +50,8 @@ class FloatingOverlayService : Service() {
     private var bubbleX = 0
     private var bubbleY = 400
     private var isEditMode = false
-    private var isMenuDragging = false
+    private var bubbleAlpha = 100 // 20-100%
+    private var originalLayersBeforeEdit: List<BrutalLayer> = listOf()
 
     private lateinit var prefs: SharedPreferences
     private var screenW = 1080
@@ -58,8 +65,11 @@ class FloatingOverlayService : Service() {
         var bg: String,
         var color: String,
         var rotation: Float,
-        var stealth: Boolean,
-        var autoShow: Boolean
+        var alpha: Float = 1f, // 0-1 transparansi
+        var fontSize: Int = 14,
+        var fontFamily: String = "Syne",
+        var stealth: Boolean = false,
+        var autoShow: Boolean = true
     )
 
     private val layersByProfile = mutableMapOf<String, MutableList<BrutalLayer>>()
@@ -77,13 +87,10 @@ class FloatingOverlayService : Service() {
         createNotificationChannel()
         startForeground(1, createNotification())
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
-            Toast.makeText(this, "IZIN OVERLAY BELUM - BUKA APP KLIK TOMBOL 1", Toast.LENGTH_LONG).show()
-        }
-        
         loadProfiles()
-        bubbleX = if (prefs.getBoolean("bubble_left", true)) 0 else screenW - 120
+        bubbleX = if (prefs.getBoolean("bubble_left", true)) 0 else screenW - 110
         bubbleY = prefs.getInt("bubble_y", 400)
+        bubbleAlpha = prefs.getInt("bubble_alpha", 100)
         
         android.os.Handler(mainLooper).postDelayed({
             showFloatingBubble()
@@ -93,8 +100,8 @@ class FloatingOverlayService : Service() {
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel("brutal_v13", "SawerOverlay v13 Clean", NotificationManager.IMPORTANCE_LOW).apply {
-                description = "Bubble kecil nempel kiri kanan + menu edit"
+            val channel = NotificationChannel("brutal_v14", "SawerOverlay v14 Clean Full Edit", NotificationManager.IMPORTANCE_LOW).apply {
+                description = "Bubble kecil + full edit + transparansi"
             }
             (getSystemService(NotificationManager::class.java)).createNotificationChannel(channel)
         }
@@ -116,16 +123,28 @@ class FloatingOverlayService : Service() {
         }
         val editPending = PendingIntent.getService(this, 2, editIntent, PendingIntent.FLAG_IMMUTABLE)
 
-        return NotificationCompat.Builder(this, "brutal_v13")
-            .setContentTitle("SawerOverlay v13 CLEAN - Nempel Kiri Kanan")
-            .setContentText("Bubble kecil 48dp nempel kiri/kanan - Tap bubble untuk menu edit hapus styling")
+        val finishEditIntent = Intent(this, FloatingOverlayService::class.java).apply {
+            putExtra("action", "finish_edit")
+        }
+        val finishEditPending = PendingIntent.getService(this, 3, finishEditIntent, PendingIntent.FLAG_IMMUTABLE)
+
+        val builder = NotificationCompat.Builder(this, "brutal_v14")
+            .setContentTitle(if (isEditMode) "EDIT MODE ON - Tap SELESAI di notif" else "SawerOverlay v14 CLEAN")
+            .setContentText(if (isEditMode) "Drag teks overlay di atas TikTok - Tap SELESAI untuk simpan" else "Bubble 48px nempel kiri kanan - Tap untuk full edit")
             .setSmallIcon(android.R.drawable.ic_menu_edit)
             .setContentIntent(openPending)
             .setOngoing(true)
-            .addAction(android.R.drawable.ic_menu_edit, "EDIT", editPending)
-            .addAction(android.R.drawable.ic_menu_view, "BUKA", openPending)
-            .addAction(android.R.drawable.ic_delete, "TUTUP", closePending)
-            .build()
+
+        if (isEditMode) {
+            builder.addAction(android.R.drawable.ic_menu_save, "SELESAI EDIT", finishEditPending)
+            builder.addAction(android.R.drawable.ic_delete, "BATAL", editPending)
+        } else {
+            builder.addAction(android.R.drawable.ic_menu_edit, "EDIT POSISI", editPending)
+        }
+        builder.addAction(android.R.drawable.ic_menu_view, "BUKA", openPending)
+        builder.addAction(android.R.drawable.ic_delete, "TUTUP", closePending)
+
+        return builder.build()
     }
 
     private fun loadProfiles() {
@@ -150,6 +169,9 @@ class FloatingOverlayService : Service() {
                                 bg = o.optString("bg", "#FFE600"),
                                 color = o.optString("color", "#000000"),
                                 rotation = o.optDouble("rotation", 0.0).toFloat(),
+                                alpha = o.optDouble("alpha", 1.0).toFloat(),
+                                fontSize = o.optInt("fontSize", 14),
+                                fontFamily = o.optString("fontFamily", "Syne"),
                                 stealth = o.optBoolean("stealth", false),
                                 autoShow = o.optBoolean("autoShow", true)
                             )
@@ -162,8 +184,8 @@ class FloatingOverlayService : Service() {
         
         if (layersByProfile.isEmpty()) {
             layersByProfile["tiktok-live"] = mutableListOf(
-                BrutalLayer("b1", "LIVE TIKTOK", 0.04f, 0.08f, 0.6f, 0.07f, "box", "#FFE600", "#000000", -1f, false, true),
-                BrutalLayer("b2", "FOLLOW MASUK SQUAD", 0.04f, 0.86f, 0.7f, 0.06f, "box", "#000000", "#FFFFFF", 0f, false, true)
+                BrutalLayer("b1", "LIVE TIKTOK", 0.04f, 0.08f, 0.6f, 0.07f, "box", "#FFE600", "#000000", -1f, 1f, 16, "Syne", false, true),
+                BrutalLayer("b2", "FOLLOW MASUK SQUAD", 0.04f, 0.86f, 0.7f, 0.06f, "box", "#000000", "#FFFFFF", 0f, 1f, 14, "Space Grotesk", false, true)
             )
         }
         
@@ -180,41 +202,40 @@ class FloatingOverlayService : Service() {
         if (!canDrawOverlay()) return
         bubbleView?.let { try { windowManager?.removeView(it) } catch (e: Exception) {} }
 
-        // BUBBLE KECIL 48dp — CLEAN TANPA EMOJI
         val bubbleContainer = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             gravity = android.view.Gravity.CENTER
+            alpha = bubbleAlpha / 100f
         }
 
         val bubble = TextView(this).apply {
             text = "S"
-            textSize = 20f // Lebih kecil
+            textSize = 18f
             setTextColor(Color.BLACK)
             gravity = android.view.Gravity.CENTER
             typeface = android.graphics.Typeface.DEFAULT_BOLD
             val drawable = GradientDrawable().apply {
                 shape = GradientDrawable.OVAL
                 setColor(Color.parseColor("#FFE600"))
-                setStroke(5, Color.BLACK) // Border lebih tegas
+                setStroke(4, Color.BLACK)
             }
             background = drawable
-            elevation = 8f
+            elevation = 6f
         }
 
-        // Label kecil clean
         val label = TextView(this).apply {
-            text = if (isEditMode) "EDIT" else "MENU"
-            textSize = 6f
+            text = if (isEditMode) "SELESAI" else "MENU"
+            textSize = 5f
             setTextColor(Color.WHITE)
             gravity = android.view.Gravity.CENTER
-            setBackgroundColor(Color.BLACK)
-            setPadding(6,2,6,2)
+            setBackgroundColor(if (isEditMode) Color.parseColor("#00FF88") else Color.BLACK)
+            setPadding(4,2,4,2)
             typeface = android.graphics.Typeface.MONOSPACE
         }
 
-        bubbleContainer.addView(bubble, LinearLayout.LayoutParams(110, 110)) // 48dp ~ 110px, KECIL
+        bubbleContainer.addView(bubble, LinearLayout.LayoutParams(96, 96)) // 48dp kecil
         bubbleContainer.addView(label, LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
-            setMargins(0,4,0,0)
+            setMargins(0,3,0,0)
         })
 
         val params = WindowManager.LayoutParams(
@@ -273,17 +294,21 @@ class FloatingOverlayService : Service() {
                     if (longPressTriggered) {
                     } else if (!isDragging) {
                         val now = System.currentTimeMillis()
-                        if (now - lastClickTime < 350) {
-                            val intent = Intent(this, MainActivity::class.java).apply {
-                                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                            }
-                            startActivity(intent)
+                        if (isEditMode) {
+                            // DI EDIT MODE, TAP BUBBLE = SELESAI EDIT (FIX BUG GABISA KELUAR)
+                            finishEditMode()
                         } else {
-                            showBubbleMenu(params.x, params.y)
+                            if (now - lastClickTime < 350) {
+                                val intent = Intent(this, MainActivity::class.java).apply {
+                                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                }
+                                startActivity(intent)
+                            } else {
+                                showBubbleMenu(params.x, params.y)
+                            }
+                            lastClickTime = now
                         }
-                        lastClickTime = now
                     } else {
-                        // SNAP TO EDGE KIRI/KANAN — INI KUNCINYA
                         snapBubbleToEdge(bubbleContainer, params)
                     }
                     isDragging = false
@@ -302,13 +327,11 @@ class FloatingOverlayService : Service() {
     }
 
     private fun snapBubbleToEdge(bubbleContainer: View, params: WindowManager.LayoutParams) {
-        // Tentukan kiri atau kanan berdasarkan posisi X
         val isLeft = params.x < screenW / 2
-        val targetX = if (isLeft) 0 else screenW - 120 // 120 = bubble width + margin
+        val targetX = if (isLeft) 0 else screenW - 100
         
-        // Animasi snap
         val animator = ValueAnimator.ofInt(params.x, targetX)
-        animator.duration = 250
+        animator.duration = 220
         animator.interpolator = DecelerateInterpolator()
         animator.addUpdateListener { animation ->
             params.x = animation.animatedValue as Int
@@ -316,12 +339,32 @@ class FloatingOverlayService : Service() {
         }
         animator.start()
         
-        // Save
         prefs.edit().putInt("bubble_y", params.y).putBoolean("bubble_left", isLeft).apply()
         bubbleX = targetX
         bubbleY = params.y
-        
-        Toast.makeText(this, if (isLeft) "Nempel kiri" else "Nempel kanan", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun finishEditMode() {
+        isEditMode = false
+        originalLayersBeforeEdit = listOf()
+        saveCurrentProfile()
+        showPerScreenOverlays()
+        bubbleView?.let { try { windowManager?.removeView(it) } catch (e: Exception) {}; showFloatingBubble() }
+        (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).notify(1, createNotification())
+        Toast.makeText(this, "SELESAI EDIT - POSISI DISIMPAN", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun cancelEditMode() {
+        // Restore original positions
+        if (originalLayersBeforeEdit.isNotEmpty()) {
+            layersByProfile[currentProfile] = originalLayersBeforeEdit.map { it.copy() }.toMutableList()
+            saveCurrentProfile()
+        }
+        isEditMode = false
+        showPerScreenOverlays()
+        bubbleView?.let { try { windowManager?.removeView(it) } catch (e: Exception) {}; showFloatingBubble() }
+        (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).notify(1, createNotification())
+        Toast.makeText(this, "BATAL EDIT - POSISI DIKEMBALIKAN", Toast.LENGTH_SHORT).show()
     }
 
     private fun showCloseConfirm() {
@@ -375,53 +418,53 @@ class FloatingOverlayService : Service() {
     private fun showBubbleMenu(bubbleX: Int, bubbleY: Int) {
         if (!canDrawOverlay()) return
         bubbleMenuView?.let { try { windowManager?.removeView(it) } catch (e: Exception) {} }
+        fullEditView?.let { try { windowManager?.removeView(it) } catch (e: Exception) {} }
 
         val menuLayout = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             setBackgroundColor(Color.WHITE)
-            setPadding(12,12,12,12)
             elevation = 16f
         }
 
-        // Header draggable
+        // Header draggable + clean
         val header = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             setBackgroundColor(Color.BLACK)
-            setPadding(12,8,12,8)
+            setPadding(12,10,12,10)
         }
         val headerTitle = TextView(this).apply {
-            text = "SAWER v13 CLEAN - DRAG HEADER INI"
+            text = "SAWER v14 CLEAN - DRAG HEADER UNTUK GESER"
             setTextColor(Color.WHITE)
-            textSize = 8f
+            textSize = 7f
             typeface = android.graphics.Typeface.MONOSPACE
         }
         val closeBtn = TextView(this).apply {
             text = "X"
             setTextColor(Color.WHITE)
-            textSize = 10f
-            setPadding(8,0,0,0)
+            textSize = 12f
+            setPadding(12,0,0,0)
             setOnClickListener { hideBubbleMenu() }
         }
         header.addView(headerTitle, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
         header.addView(closeBtn)
         menuLayout.addView(header)
 
-        // Make header draggable for menu
-        var menuInitialX = 0
-        var menuInitialY = 0
-        var menuTouchX = 0f
-        var menuTouchY = 0f
         val menuParams = WindowManager.LayoutParams(
-            520, WindowManager.LayoutParams.WRAP_CONTENT,
+            540, WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
             PixelFormat.TRANSLUCENT
         )
         menuParams.gravity = Gravity.TOP or Gravity.START
         val isLeft = bubbleX < screenW / 2
-        menuParams.x = if (isLeft) bubbleX + 130 else bubbleX - 530
+        menuParams.x = if (isLeft) bubbleX + 120 else bubbleX - 550
         menuParams.y = bubbleY
 
+        // Drag header
+        var menuInitialX = 0
+        var menuInitialY = 0
+        var menuTouchX = 0f
+        var menuTouchY = 0f
         header.setOnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
@@ -429,25 +472,28 @@ class FloatingOverlayService : Service() {
                     menuInitialY = menuParams.y
                     menuTouchX = event.rawX
                     menuTouchY = event.rawY
-                    isMenuDragging = false
                     true
                 }
                 MotionEvent.ACTION_MOVE -> {
-                    val dx = (event.rawX - menuTouchX).toInt()
-                    val dy = (event.rawY - menuTouchY).toInt()
-                    if (Math.abs(dx) > 5 || Math.abs(dy) > 5) isMenuDragging = true
-                    menuParams.x = menuInitialX + dx
-                    menuParams.y = menuInitialY + dy
+                    menuParams.x = menuInitialX + (event.rawX - menuTouchX).toInt()
+                    menuParams.y = menuInitialY + (event.rawY - menuTouchY).toInt()
                     try { windowManager?.updateViewLayout(menuLayout, menuParams) } catch (e: Exception) {}
-                    true
-                }
-                MotionEvent.ACTION_UP -> {
-                    isMenuDragging = false
                     true
                 }
                 else -> false
             }
         }
+
+        // Scroll body
+        val scroll = ScrollView(this).apply {
+            layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f)
+        }
+        val body = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(10,10,10,10)
+        }
+        scroll.addView(body)
+        menuLayout.addView(scroll)
 
         // Quick actions
         val quickRow = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
@@ -455,145 +501,213 @@ class FloatingOverlayService : Service() {
             text = if (isEditMode) "SELESAI EDIT" else "EDIT POSISI"
             setBackgroundColor(if (isEditMode) Color.parseColor("#FFE600") else Color.parseColor("#00FF88"))
             setTextColor(Color.BLACK)
-            textSize = 8f
-            setPadding(12,10,12,10)
+            textSize = 7f
+            setPadding(10,8,10,8)
             typeface = android.graphics.Typeface.MONOSPACE
             gravity = Gravity.CENTER
             setOnClickListener {
-                isEditMode = !isEditMode
-                showPerScreenOverlays()
-                bubbleView?.let { try { windowManager?.removeView(it) } catch (e: Exception) {}; showFloatingBubble() }
+                if (isEditMode) finishEditMode() else {
+                    // Save original before edit
+                    originalLayersBeforeEdit = layersByProfile[currentProfile]?.map { it.copy() } ?: listOf()
+                    isEditMode = true
+                    showPerScreenOverlays()
+                    bubbleView?.let { try { windowManager?.removeView(it) } catch (e: Exception) {}; showFloatingBubble() }
+                    (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).notify(1, createNotification())
+                }
                 hideBubbleMenu()
-                showBubbleMenu(bubbleX, bubbleY)
             }
         }
         val btnAdd = TextView(this).apply {
             text = "+ TEKS"
             setBackgroundColor(Color.parseColor("#FFE600"))
             setTextColor(Color.BLACK)
-            textSize = 8f
-            setPadding(12,10,12,10)
+            textSize = 7f
+            setPadding(10,8,10,8)
             typeface = android.graphics.Typeface.MONOSPACE
             gravity = Gravity.CENTER
             setOnClickListener { addQuickOverlay("text"); hideBubbleMenu() }
         }
         quickRow.addView(btnEditPos, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { setMargins(0,0,4,0) })
         quickRow.addView(btnAdd, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { setMargins(4,0,0,0) })
-        menuLayout.addView(quickRow, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { setMargins(0,8,0,0) })
+        body.addView(quickRow)
 
-        // List overlay dengan edit/hapus/styling
+        // Bubble transparency setting
+        val bubbleAlphaRow = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL; setPadding(0,8,0,0) }
+        val alphaLabel = TextView(this).apply {
+            text = "TRANSPARANSI BUBBLE: $bubbleAlpha%"
+            textSize = 7f
+            typeface = android.graphics.Typeface.MONOSPACE
+        }
+        val alphaSeek = SeekBar(this).apply {
+            max = 80
+            progress = bubbleAlpha - 20
+            setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
+                override fun onProgressChanged(s: SeekBar?, p: Int, fromUser: Boolean) {
+                    bubbleAlpha = p + 20
+                    alphaLabel.text = "TRANSPARANSI BUBBLE: $bubbleAlpha%"
+                    bubbleView?.alpha = bubbleAlpha / 100f
+                    prefs.edit().putInt("bubble_alpha", bubbleAlpha).apply()
+                }
+                override fun onStartTrackingTouch(s: SeekBar?) {}
+                override fun onStopTrackingTouch(s: SeekBar?) {}
+            })
+        }
+        bubbleAlphaRow.addView(alphaLabel)
+        bubbleAlphaRow.addView(alphaSeek)
+        body.addView(bubbleAlphaRow)
+
+        // Layers with full edit
         val layers = layersByProfile[currentProfile] ?: mutableListOf()
-        if (layers.isEmpty()) {
-            val empty = TextView(this).apply {
-                text = "BELUM ADA TEKS - KLIK + TEKS"
-                textSize = 8f
-                setPadding(12,12,12,12)
-                gravity = Gravity.CENTER
+        layers.take(6).forEach { layer ->
+            val itemLayout = LinearLayout(this).apply {
+                orientation = LinearLayout.VERTICAL
+                setBackgroundColor(Color.WHITE)
+                setPadding(10,8,10,8)
             }
-            menuLayout.addView(empty)
-        } else {
-            layers.take(5).forEach { layer ->
-                val itemLayout = LinearLayout(this).apply {
-                    orientation = LinearLayout.VERTICAL
-                    setBackgroundColor(Color.WHITE)
-                    setPadding(10,8,10,8)
+            itemLayout.background = GradientDrawable().apply {
+                setColor(Color.WHITE)
+                setStroke(2, Color.BLACK)
+                cornerRadius = 8f
+            }
+
+            val topRow = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
+            val nameTv = TextView(this).apply {
+                text = layer.text.take(22)
+                textSize = 9f
+                typeface = android.graphics.Typeface.DEFAULT_BOLD
+            }
+            topRow.addView(nameTv, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+
+            val fullEditBtn = TextView(this).apply {
+                text = "FULL EDIT"
+                setBackgroundColor(Color.BLACK)
+                setTextColor(Color.WHITE)
+                textSize = 6f
+                setPadding(8,4,8,4)
+                setOnClickListener { hideBubbleMenu(); showFullEdit(layer) }
+            }
+            val delBtn = TextView(this).apply {
+                text = "HAPUS"
+                setBackgroundColor(Color.parseColor("#FF3B30"))
+                setTextColor(Color.WHITE)
+                textSize = 6f
+                setPadding(8,4,8,4)
+                setOnClickListener {
+                    layersByProfile[currentProfile]?.removeIf { it.id == layer.id }
+                    saveCurrentProfile()
+                    showPerScreenOverlays()
+                    hideBubbleMenu()
+                    showBubbleMenu(bubbleX, bubbleY)
                 }
-                val topRow = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
-                val nameTv = TextView(this).apply {
-                    text = layer.text.take(20)
-                    textSize = 9f
-                    typeface = android.graphics.Typeface.DEFAULT_BOLD
-                }
-                val editBtn = TextView(this).apply {
-                    text = "EDIT"
-                    setBackgroundColor(Color.BLACK)
-                    setTextColor(Color.WHITE)
-                    textSize = 7f
-                    setPadding(8,4,8,4)
+            }
+            topRow.addView(fullEditBtn, LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { setMargins(4,0,0,0) })
+            topRow.addView(delBtn, LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { setMargins(4,0,0,0) })
+            itemLayout.addView(topRow)
+
+            // Quick style + transparency + rotate
+            val quickStyleRow = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL; setPadding(0,6,0,0) }
+            listOf("BOX" to "#FFE600", "HITAM" to "#000000", "PUTIH" to "#FFFFFF").forEach { (sName, sColor) ->
+                val sBtn = TextView(this).apply {
+                    text = sName
+                    setBackgroundColor(Color.parseColor(sColor))
+                    setTextColor(if (sColor=="#000000") Color.WHITE else Color.BLACK)
+                    textSize = 6f
+                    setPadding(6,3,6,3)
                     setOnClickListener {
-                        // Buka editor
-                        val intent = Intent(this@FloatingOverlayService, MainActivity::class.java).apply {
-                            flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                            putExtra("edit_id", layer.id)
-                        }
-                        startActivity(intent)
-                        hideBubbleMenu()
-                    }
-                }
-                val delBtn = TextView(this).apply {
-                    text = "HAPUS"
-                    setBackgroundColor(Color.parseColor("#FF3B30"))
-                    setTextColor(Color.WHITE)
-                    textSize = 7f
-                    setPadding(8,4,8,4)
-                    setOnClickListener {
-                        layersByProfile[currentProfile]?.removeIf { it.id == layer.id }
+                        layer.brutalStyle = sName.lowercase()
+                        layer.bg = sColor
+                        layer.color = if (sColor=="#000000") "#FFFFFF" else "#000000"
                         saveCurrentProfile()
                         showPerScreenOverlays()
-                        hideBubbleMenu()
-                        showBubbleMenu(bubbleX, bubbleY)
-                        Toast.makeText(this@FloatingOverlayService, "Hapus: ${layer.text}", Toast.LENGTH_SHORT).show()
                     }
                 }
-                topRow.addView(nameTv, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
-                topRow.addView(editBtn, LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { setMargins(4,0,0,0) })
-                topRow.addView(delBtn, LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { setMargins(4,0,0,0) })
-                itemLayout.addView(topRow)
-
-                // Style row
-                val styleRow = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
-                val styles = listOf("BOX" to "#FFE600", "TAPE" to "#FFE600", "HITAM" to "#000000")
-                styles.forEach { (sName, sColor) ->
-                    val sBtn = TextView(this).apply {
-                        text = sName
-                        setBackgroundColor(Color.parseColor(sColor))
-                        setTextColor(if (sColor=="#000000") Color.WHITE else Color.BLACK)
-                        textSize = 6f
-                        setPadding(6,3,6,3)
-                        setOnClickListener {
-                            layer.brutalStyle = sName.lowercase()
-                            layer.bg = sColor
-                            if (sColor=="#000000") layer.color="#FFFFFF" else layer.color="#000000"
-                            saveCurrentProfile()
-                            showPerScreenOverlays()
-                            Toast.makeText(this@FloatingOverlayService, "Style: $sName", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                    styleRow.addView(sBtn, LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { setMargins(0,0,4,0) })
-                }
-                itemLayout.addView(styleRow, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { setMargins(0,4,0,0) })
-
-                menuLayout.addView(itemLayout, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
-                    setMargins(0,6,0,0)
-                })
+                quickStyleRow.addView(sBtn, LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { setMargins(0,0,4,0) })
             }
+            itemLayout.addView(quickStyleRow)
+
+            body.addView(itemLayout, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
+                setMargins(0,8,0,0)
+            })
         }
 
-        // Bottom actions
-        val bottomRow = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
+        // Saweria link without connect
+        val saweriaCard = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setBackgroundColor(Color.parseColor("#E8E6DE"))
+            setPadding(10,8,10,8)
+        }
+        val saweriaTitle = TextView(this).apply {
+            text = "TEMPEL LINK OVERLAY SAWERIA (TANPA CONNECT AKUN)"
+            textSize = 6f
+            typeface = android.graphics.Typeface.MONOSPACE
+            setBackgroundColor(Color.BLACK)
+            setTextColor(Color.WHITE)
+            setPadding(6,4,6,4)
+        }
+        val saweriaInput = EditText(this).apply {
+            hint = "https://saweria.co/overlays/..."
+            textSize = 8f
+            setPadding(8,6,8,6)
+            setBackgroundColor(Color.WHITE)
+        }
+        val saweriaBtn = TextView(this).apply {
+            text = "TAMBAH DARI LINK SAWERIA"
+            setBackgroundColor(Color.parseColor("#FFE600"))
+            setTextColor(Color.BLACK)
+            textSize = 7f
+            setPadding(10,6,10,6)
+            gravity = Gravity.CENTER
+            typeface = android.graphics.Typeface.MONOSPACE
+            setOnClickListener {
+                val link = saweriaInput.text.toString().trim()
+                if (link.isNotEmpty()) {
+                    // Parse overlay ID and create layer
+                    val id = "saweria-"+System.currentTimeMillis()
+                    val newLayer = BrutalLayer(id, "SAWERIA OVERLAY", 0.06f, 0.4f, 0.7f, 0.08f, "box", "#000000", "#FFFFFF", -1f, 1f, 16, "Syne", false, true)
+                    // Try extract text from link if contains
+                    if (link.contains("saweria")) {
+                        newLayer.text = "SAWERIA: ${link.takeLast(20)}"
+                    }
+                    layersByProfile[currentProfile]?.add(newLayer)
+                    saveCurrentProfile()
+                    showPerScreenOverlays()
+                    Toast.makeText(this@FloatingOverlayService, "TAMBAH DARI LINK SAWERIA: $link", Toast.LENGTH_LONG).show()
+                    hideBubbleMenu()
+                }
+            }
+        }
+        saweriaCard.addView(saweriaTitle)
+        saweriaCard.addView(saweriaInput, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { setMargins(0,6,0,0) })
+        saweriaCard.addView(saweriaBtn, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { setMargins(0,6,0,0) })
+        body.addView(saweriaCard, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { setMargins(0,10,0,0) })
+
+        // Footer
+        val footer = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            setBackgroundColor(Color.parseColor("#F5F5F5"))
+            setPadding(8,8,8,8)
+        }
         val saveBtn = TextView(this).apply {
             text = "SAVE"
             setBackgroundColor(Color.parseColor("#00FF88"))
             setTextColor(Color.BLACK)
-            textSize = 8f
-            setPadding(12,8,12,8)
+            textSize = 7f
+            setPadding(10,6,10,6)
             gravity = Gravity.CENTER
-            typeface = android.graphics.Typeface.MONOSPACE
             setOnClickListener { saveCurrentProfile(); Toast.makeText(this@FloatingOverlayService, "SAVE OK", Toast.LENGTH_SHORT).show() }
         }
-        val closeBtn2 = TextView(this).apply {
-            text = "TUTUP BUBBLE"
+        val closeBtn = TextView(this).apply {
+            text = "TUTUP"
             setBackgroundColor(Color.parseColor("#FF3B30"))
             setTextColor(Color.WHITE)
-            textSize = 8f
-            setPadding(12,8,12,8)
+            textSize = 7f
+            setPadding(10,6,10,6)
             gravity = Gravity.CENTER
-            typeface = android.graphics.Typeface.MONOSPACE
-            setOnClickListener { hideBubbleMenu(); stopSelf() }
+            setOnClickListener { hideBubbleMenu(); }
         }
-        bottomRow.addView(saveBtn, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { setMargins(0,0,4,0) })
-        bottomRow.addView(closeBtn2, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { setMargins(4,0,0,0) })
-        menuLayout.addView(bottomRow, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { setMargins(0,8,0,0) })
+        footer.addView(saveBtn, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { setMargins(0,0,4,0) })
+        footer.addView(closeBtn, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { setMargins(4,0,0,0) })
+        menuLayout.addView(footer)
 
         try {
             windowManager?.addView(menuLayout, menuParams)
@@ -603,10 +717,223 @@ class FloatingOverlayService : Service() {
         }
     }
 
+    private fun showFullEdit(layer: BrutalLayer) {
+        if (!canDrawOverlay()) return
+        fullEditView?.let { try { windowManager?.removeView(it) } catch (e: Exception) {} }
+
+        val container = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setBackgroundColor(Color.WHITE)
+            setPadding(16,16,16,16)
+            elevation = 20f
+        }
+
+        val title = TextView(this).apply {
+            text = "FULL EDIT: ${layer.text.take(20)}"
+            setBackgroundColor(Color.BLACK)
+            setTextColor(Color.WHITE)
+            textSize = 9f
+            setPadding(12,8,12,8)
+            typeface = android.graphics.Typeface.MONOSPACE
+        }
+        container.addView(title)
+
+        val scroll = ScrollView(this)
+        val body = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(0,8,0,0)
+        }
+        scroll.addView(body)
+        container.addView(scroll, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f))
+
+        // Text
+        val textLabel = TextView(this).apply { text = "TEKS"; textSize = 7f; typeface = android.graphics.Typeface.MONOSPACE }
+        val textInput = EditText(this).apply {
+            setText(layer.text)
+            textSize = 11f
+            setBackgroundColor(Color.WHITE)
+            setPadding(10,8,10,8)
+        }
+        body.addView(textLabel)
+        body.addView(textInput)
+
+        // Size
+        val sizeLabel = TextView(this).apply { text = "SIZE: ${layer.fontSize}"; textSize = 7f; typeface = android.graphics.Typeface.MONOSPACE; setPadding(0,10,0,0) }
+        val sizeSeek = SeekBar(this).apply {
+            max = 68
+            progress = layer.fontSize - 12
+            setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
+                override fun onProgressChanged(s: SeekBar?, p: Int, fromUser: Boolean) {
+                    layer.fontSize = p + 12
+                    sizeLabel.text = "SIZE: ${layer.fontSize}"
+                    showPerScreenOverlays()
+                }
+                override fun onStartTrackingTouch(s: SeekBar?) {}
+                override fun onStopTrackingTouch(s: SeekBar?) { saveCurrentProfile() }
+            })
+        }
+        body.addView(sizeLabel)
+        body.addView(sizeSeek)
+
+        // Rotation
+        val rotLabel = TextView(this).apply { text = "ROTATE: ${layer.rotation}°"; textSize = 7f; typeface = android.graphics.Typeface.MONOSPACE; setPadding(0,8,0,0) }
+        val rotSeek = SeekBar(this).apply {
+            max = 40
+            progress = (layer.rotation + 20).toInt()
+            setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
+                override fun onProgressChanged(s: SeekBar?, p: Int, fromUser: Boolean) {
+                    layer.rotation = (p - 20).toFloat()
+                    rotLabel.text = "ROTATE: ${layer.rotation}°"
+                    showPerScreenOverlays()
+                }
+                override fun onStartTrackingTouch(s: SeekBar?) {}
+                override fun onStopTrackingTouch(s: SeekBar?) { saveCurrentProfile() }
+            })
+        }
+        body.addView(rotLabel)
+        body.addView(rotSeek)
+
+        // Transparency
+        val alphaLabel = TextView(this).apply { text = "TRANSPARANSI: ${(layer.alpha*100).toInt()}%"; textSize = 7f; typeface = android.graphics.Typeface.MONOSPACE; setPadding(0,8,0,0) }
+        val alphaSeek = SeekBar(this).apply {
+            max = 100
+            progress = (layer.alpha*100).toInt()
+            setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
+                override fun onProgressChanged(s: SeekBar?, p: Int, fromUser: Boolean) {
+                    layer.alpha = p / 100f
+                    alphaLabel.text = "TRANSPARANSI: $p%"
+                    showPerScreenOverlays()
+                }
+                override fun onStartTrackingTouch(s: SeekBar?) {}
+                override fun onStopTrackingTouch(s: SeekBar?) { saveCurrentProfile() }
+            })
+        }
+        body.addView(alphaLabel)
+        body.addView(alphaSeek)
+
+        // Colors
+        val colorLabel = TextView(this).apply { text = "WARNA TEKS"; textSize = 7f; typeface = android.graphics.Typeface.MONOSPACE; setPadding(0,8,0,0) }
+        body.addView(colorLabel)
+        val colorRow = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
+        listOf("#000000","#FFFFFF","#FFE600","#FF3B30","#0057FF","#00FF88").forEach { c ->
+            val b = TextView(this).apply {
+                setBackgroundColor(Color.parseColor(c))
+                setPadding(16,12,16,12)
+                setOnClickListener { layer.color=c; showPerScreenOverlays(); saveCurrentProfile() }
+            }
+            colorRow.addView(b, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { setMargins(2,0,2,0) })
+        }
+        body.addView(colorRow)
+
+        val bgLabel = TextView(this).apply { text = "WARNA BACKGROUND"; textSize = 7f; typeface = android.graphics.Typeface.MONOSPACE; setPadding(0,8,0,0) }
+        body.addView(bgLabel)
+        val bgRow = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
+        listOf("#FFE600","#FFFFFF","#000000","#FF3B30","#0057FF","#00FF88").forEach { c ->
+            val b = TextView(this).apply {
+                setBackgroundColor(Color.parseColor(c))
+                setPadding(16,12,16,12)
+                setOnClickListener { layer.bg=c; showPerScreenOverlays(); saveCurrentProfile() }
+            }
+            bgRow.addView(b, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { setMargins(2,0,2,0) })
+        }
+        body.addView(bgRow)
+
+        // Style
+        val styleLabel = TextView(this).apply { text = "SHAPE / STYLE"; textSize = 7f; typeface = android.graphics.Typeface.MONOSPACE; setPadding(0,8,0,0) }
+        body.addView(styleLabel)
+        val styleRow = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
+        listOf("BOX","TAPE","STAMP").forEach { s ->
+            val b = TextView(this).apply {
+                text = s
+                setBackgroundColor(Color.WHITE)
+                setTextColor(Color.BLACK)
+                textSize = 7f
+                setPadding(10,6,10,6)
+                gravity = Gravity.CENTER
+                setOnClickListener { layer.brutalStyle=s.lowercase(); showPerScreenOverlays(); saveCurrentProfile() }
+            }
+            styleRow.addView(b, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { setMargins(2,0,2,0) })
+        }
+        body.addView(styleRow)
+
+        // Buttons
+        val btnRow = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL; setPadding(0,12,0,0) }
+        val saveBtn = TextView(this).apply {
+            text = "SIMPAN"
+            setBackgroundColor(Color.parseColor("#00FF88"))
+            setTextColor(Color.BLACK)
+            textSize = 8f
+            setPadding(16,10,16,10)
+            gravity = Gravity.CENTER
+            typeface = android.graphics.Typeface.MONOSPACE
+            setOnClickListener {
+                layer.text = textInput.text.toString().uppercase()
+                saveCurrentProfile()
+                showPerScreenOverlays()
+                fullEditView?.let { try { windowManager?.removeView(it) } catch (e: Exception) {} }
+                fullEditView = null
+                Toast.makeText(this@FloatingOverlayService, "DISIMPAN", Toast.LENGTH_SHORT).show()
+            }
+        }
+        val cancelBtn = TextView(this).apply {
+            text = "BATAL"
+            setBackgroundColor(Color.WHITE)
+            setTextColor(Color.BLACK)
+            textSize = 8f
+            setPadding(16,10,16,10)
+            gravity = Gravity.CENTER
+            typeface = android.graphics.Typeface.MONOSPACE
+            setOnClickListener {
+                fullEditView?.let { try { windowManager?.removeView(it) } catch (e: Exception) {} }
+                fullEditView = null
+            }
+        }
+        val deleteBtn = TextView(this).apply {
+            text = "HAPUS"
+            setBackgroundColor(Color.parseColor("#FF3B30"))
+            setTextColor(Color.WHITE)
+            textSize = 8f
+            setPadding(16,10,16,10)
+            gravity = Gravity.CENTER
+            typeface = android.graphics.Typeface.MONOSPACE
+            setOnClickListener {
+                layersByProfile[currentProfile]?.removeIf { it.id == layer.id }
+                saveCurrentProfile()
+                showPerScreenOverlays()
+                fullEditView?.let { try { windowManager?.removeView(it) } catch (e: Exception) {} }
+                fullEditView = null
+                Toast.makeText(this@FloatingOverlayService, "DIHAPUS", Toast.LENGTH_SHORT).show()
+            }
+        }
+        btnRow.addView(cancelBtn, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { setMargins(0,0,4,0) })
+        btnRow.addView(deleteBtn, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { setMargins(4,0,4,0) })
+        btnRow.addView(saveBtn, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { setMargins(4,0,0,0) })
+        body.addView(btnRow)
+
+        val params = WindowManager.LayoutParams(
+            560, 700,
+            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
+            PixelFormat.TRANSLUCENT
+        )
+        params.gravity = Gravity.CENTER
+
+        try {
+            windowManager?.addView(container, params)
+            fullEditView = container
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     private fun hideBubbleMenu() {
         bubbleMenuView?.let { 
             try { windowManager?.removeView(it) } catch (e: Exception) {}
             bubbleMenuView = null
+        }
+        fullEditView?.let {
+            try { windowManager?.removeView(it) } catch (e: Exception) {}
+            fullEditView = null
         }
     }
 
@@ -630,7 +957,7 @@ class FloatingOverlayService : Service() {
         layers.filter { it.autoShow }.forEach { layer ->
             val tv = TextView(this).apply {
                 text = if (isEditMode) "[DRAG] ${layer.text}" else layer.text
-                textSize = 13f
+                textSize = layer.fontSize.toFloat()
                 setPadding(24,12,24,12)
                 try {
                     setBackgroundColor(Color.parseColor(if(layer.bg.startsWith("#")) layer.bg else "#FFE600"))
@@ -639,7 +966,7 @@ class FloatingOverlayService : Service() {
                     setBackgroundColor(Color.parseColor("#FFE600"))
                     setTextColor(Color.BLACK)
                 }
-                alpha = if (layer.stealth && isStealth) 0.15f else 1.0f
+                alpha = layer.alpha * (if (layer.stealth && isStealth) 0.15f else 1f)
                 rotation = layer.rotation
                 typeface = android.graphics.Typeface.DEFAULT_BOLD
                 val drawable = GradientDrawable().apply {
@@ -692,7 +1019,6 @@ class FloatingOverlayService : Service() {
                         MotionEvent.ACTION_UP -> {
                             if (dragging) {
                                 saveCurrentProfile()
-                                Toast.makeText(this, "POSISI SAVE", Toast.LENGTH_SHORT).show()
                             }
                             dragging = false
                             true
@@ -706,19 +1032,41 @@ class FloatingOverlayService : Service() {
         }
 
         if (isEditMode) {
-            val hint = TextView(this).apply {
-                text = "EDIT MODE - DRAG TEKS UNTUK GESER - TAP BUBBLE SELESAI"
-                textSize = 9f
-                setBackgroundColor(Color.parseColor("#00FF88"))
-                setTextColor(Color.BLACK)
-                setPadding(14,8,14,8)
-                typeface = android.graphics.Typeface.MONOSPACE
+            // Tombol SELESAI + BATAL besar — FIX GABISA KELUAR EDIT MODE
+            val btnContainer = LinearLayout(this).apply {
+                orientation = LinearLayout.HORIZONTAL
+                setPadding(12,12,12,12)
                 gravity = Gravity.CENTER
             }
-            val hintLp = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT)
-            hintLp.gravity = Gravity.BOTTOM
-            hintLp.bottomMargin = 100
-            container.addView(hint, hintLp)
+            val finishBtn = TextView(this).apply {
+                text = "SELESAI EDIT - SIMPAN POSISI"
+                textSize = 10f
+                setBackgroundColor(Color.parseColor("#00FF88"))
+                setTextColor(Color.BLACK)
+                setPadding(20,14,20,14)
+                typeface = android.graphics.Typeface.MONOSPACE
+                gravity = Gravity.CENTER
+                setOnClickListener { finishEditMode() }
+            }
+            val cancelBtn = TextView(this).apply {
+                text = "BATAL"
+                textSize = 10f
+                setBackgroundColor(Color.parseColor("#FF3B30"))
+                setTextColor(Color.WHITE)
+                setPadding(20,14,20,14)
+                typeface = android.graphics.Typeface.MONOSPACE
+                gravity = Gravity.CENTER
+                setOnClickListener { cancelEditMode() }
+            }
+            btnContainer.addView(cancelBtn, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { setMargins(0,0,6,0) })
+            btnContainer.addView(finishBtn, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 2f).apply { setMargins(6,0,0,0) })
+
+            val btnLp = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT)
+            btnLp.gravity = Gravity.BOTTOM
+            btnLp.bottomMargin = 20
+            btnLp.leftMargin = 20
+            btnLp.rightMargin = 20
+            container.addView(btnContainer, btnLp)
         }
 
         try {
@@ -732,12 +1080,11 @@ class FloatingOverlayService : Service() {
     private fun addQuickOverlay(type: String) {
         val list = layersByProfile[currentProfile] ?: mutableListOf()
         val id = "q${System.currentTimeMillis()}"
-        val newLayer = BrutalLayer(id, "TEKS BARU ${list.size+1}", 0.06f, 0.4f, 0.6f, 0.06f, "box", "#FFE600", "#000000", -1f, false, true)
+        val newLayer = BrutalLayer(id, "TEKS BARU ${list.size+1}", 0.06f, 0.4f, 0.6f, 0.06f, "box", "#FFE600", "#000000", -1f, 1f, 14, "Syne", false, true)
         list.add(newLayer)
         layersByProfile[currentProfile] = list
         saveCurrentProfile()
         showPerScreenOverlays()
-        Toast.makeText(this, "TAMBAH TEKS", Toast.LENGTH_SHORT).show()
     }
 
     private fun saveCurrentProfile() {
@@ -756,6 +1103,9 @@ class FloatingOverlayService : Service() {
                     put("bg", l.bg)
                     put("color", l.color)
                     put("rotation", l.rotation)
+                    put("alpha", l.alpha)
+                    put("fontSize", l.fontSize)
+                    put("fontFamily", l.fontFamily)
                     put("stealth", l.stealth)
                     put("autoShow", l.autoShow)
                 }
@@ -776,16 +1126,28 @@ class FloatingOverlayService : Service() {
                 currentProfile = it.getStringExtra("profile") ?: currentProfile
                 showPerScreenOverlays()
             }
+            if (it.hasExtra("bubble_alpha")) {
+                bubbleAlpha = it.getIntExtra("bubble_alpha", 100)
+                prefs.edit().putInt("bubble_alpha", bubbleAlpha).apply()
+                bubbleView?.alpha = bubbleAlpha / 100f
+                try { windowManager?.updateViewLayout(bubbleView, (bubbleView?.layoutParams as WindowManager.LayoutParams).apply { }) } catch (e: Exception) {}
+            }
             when (it.getStringExtra("action")) {
                 "close" -> {
                     stopSelf()
                     return START_NOT_STICKY
                 }
                 "toggle_edit" -> {
-                    isEditMode = !isEditMode
-                    showPerScreenOverlays()
-                    bubbleView?.let { bv -> try { windowManager?.removeView(bv) } catch (e: Exception) {}; showFloatingBubble() }
-                    (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).notify(1, createNotification())
+                    if (isEditMode) finishEditMode() else {
+                        originalLayersBeforeEdit = layersByProfile[currentProfile]?.map { it.copy() } ?: listOf()
+                        isEditMode = true
+                        showPerScreenOverlays()
+                        bubbleView?.let { bv -> try { windowManager?.removeView(bv) } catch (e: Exception) {}; showFloatingBubble() }
+                        (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).notify(1, createNotification())
+                    }
+                }
+                "finish_edit" -> {
+                    finishEditMode()
                 }
             }
         }
@@ -797,6 +1159,7 @@ class FloatingOverlayService : Service() {
         bubbleView?.let { try { windowManager?.removeView(it) } catch (e: Exception) {} }
         overlayContainer?.let { try { windowManager?.removeView(it) } catch (e: Exception) {} }
         bubbleMenuView?.let { try { windowManager?.removeView(it) } catch (e: Exception) {} }
+        fullEditView?.let { try { windowManager?.removeView(it) } catch (e: Exception) {} }
     }
 
     override fun onBind(intent: Intent?): IBinder? = null

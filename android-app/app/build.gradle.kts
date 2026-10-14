@@ -11,8 +11,8 @@ android {
         applicationId = "com.saweroverlay.live"
         minSdk = 24
         targetSdk = 34
-        versionCode = 13
-        versionName = "13.0-clean-no-emoji-bubble-kecil"
+        versionCode = 14
+        versionName = "14.0-clean-full-edit-bubble-v1v2"
 
         ndk {
             abiFilters += listOf("armeabi-v7a")
@@ -25,15 +25,18 @@ android {
             storePassword = "SawerBrutal2024!"
             keyAlias = "sawerstudio"
             keyPassword = "SawerBrutal2024!"
-            // Jika di CI, bisa pakai env variable
-            // storePassword = System.getenv("KEYSTORE_PASSWORD") ?: "SawerBrutal2024!"
+            // v1+v2+v3 signing enabled — verifikasi tanda tangan lengkap
+            isV1SigningEnabled = true
+            isV2SigningEnabled = true
+            enableV3Signing = true
+            enableV4Signing = true
         }
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = true // R8 aktif — bikin APK lebih kecil & optimasi
-            isShrinkResources = true // Hapus resource gak kepake
+            isMinifyEnabled = true
+            isShrinkResources = true
             isDebuggable = false
             signingConfig = signingConfigs.getByName("release")
             proguardFiles(

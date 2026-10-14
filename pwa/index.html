@@ -3,83 +3,74 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>SAWER STUDIO v13 — CLEAN NO EMOJI + BUBBLE KECIL KIRI KANAN</title>
+<title>SAWER STUDIO v14 — CLEAN FULL EDIT + TRANSPARANSI + SAWERIA LINK</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#000000">
+<link rel="icon" type="image/png" href="icon-512.png">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#E8E6DE;--paper:#FFF;--ink:#000;--yellow:#FFE600;--red:#FF3B30;--blue:#0057FF;--green:#00FF88;--purple:#8A2BE2;--border:3px solid #000;--shadow:6px 6px 0 #000;--shadow-sm:4px 4px 0 #000;--shadow-xs:2px 2px 0 #000;}
+:root{--bg:#E8E6DE;--paper:#FFF;--ink:#000;--yellow:#FFE600;--red:#FF3B30;--blue:#0057FF;--green:#00FF88;--border:3px solid #000;--shadow:6px 6px 0 #000;--shadow-sm:4px 4px 0 #000;--shadow-xs:2px 2px 0 #000;}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',sans-serif;height:100dvh;display:flex;flex-direction:column;overflow:hidden;}
 .header{height:52px;background:var(--ink);color:white;display:flex;align-items:center;justify-content:space-between;padding:0 12px;border-bottom:var(--border);position:relative;z-index:30;flex-shrink:0;}
 .header::after{content:'';position:absolute;bottom:-6px;left:0;right:0;height:6px;background:var(--yellow);border-bottom:var(--border);}
-.logo{font-family:'Syne';font-weight:800;font-size:15px;display:flex;align-items:center;gap:6px;letter-spacing:-0.5px;}
-.logo-box{background:var(--yellow);color:black;padding:2px 6px;border:2px solid white;transform:rotate(-1deg);box-shadow:2px 2px 0 white;}
-.badge{border:2px solid white;padding:3px 7px;font-family:'Space Mono';font-size:7px;font-weight:700;box-shadow:2px 2px 0 black;letter-spacing:0.5px;}
-.badge-live{background:var(--red);color:white;} .badge-v13{background:white;color:black;}
+.logo{font-family:'Syne';font-weight:800;font-size:15px;display:flex;align-items:center;gap:6px;}
+.logo-box{background:var(--yellow);color:black;padding:3px 7px;border:2px solid white;transform:rotate(-1deg);box-shadow:2px 2px 0 white; display:flex; align-items:center; gap:4px;}
+.logo-box img{width:18px; height:18px; border-radius:50%; border:2px solid black;}
+.badge{border:2px solid white;padding:3px 7px;font-family:'Space Mono';font-size:7px;font-weight:700;box-shadow:2px 2px 0 black;}
+.badge-v14{background:white;color:black;}
 .main{flex:1;display:flex;overflow:hidden;position:relative;}
 .sidebar{width:400px;background:var(--paper);border-right:var(--border);display:flex;flex-direction:column;overflow:hidden;z-index:20;}
 .stage{flex:1;background:var(--bg);background-image:radial-gradient(#000 1px, transparent 1px);background-size:22px 22px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;padding:8px;}
 .tab-content{flex:1;overflow-y:auto;padding:10px;display:none;padding-bottom:90px;}
 .tab-content.active{display:block;}
-.btn{width:100%;padding:12px 10px;border:var(--border);font-family:'Space Mono';font-weight:700;font-size:10px;cursor:pointer;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:var(--shadow-xs);background:white;min-height:44px;border-radius:8px;letter-spacing:0.3px;}
+.btn{width:100%;padding:12px 10px;border:var(--border);font-family:'Space Mono';font-weight:700;font-size:10px;cursor:pointer;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:var(--shadow-xs);background:white;min-height:44px;border-radius:8px;}
 .btn:active{transform:translate(1px,1px);box-shadow:0 0 0 black;}
-.btn-black{background:black;color:white;} .btn-yellow{background:var(--yellow);color:black;} .btn-red{background:var(--red);color:white;} .btn-blue{background:var(--blue);color:white;} .btn-green{background:var(--green);color:black;}
+.btn-black{background:black;color:white;} .btn-yellow{background:var(--yellow);color:black;} .btn-red{background:var(--red);color:white;} .btn-green{background:var(--green);color:black;}
 .card{background:white;border:var(--border);box-shadow:var(--shadow-xs);padding:12px;margin-bottom:10px;border-radius:10px;}
-.card-title{font-family:'Space Mono';font-size:8px;font-weight:700;text-transform:uppercase;background:black;color:white;display:inline-block;padding:4px 8px;margin-bottom:8px;border-radius:4px;letter-spacing:0.5px;}
+.card-title{font-family:'Space Mono';font-size:8px;font-weight:700;text-transform:uppercase;background:black;color:white;display:inline-block;padding:4px 8px;margin-bottom:8px;border-radius:4px;}
 .input,.select,.textarea{width:100%;border:var(--border);padding:12px;font-family:'Space Mono';font-size:11px;background:white;outline:none;margin-top:4px;box-shadow:1px 1px 0 black inset;min-height:44px;border-radius:8px;}
 .input:focus{background:var(--yellow);}
-.label{font-family:'Space Mono';font-size:7px;font-weight:700;text-transform:uppercase;margin-top:10px;display:block;opacity:.8;letter-spacing:0.5px;}
-.layer-item{background:white;border:var(--border);padding:10px;margin-bottom:8px;display:flex;flex-direction:column;gap:6px;box-shadow:var(--shadow-xs);border-radius:10px;}
+.label{font-family:'Space Mono';font-size:7px;font-weight:700;text-transform:uppercase;margin-top:10px;display:block;opacity:.8;}
+.layer-item{background:white;border:var(--border);padding:10px;margin-bottom:8px;display:flex;flex-direction:column;gap:8px;box-shadow:var(--shadow-xs);border-radius:10px;}
 .layer-item.active{background:var(--yellow);transform:rotate(-0.3deg);box-shadow:3px 3px 0 black;}
 .layer-top{display:flex;align-items:center;justify-content:space-between;gap:8px;}
-.layer-name{font-family:'Syne';font-weight:800;font-size:13px;flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-transform:uppercase;}
+.layer-name{font-family:'Syne';font-weight:800;font-size:12px;flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-transform:uppercase;}
 .layer-actions{display:flex;gap:4px;}
 .mini-btn{border:2px solid black;padding:5px 8px;font-family:'Space Mono';font-size:7px;font-weight:700;cursor:pointer;background:white;box-shadow:1px 1px 0 black;border-radius:6px;min-width:36px;text-align:center;}
 .mini-btn:active{transform:translate(1px,1px);box-shadow:0 0 0 black;}
-.mini-btn-black{background:black;color:white;} .mini-btn-red{background:var(--red);color:white;} .mini-btn-yellow{background:var(--yellow);color:black;}
-.layer-style-row{display:flex;gap:4px;flex-wrap:wrap;}
-.style-chip{border:2px solid black;padding:4px 8px;font-family:'Space Mono';font-size:6px;font-weight:700;cursor:pointer;background:white;border-radius:6px;box-shadow:1px 1px 0 black;}
+.mini-btn-black{background:black;color:white;} .mini-btn-red{background:var(--red);color:white;} .mini-btn-yellow{background:var(--yellow);color:black;} .mini-btn-green{background:var(--green);color:black;}
+.layer-controls{display:flex;flex-direction:column;gap:6px; margin-top:4px;}
+.control-row{display:flex;align-items:center;gap:8px;}
+.control-row label{font-family:'Space Mono';font-size:7px;font-weight:700;min-width:60px;text-transform:uppercase;}
+.control-row input[type=range]{flex:1;}
+.control-row span{font-family:'Space Mono';font-size:8px;font-weight:700;min-width:36px;text-align:right;}
+.style-grid{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px;}
+.style-chip{border:2px solid black;padding:5px 10px;font-family:'Space Mono';font-size:7px;font-weight:700;cursor:pointer;background:white;border-radius:6px;box-shadow:1px 1px 0 black;}
 .style-chip.active{background:black;color:white;}
+.color-grid{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;}
+.color-swatch{width:28px;height:28px;border:var(--border);cursor:pointer;box-shadow:1px 1px 0 black;border-radius:50%;}
 .phone-wrap{position:relative;width:360px;max-width:94vw;height:620px;max-height:72vh;background:black;border:var(--border);box-shadow:var(--shadow);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0;border-radius:12px;}
 .phone-top{height:24px;background:white;border-bottom:var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 8px;font-family:'Space Mono';font-size:7px;font-weight:700;flex-shrink:0;}
 .canvas-wrap{flex:1;position:relative;overflow:hidden;background:black;}
 #video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scaleX(-1);}
 #canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;z-index:2;}
 #ghost{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;}
-#particles{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3;}
 .viewer-pill{position:absolute;top:6px;left:6px;z-index:10;background:black;color:white;border:2px solid white;padding:3px 6px;font-family:'Space Mono';font-size:7px;font-weight:700;box-shadow:2px 2px 0 black;border-radius:6px;}
 .bottom-nav{height:68px; background:white; border-top:var(--border); display:flex; align-items:center; justify-content:space-around; padding:0 4px; padding-bottom:env(safe-area-inset-bottom); flex-shrink:0; z-index:30; box-shadow:0 -3px 0 black;}
 .bottom-nav-item{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; padding:8px 2px; cursor:pointer; border:2px solid transparent; border-radius:10px; transition:.15s; min-width:0;}
 .bottom-nav-item.active{background:var(--yellow); border:var(--border); box-shadow:2px 2px 0 black; transform:translate(-1px,-1px);}
-.bottom-nav-label{font-family:'Space Mono'; font-size:7px; font-weight:700; text-transform:uppercase; letter-spacing:0.3px;}
-
-/* BUBBLE KECIL 48DP — NEMPEL KIRI KANAN — CLEAN NO EMOJI */
-.floating-bubble{position:fixed; width:48px; height:48px; background:var(--yellow); border:3px solid black; border-radius:50%; box-shadow:3px 3px 0 black; display:flex; align-items:center; justify-content:center; font-family:'Syne'; font-weight:800; font-size:16px; cursor:grab; z-index:9999; right:0; bottom:100px; user-select:none; touch-action:none; transition: left 0.25s cubic-bezier(0.2,0,0,1), right 0.25s cubic-bezier(0.2,0,0,1);}
+.bottom-nav-label{font-family:'Space Mono'; font-size:7px; font-weight:700; text-transform:uppercase;}
+.floating-bubble{position:fixed; width:48px; height:48px; background:var(--yellow); border:3px solid black; border-radius:50%; box-shadow:3px 3px 0 black; display:flex; align-items:center; justify-content:center; font-family:'Syne'; font-weight:800; font-size:16px; cursor:grab; z-index:9999; right:0; bottom:100px; user-select:none; touch-action:none; transition: left 0.22s cubic-bezier(0.2,0,0,1), right 0.22s cubic-bezier(0.2,0,0,1);}
 .floating-bubble.left{left:0; right:auto; border-radius:0 24px 24px 0; border-left:0;}
 .floating-bubble.right{right:0; left:auto; border-radius:24px 0 0 24px; border-right:0;}
-.floating-bubble .bubble-label{position:absolute; bottom:-16px; left:50%; transform:translateX(-50%); background:black; color:white; font-family:'Space Mono'; font-size:5px; padding:2px 4px; border-radius:3px; white-space:nowrap;}
-
-/* MENU DRAGGABLE — ENAK DRAG — EDIT HAPUS STYLING */
-.bubble-menu{position:fixed; background:white; border:var(--border); box-shadow:var(--shadow); width:300px; max-height:70vh; z-index:9998; display:none; border-radius:12px; overflow:hidden; flex-direction:column;}
-.bubble-menu.open{display:flex; animation:pop .2s cubic-bezier(.175,.885,.32,1.275);}
+.bubble-menu{position:fixed; background:white; border:var(--border); box-shadow:var(--shadow); width:320px; max-height:72vh; z-index:9998; display:none; border-radius:12px; overflow:hidden; flex-direction:column;}
+.bubble-menu.open{display:flex; animation:pop .18s cubic-bezier(.175,.885,.32,1.275);}
 @keyframes pop{0%{transform:scale(.92)} 100%{transform:scale(1)}}
 .bubble-menu-header{background:black; color:white; padding:10px 12px; display:flex; justify-content:space-between; align-items:center; cursor:grab; font-family:'Space Mono'; font-size:8px; font-weight:700; user-select:none; touch-action:none;}
-.bubble-menu-body{flex:1; overflow-y:auto; padding:10px; max-height:50vh;}
+.bubble-menu-body{flex:1; overflow-y:auto; padding:10px; max-height:52vh;}
 .bubble-menu-footer{border-top:var(--border); padding:8px; display:flex; gap:6px; background:#f5f5f5;}
-.bubble-item{border:2px solid black; padding:10px; margin-bottom:6px; font-family:'Space Mono'; font-size:8px; font-weight:700; cursor:pointer; background:white; display:flex; gap:6px; align-items:center; box-shadow:1px 1px 0 black; min-height:40px; border-radius:8px;}
-.bubble-item:active{transform:translate(1px,1px); box-shadow:0 0 0 black;}
-.bubble-item.highlight{background:var(--yellow);}
-.menu-layer-item{border:2px solid black; padding:8px; margin-bottom:8px; background:white; border-radius:8px; box-shadow:2px 2px 0 black;}
-.menu-layer-top{display:flex; justify-content:space-between; align-items:center; gap:6px;}
-.menu-layer-name{font-family:'Syne'; font-weight:800; font-size:11px; flex:1; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; text-transform:uppercase;}
-.menu-layer-actions{display:flex; gap:4px;}
 .fab-add{position:absolute; bottom:8px; left:50%; transform:translateX(-50%); z-index:12; background:black; color:white; border:var(--border); border-radius:20px; padding:8px 14px; font-family:'Space Mono'; font-size:8px; font-weight:700; box-shadow:var(--shadow-xs); cursor:pointer;}
-.add-menu{position:absolute; bottom:42px; left:50%; transform:translateX(-50%); background:white; border:var(--border); box-shadow:var(--shadow); padding:6px; display:none; z-index:13; width:260px; border-radius:12px;}
-.add-menu.open{display:flex; flex-wrap:wrap; gap:6px;}
-.add-option{border:2px solid black; padding:8px; font-family:'Space Mono'; font-size:8px; font-weight:700; background:white; cursor:pointer; flex:1 0 46%; text-align:center; box-shadow:1px 1px 0 black; min-height:36px; display:flex; align-items:center; justify-content:center; border-radius:8px;}
-.color-grid{display:flex; flex-wrap:wrap; gap:6px; margin-top:6px;}
-.color-swatch{width:28px; height:28px; border:var(--border); cursor:pointer; box-shadow:1px 1px 0 black; border-radius:50%;}
 @media(max-width:900px){
   .sidebar{position:absolute; inset:0; z-index:40; width:100%; transform:translateX(-100%); transition:.25s cubic-bezier(.8,0,.2,1);}
   .sidebar.open{transform:translateX(0);}
@@ -91,10 +82,10 @@ body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',sans-seri
 <body>
 
 <div class="header">
-  <div class="logo"><div class="logo-box">SAWER</div>STUDIO v13 CLEAN</div>
+  <div class="logo"><div class="logo-box"><img src="icon-512.png" alt="S"> SAWER</div>STUDIO v14 CLEAN</div>
   <div class="header-actions">
-    <div class="badge badge-v13">NO EMOJI</div>
-    <div class="badge badge-live" id="liveBadge">TEKS NEMPEL</div>
+    <div class="badge badge-v14">V1+V2 SIGNED</div>
+    <div class="badge" id="liveBadge" style="background:white; color:black;">TEKS NEMPEL</div>
   </div>
 </div>
 
@@ -103,39 +94,68 @@ body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',sans-seri
     
     <div class="tab-content active" id="tab-layers">
       <div class="card" style="background:var(--yellow);">
-        <div class="card-title">TEKS OVERLAY NEMPEL LAYAR HP — CLEAN NO EMOJI</div>
+        <div class="card-title">TEKS OVERLAY — CLEAN NO EMOJI — FULL EDIT</div>
         <div style="font-family:'Space Mono'; font-size:9px; font-weight:700; line-height:1.4;">
-          Fokus teks aja, tanpa emoji, rapi brutalism. Bubble kecil 48px nempel kiri/kanan, menu bisa drag enak edit hapus styling.
+          Fokus teks aja, rapi brutalism, bubble kecil 48px nempel kiri/kanan, full edit transparansi rotate font size warna shape di bubble juga.
         </div>
       </div>
 
       <div class="card">
-        <div class="card-title">TAMBAH TEKS BARU</div>
-        <textarea id="mainText" class="textarea" rows="2" style="font-family:'Syne'; font-weight:800; font-size:14px; text-transform:uppercase;" placeholder="KETIK TEKS DISINI">LIVE TIKTOK</textarea>
-        <div class="row" style="margin-top:8px;">
+        <div class="card-title">TAMBAH TEKS BARU — NEMPEL LAYAR HP</div>
+        <textarea id="mainText" class="textarea" rows="2" style="font-family:'Syne'; font-weight:800; font-size:14px; text-transform:uppercase;" placeholder="KETIK TEKS">LIVE TIKTOK</textarea>
+        <div style="display:flex; gap:6px; margin-top:8px;">
           <button class="btn btn-black" onclick="addTextLayer()">TAMBAH KE LAYAR</button>
-          <button class="btn btn-yellow" onclick="quickAddText()">CEPAT + TEKS</button>
+          <button class="btn btn-yellow" onclick="quickAddText()">CEPAT</button>
+        </div>
+      </div>
+
+      <div class="card" style="background:#000; color:white;">
+        <div class="card-title" style="background:var(--yellow); color:black;">TEMPEL LINK OVERLAY SAWERIA — TANPA CONNECT AKUN</div>
+        <div style="font-family:'Space Mono'; font-size:8px; font-weight:700; line-height:1.4; margin-bottom:8px;">
+          Gak perlu connect akun saweria — tinggal ambil link overlay di dashboard saweria.co → Settings → Overlay → Copy Link → Paste di bawah!
+        </div>
+        <input id="saweriaLink" class="input" placeholder="https://saweria.co/overlays/xxxx atau https://saweria.co/overlay/..." style="background:white; color:black;">
+        <div style="display:flex; gap:6px; margin-top:6px;">
+          <button class="btn btn-yellow" style="color:black;" onclick="addFromSaweriaLink()">TAMBAH DARI LINK SAWERIA</button>
+          <button class="btn btn-black" onclick="pasteSaweriaLink()">PASTE</button>
+        </div>
+        <div style="font-family:'Space Mono'; font-size:7px; margin-top:6px; opacity:0.8;">
+          Contoh: https://saweria.co/overlays/abc123 — bakal jadi teks overlay otomatis nempel di layar HP!
         </div>
       </div>
 
       <div id="layerList"></div>
 
       <div id="props" class="card" style="display:none; margin-top:8px;">
-        <div class="card-title">EDIT TEKS — TAP UNTUK UBAH</div>
-        <label class="label">TEKS</label>
+        <div class="card-title">FULL EDIT TEKS — TRANSPARANSI ROTATE FONT SIZE WARNA SHAPE</div>
+        
+        <label class="label">TEKS (UPPERCASE OTOMATIS)</label>
         <textarea id="propText" class="textarea" rows="2" style="font-weight:700; text-transform:uppercase;" oninput="updateProp('text', this.value)"></textarea>
         
-        <div class="row">
-          <div><label class="label">UKURAN</label><input id="propSize" type="range" min="10" max="80" value="24" style="width:100%;" oninput="updateProp('fontSize', this.value)"><span id="sizeLabel" style="font-size:8px; font-weight:700;">24px</span></div>
-          <div><label class="label">ROTASI</label><input id="propRot" type="range" min="-20" max="20" value="-1" style="width:100%;" oninput="updateProp('rotation', this.value)"><span id="rotLabel" style="font-size:8px; font-weight:700;">-1°</span></div>
+        <div style="display:flex; gap:8px; margin-top:8px;">
+          <div style="flex:1;"><label class="label">UKURAN FONT</label><input id="propSize" type="range" min="10" max="80" value="24" style="width:100%;" oninput="updateProp('fontSize', this.value)"><span id="sizeLabel" style="font-size:8px; font-weight:700;">24px</span></div>
+          <div style="flex:1;"><label class="label">ROTASI</label><input id="propRot" type="range" min="-30" max="30" value="-1" style="width:100%;" oninput="updateProp('rotation', this.value)"><span id="rotLabel" style="font-size:8px; font-weight:700;">-1°</span></div>
         </div>
 
-        <label class="label">STYLE BRUTALISM</label>
-        <div style="display:flex; gap:4px; flex-wrap:wrap; margin-top:4px;" id="styleChips">
+        <div style="display:flex; gap:8px; margin-top:8px;">
+          <div style="flex:1;"><label class="label">TRANSPARANSI TEKS OVERLAY</label><input id="propAlpha" type="range" min="10" max="100" value="100" style="width:100%;" oninput="updateProp('alpha', this.value)"><span id="alphaLabel" style="font-size:8px; font-weight:700;">100%</span></div>
+          <div style="flex:1;"><label class="label">LEBAR BOX</label><input id="propW" type="range" min="20" max="90" value="60" style="width:100%;" oninput="updateProp('w', this.value)"><span id="wLabel" style="font-size:8px; font-weight:700;">60%</span></div>
+        </div>
+
+        <label class="label">FONT FAMILY</label>
+        <select id="propFont" class="select" onchange="updateProp('fontFamily', this.value)">
+          <option value="Syne">SYNE EXTRA BOLD</option>
+          <option value="Space Grotesk">SPACE GROTESK</option>
+          <option value="Space Mono">SPACE MONO</option>
+        </select>
+
+        <label class="label">STYLE / SHAPE BRUTALISM</label>
+        <div class="style-grid" id="styleChips">
           <div class="style-chip active" data-style="box" onclick="setStyle('box')">BOX SHADOW</div>
           <div class="style-chip" data-style="tape" onclick="setStyle('tape')">TAPE KUNING</div>
-          <div class="style-chip" data-style="stamp" onclick="setStyle('stamp')">STAMP</div>
+          <div class="style-chip" data-style="stamp" onclick="setStyle('stamp')">STAMP MERAH</div>
           <div class="style-chip" data-style="highlight" onclick="setStyle('highlight')">HIGHLIGHT</div>
+          <div class="style-chip" data-style="ripped" onclick="setStyle('ripped')">RIPPED</div>
         </div>
 
         <label class="label">WARNA TEKS</label>
@@ -143,63 +163,63 @@ body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',sans-seri
         <label class="label">WARNA BACKGROUND</label>
         <div class="color-grid" id="bgGrid"></div>
 
-        <div class="row" style="margin-top:10px;">
-          <button class="btn btn-red" onclick="deleteLayer()">HAPUS TEKS</button>
-          <button class="btn btn-green" onclick="duplicateLayer()">DUPLIKAT</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="tab-content" id="tab-ai">
-      <div class="card">
-        <div class="card-title">ELEMEN MELAYANG — CLEAN NO EMOJI</div>
-        <div style="font-family:'Space Mono'; font-size:9px; font-weight:700; line-height:1.4;">
-          Elemen melayang tanpa emoji, cuma shape brutalism: kotak, garis, tape, dot. Rapi clean.
-        </div>
-        <div class="row" style="margin-top:8px;">
-          <button class="btn btn-black" onclick="addFloatingShape('box')">+ KOTAK MELAYANG</button>
-          <button class="btn btn-yellow" onclick="addFloatingShape('dot')">+ DOT MELAYANG</button>
-        </div>
-        <div class="row" style="margin-top:4px;">
-          <button class="btn" onclick="addFloatingShape('line')">+ GARIS MELAYANG</button>
-          <button class="btn btn-green" onclick="clearFloating()">HAPUS ELEMEN</button>
+        <div style="display:flex; gap:6px; margin-top:12px;">
+          <button class="btn btn-red" onclick="deleteLayer()">HAPUS</button>
+          <button class="btn btn-black" onclick="duplicateLayer()">DUPLIKAT</button>
+          <button class="btn btn-green" onclick="savePerScreen()">SAVE POSISI</button>
         </div>
       </div>
     </div>
 
     <div class="tab-content" id="tab-live">
       <div class="card" style="background:black; color:white;">
-        <div class="card-title" style="background:var(--yellow); color:black;">BUBBLE KECIL NEMPEL KIRI KANAN — FIX</div>
+        <div class="card-title" style="background:var(--yellow); color:black;">BUBBLE KECIL 48PX NEMPEL KIRI KANAN — FIX EDIT MODE</div>
         <div style="font-family:'Space Mono'; font-size:9px; font-weight:700; line-height:1.4;">
-          Bubble sekarang kecil 48px, nempel di samping kiri atau kanan layar (snap to edge). Gak di tengah lagi. Drag bubble ke kiri → nempel kiri. Drag ke kanan → nempel kanan. Menu juga bisa drag enak.
+          FIX BUG EDIT POSISI GABISA KELUAR: Sekarang tap bubble di edit mode langsung SELESAI EDIT, ada tombol SELESAI + BATAL besar di overlay, notification ada action SELESAI. Gak perlu restart HP lagi!
         </div>
       </div>
 
-      <button id="liveBtn" class="btn btn-red" style="font-size:11px; padding:14px;" onclick="toggleLive()">MASUK MODE LIVE + BUBBLE KECIL</button>
+      <div class="card">
+        <div class="card-title">TRANSPARANSI BUBBLE MELAYANG</div>
+        <label class="label">ATUR TRANSPARANSI BUBBLE KECIL (20-100%)</label>
+        <input id="bubbleAlpha" type="range" min="20" max="100" value="100" style="width:100%;" oninput="updateBubbleAlpha(this.value)">
+        <span id="bubbleAlphaLabel" style="font-size:8px; font-weight:700;">100% — TIDAK TRANSPARAN</span>
+      </div>
+
+      <button id="liveBtn" class="btn btn-red" style="font-size:11px; padding:14px;" onclick="toggleLive()">MASUK MODE LIVE + BUBBLE KECIL NEMPEL</button>
       <button id="minimizeBtn" class="btn btn-yellow" style="margin-top:8px; display:none;" onclick="minimizeToBubble()">KECILKAN JADI BUBBLE KIRI/KANAN</button>
 
       <div class="card">
-        <div class="card-title">CARA EDIT DARI BUBBLE MENU</div>
+        <div class="card-title">LOGO & ICON KONSISTEN</div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <img src="icon-512.png" style="width:48px; height:48px; border:3px solid black; border-radius:50%; box-shadow:3px 3px 0 black;">
+          <div style="font-family:'Space Mono'; font-size:8px; font-weight:700; line-height:1.4;">
+            Logo brutalism S kuning hitam konsisten di semua tempat — header, bubble, notification, launcher icon. Optimasi R8 + v1+v2+v3+v4 signing.
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">EDIT PENUH DI BUBBLE — FULL EDIT</div>
         <div style="font-family:'Space Mono'; font-size:9px; font-weight:700; line-height:1.4;">
-          1. Tap bubble kecil S (48px) di kiri/kanan<br>
-          2. Menu muncul — drag header hitam buat geser menu enak<br>
-          3. List teks overlay muncul dengan tombol EDIT / HAPUS / STYLE<br>
-          4. Klik EDIT → balik ke app editor lengkap<br>
-          5. Klik HAPUS → langsung hapus teks<br>
-          6. Klik STYLE BOX/TAPE/HITAM → ganti style langsung<br>
-          7. Drag menu via header biar gak nutupin TikTok<br>
-          8. Tap overlay di layar → drag buat geser posisi teks nempel
+          Tap bubble kecil S → menu muncul bisa drag via header hitam<br>
+          List teks dengan tombol FULL EDIT / HAPUS<br>
+          FULL EDIT buka form lengkap: teks, size, rotate, transparansi, warna teks, warna background, style/shape, font, save, batal, hapus<br>
+          Semua edit penuh ada di bubble, gak perlu buka app!
         </div>
       </div>
     </div>
 
     <div class="tab-content" id="tab-export">
       <div class="card">
-        <div class="card-title">EXPORT</div>
+        <div class="card-title">EXPORT + VERIFIKASI</div>
+        <div style="font-family:'Space Mono'; font-size:8px; font-weight:700; line-height:1.4;">
+          APK signed v1+v2+v3+v4 — verifikasi tanda tangan lengkap. Clean gak terlalu ramai, optimasi R8, icon konsisten.
+        </div>
       </div>
       <button class="btn btn-black" onclick="exportJSON()">SAVE JSON</button>
       <button class="btn btn-yellow" style="margin-top:6px;" onclick="exportImage()">EXPORT PNG</button>
-      <button class="btn btn-green" style="margin-top:6px;" onclick="savePerScreen()">SAVE POSISI</button>
+      <button class="btn btn-green" style="margin-top:6px;" onclick="savePerScreen()">SAVE POSISI OVERLAY</button>
     </div>
 
   </div>
@@ -208,17 +228,15 @@ body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',sans-seri
     <div class="phone-wrap" id="phoneWrap">
       <div class="phone-top">
         <div>REC</div>
-        <div id="profileLabel">v13 CLEAN NO EMOJI</div>
+        <div id="profileLabel">v14 CLEAN FULL EDIT</div>
         <div id="liveIndicator" style="background:black; color:white; padding:2px 6px; border:2px solid black; font-size:7px; border-radius:4px;">OFFLINE</div>
       </div>
       <div class="canvas-wrap" id="canvasWrap">
         <video id="video" autoplay muted playsinline></video>
         <canvas id="ghost"></canvas>
         <canvas id="canvas"></canvas>
-        <canvas id="particles"></canvas>
-        <div id="floatingShapes"></div>
-        <div class="viewer-pill">v13 CLEAN • BUBBLE 48PX KIRI KANAN</div>
-        <button class="fab-add" id="fabAdd" onclick="quickAddText()">+ TEKS</button>
+        <div class="viewer-pill">v14 CLEAN • FULL EDIT BUBBLE • V1+V2</div>
+        <button class="fab-add" id="fabAdd" onclick="quickAddText()">+ TEKS NEMPEL</button>
       </div>
     </div>
   </div>
@@ -226,31 +244,24 @@ body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',sans-seri
 
 <div class="bottom-nav" id="bottomNav">
   <div class="bottom-nav-item active" data-tab="layers" onclick="switchTabViaBottom('layers')">
-    <div class="bottom-nav-label">TEKS</div>
-  </div>
-  <div class="bottom-nav-item" data-tab="ai" onclick="switchTabViaBottom('ai')">
-    <div class="bottom-nav-label">ELEMEN</div>
+    <div class="bottom-nav-label">TEKS FULL EDIT</div>
   </div>
   <div class="bottom-nav-item" data-tab="live" onclick="switchTabViaBottom('live')">
     <div class="bottom-nav-label">BUBBLE KECIL</div>
   </div>
   <div class="bottom-nav-item" data-tab="export" onclick="switchTabViaBottom('export')">
-    <div class="bottom-nav-label">SAVE</div>
+    <div class="bottom-nav-label">SAVE V1+V2</div>
   </div>
 </div>
 
-<!-- BUBBLE KECIL 48PX NEMPEL KIRI KANAN -->
-<div class="floating-bubble right" id="bubble" style="display:none;">S<div class="bubble-label">MENU</div></div>
+<div class="floating-bubble right" id="bubble" style="display:none;">S</div>
 
-<!-- MENU DRAGGABLE ENAK EDIT HAPUS STYLING -->
 <div class="bubble-menu" id="bubbleMenu">
   <div class="bubble-menu-header" id="bubbleMenuHeader">
-    <span>SAWER v13 CLEAN - DRAG HEADER</span>
-    <span onclick="toggleBubbleMenu(false)" style="cursor:pointer; padding:0 4px;">X</span>
+    <span>v14 CLEAN - DRAG HEADER UNTUK GESER MENU</span>
+    <span onclick="toggleBubbleMenu(false)" style="cursor:pointer; padding:0 6px;">X</span>
   </div>
-  <div class="bubble-menu-body" id="bubbleMenuBody">
-    <!-- Diisi JS -->
-  </div>
+  <div class="bubble-menu-body" id="bubbleMenuBody"></div>
   <div class="bubble-menu-footer">
     <button class="mini-btn mini-btn-yellow" style="flex:1;" onclick="quickAddText()">+ TEKS</button>
     <button class="mini-btn mini-btn-black" style="flex:1;" onclick="savePerScreen()">SAVE</button>
@@ -263,22 +274,17 @@ const canvas=document.getElementById('canvas');
 const ctx=canvas.getContext('2d');
 const ghost=document.getElementById('ghost');
 const gctx=ghost.getContext('2d');
-const particlesCanvas=document.getElementById('particles');
-const pctx=particlesCanvas.getContext('2d');
-const floatingShapesContainer=document.getElementById('floatingShapes');
 const video=document.getElementById('video');
 
-let profiles=JSON.parse(localStorage.getItem('brutal_profiles_v13')||'{}');
+let profiles=JSON.parse(localStorage.getItem('brutal_profiles_v14')||localStorage.getItem('brutal_profiles_v13')||'{}');
 let currentProfile='tiktok-live';
 let layers=profiles[currentProfile] || [
-  {id:'t1', type:'text', text:'LIVE TIKTOK', x:0.06, y:0.08, w:0.6, h:0.07, fontFamily:'Syne', fontSize:28, color:'#000000', brutalStyle:'box', bg:'#FFE600', rotation:-1, visible:true, animation:'pop', duration:800},
-  {id:'t2', type:'text', text:'FOLLOW MASUK SQUAD', x:0.06, y:0.86, w:0.7, h:0.06, fontFamily:'Space Grotesk', fontSize:16, color:'#FFFFFF', brutalStyle:'box', bg:'#000000', rotation:0, visible:true, animation:'pop', duration:800},
+  {id:'t1', type:'text', text:'LIVE TIKTOK', x:0.06, y:0.08, w:0.6, h:0.07, fontFamily:'Syne', fontSize:28, color:'#000000', brutalStyle:'box', bg:'#FFE600', rotation:-1, alpha:1, visible:true, animation:'pop', duration:800},
+  {id:'t2', type:'text', text:'FOLLOW MASUK SQUAD', x:0.06, y:0.86, w:0.7, h:0.06, fontFamily:'Space Grotesk', fontSize:16, color:'#FFFFFF', brutalStyle:'box', bg:'#000000', rotation:0, alpha:1, visible:true, animation:'pop', duration:800},
 ];
 
 let selected=layers[0]?.id||null;
 let res={w:1080,h:1920};
-let particles=[];
-let floatingShapes=[];
 let currentStyle='box';
 let textColor='#000000';
 let bgColor='#FFE600';
@@ -290,12 +296,12 @@ const bgColors=['#FFE600','#FFFFFF','#000000','#FF3B30','#0057FF','#00FF88'];
 function init(){
   setupCanvas(); startCam(); initColors(); renderList();
   if(selected) select(selected);
-  renderLoop(); particleLoop(); floatingLoop(); bindDrag(); bindBubble(); bindBubbleMenuDrag();
+  renderLoop(); bindDrag(); bindBubble(); bindBubbleMenuDrag();
   loadProfileToUI();
-  console.log('v13 CLEAN NO EMOJI - BUBBLE KECIL KIRI KANAN ready');
+  console.log('v14 CLEAN FULL EDIT + TRANSPARANSI + SAWERIA LINK ready');
 }
 
-function setupCanvas(){ [canvas,ghost,particlesCanvas].forEach(c=>{ c.width=res.w; c.height=res.h; c.style.width='100%'; c.style.height='100%'; }); }
+function setupCanvas(){ [canvas,ghost].forEach(c=>{ c.width=res.w; c.height=res.h; c.style.width='100%'; c.style.height='100%'; }); }
 async function startCam(){ try{ const s=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user', width:{ideal:1080}, height:{ideal:1920}}, audio:true}); video.srcObject=s; }catch(e){} }
 
 function initColors(){
@@ -317,11 +323,14 @@ function addTextLayer(){
   const id='t'+Date.now();
   const size=parseInt(document.getElementById('propSize')?.value||28);
   const rot=parseInt(document.getElementById('propRot')?.value||-1);
+  const alpha=parseInt(document.getElementById('propAlpha')?.value||100)/100;
+  const w=parseInt(document.getElementById('propW')?.value||60)/100;
   layers.push({
     id, type:'text', text: text.toUpperCase(),
-    x:0.06+Math.random()*0.1, y:0.2+Math.random()*0.5, w:0.6, h:0.07,
-    fontFamily:'Syne', fontSize:size, color:textColor, brutalStyle:currentStyle, bg:bgColor,
-    rotation:rot, visible:true, animation:'pop', duration:800
+    x:0.06+Math.random()*0.1, y:0.2+Math.random()*0.5, w, h:0.07,
+    fontFamily:document.getElementById('propFont')?.value||'Syne',
+    fontSize:size, color:textColor, brutalStyle:currentStyle, bg:bgColor,
+    rotation:rot, alpha, visible:true, animation:'pop', duration:800
   });
   select(id); renderList(); savePerScreen();
 }
@@ -329,12 +338,52 @@ function addTextLayer(){
 function quickAddText(){
   const id='t'+Date.now();
   layers.push({
-    id, type:'text', text:'TEKS BARU v13', x:0.06, y:0.4, w:0.55, h:0.06,
+    id, type:'text', text:'TEKS BARU v14', x:0.06, y:0.4, w:0.55, h:0.06,
     fontFamily:'Syne', fontSize:24, color:'#000', brutalStyle:'box', bg:'#FFE600',
-    rotation:-1, visible:true, animation:'pop', duration:800
+    rotation:-1, alpha:1, visible:true, animation:'pop', duration:800
   });
   select(id); renderList(); savePerScreen();
   toggleBubbleMenu(false);
+}
+
+function addFromSaweriaLink(){
+  const link=document.getElementById('saweriaLink').value.trim();
+  if(!link){ alert('PASTE LINK OVERLAY SAWERIA DULU - CONTOH: https://saweria.co/overlays/xxx'); return; }
+  // Parse link - bisa overlay ID atau full URL
+  let overlayText='SAWERIA OVERLAY';
+  let overlayId='';
+  try{
+    // Extract ID from URL
+    if(link.includes('/overlays/') || link.includes('/overlay/')){
+      const parts=link.split('/overlays/')[1] || link.split('/overlay/')[1] || '';
+      overlayId=parts.split('?')[0].split('/')[0];
+      overlayText='SAWERIA '+overlayId.slice(0,12).toUpperCase();
+    } else if(link.length>5){
+      overlayId=link;
+      overlayText='SAWERIA '+link.slice(0,12).toUpperCase();
+    }
+    // If link contains stream key or user, try to use
+    if(link.includes('saweria.co')){
+      overlayText='SAWERIA OVERLAY - '+overlayId.slice(0,8);
+    }
+  }catch(e){ overlayText='SAWERIA OVERLAY'; }
+
+  const id='saweria-'+Date.now();
+  layers.push({
+    id, type:'saweria', text: overlayText,
+    x:0.06, y:0.3+Math.random()*0.3, w:0.7, h:0.08,
+    fontFamily:'Syne', fontSize:20, color:'#FFFFFF', brutalStyle:'box', bg:'#000000',
+    rotation:-1, alpha:1, visible:true, animation:'pop', duration:800,
+    saweriaLink: link
+  });
+  select(id); renderList(); savePerScreen();
+  alert('TAMBAH DARI LINK SAWERIA BERHASIL! Teks: '+overlayText+' - Nempel di layar HP!');
+}
+
+function pasteSaweriaLink(){
+  navigator.clipboard.readText().then(text=>{
+    document.getElementById('saweriaLink').value=text;
+  }).catch(()=>{ alert('PASTE MANUAL: Ctrl+V di input link saweria'); });
 }
 
 function renderList(){
@@ -348,15 +397,14 @@ function renderList(){
       <div class="layer-top">
         <div class="layer-name">${l.text}</div>
         <div class="layer-actions">
-          <div class="mini-btn mini-btn-black" onclick="event.stopPropagation(); select('${l.id}'); document.getElementById('sidebar').classList.add('open');">EDIT</div>
+          <div class="mini-btn mini-btn-black" onclick="event.stopPropagation(); select('${l.id}');">EDIT</div>
           <div class="mini-btn mini-btn-red" onclick="event.stopPropagation(); deleteLayerById('${l.id}')">HAPUS</div>
         </div>
       </div>
-      <div class="layer-style-row">
-        <div class="style-chip ${l.brutalStyle==='box'?'active':''}" onclick="event.stopPropagation(); setLayerStyle('${l.id}','box')">BOX</div>
-        <div class="style-chip ${l.brutalStyle==='tape'?'active':''}" onclick="event.stopPropagation(); setLayerStyle('${l.id}','tape')">TAPE</div>
-        <div class="style-chip ${l.brutalStyle==='stamp'?'active':''}" onclick="event.stopPropagation(); setLayerStyle('${l.id}','stamp')">STAMP</div>
-        <div class="style-chip" onclick="event.stopPropagation(); duplicateLayerById('${l.id}')">DUPLIKAT</div>
+      <div style="display:flex; gap:4px; flex-wrap:wrap; margin-top:4px;">
+        <div style="font-family:'Space Mono'; font-size:6px; background:black; color:white; padding:2px 6px; border-radius:4px;">${l.brutalStyle.toUpperCase()} • ${Math.round(l.alpha*100)}% • ${l.fontSize}px • ${l.rotation}°</div>
+        <div style="width:14px; height:14px; background:${l.bg}; border:2px solid black; border-radius:50%; display:inline-block;"></div>
+        <div style="width:14px; height:14px; background:${l.color}; border:2px solid black; border-radius:50%; display:inline-block;"></div>
       </div>
     `;
     div.onclick=()=>select(l.id);
@@ -371,14 +419,16 @@ function select(id){
   renderList();
   const props=document.getElementById('props');
   if(props) props.style.display='block';
-  const propText=document.getElementById('propText');
-  if(propText) propText.value=l.text;
-  const propSize=document.getElementById('propSize');
-  if(propSize) propSize.value=l.fontSize;
-  const propRot=document.getElementById('propRot');
-  if(propRot) propRot.value=l.rotation;
+  document.getElementById('propText').value=l.text;
+  document.getElementById('propSize').value=l.fontSize;
+  document.getElementById('propRot').value=l.rotation;
+  document.getElementById('propAlpha').value=Math.round(l.alpha*100);
+  document.getElementById('propW').value=Math.round(l.w*100);
+  document.getElementById('propFont').value=l.fontFamily||'Syne';
   document.getElementById('sizeLabel').textContent=l.fontSize+'px';
   document.getElementById('rotLabel').textContent=l.rotation+'°';
+  document.getElementById('alphaLabel').textContent=Math.round(l.alpha*100)+'%';
+  document.getElementById('wLabel').textContent=Math.round(l.w*100)+'%';
   currentStyle=l.brutalStyle;
   textColor=l.color;
   bgColor=l.bg;
@@ -391,11 +441,14 @@ function updateProp(k,v){
   if(k==='text') l.text=v.toUpperCase();
   if(k==='fontSize'){ l.fontSize=parseInt(v); document.getElementById('sizeLabel').textContent=v+'px'; }
   if(k==='rotation'){ l.rotation=parseInt(v); document.getElementById('rotLabel').textContent=v+'°'; }
+  if(k==='alpha'){ l.alpha=parseInt(v)/100; document.getElementById('alphaLabel').textContent=v+'%'; }
+  if(k==='w'){ l.w=parseInt(v)/100; document.getElementById('wLabel').textContent=v+'%'; }
+  if(k==='fontFamily') l.fontFamily=v;
   if(k==='brutalStyle') l.brutalStyle=v;
   if(k==='color') l.color=v;
   if(k==='bg') l.bg=v;
   renderList();
-  clearTimeout(window.saveTimeout); window.saveTimeout=setTimeout(savePerScreen, 400);
+  clearTimeout(window.saveTimeout); window.saveTimeout=setTimeout(savePerScreen, 300);
 }
 
 function setLayerStyle(id, style){
@@ -421,45 +474,15 @@ function duplicateLayerById(id){
   select(nid); renderList(); savePerScreen();
 }
 
-function addFloatingShape(type){
-  const id='f'+Date.now()+Math.random();
-  floatingShapes.push({
-    id, type,
-    x: Math.random()*0.7+0.15,
-    y: Math.random()*0.7+0.15,
-    vx: (Math.random()-0.5)*0.004,
-    vy: (Math.random()-0.5)*0.004,
-    rotation: Math.random()*20-10,
-    size: 20+Math.random()*30
-  });
-}
-
-function clearFloating(){ floatingShapes=[]; }
-
-function floatingLoop(){
-  floatingShapes.forEach(s=>{
-    s.x+=s.vx; s.y+=s.vy;
-    if(s.x<0.05||s.x>0.9) s.vx*=-1;
-    if(s.y<0.05||s.y>0.9) s.vy*=-1;
-  });
-  // Render floating shapes DOM
-  floatingShapesContainer.innerHTML='';
-  floatingShapes.forEach(s=>{
-    const div=document.createElement('div');
-    div.style.position='absolute';
-    div.style.left=(s.x*100)+'%';
-    div.style.top=(s.y*100)+'%';
-    div.style.width=s.size+'px';
-    div.style.height=s.size+'px';
-    div.style.background=s.type==='box'?'#FFE600': s.type==='dot'?'#FF3B30':'#000';
-    div.style.border='3px solid black';
-    div.style.borderRadius=s.type==='dot'?'50%': s.type==='line'?'0':'4px';
-    div.style.transform=`rotate(${s.rotation}deg)`;
-    div.style.boxShadow='2px 2px 0 black';
-    if(s.type==='line'){ div.style.height='6px'; div.style.width=(s.size*2)+'px'; }
-    floatingShapesContainer.appendChild(div);
-  });
-  requestAnimationFrame(floatingLoop);
+function updateBubbleAlpha(val){
+  const alpha=parseInt(val);
+  document.getElementById('bubbleAlphaLabel').textContent=alpha+'% — '+(alpha<50?'TRANSPARAN':'TIDAK TRANSPARAN');
+  const bubble=document.getElementById('bubble');
+  if(bubble) bubble.style.opacity=alpha/100;
+  localStorage.setItem('bubble_alpha', alpha);
+  if(window.BrutalAndroid && BrutalAndroid.setBubbleAlpha){
+    try{ BrutalAndroid.setBubbleAlpha(alpha); }catch(e){}
+  }
 }
 
 function drawBrutal(c, l, isGhost, animTime){
@@ -472,16 +495,24 @@ function drawBrutal(c, l, isGhost, animTime){
   c.rotate((l.rotation||0)*Math.PI/180);
   c.scale(scale, scale);
   c.translate(-(x+w/2), -(y+h/2));
+  c.globalAlpha=l.alpha||1;
+  // Shadow
   c.fillStyle='#000000'; c.fillRect(x+6, y+6, w, h);
+  // Background by style
   if(l.brutalStyle==='tape'){
     c.fillStyle='#FFE600'; c.fillRect(x,y,w,h);
+    c.fillStyle='rgba(0,0,0,0.15)'; c.fillRect(x,y,16,h); c.fillRect(x+w-16,y,16,h);
   } else if(l.brutalStyle==='stamp'){
     c.fillStyle=l.bg||'#FF3B30'; c.fillRect(x,y,w,h);
+    c.strokeStyle='white'; c.lineWidth=2; c.setLineDash([6,4]); c.strokeRect(x+6,y+6,w-12,h-12); c.setLineDash([]);
+  } else if(l.brutalStyle==='highlight'){
+    c.fillStyle='#FFE600'; c.fillRect(x,y,w,h);
+    c.fillStyle=l.bg||'#000'; c.fillRect(x,y,w*0.06,h);
   } else {
     c.fillStyle=l.bg||'#FFE600'; c.fillRect(x,y,w,h);
   }
   c.strokeStyle='black'; c.lineWidth=3; c.strokeRect(x,y,w,h);
-  c.font=`800 ${l.fontSize*(res.w/1080)}px Syne, sans-serif`;
+  c.font=`800 ${l.fontSize*(res.w/1080)}px ${l.fontFamily||'Syne'}, sans-serif`;
   c.fillStyle=l.color||'#000';
   c.textBaseline='middle';
   c.fillText(l.text, x+12, y+h/2);
@@ -500,7 +531,6 @@ function renderLoop(){
   layers.forEach(l=>{ if(!l.visible) return; drawBrutal(ctx,l,false,elapsed); });
   requestAnimationFrame(renderLoop);
 }
-function particleLoop(){ pctx.clearRect(0,0,res.w,res.h); requestAnimationFrame(particleLoop); }
 
 function bindDrag(){
   let dragging=false, sx,sy, ox,oy;
@@ -527,14 +557,7 @@ function bindDrag(){
 function bindBubble(){
   const bubble=document.getElementById('bubble');
   let drag=false, startX, startY, origLeft, origTop, moved=false, lastClick=0;
-  let isLeft=false;
-
-  bubble.addEventListener('pointerdown', e=>{
-    drag=true; moved=false; startX=e.clientX; startY=e.clientY;
-    const rect=bubble.getBoundingClientRect();
-    origLeft=rect.left; origTop=rect.top;
-    bubble.setPointerCapture(e.pointerId);
-  });
+  bubble.addEventListener('pointerdown', e=>{ drag=true; moved=false; startX=e.clientX; startY=e.clientY; const rect=bubble.getBoundingClientRect(); origLeft=rect.left; origTop=rect.top; bubble.setPointerCapture(e.pointerId); });
   bubble.addEventListener('pointermove', e=>{
     if(!drag) return;
     const dx=e.clientX-startX, dy=e.clientY-startY;
@@ -548,67 +571,34 @@ function bindBubble(){
     drag=false;
     if(!moved){
       const now=Date.now();
-      if(now-lastClick<300){
-        document.getElementById('sidebar').classList.add('open');
-        toggleBubbleMenu(false);
-      } else {
-        toggleBubbleMenu();
-      }
+      if(now-lastClick<300){ document.getElementById('sidebar').classList.add('open'); toggleBubbleMenu(false); }
+      else { toggleBubbleMenu(); }
       lastClick=now;
     } else {
-      // SNAP TO EDGE KIRI KANAN
       const rect=bubble.getBoundingClientRect();
-      const midX=rect.left + rect.width/2;
-      const screenW=window.innerWidth;
-      isLeft = midX < screenW/2;
-      
+      const isLeft = (rect.left + rect.width/2) < window.innerWidth/2;
       bubble.classList.toggle('left', isLeft);
       bubble.classList.toggle('right', !isLeft);
-      
-      if(isLeft){
-        bubble.style.left='0px';
-        bubble.style.right='auto';
-      } else {
-        bubble.style.left='auto';
-        bubble.style.right='0px';
-      }
-      // Save
+      if(isLeft){ bubble.style.left='0px'; bubble.style.right='auto'; }
+      else { bubble.style.left='auto'; bubble.style.right='0px'; }
       localStorage.setItem('bubble_side', isLeft?'left':'right');
       localStorage.setItem('bubble_y', rect.top);
     }
   });
-
-  // Load saved side
   const savedSide=localStorage.getItem('bubble_side');
   const savedY=localStorage.getItem('bubble_y');
-  if(savedSide){
-    bubble.classList.toggle('left', savedSide==='left');
-    bubble.classList.toggle('right', savedSide==='right');
-    if(savedSide==='left'){ bubble.style.left='0px'; bubble.style.right='auto'; }
-    else { bubble.style.left='auto'; bubble.style.right='0px'; }
-  }
+  const savedAlpha=localStorage.getItem('bubble_alpha');
+  if(savedSide){ bubble.classList.toggle('left', savedSide==='left'); bubble.classList.toggle('right', savedSide==='right'); if(savedSide==='left'){ bubble.style.left='0px'; bubble.style.right='auto'; } else { bubble.style.left='auto'; bubble.style.right='0px'; } }
   if(savedY){ bubble.style.top=savedY+'px'; bubble.style.bottom='auto'; }
+  if(savedAlpha){ bubble.style.opacity=savedAlpha/100; document.getElementById('bubbleAlpha').value=savedAlpha; document.getElementById('bubbleAlphaLabel').textContent=savedAlpha+'%'; }
 }
 
 function bindBubbleMenuDrag(){
   const header=document.getElementById('bubbleMenuHeader');
   const menu=document.getElementById('bubbleMenu');
   let drag=false, startX, startY, origLeft, origTop;
-
-  header.addEventListener('pointerdown', e=>{
-    drag=true; startX=e.clientX; startY=e.clientY;
-    const rect=menu.getBoundingClientRect();
-    origLeft=rect.left; origTop=rect.top;
-    header.setPointerCapture(e.pointerId);
-  });
-  header.addEventListener('pointermove', e=>{
-    if(!drag) return;
-    const dx=e.clientX-startX, dy=e.clientY-startY;
-    menu.style.left=(origLeft+dx)+'px';
-    menu.style.top=(origTop+dy)+'px';
-    menu.style.right='auto';
-    menu.style.bottom='auto';
-  });
+  header.addEventListener('pointerdown', e=>{ drag=true; startX=e.clientX; startY=e.clientY; const rect=menu.getBoundingClientRect(); origLeft=rect.left; origTop=rect.top; header.setPointerCapture(e.pointerId); });
+  header.addEventListener('pointermove', e=>{ if(!drag) return; const dx=e.clientX-startX, dy=e.clientY-startY; menu.style.left=(origLeft+dx)+'px'; menu.style.top=(origTop+dy)+'px'; menu.style.right='auto'; menu.style.bottom='auto'; });
   header.addEventListener('pointerup', ()=>{ drag=false; });
 }
 
@@ -616,96 +606,60 @@ function toggleBubbleMenu(force){
   const menu=document.getElementById('bubbleMenu');
   const body=document.getElementById('bubbleMenuBody');
   if(force===false){ menu.classList.remove('open'); return; }
-  
   const isOpen=menu.classList.contains('open');
   if(isOpen){ menu.classList.remove('open'); return; }
-
-  // Build menu body with layers + edit/hapus/styling
   body.innerHTML='';
-  
-  // Quick add
   const quickDiv=document.createElement('div');
   quickDiv.style.display='flex'; quickDiv.style.gap='6px'; quickDiv.style.marginBottom='10px';
-  quickDiv.innerHTML=`
-    <button class="mini-btn mini-btn-yellow" style="flex:1;" onclick="quickAddText()">+ TEKS BARU</button>
-    <button class="mini-btn mini-btn-black" style="flex:1;" onclick="savePerScreen()">SAVE</button>
-  `;
+  quickDiv.innerHTML=`<button class="mini-btn mini-btn-yellow" style="flex:1;" onclick="quickAddText()">+ TEKS</button><button class="mini-btn mini-btn-black" style="flex:1;" onclick="savePerScreen()">SAVE</button>`;
   body.appendChild(quickDiv);
-
   if(layers.length===0){
     const empty=document.createElement('div');
-    empty.textContent='BELUM ADA TEKS - KLIK + TEKS BARU';
-    empty.style.fontFamily='Space Mono'; empty.style.fontSize='8px'; empty.style.fontWeight='700';
-    empty.style.textAlign='center'; empty.style.padding='12px';
+    empty.textContent='BELUM ADA TEKS';
+    empty.style.fontFamily='Space Mono'; empty.style.fontSize='8px'; empty.style.fontWeight='700'; empty.style.textAlign='center'; empty.style.padding='12px';
     body.appendChild(empty);
   } else {
     layers.slice(0,6).forEach(l=>{
       const item=document.createElement('div');
-      item.className='menu-layer-item';
+      item.style.border='2px solid black'; item.style.padding='8px'; item.style.marginBottom='8px'; item.style.background='white'; item.style.borderRadius='8px'; item.style.boxShadow='2px 2px 0 black';
       item.innerHTML=`
-        <div class="menu-layer-top">
-          <div class="menu-layer-name">${l.text}</div>
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
+          <div style="font-family:Syne; font-weight:800; font-size:11px; flex:1; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; text-transform:uppercase;">${l.text}</div>
         </div>
         <div style="display:flex; gap:4px; margin-top:6px;">
-          <div class="mini-btn mini-btn-black" onclick="select('${l.id}'); document.getElementById('sidebar').classList.add('open'); toggleBubbleMenu(false);">EDIT TULISAN</div>
+          <div class="mini-btn mini-btn-black" onclick="select('${l.id}'); document.getElementById('sidebar').classList.add('open'); toggleBubbleMenu(false);">FULL EDIT</div>
           <div class="mini-btn mini-btn-red" onclick="deleteLayerById('${l.id}'); toggleBubbleMenu(false); setTimeout(()=>toggleBubbleMenu(true),100);">HAPUS</div>
           <div class="mini-btn mini-btn-yellow" onclick="duplicateLayerById('${l.id}'); toggleBubbleMenu(false); setTimeout(()=>toggleBubbleMenu(true),100);">DUPLIKAT</div>
         </div>
         <div style="display:flex; gap:4px; margin-top:6px;">
-          <div class="style-chip ${l.brutalStyle==='box'?'active':''}" onclick="setLayerStyle('${l.id}','box'); toggleBubbleMenu(false); setTimeout(()=>toggleBubbleMenu(true),100);">BOX KUNING</div>
-          <div class="style-chip ${l.brutalStyle==='tape'?'active':''}" onclick="setLayerStyle('${l.id}','tape'); toggleBubbleMenu(false); setTimeout(()=>toggleBubbleMenu(true),100);">TAPE</div>
-          <div class="style-chip" style="background:black; color:white;" onclick="setLayerStyle('${l.id}','box'); layers.find(x=>x.id==='${l.id}').bg='#000000'; layers.find(x=>x.id==='${l.id}').color='#FFFFFF'; savePerScreen(); renderList(); toggleBubbleMenu(false); setTimeout(()=>toggleBubbleMenu(true),100);">HITAM PUTIH</div>
+          <div class="mini-btn" style="background:${l.bg}; color:${l.color===' #FFFFFF'?'white':'black'};" onclick="setLayerStyle('${l.id}','box')">STYLE</div>
+          <div style="font-size:7px; background:black; color:white; padding:3px 6px; border-radius:4px;">${Math.round(l.alpha*100)}% • ${l.fontSize}px • ${l.rotation}°</div>
         </div>
       `;
       body.appendChild(item);
     });
   }
-
-  // Position menu near bubble, but draggable
   const bubble=document.getElementById('bubble');
   const bRect=bubble.getBoundingClientRect();
   const isLeft=bRect.left < window.innerWidth/2;
-  
-  if(isLeft){
-    menu.style.left=(bRect.right+8)+'px';
-    menu.style.right='auto';
-  } else {
-    menu.style.left='auto';
-    menu.style.right=(window.innerWidth - bRect.left + 8)+'px';
-  }
+  if(isLeft){ menu.style.left=(bRect.right+8)+'px'; menu.style.right='auto'; }
+  else { menu.style.left='auto'; menu.style.right=(window.innerWidth - bRect.left + 8)+'px'; }
   menu.style.top=bRect.top+'px';
   menu.style.bottom='auto';
-  
   menu.classList.add('open');
 }
-
 function hideBubbleMenu(){ document.getElementById('bubbleMenu').classList.remove('open'); }
-
-function switchTab(tab){
-  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
-  document.getElementById('tab-'+tab).classList.add('active');
-  document.querySelectorAll('.bottom-nav-item').forEach(item=>{ item.classList.toggle('active', item.dataset.tab===tab); });
-}
+function switchTab(tab){ document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active')); document.getElementById('tab-'+tab).classList.add('active'); document.querySelectorAll('.bottom-nav-item').forEach(item=>{ item.classList.toggle('active', item.dataset.tab===tab); }); }
 function switchTabViaBottom(tab){ document.getElementById('sidebar').classList.add('open'); switchTab(tab); if(navigator.vibrate) navigator.vibrate(20); }
-function savePerScreen(){ profiles[currentProfile]=layers; localStorage.setItem('brutal_profiles_v13', JSON.stringify(profiles)); }
-function minimizeToBubble(){
-  if(window.BrutalAndroid && BrutalAndroid.minimizeToBubble){ BrutalAndroid.minimizeToBubble(); }
-  else { document.getElementById('bubble').style.display='flex'; }
-}
+function savePerScreen(){ profiles[currentProfile]=layers; localStorage.setItem('brutal_profiles_v14', JSON.stringify(profiles)); if(window.BrutalAndroid && BrutalAndroid.saveProfiles){ try{ BrutalAndroid.saveProfiles(JSON.stringify(profiles)); }catch(e){} } }
+function minimizeToBubble(){ if(window.BrutalAndroid && BrutalAndroid.minimizeToBubble){ BrutalAndroid.minimizeToBubble(); } else { document.getElementById('bubble').style.display='flex'; } }
 function toggleLive(){
   const btn=document.getElementById('liveBtn'); const ind=document.getElementById('liveIndicator'); const minBtn=document.getElementById('minimizeBtn');
-  if(!isLive){
-    isLive=true; btn.textContent='STOP LIVE'; btn.classList.remove('btn-red'); btn.classList.add('btn-black'); ind.textContent='LIVE NEMPEL'; ind.style.background='#FF3B30'; if(minBtn) minBtn.style.display='flex';
-    document.getElementById('bubble').style.display='flex';
-    if(window.BrutalAndroid && BrutalAndroid.startFloatingOverlay){ try{ BrutalAndroid.startFloatingOverlay(JSON.stringify(profiles)); }catch(e){} }
-  } else {
-    isLive=false; btn.textContent='MASUK MODE LIVE + BUBBLE KECIL'; btn.classList.add('btn-red'); btn.classList.remove('btn-black'); ind.textContent='OFFLINE'; ind.style.background='black'; if(minBtn) minBtn.style.display='none';
-    document.getElementById('bubble').style.display='none';
-    if(window.BrutalAndroid && BrutalAndroid.stopFloatingOverlay){ try{ BrutalAndroid.stopFloatingOverlay(); }catch(e){} }
-  }
+  if(!isLive){ isLive=true; btn.textContent='STOP LIVE'; btn.classList.remove('btn-red'); btn.classList.add('btn-black'); ind.textContent='LIVE NEMPEL'; ind.style.background='#FF3B30'; if(minBtn) minBtn.style.display='flex'; document.getElementById('bubble').style.display='flex'; if(window.BrutalAndroid && BrutalAndroid.startFloatingOverlay){ try{ BrutalAndroid.startFloatingOverlay(JSON.stringify(profiles)); }catch(e){} } }
+  else { isLive=false; btn.textContent='MASUK MODE LIVE + BUBBLE KECIL NEMPEL'; btn.classList.add('btn-red'); btn.classList.remove('btn-black'); ind.textContent='OFFLINE'; ind.style.background='black'; if(minBtn) minBtn.style.display='none'; document.getElementById('bubble').style.display='none'; if(window.BrutalAndroid && BrutalAndroid.stopFloatingOverlay){ try{ BrutalAndroid.stopFloatingOverlay(); }catch(e){} } }
 }
-function exportJSON(){ const blob=new Blob([JSON.stringify({profiles, layers, version:'v13-clean'},null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`v13-clean-${Date.now()}.json`; a.click(); }
-function exportImage(){ const link=document.createElement('a'); link.download=`v13-${Date.now()}.png`; link.href=canvas.toDataURL(); link.click(); }
+function exportJSON(){ const blob=new Blob([JSON.stringify({profiles, layers, version:'v14-clean-full-edit'},null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`v14-clean-${Date.now()}.json`; a.click(); }
+function exportImage(){ const link=document.createElement('a'); link.download=`v14-${Date.now()}.png`; link.href=canvas.toDataURL(); link.click(); }
 
 init();
 </script>
