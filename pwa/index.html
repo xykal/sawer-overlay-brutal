@@ -2,170 +2,161 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>SAWEROVERLAY — BRUTAL STUDIO v3</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>SAWER STUDIO v4 — ANDROID ULTIMATE</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#000000">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Space+Mono:wght@400;700&family=Bebas+Neue&family=Syne:wght@800&display=swap" rel="stylesheet">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Space+Mono:wght@400;700&family=Bebas+Neue&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#E8E6DE;
-  --paper:#FFFFFF;
-  --ink:#000000;
-  --yellow:#FFE600;
-  --red:#FF3B30;
-  --blue:#0057FF;
-  --green:#00FF88;
-  --border:3px solid #000;
-  --shadow:8px 8px 0px #000;
-  --shadow-sm:5px 5px 0px #000;
-  --shadow-xs:3px 3px 0px #000;
+  --bg:#E8E6DE; --paper:#FFF; --ink:#000; --yellow:#FFE600; --red:#FF3B30; --blue:#0057FF; --green:#00FF88; --purple:#8A2BE2;
+  --border:3px solid #000; --shadow:8px 8px 0 #000; --shadow-sm:5px 5px 0 #000; --shadow-xs:3px 3px 0 #000;
 }
-*{margin:0;padding:0;box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
-body{background:var(--bg); color:var(--ink); font-family:'Space Grotesk', sans-serif; height:100dvh; display:flex; flex-direction:column; overflow:hidden;}
+*{margin:0;padding:0;box-sizing:border-box; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none;}
+body{background:var(--bg); color:var(--ink); font-family:'Space Grotesk', sans-serif; height:100dvh; display:flex; flex-direction:column; overflow:hidden; overscroll-behavior:none;}
 ::selection{background:var(--yellow);}
 
-/* HEADER BRUTAL STUDIO */
-.header{height:68px; background:var(--ink); color:white; display:flex; align-items:center; justify-content:space-between; padding:0 16px; border-bottom:var(--border); position:relative; z-index:20;}
+/* ANDROID OPTIMIZED HEADER */
+.header{height:64px; background:var(--ink); color:white; display:flex; align-items:center; justify-content:space-between; padding:0 12px; border-bottom:var(--border); position:relative; z-index:30; padding-top:env(safe-area-inset-top);}
 .header::after{content:''; position:absolute; bottom:-10px; left:0; right:0; height:10px; background:var(--yellow); border-bottom:var(--border);}
-.logo{font-family:'Syne'; font-weight:800; font-size:28px; letter-spacing:-1px; display:flex; align-items:center; gap:8px;}
-.logo-box{background:var(--yellow); color:black; padding:2px 8px; border:2px solid white; transform:rotate(-2deg); box-shadow:3px 3px 0 white;}
-.header-actions{display:flex; gap:8px; align-items:center;}
-.badge-live{border:2px solid white; padding:5px 12px; font-family:'Space Mono'; font-size:11px; font-weight:700; background:var(--red); color:white; box-shadow:3px 3px 0 black;}
-.profile-select{background:white; color:black; border:var(--border); padding:8px 12px; font-family:'Space Mono'; font-size:11px; font-weight:700; box-shadow:3px 3px 0 black;}
+.logo{font-family:'Syne'; font-weight:800; font-size:24px; letter-spacing:-1px; display:flex; align-items:center; gap:6px;}
+.logo-box{background:var(--yellow); color:black; padding:2px 6px; border:2px solid white; transform:rotate(-2deg); box-shadow:2px 2px 0 white; font-size:20px;}
+.header-actions{display:flex; gap:6px; align-items:center;}
+.badge{border:2px solid white; padding:4px 8px; font-family:'Space Mono'; font-size:9px; font-weight:700; box-shadow:2px 2px 0 black;}
+.badge-live{background:var(--red); color:white;}
+.badge-android{background:var(--green); color:black;}
+.profile-select{background:white; color:black; border:var(--border); padding:6px 8px; font-family:'Space Mono'; font-size:9px; font-weight:700; box-shadow:2px 2px 0 black; max-width:110px;}
 
-/* LAYOUT */
+/* MAIN */
 .main{flex:1; display:flex; overflow:hidden; position:relative;}
-.sidebar{width:420px; background:var(--paper); border-right:var(--border); display:flex; flex-direction:column; overflow:hidden; z-index:10; box-shadow:8px 0 0 rgba(0,0,0,.1);}
-.stage{flex:1; background:var(--bg); background-image: radial-gradient(#000 1.2px, transparent 1.2px); background-size:22px 22px; display:flex; align-items:center; justify-content:center; position:relative; padding:16px;}
+.sidebar{width:420px; background:var(--paper); border-right:var(--border); display:flex; flex-direction:column; overflow:hidden; z-index:20; box-shadow:8px 0 0 rgba(0,0,0,.1);}
+.stage{flex:1; background:var(--bg); background-image: radial-gradient(#000 1px, transparent 1px); background-size:20px 20px; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; padding:10px;}
 
 /* TABS */
-.tabs{display:flex; border-bottom:var(--border); background:var(--ink);}
-.tab{flex:1; padding:13px 6px; text-align:center; font-family:'Space Mono'; font-size:10px; font-weight:700; cursor:pointer; color:white; border-right:2px solid #333; letter-spacing:.5px; position:relative;}
+.tabs{display:flex; border-bottom:var(--border); background:var(--ink); overflow-x:auto;}
+.tab{flex:1; padding:11px 4px; text-align:center; font-family:'Space Mono'; font-size:9px; font-weight:700; cursor:pointer; color:white; border-right:2px solid #333; white-space:nowrap; min-width:60px;}
 .tab.active{background:var(--yellow); color:black;}
-.tab.active::after{content:''; position:absolute; bottom:-3px; left:0; right:0; height:3px; background:var(--yellow);}
-.tab-content{flex:1; overflow-y:auto; padding:14px; display:none;}
+.tab-content{flex:1; overflow-y:auto; padding:10px; display:none; -webkit-overflow-scrolling: touch;}
 .tab-content.active{display:block;}
-.tab-content::-webkit-scrollbar{width:12px;}
-.tab-content::-webkit-scrollbar-thumb{background:black; border:2px solid white;}
 
-/* BRUTAL COMPONENTS */
-.btn{width:100%; padding:13px 14px; border:var(--border); font-family:'Space Mono'; font-weight:700; font-size:12px; letter-spacing:.5px; cursor:pointer; text-transform:uppercase; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:var(--shadow-xs); transition:.08s; background:white; position:relative;}
-.btn:active{transform:translate(3px,3px); box-shadow:0 0 0 black;}
+/* BUTTONS - ANDROID BIG TOUCH TARGETS */
+.btn{width:100%; padding:14px 12px; border:var(--border); font-family:'Space Mono'; font-weight:700; font-size:11px; cursor:pointer; text-transform:uppercase; display:flex; align-items:center; justify-content:center; gap:6px; box-shadow:var(--shadow-xs); background:white; min-height:44px; touch-action:manipulation;}
+.btn:active{transform:translate(2px,2px); box-shadow:0 0 0 black;}
 .btn-black{background:black; color:white;}
 .btn-yellow{background:var(--yellow); color:black;}
 .btn-red{background:var(--red); color:white;}
 .btn-blue{background:var(--blue); color:white;}
-.btn-live{font-size:15px; padding:16px; font-family:'Syne'; font-weight:800;}
+.btn-green{background:var(--green); color:black;}
+.btn-live{font-family:'Syne'; font-weight:800; font-size:14px; padding:16px;}
 
-.card{background:white; border:var(--border); box-shadow:var(--shadow-xs); padding:12px; margin-bottom:10px; position:relative;}
-.card::before{content:''; position:absolute; top:4px; left:4px; right:-4px; bottom:-4px; background:black; z-index:-1;}
-.card-title{font-family:'Space Mono'; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; background:black; color:white; display:inline-block; padding:3px 8px; margin-bottom:10px;}
-.input, .select, .textarea{width:100%; border:var(--border); padding:10px 12px; font-family:'Space Mono'; font-size:12px; background:white; outline:none; margin-top:5px; box-shadow:2px 2px 0 black inset;}
-.input:focus, .textarea:focus{background:var(--yellow);}
-.label{font-family:'Space Mono'; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-top:12px; display:block; opacity:.8;}
+.card{background:white; border:var(--border); box-shadow:var(--shadow-xs); padding:10px; margin-bottom:8px; position:relative;}
+.card-title{font-family:'Space Mono'; font-size:9px; font-weight:700; text-transform:uppercase; background:black; color:white; display:inline-block; padding:2px 6px; margin-bottom:8px;}
+.input, .select, .textarea{width:100%; border:var(--border); padding:10px; font-family:'Space Mono'; font-size:12px; background:white; outline:none; margin-top:4px; box-shadow:1px 1px 0 black inset; min-height:40px;}
+.input:focus{background:var(--yellow);}
+.label{font-family:'Space Mono'; font-size:8px; font-weight:700; text-transform:uppercase; margin-top:10px; display:block; opacity:.7; letter-spacing:.5px;}
 
-/* LAYERS - DA STUDIO STYLE */
-.layer-item{background:white; border:var(--border); padding:10px 12px; margin-bottom:8px; display:flex; align-items:center; justify-content:space-between; cursor:grab; box-shadow:3px 3px 0 black; position:relative; transition:.1s;}
-.layer-item:hover{transform:translate(-1px,-1px); box-shadow:4px 4px 0 black;}
-.layer-item.active{background:var(--yellow); transform:rotate(-0.8deg) scale(1.02); box-shadow:5px 5px 0 black; z-index:2;}
-.layer-item.active::after{content:'◀ EDITING'; position:absolute; right:-2px; top:-10px; background:var(--red); color:white; font-family:'Space Mono'; font-size:8px; padding:2px 6px; border:2px solid black; font-weight:700;}
-.layer-thumb{width:36px; height:36px; border:2px solid black; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:14px; background:var(--bg);}
-.layer-meta{flex:1; margin-left:10px;}
-.layer-type{font-family:'Space Mono'; font-size:8px; font-weight:700; background:black; color:white; padding:2px 5px; display:inline-block;}
-.layer-name{font-weight:700; font-size:12px; margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:170px;}
+/* LAYERS DA STUDIO */
+.layer-item{background:white; border:var(--border); padding:8px 10px; margin-bottom:6px; display:flex; align-items:center; justify-content:space-between; cursor:pointer; box-shadow:2px 2px 0 black; position:relative;}
+.layer-item.active{background:var(--yellow); transform:rotate(-0.5deg) scale(1.01); box-shadow:4px 4px 0 black; z-index:2;}
+.layer-thumb{width:32px; height:32px; border:2px solid black; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:12px; flex-shrink:0;}
+.layer-meta{flex:1; margin-left:8px; overflow:hidden;}
+.layer-type{font-family:'Space Mono'; font-size:7px; font-weight:700; background:black; color:white; padding:1px 4px; display:inline-block;}
+.layer-name{font-weight:700; font-size:11px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.layer-anim{width:8px; height:8px; background:var(--blue); border-radius:50%; margin-left:6px; animation:blink 1s infinite;}
+@keyframes blink{0%,100%{opacity:1} 50%{opacity:.3}}
 
-/* PHONE FRAME - BRUTAL STUDIO */
-.phone-wrap{position:relative; width:370px; max-width:92vw; height:740px; max-height:84vh; background:black; border:var(--border); box-shadow:var(--shadow); display:flex; flex-direction:column; overflow:hidden;}
-.phone-top{height:32px; background:white; border-bottom:var(--border); display:flex; align-items:center; justify-content:space-between; padding:0 12px; font-family:'Space Mono'; font-size:9px; font-weight:700;}
+/* PHONE FRAME ANDROID */
+.phone-wrap{position:relative; width:360px; max-width:94vw; height:680px; max-height:78vh; background:black; border:var(--border); box-shadow:var(--shadow); display:flex; flex-direction:column; overflow:hidden; flex-shrink:0;}
+.phone-top{height:28px; background:white; border-bottom:var(--border); display:flex; align-items:center; justify-content:space-between; padding:0 10px; font-family:'Space Mono'; font-size:8px; font-weight:700; flex-shrink:0;}
 .canvas-wrap{flex:1; position:relative; overflow:hidden; background:black;}
 #video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transform:scaleX(-1);}
 #canvas{position:absolute; inset:0; width:100%; height:100%; touch-action:none; z-index:2;}
 #ghost{position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:1;}
 
-.mode-switch{position:absolute; top:8px; right:8px; z-index:20; display:flex; border:var(--border); box-shadow:var(--shadow-xs); background:white; overflow:hidden;}
-.mode-btn{padding:7px 10px; font-family:'Space Mono'; font-size:9px; font-weight:700; border:0; background:white; cursor:pointer; border-right:2px solid black;}
+.mode-switch{position:absolute; top:6px; right:6px; z-index:15; display:flex; border:var(--border); box-shadow:var(--shadow-xs); background:white; overflow:hidden;}
+.mode-btn{padding:6px 8px; font-family:'Space Mono'; font-size:8px; font-weight:700; border:0; background:white; cursor:pointer; border-right:2px solid black;}
 .mode-btn.active{background:black; color:white;}
-.mode-btn:last-child{border-right:0;}
+.viewer-pill{position:absolute; top:6px; left:6px; z-index:10; background:black; color:white; border:2px solid white; padding:3px 6px; font-family:'Space Mono'; font-size:8px; font-weight:700; box-shadow:2px 2px 0 black;}
+.tiktok-right{position:absolute; right:4px; bottom:70px; z-index:10; display:flex; flex-direction:column; gap:8px;}
+.tiktok-right div{width:32px; height:32px; background:white; border:2px solid black; display:flex; align-items:center; justify-content:center; font-weight:800; box-shadow:2px 2px 0 black; border-radius:50%; font-size:12px;}
 
-.viewer-pill{position:absolute; top:8px; left:8px; z-index:10; background:black; color:white; border:2px solid white; padding:4px 8px; font-family:'Space Mono'; font-size:9px; font-weight:700; box-shadow:3px 3px 0 black;}
-.tiktok-right{position:absolute; right:6px; bottom:80px; z-index:10; display:flex; flex-direction:column; gap:10px; align-items:center;}
-.tiktok-right div{width:38px; height:38px; background:white; border:2px solid black; display:flex; align-items:center; justify-content:center; font-weight:800; box-shadow:3px 3px 0 black; border-radius:50%;}
+/* TIMELINE DA STUDIO */
+.timeline{height:90px; background:black; border-top:var(--border); display:flex; flex-direction:column; flex-shrink:0; width:100%;}
+.timeline-header{height:24px; background:var(--yellow); border-bottom:2px solid black; display:flex; align-items:center; padding:0 8px; font-family:'Space Mono'; font-size:8px; font-weight:700; justify-content:space-between;}
+.timeline-tracks{flex:1; overflow-x:auto; overflow-y:hidden; display:flex; flex-direction:column; padding:4px; gap:3px;}
+.track{height:18px; background:#222; border:1px solid #444; display:flex; align-items:center; position:relative; min-width:800px;}
+.track-label{width:60px; background:#333; color:white; font-family:'Space Mono'; font-size:7px; padding:2px 4px; flex-shrink:0; border-right:2px solid black; font-weight:700;}
+.track-keyframes{flex:1; position:relative; height:100%; background:repeating-linear-gradient(90deg, transparent, transparent 19px, #333 20px);}
+.keyframe{position:absolute; top:2px; width:12px; height:12px; background:var(--yellow); border:2px solid black; transform:rotate(45deg); cursor:pointer;}
+.keyframe.active{background:var(--red);}
 
-/* ALERT BRUTAL v3 */
-.alert-box{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%) rotate(-1.5deg); width:90%; background:white; border:var(--border); box-shadow:10px 10px 0 black; padding:0; z-index:30; display:none; overflow:hidden;}
-.alert-header{display:flex; justify-content:space-between; align-items:center; background:black; color:white; padding:8px 12px; font-family:'Space Mono'; font-size:9px; font-weight:700;}
-.alert-stamp{position:absolute; top:38px; right:-6px; background:var(--yellow); border:var(--border); padding:4px 10px; font-family:'Space Mono'; font-size:10px; font-weight:800; transform:rotate(12deg); box-shadow:3px 3px 0 black; z-index:2;}
-.alert-body{padding:14px;}
-.alert-body h2{font-family:'Syne'; font-weight:800; font-size:34px; line-height:0.9; letter-spacing:-1px; text-transform:uppercase;}
-.alert-body p{font-family:'Space Mono'; font-size:12px; margin-top:10px; font-weight:700; border-top:var(--border); padding-top:8px; background:var(--yellow); margin:10px -14px -14px -14px; padding:10px 14px;}
-.tape{position:absolute; top:-10px; left:20%; width:60%; height:20px; background:rgba(255,230,0,.8); border-left:2px solid #00000044; border-right:2px solid #00000044; transform:rotate(-1deg);}
+/* ALERT BRUTAL v4 WITH SOUND */
+.alert-box{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%) rotate(-1deg); width:88%; background:white; border:var(--border); box-shadow:8px 8px 0 black; padding:0; z-index:25; display:none; overflow:hidden;}
+.alert-header{display:flex; justify-content:space-between; background:black; color:white; padding:6px 10px; font-family:'Space Mono'; font-size:8px; font-weight:700;}
+.alert-stamp{position:absolute; top:32px; right:-4px; background:var(--yellow); border:var(--border); padding:3px 8px; font-family:'Space Mono'; font-size:9px; font-weight:800; transform:rotate(10deg); box-shadow:2px 2px 0 black; z-index:2;}
+.alert-body{padding:12px;}
+.alert-body h2{font-family:'Syne'; font-weight:800; font-size:30px; line-height:.9; text-transform:uppercase; letter-spacing:-1px;}
+.alert-body p{font-family:'Space Mono'; font-size:11px; margin-top:8px; font-weight:700; border-top:var(--border); background:var(--yellow); margin:8px -12px -12px -12px; padding:8px 12px;}
+.tape{position:absolute; top:-8px; left:20%; width:60%; height:16px; background:rgba(255,230,0,.85); border-left:2px solid #00000033; border-right:2px solid #00000033; transform:rotate(-1deg);}
 
-/* FLOATING BUBBLE - DA STUDIO STYLE */
-.floating-bubble{position:fixed; width:64px; height:64px; background:var(--yellow); border:var(--border); border-radius:50%; box-shadow:var(--shadow-sm); display:flex; align-items:center; justify-content:center; font-family:'Syne'; font-weight:800; font-size:22px; cursor:grab; z-index:9999; user-select:none; transition:transform .1s; right:20px; bottom:100px;}
-.floating-bubble:active{transform:scale(.9);}
-.floating-bubble .notif{position:absolute; top:-4px; right:-4px; background:var(--red); color:white; border:2px solid black; border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700;}
-.bubble-menu{position:fixed; right:20px; bottom:180px; background:white; border:var(--border); box-shadow:var(--shadow); padding:10px; width:200px; z-index:9998; display:none;}
+/* FLOATING BUBBLE ANDROID */
+.floating-bubble{position:fixed; width:60px; height:60px; background:var(--yellow); border:var(--border); border-radius:50%; box-shadow:var(--shadow-sm); display:flex; align-items:center; justify-content:center; font-family:'Syne'; font-weight:800; font-size:20px; cursor:grab; z-index:9999; right:16px; bottom:90px; user-select:none; touch-action:none;}
+.floating-bubble .notif{position:absolute; top:-6px; right:-6px; background:var(--red); color:white; border:2px solid black; border-radius:50%; width:20px; height:20px; display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:700;}
+.bubble-menu{position:fixed; right:12px; bottom:160px; background:white; border:var(--border); box-shadow:var(--shadow); padding:8px; width:190px; z-index:9998; display:none; max-height:60vh; overflow-y:auto;}
 .bubble-menu.open{display:block; animation:pop .2s cubic-bezier(.175,.885,.32,1.275);}
-@keyframes pop{0%{transform:scale(.8) translateY(10px)} 100%{transform:scale(1) translateY(0)}}
-.bubble-item{border:2px solid black; padding:10px; margin-bottom:8px; font-family:'Space Mono'; font-size:11px; font-weight:700; cursor:pointer; background:white; display:flex; gap:8px; align-items:center; box-shadow:2px 2px 0 black;}
-.bubble-item:hover{background:var(--yellow);}
-.bubble-item:last-child{margin-bottom:0;}
+@keyframes pop{0%{transform:scale(.8) translateY(10px)} 100%{transform:scale(1)}}
+.bubble-item{border:2px solid black; padding:8px; margin-bottom:6px; font-family:'Space Mono'; font-size:10px; font-weight:700; cursor:pointer; background:white; display:flex; gap:6px; align-items:center; box-shadow:2px 2px 0 black; min-height:36px;}
+.bubble-item:active{transform:translate(2px,2px); box-shadow:0 0 0 black;}
 
-/* FLOATING ADD MENU - DA STUDIO */
-.fab-add{position:absolute; bottom:16px; left:50%; transform:translateX(-50%); z-index:15; background:black; color:white; border:var(--border); border-radius:30px; padding:10px 18px; font-family:'Space Mono'; font-size:11px; font-weight:700; box-shadow:var(--shadow-xs); cursor:pointer; display:flex; gap:8px; align-items:center;}
-.fab-add:active{transform:translateX(-50%) translate(2px,2px); box-shadow:0 0 0 black;}
+.fab-add{position:absolute; bottom:10px; left:50%; transform:translateX(-50%); z-index:12; background:black; color:white; border:var(--border); border-radius:20px; padding:8px 14px; font-family:'Space Mono'; font-size:10px; font-weight:700; box-shadow:var(--shadow-xs); cursor:pointer; display:flex; gap:6px; align-items:center;}
+.add-menu{position:absolute; bottom:46px; left:50%; transform:translateX(-50%); background:white; border:var(--border); box-shadow:var(--shadow); padding:6px; display:none; z-index:13; width:260px; max-height:200px; overflow-y:auto;}
+.add-menu.open{display:flex; flex-wrap:wrap; gap:5px;}
+.add-option{border:2px solid black; padding:6px 8px; font-family:'Space Mono'; font-size:9px; font-weight:700; background:white; cursor:pointer; flex:1 0 45%; text-align:center; box-shadow:1px 1px 0 black; min-height:32px; display:flex; align-items:center; justify-content:center;}
 
-.add-menu{position:absolute; bottom:60px; left:50%; transform:translateX(-50%); background:white; border:var(--border); box-shadow:var(--shadow); padding:8px; display:none; z-index:16; width:280px;}
-.add-menu.open{display:flex; flex-wrap:wrap; gap:6px;}
-.add-option{border:2px solid black; padding:8px 10px; font-family:'Space Mono'; font-size:10px; font-weight:700; background:white; cursor:pointer; flex:1 0 45%; text-align:center; box-shadow:2px 2px 0 black;}
-.add-option:hover{background:var(--yellow);}
-.add-option:active{transform:translate(2px,2px); box-shadow:0 0 0 black;}
-
-/* COLOR */
-.color-grid{display:flex; flex-wrap:wrap; gap:6px; margin-top:6px;}
-.color-swatch{width:30px; height:30px; border:var(--border); cursor:pointer; box-shadow:2px 2px 0 black; position:relative;}
-.color-swatch.active{transform:translate(2px,2px); box-shadow:0 0 0 black; outline:3px solid var(--blue);}
-.color-swatch.active::after{content:'✓'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-weight:800; color:white; text-shadow:0 0 3px black;}
-
-/* PER SCREEN */
-.screen-tabs{display:flex; gap:6px; overflow-x:auto; padding-bottom:6px; margin-bottom:10px;}
-.screen-tab{border:2px solid black; padding:6px 10px; font-family:'Space Mono'; font-size:9px; font-weight:700; white-space:nowrap; cursor:pointer; background:white; box-shadow:2px 2px 0 black; flex-shrink:0;}
+.color-grid{display:flex; flex-wrap:wrap; gap:5px; margin-top:6px;}
+.color-swatch{width:28px; height:28px; border:var(--border); cursor:pointer; box-shadow:2px 2px 0 black;}
+.color-swatch.active{transform:translate(1px,1px); box-shadow:0 0 0 black; outline:3px solid var(--blue);}
+.screen-tabs{display:flex; gap:4px; overflow-x:auto; padding-bottom:4px; margin-bottom:8px;}
+.screen-tab{border:2px solid black; padding:5px 8px; font-family:'Space Mono'; font-size:8px; font-weight:700; white-space:nowrap; cursor:pointer; background:white; box-shadow:1px 1px 0 black; flex-shrink:0;}
 .screen-tab.active{background:black; color:white;}
-
-/* SWITCH */
-.switch{border:var(--border); padding:10px 12px; display:flex; justify-content:space-between; align-items:center; background:white; margin-top:8px; box-shadow:2px 2px 0 black;}
-.switch span{font-family:'Space Mono'; font-size:10px; font-weight:700; text-transform:uppercase;}
-.switch input{width:44px; height:24px; appearance:none; border:2px solid black; background:white; position:relative; cursor:pointer; flex-shrink:0;}
+.switch{border:var(--border); padding:8px 10px; display:flex; justify-content:space-between; align-items:center; background:white; margin-top:6px; box-shadow:1px 1px 0 black;}
+.switch span{font-family:'Space Mono'; font-size:9px; font-weight:700; text-transform:uppercase; flex:1;}
+.switch input{width:40px; height:20px; appearance:none; border:2px solid black; background:white; position:relative; cursor:pointer; flex-shrink:0;}
 .switch input:checked{background:var(--yellow);}
-.switch input::after{content:''; position:absolute; width:16px; height:16px; background:black; top:2px; left:2px; transition:.12s;}
-.switch input:checked::after{left:22px;}
+.switch input::after{content:''; position:absolute; width:14px; height:14px; background:black; top:1px; left:1px; transition:.1s;}
+.switch input:checked::after{left:20px;}
+.row{display:flex; gap:6px;} .row > *{flex:1;}
+.how-box{background:var(--yellow); border:var(--border); padding:8px; box-shadow:var(--shadow-xs); margin-top:8px; font-family:'Space Mono'; font-size:9px; font-weight:700; line-height:1.3;}
 
-.row{display:flex; gap:8px;} .row > *{flex:1;}
-.how-box{background:var(--yellow); border:var(--border); padding:10px; box-shadow:var(--shadow-xs); margin-top:10px; font-family:'Space Mono'; font-size:10px; font-weight:700; line-height:1.4;}
-
-.mobile-bar{display:none; border-top:var(--border); background:white; height:62px; z-index:15;}
+.mobile-bar{display:none; border-top:var(--border); background:white; height:56px; z-index:15; padding-bottom:env(safe-area-inset-bottom);}
 @media(max-width:900px){
-  .sidebar{position:absolute; inset:0; z-index:40; width:100%; transform:translateX(-100%); transition:.28s cubic-bezier(.8,0,.2,1);}
+  .sidebar{position:absolute; inset:0; z-index:40; width:100%; transform:translateX(-100%); transition:.25s cubic-bezier(.8,0,.2,1);}
   .sidebar.open{transform:translateX(0);}
   .mobile-bar{display:flex;}
-  .phone-wrap{width:100%; height:100%; max-height:100%; box-shadow:none; border-left:0; border-right:0;}
+  .phone-wrap{width:100%; height:100%; max-height:100%; box-shadow:none; border:0;}
   .stage{padding:0;}
+  .timeline{height:80px;}
 }
+
+/* ANDROID VIBRATION FEEDBACK */
+.vibrate{animation:vib .1s;}
+@keyframes vib{0%,100%{transform:translateX(0)} 25%{transform:translateX(-2px)} 75%{transform:translateX(2px)}}
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="logo"><div class="logo-box">SAWER</div>STUDIO</div>
+  <div class="logo"><div class="logo-box">SAWER</div>STUDIO v4</div>
   <div class="header-actions">
     <select id="screenProfile" class="profile-select" onchange="switchProfile(this.value)">
-      <option value="tiktok-live">📱 TIKTOK LIVE</option>
-      <option value="tiktok-game">🎮 TIKTOK GAME</option>
-      <option value="youtube">▶️ YOUTUBE</option>
-      <option value="custom">⚙️ CUSTOM SCREEN</option>
+      <option value="tiktok-live">📱 LIVE</option>
+      <option value="tiktok-game">🎮 GAME</option>
+      <option value="youtube">▶️ YT</option>
+      <option value="custom">⚙️ CUSTOM</option>
     </select>
-    <div class="badge-live" id="liveBadge">● OFFLINE</div>
+    <div class="badge badge-android">🤖 ANDROID</div>
+    <div class="badge badge-live" id="liveBadge">OFF</div>
   </div>
 </div>
 
@@ -173,176 +164,190 @@ body{background:var(--bg); color:var(--ink); font-family:'Space Grotesk', sans-s
   <div class="sidebar" id="sidebar">
     <div class="tabs">
       <div class="tab active" onclick="switchTab('layers')">LAYERS</div>
+      <div class="tab" onclick="switchTab('anim')">ANIM</div>
       <div class="tab" onclick="switchTab('design')">DESIGN</div>
       <div class="tab" onclick="switchTab('saweria')">SAWERIA</div>
-      <div class="tab" onclick="switchTab('live')">LIVE</div>
+      <div class="tab" onclick="switchTab('export')">EXPORT</div>
     </div>
 
-    <!-- LAYERS -->
     <div class="tab-content active" id="tab-layers">
       <div class="screen-tabs" id="screenTabs"></div>
-
       <div class="card">
-        <div class="card-title">QUICK ADD — TAP FLOATING + DI CANVAS</div>
+        <div class="card-title">QUICK ADD — ANDROID OPTIMIZED</div>
         <div class="row">
-          <button class="btn btn-black" onclick="quickAdd('text')">+ TEKS BRUTAL</button>
-          <button class="btn btn-yellow" onclick="quickAdd('saweria')">+ SAWERIA</button>
+          <button class="btn btn-black" onclick="quickAdd('text')">+ TEKS</button>
+          <button class="btn btn-yellow" onclick="quickAdd('saweria')">+ SAWER</button>
         </div>
-        <div class="row" style="margin-top:6px;">
+        <div class="row" style="margin-top:4px;">
           <button class="btn" onclick="quickAdd('goal')">+ GOAL</button>
           <button class="btn" onclick="quickAdd('tape')">+ TAPE</button>
           <button class="btn" onclick="quickAdd('stamp')">+ STAMP</button>
         </div>
-        <div style="margin-top:8px; font-family:'Space Mono'; font-size:9px; opacity:.6;">💡 Double-click canvas = add text. Drag bubble = pindah posisi. Double-click bubble = balik ke app.</div>
+        <div style="margin-top:6px; font-family:'Space Mono'; font-size:8px; opacity:.6;">Double-tap canvas = add. Drag bubble = pindah. Double-tap bubble = balik app. Long-press layer = duplicate.</div>
       </div>
-
-      <div style="display:flex; justify-content:space-between; align-items:center; margin:12px 0 8px 0;">
-        <div style="font-family:'Space Mono'; font-size:10px; font-weight:700;">LAYERS — PER SCREEN</div>
-        <button class="btn" style="width:auto; padding:4px 8px; font-size:9px;" onclick="savePerScreen()">💾 SAVE SCREEN INI</button>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin:8px 0 6px 0;">
+        <div style="font-family:'Space Mono'; font-size:9px; font-weight:700;">LAYERS — PER SCREEN</div>
+        <button class="btn" style="width:auto; padding:4px 8px; font-size:8px;" onclick="savePerScreen()">💾 SAVE</button>
       </div>
       <div id="layerList"></div>
-
-      <div id="props" class="card" style="display:none; margin-top:12px;">
-        <div class="card-title">EDIT — DA STUDIO STYLE</div>
-        <label class="label">TULISAN</label>
+      <div id="props" class="card" style="display:none; margin-top:8px;">
+        <div class="card-title">EDIT LAYER — DA STUDIO</div>
+        <label class="label">TEXT</label>
         <textarea id="propText" class="textarea" rows="2" style="font-weight:700;" oninput="updateProp('text', this.value)"></textarea>
-
         <div class="row">
-          <div><label class="label">SIZE</label><input id="propSize" type="range" min="10" max="100" value="28" style="width:100%; accent-color:black;" oninput="updateProp('fontSize', this.value)"></div>
-          <div><label class="label">ROTASI</label><input id="propRot" type="range" min="-20" max="20" value="0" style="width:100%; accent-color:black;" oninput="updateProp('rotation', this.value)"></div>
+          <div><label class="label">SIZE</label><input id="propSize" type="range" min="10" max="100" value="28" style="width:100%;" oninput="updateProp('fontSize', this.value)"></div>
+          <div><label class="label">ROTASI</label><input id="propRot" type="range" min="-25" max="25" value="0" style="width:100%;" oninput="updateProp('rotation', this.value)"></div>
         </div>
-
-        <label class="label">FONT BRUTAL</label>
+        <label class="label">FONT</label>
         <select id="propFont" class="select" onchange="updateProp('fontFamily', this.value)">
-          <option value="Syne">SYNE — EXTRA BOLD</option>
-          <option value="Bebas Neue">BEBAS NEUE — TITEL</option>
-          <option value="Space Grotesk">SPACE GROTESK — BRUTAL</option>
-          <option value="Space Mono">SPACE MONO — TYPEWRITER</option>
+          <option value="Syne">SYNE EXTRA BOLD</option>
+          <option value="Bebas Neue">BEBAS NEUE</option>
+          <option value="Space Grotesk">SPACE GROTESK</option>
+          <option value="Space Mono">SPACE MONO</option>
         </select>
-
-        <label class="label">STYLE BRUTAL</label>
+        <label class="label">BRUTAL STYLE</label>
         <select id="propStyle" class="select" onchange="updateProp('brutalStyle', this.value)">
-          <option value="box">BOX — KOTAK TEBAL + SHADOW</option>
-          <option value="tape">TAPE — SOLATIP KUNING</option>
-          <option value="stamp">STAMP — CAP MERAH MIRING</option>
-          <option value="highlight">HIGHLIGHT — STABILO</option>
-          <option value="ripped">RIPPED — KERTAS SOBEK</option>
-          <option value="none">NONE — TRANSPARAN</option>
+          <option value="box">BOX + SHADOW</option>
+          <option value="tape">TAPE KUNING</option>
+          <option value="stamp">STAMP MERAH</option>
+          <option value="highlight">HIGHLIGHT</option>
+          <option value="ripped">RIPPED SOBEK</option>
+          <option value="neon">NEON BRUTAL</option>
+          <option value="none">TRANSPARAN</option>
         </select>
-
         <label class="label">WARNA</label>
         <div class="color-grid" id="colorGrid"></div>
-
-        <div class="switch"><span>AUTO MUNCUL PAS LIVE</span><input type="checkbox" id="propAuto" checked onchange="updateProp('autoShow', this.checked)"></div>
-        <div class="switch"><span>STEALTH — DI HP TIPIS 15%</span><input type="checkbox" id="propStealth" onchange="updateProp('stealth', this.checked)"></div>
-        <div class="switch"><span>ANIMASI MARQUEE</span><input type="checkbox" id="propMarquee" onchange="updateProp('marquee', this.checked)"></div>
-
-        <button class="btn btn-red" style="margin-top:10px;" onclick="deleteLayer()">HAPUS — X</button>
-      </div>
-
-      <div class="how-box">
-        <b>DA STUDIO TRICK:</b><br>
-        • Keluar app? Floating bubble kuning tetap ada di atas TikTok<br>
-        • Double-click bubble = balik ke editor<br>
-        • Drag bubble = pindah posisi bubble<br>
-        • Tiap Screen (TikTok Live / Game) overlay beda — auto save per screen
+        <div class="switch"><span>AUTO LIVE</span><input type="checkbox" id="propAuto" checked onchange="updateProp('autoShow', this.checked)"></div>
+        <div class="switch"><span>STEALTH 15%</span><input type="checkbox" id="propStealth" onchange="updateProp('stealth', this.checked)"></div>
+        <button class="btn btn-red" style="margin-top:8px;" onclick="deleteLayer()">HAPUS X</button>
+        <button class="btn" style="margin-top:4px;" onclick="duplicateLayer()">DUPLICATE — LONG PRESS</button>
       </div>
     </div>
 
-    <!-- DESIGN -->
+    <div class="tab-content" id="tab-anim">
+      <div class="card" style="background:var(--blue); color:white;">
+        <div class="card-title" style="background:white; color:black;">KEYFRAME ANIM — DA STUDIO</div>
+        <div style="font-weight:700; font-size:11px;">ANIMASI KAYAK ALIGHT MOTION / DA STUDIO — ANDROID 60FPS</div>
+      </div>
+      <div id="animProps" class="card" style="display:none;">
+        <label class="label">ANIMATION TYPE</label>
+        <select id="propAnim" class="select" onchange="updateProp('animation', this.value)">
+          <option value="none">NONE — DIAM</option>
+          <option value="slideLeft">SLIDE LEFT — MASUK KIRI</option>
+          <option value="slideRight">SLIDE RIGHT — KANAN</option>
+          <option value="slideUp">SLIDE UP — BAWAH KE ATAS</option>
+          <option value="bounce">BOUNCE — MENTAL BRUTAL</option>
+          <option value="typewriter">TYPEWRITER — KETIK</option>
+          <option value="glitch">GLITCH — RUSAK</option>
+          <option value="shake">SHAKE — GETAR</option>
+          <option value="pop">POP — MELETUS</option>
+        </select>
+        <div class="row">
+          <div><label class="label">DURATION (MS)</label><input id="propDur" type="range" min="200" max="3000" value="800" style="width:100%;" oninput="updateProp('duration', this.value)"><span id="durLabel" style="font-family:'Space Mono'; font-size:9px;">800ms</span></div>
+          <div><label class="label">DELAY (MS)</label><input id="propDelay" type="range" min="0" max="2000" value="0" style="width:100%;" oninput="updateProp('delay', this.value)"><span id="delayLabel" style="font-family:'Space Mono'; font-size:9px;">0ms</span></div>
+        </div>
+        <div class="switch"><span>LOOP ANIM</span><input type="checkbox" id="propLoop" onchange="updateProp('loop', this.checked)"></div>
+        <div class="switch"><span>ANIM PAS SAWER AJA</span><input type="checkbox" id="propOnSawer" onchange="updateProp('onSawer', this.checked)"></div>
+        <button class="btn btn-yellow" onclick="previewAnim()">▶️ PREVIEW ANIM</button>
+      </div>
+      <div class="card">
+        <div class="card-title">TIMELINE — TAP KEYFRAME UNTUK EDIT</div>
+        <div style="font-family:'Space Mono'; font-size:8px; opacity:.6;">Timeline di bawah canvas — drag keyframe untuk atur timing. Long-press track = add keyframe.</div>
+      </div>
+      <div class="how-box">💡 ANDROID TIP: Animasi 60FPS pakai requestAnimationFrame, ringan di HP kentang. Pake bounce + shake buat saweran biar brutal!</div>
+    </div>
+
     <div class="tab-content" id="tab-design">
       <div class="card">
-        <div class="card-title">TEMPLATE BRUTAL — 1 CLICK APPLY</div>
+        <div class="card-title">TEMPLATE BRUTAL v4</div>
         <div class="row">
-          <button class="btn btn-yellow" onclick="applyTemplate('brutal-live')">🔴 LIVE BRUTAL</button>
-          <button class="btn btn-black" onclick="applyTemplate('saweria-tape')">💸 SAWER TAPE</button>
+          <button class="btn btn-yellow" onclick="applyTemplate('brutal-live')">🔴 LIVE</button>
+          <button class="btn btn-black" onclick="applyTemplate('saweria-tape')">💸 SAWER</button>
         </div>
-        <div class="row" style="margin-top:6px;">
-          <button class="btn" onclick="applyTemplate('goal-ripped')">🎯 GOAL RIPPED</button>
-          <button class="btn" onclick="applyTemplate('minimal')">⬜ MINIMAL BOX</button>
+        <div class="row" style="margin-top:4px;">
+          <button class="btn" onclick="applyTemplate('goal-ripped')">🎯 GOAL</button>
+          <button class="btn" onclick="applyTemplate('gaming')">🎮 GAMING</button>
+          <button class="btn" onclick="applyTemplate('minimal')">⬜ MINIMAL</button>
         </div>
       </div>
-
       <div class="card">
-        <div class="card-title">EFFECT TAMBAHAN</div>
-        <label class="label">BORDER STYLE</label>
-        <select class="select" onchange="updateProp('borderStyle', this.value)">
-          <option value="solid">SOLID 3PX</option>
-          <option value="dashed">DASHED BRUTAL</option>
-          <option value="double">DOUBLE 5PX</option>
-        </select>
-        <div class="switch"><span>SHADOW KERAS 8PX</span><input type="checkbox" checked onchange="updateProp('shadow', this.checked)"></div>
-        <div class="switch"><span>TAPE DI ATAS</span><input type="checkbox" onchange="updateProp('hasTape', this.checked)"></div>
-      </div>
-
-      <div class="card" style="background:var(--yellow);">
-        <div class="card-title" style="background:white; color:black;">PRO TIP</div>
-        <div style="font-size:12px; font-weight:700;">Overlay brutal yang bagus itu: kontras tinggi, rotasi dikit (-2deg), shadow keras, jangan banyak warna. Hitam-putih-kuning aja.</div>
+        <div class="card-title">EFFECT</div>
+        <div class="switch"><span>SHADOW 8PX</span><input type="checkbox" id="propShadow" checked onchange="updateProp('shadow', this.checked)"></div>
+        <div class="switch"><span>TAPE DI ATAS</span><input type="checkbox" id="propTape" onchange="updateProp('hasTape', this.checked)"></div>
+        <div class="switch"><span>BORDER DOUBLE</span><input type="checkbox" onchange="updateProp('borderDouble', this.checked)"></div>
       </div>
     </div>
 
-    <!-- SAWERIA -->
     <div class="tab-content" id="tab-saweria">
       <div class="card" style="background:black; color:white;">
-        <div class="card-title" style="background:var(--yellow); color:black;">SAWERIA — AUTO POPUP</div>
-        <div style="font-weight:800; font-size:14px;">DONASI MASUK LANGSUNG MUNCUL DI OVERLAY + FLOATING BUBBLE NOTIF</div>
+        <div class="card-title" style="background:var(--yellow); color:black;">SAWERIA + SOUND</div>
+        <div style="font-weight:800; font-size:12px;">DONASI MASUK = POPUP + SOUND + BUBBLE NOTIF + VIBRATE ANDROID</div>
       </div>
       <label class="label">USERNAME SAWERIA</label>
       <input id="saweriaUser" class="input" placeholder="jamalstream">
-      <div class="row" style="margin-top:8px;">
+      <label class="label">SOUND EFFECT SAWER (ANDROID)</label>
+      <select id="sawerSound" class="select" onchange="updateSound(this.value)">
+        <option value="cash">💵 CASH REGISTER — BRUTAL</option>
+        <option value="coin">🪙 COIN MARIO</option>
+        <option value="airhorn">📢 AIRHORN MLG</option>
+        <option value="brutal">🔨 BRUTAL HIT</option>
+        <option value="custom">🎵 CUSTOM UPLOAD</option>
+      </select>
+      <div class="row" style="margin-top:6px;">
         <button class="btn btn-black" onclick="connectSaweria()">CONNECT</button>
         <button class="btn btn-yellow" onclick="testDonation()">TEST 💸</button>
       </div>
+      <div class="row" style="margin-top:4px;">
+        <button class="btn" onclick="playSound()">🔊 TEST SOUND</button>
+        <button class="btn" onclick="vibrateAndroid()">📳 TEST VIBRATE</button>
+      </div>
       <div class="switch"><span>TTS INDONESIA</span><input type="checkbox" id="tts" checked></div>
-      <div class="switch"><span>FLOATING NOTIF JUGA</span><input type="checkbox" id="floatingNotif" checked></div>
-      <div id="saweriaLog" style="margin-top:10px; background:black; color:#00ff00; font-family:'Space Mono'; font-size:10px; padding:10px; height:140px; overflow-y:auto; border:var(--border);"></div>
+      <div class="switch"><span>VIBRATE HP PAS SAWER</span><input type="checkbox" id="vibrate" checked></div>
+      <div class="switch"><span>SOUND + TTS BARENG</span><input type="checkbox" id="soundTts" checked></div>
+      <div id="saweriaLog" style="margin-top:8px; background:black; color:#00ff00; font-family:'Space Mono'; font-size:9px; padding:8px; height:120px; overflow-y:auto; border:var(--border);"></div>
     </div>
 
-    <!-- LIVE -->
-    <div class="tab-content" id="tab-live">
-      <div class="card" style="background:var(--blue); color:white; border-color:white;">
-        <div class="card-title" style="background:white; color:black;">LIVE TANPA RTMP — SCREEN SHARE</div>
-        <div style="font-weight:700;">FLOATING BUBBLE TETAP ADA PAS LU KELUAR APP!</div>
+    <div class="tab-content" id="tab-export">
+      <div class="card" style="background:var(--green);">
+        <div class="card-title" style="background:black; color:white;">EXPORT — ANDROID</div>
+        <div style="font-weight:700; font-size:11px;">EXPORT VIDEO TEMPLATE KAYAK DA STUDIO — MP4 TRANSPARAN / GREEN SCREEN</div>
       </div>
-      <button id="liveBtn" class="btn btn-red btn-live" onclick="toggleLive()">● MASUK MODE LIVE + FLOATING</button>
-      <div class="card">
-        <div class="card-title">CARA PAKAI PER SCREEN</div>
-        <div style="font-family:'Space Mono'; font-size:11px; line-height:1.6; font-weight:700;">
-          1. Pilih Screen Profile di atas (TikTok Live / Game)<br>
-          2. Edit overlay beda per screen — auto save<br>
-          3. Klik LIVE + FLOATING — bubble kuning muncul<br>
-          4. Keluar app, buka TikTok<br>
-          5. Bubble tetap ada! Tap bubble = add overlay cepat<br>
-          6. Double-click bubble = balik ke Studio<br>
-          7. TikTok LIVE > Mobile Gaming > Share Screen > Pilih SawerOverlay<br>
+      <button class="btn btn-black" onclick="exportJSON()">💾 EXPORT JSON PER SCREEN</button>
+      <button class="btn btn-yellow" style="margin-top:6px;" onclick="exportVideo()">🎬 EXPORT VIDEO 5 DETIK (WEBM)</button>
+      <button class="btn btn-blue" style="margin-top:6px;" onclick="exportGreenScreen()">🟩 EXPORT GREEN SCREEN MP4</button>
+      <button class="btn" style="margin-top:6px;" onclick="copyOverlayLink()">🔗 COPY BROWSER SOURCE LINK</button>
+      <div class="card" style="margin-top:8px;">
+        <div class="card-title">ANDROID APK INFO</div>
+        <div style="font-family:'Space Mono'; font-size:9px; line-height:1.4;">
+          APK: armeabi-v7a 32-bit (5.4MB)<br>
+          Min SDK: Android 7.0 (API 24)<br>
+          Permissions: Camera, Overlay, Vibrate, Internet<br>
+          Fitur: Floating bubble, per-screen, sound, vibrate, 60fps anim<br>
+          Build: GitHub Actions auto release<br>
         </div>
       </div>
-      <div class="switch"><span>BUBBLE SELALU DI ATAS</span><input type="checkbox" id="bubbleOnTop" checked onchange="toggleBubble(this.checked)"></div>
-      <div class="switch"><span>DOUBLE-CLICK = BALIK APP</span><input type="checkbox" checked disabled></div>
+      <div class="how-box">📱 ANDROID: Export video pakai MediaRecorder API — record canvas 5 detik jadi WebM. Bisa di-import ke CapCut / Alight Motion sebagai overlay!</div>
     </div>
   </div>
 
-  <!-- STAGE -->
   <div class="stage" id="stage">
     <div class="phone-wrap" id="phoneWrap">
       <div class="phone-top">
         <div>● ● ●</div>
-        <div id="profileLabel">TIKTOK LIVE • BRUTAL STUDIO v3</div>
-        <div id="liveIndicator" style="background:black; color:white; padding:3px 8px; border:2px solid black;">OFFLINE</div>
+        <div id="profileLabel">TIKTOK LIVE • v4 ANDROID</div>
+        <div id="liveIndicator" style="background:black; color:white; padding:2px 6px; border:2px solid black; font-size:8px;">OFFLINE</div>
       </div>
       <div class="canvas-wrap" id="canvasWrap">
         <video id="video" autoplay muted playsinline></video>
         <canvas id="ghost"></canvas>
         <canvas id="canvas"></canvas>
-
         <div class="mode-switch">
           <button class="mode-btn active" id="modeViewer" onclick="setMode('viewer')">PENONTON</button>
           <button class="mode-btn" id="modeStreamer" onclick="setMode('streamer')">STEALTH</button>
         </div>
-        <div class="viewer-pill">👁 1.2K • BRUTAL v3</div>
+        <div class="viewer-pill">👁 1.2K • v4 ANDROID</div>
         <div class="tiktok-right"><div>♥</div><div>💬</div><div>↗</div></div>
-
-        <button class="fab-add" id="fabAdd" onclick="toggleAddMenu()">+ ADD OVERLAY</button>
+        <button class="fab-add" id="fabAdd" onclick="toggleAddMenu()">+ ADD</button>
         <div class="add-menu" id="addMenu">
           <div class="add-option" onclick="quickAdd('text')">📝 TEKS</div>
           <div class="add-option" onclick="quickAdd('saweria')">💸 SAWER</div>
@@ -350,59 +355,63 @@ body{background:var(--bg); color:var(--ink); font-family:'Space Grotesk', sans-s
           <div class="add-option" onclick="quickAdd('tape')">📼 TAPE</div>
           <div class="add-option" onclick="quickAdd('stamp')">🔴 STAMP</div>
           <div class="add-option" onclick="quickAdd('highlight')">🟨 HIGHLIGHT</div>
+          <div class="add-option" onclick="quickAdd('neon')">💜 NEON</div>
+          <div class="add-option" onclick="quickAdd('typewriter')">⌨️ TYPEWRITER</div>
         </div>
-
         <div class="alert-box" id="alertBox">
           <div class="tape"></div>
-          <div class="alert-header"><span>SAWERIA • BRUTAL</span><span id="alertTime">12:00</span></div>
+          <div class="alert-header"><span>SAWERIA • BRUTAL v4</span><span id="alertTime">12:00</span></div>
           <div class="alert-stamp">PAID!</div>
           <div class="alert-body">
             <h2 id="alertTitle">BANG JAGO SAWER 50K!</h2>
             <p id="alertMsg">semangat bang live brutal nya keren parah!</p>
           </div>
         </div>
-
-        <div id="safeArea" style="position:absolute; inset:5% 3% 16% 3%; border:2px dashed black; pointer-events:none; opacity:.3;">
-          <div style="position:absolute; top:-10px; left:8px; background:var(--yellow); border:2px solid black; font-family:'Space Mono'; font-size:8px; padding:2px 6px; font-weight:700;">SAFE AREA</div>
-        </div>
+        <div id="safeArea" style="position:absolute; inset:5% 3% 16% 3%; border:2px dashed black; pointer-events:none; opacity:.25;"></div>
+      </div>
+      <div class="timeline" id="timeline">
+        <div class="timeline-header"><span>⏱️ TIMELINE — DA STUDIO (TAP KEYFRAME)</span><span id="timelineTime">00:00 / 05:00</span></div>
+        <div class="timeline-tracks" id="timelineTracks"></div>
       </div>
     </div>
   </div>
 </div>
 
 <div class="mobile-bar">
-  <button class="btn" style="flex:1; box-shadow:none; border:0; border-right:var(--border);" onclick="toggleSidebar()">LAYERS</button>
-  <button class="btn btn-yellow" style="flex:1; box-shadow:none; border:0; border-right:var(--border);" onclick="toggleAddMenu()">+ ADD</button>
-  <button class="btn btn-red" style="flex:1; box-shadow:none; border:0;" onclick="toggleLive()">● LIVE</button>
+  <button class="btn" style="flex:1; box-shadow:none; border:0; border-right:var(--border); font-size:9px;" onclick="toggleSidebar()">LAYERS</button>
+  <button class="btn btn-yellow" style="flex:1; box-shadow:none; border:0; border-right:var(--border); font-size:9px;" onclick="toggleAddMenu()">+ ADD</button>
+  <button class="btn" style="flex:1; box-shadow:none; border:0; border-right:var(--border); font-size:9px;" onclick="switchTab('anim')">ANIM</button>
+  <button class="btn btn-red" style="flex:1; box-shadow:none; border:0; font-size:9px;" onclick="toggleLive()">● LIVE</button>
 </div>
 
-<!-- FLOATING BUBBLE - DA STUDIO -->
-<div class="floating-bubble" id="bubble" style="display:none;">
-  S
-  <div class="notif" id="bubbleNotif" style="display:none;">1</div>
-</div>
+<div class="floating-bubble" id="bubble" style="display:none;">S<div class="notif" id="bubbleNotif" style="display:none;">1</div></div>
 <div class="bubble-menu" id="bubbleMenu">
-  <div style="font-family:'Space Mono'; font-size:9px; font-weight:700; margin-bottom:8px; background:black; color:white; padding:4px 8px; display:inline-block;">SAWER STUDIO — FLOATING</div>
-  <div class="bubble-item" onclick="quickAdd('text')">📝 + TEKS BARU</div>
-  <div class="bubble-item" onclick="quickAdd('saweria')">💸 + SAWERIA</div>
+  <div style="font-family:'Space Mono'; font-size:8px; font-weight:700; margin-bottom:6px; background:black; color:white; padding:4px 6px;">FLOATING — ANDROID</div>
+  <div class="bubble-item" onclick="quickAdd('text')">📝 + TEKS</div>
+  <div class="bubble-item" onclick="quickAdd('saweria')">💸 + SAWER</div>
   <div class="bubble-item" onclick="quickAdd('goal')">🎯 + GOAL</div>
-  <div class="bubble-item" onclick="toggleBubbleMenu(); document.getElementById('sidebar').classList.add('open')">🎨 BUKA EDITOR</div>
-  <div class="bubble-item" onclick="savePerScreen()" style="background:var(--yellow);">💾 SAVE SCREEN INI</div>
+  <div class="bubble-item" onclick="quickAdd('tape')">📼 + TAPE</div>
+  <div class="bubble-item" onclick="toggleBubbleMenu(); document.getElementById('sidebar').classList.add('open')">🎨 EDITOR</div>
+  <div class="bubble-item" onclick="savePerScreen()" style="background:var(--yellow);">💾 SAVE SCREEN</div>
+  <div class="bubble-item" onclick="exportVideo()" style="background:var(--green);">🎬 EXPORT VIDEO</div>
 </div>
+
+<audio id="audioCash" preload="auto"><source src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRyAgAAAAEA" type="audio/wav"></audio>
 
 <script>
+// ANDROID ULTIMATE v4 - FULL FEATURES
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 const ghost = document.getElementById('ghost');
 const gctx = ghost.getContext('2d');
 const video = document.getElementById('video');
 
-let profiles = JSON.parse(localStorage.getItem('brutal_profiles')||'{}');
-let currentProfile = localStorage.getItem('brutal_current_profile')||'tiktok-live';
+let profiles = JSON.parse(localStorage.getItem('brutal_profiles_v4')||'{}');
+let currentProfile = localStorage.getItem('brutal_current_profile_v4')||'tiktok-live';
 let layers = profiles[currentProfile] || [
-  {id:'b1', type:'text', text:'LIVE TIKTOK — JAMAL', x:0.04, y:0.04, w:0.62, h:0.07, fontFamily:'Syne', fontSize:32, color:'#000000', brutalStyle:'box', bg:'#FFE600', rotation:-1.5, autoShow:true, stealth:false, visible:true, marquee:false, hasTape:true},
-  {id:'b2', type:'text', text:'SAWERIA.CO/JAMALSTREAM', x:0.04, y:0.86, w:0.72, h:0.06, fontFamily:'Space Mono', fontSize:15, color:'#FFFFFF', brutalStyle:'box', bg:'#000000', rotation:0, autoShow:true, stealth:false, visible:true},
-  {id:'b3', type:'goal', text:'TARGET 500K / 1JT', x:0.04, y:0.13, w:0.55, h:0.05, fontFamily:'Space Grotesk', fontSize:14, color:'#000000', brutalStyle:'ripped', bg:'#FFFFFF', progress:0.5, rotation:0, autoShow:false, stealth:true, visible:true},
+  {id:'b1', type:'text', text:'LIVE TIKTOK — JAMAL', x:0.04, y:0.04, w:0.62, h:0.07, fontFamily:'Syne', fontSize:32, color:'#000000', brutalStyle:'box', bg:'#FFE600', rotation:-1.5, autoShow:true, stealth:false, visible:true, animation:'slideLeft', duration:800, delay:0, loop:false, onSawer:false, hasTape:true, shadow:true, borderDouble:false, keyframes:[{t:0,x: -0.5},{t:800,x:0.04}]},
+  {id:'b2', type:'text', text:'SAWERIA.CO/JAMALSTREAM', x:0.04, y:0.86, w:0.72, h:0.06, fontFamily:'Space Mono', fontSize:15, color:'#FFFFFF', brutalStyle:'box', bg:'#000000', rotation:0, autoShow:true, stealth:false, visible:true, animation:'slideUp', duration:600, delay:200, loop:false},
+  {id:'b3', type:'goal', text:'TARGET 500K / 1JT', x:0.04, y:0.13, w:0.55, h:0.05, fontFamily:'Space Grotesk', fontSize:14, color:'#000000', brutalStyle:'ripped', bg:'#FFFFFF', progress:0.5, rotation:0, autoShow:false, stealth:true, visible:true, animation:'bounce', duration:1000, delay:0},
 ];
 
 let selected = layers[0]?.id||null;
@@ -412,8 +421,12 @@ let res = {w:1080,h:1920};
 let saweriaPoll = null;
 let bubbleVisible = false;
 let lastClick = 0;
+let currentSound = 'cash';
+let isRecording = false;
+let mediaRecorder = null;
 
-const colors = ['#000000','#FFFFFF','#FFE600','#FF3B30','#0057FF','#00FF88'];
+const colors = ['#000000','#FFFFFF','#FFE600','#FF3B30','#0057FF','#00FF88','#8A2BE2'];
+const isAndroid = /Android/i.test(navigator.userAgent);
 
 function init(){
   setupCanvas();
@@ -421,86 +434,85 @@ function init(){
   initColors();
   renderScreenTabs();
   renderList();
+  renderTimeline();
   if(selected) select(selected);
-  render();
+  renderLoop();
   bindDrag();
   bindBubble();
   bindDoubleClick();
   loadProfileToUI();
-  log('Brutal Studio v3 ready — floating bubble + per screen');
-  if(innerWidth<900) document.getElementById('menuBtn')?.style && (document.getElementById('menuBtn').style.display='block');
+  setupAndroid();
+  log('Brutal Studio v4 ANDROID ULTIMATE ready — anim + sound + export');
+  // Haptic
+  if(isAndroid && navigator.vibrate) navigator.vibrate(50);
+}
+
+function setupAndroid(){
+  if(isAndroid){
+    document.body.style.paddingBottom='env(safe-area-inset-bottom)';
+    // Request fullscreen on tap
+    document.addEventListener('click', ()=>{
+      if(document.documentElement.requestFullscreen && !document.fullscreenElement){
+        // don't auto fullscreen, let user decide
+      }
+    }, {once:true});
+    log('🤖 Android detected — optimized touch targets, haptics, vibrate ready');
+  }
 }
 
 function setupCanvas(){
   [canvas,ghost].forEach(c=>{ c.width=res.w; c.height=res.h; c.style.width='100%'; c.style.height='100%'; });
 }
 async function startCam(){
-  try{ const s=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user', width:{ideal:1080}, height:{ideal:1920}}, audio:true}); video.srcObject=s; }catch(e){}
+  try{
+    const s=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user', width:{ideal:1080}, height:{ideal:1920}}, audio:true});
+    video.srcObject=s;
+  }catch(e){ log('Cam fail: '+e.message); }
 }
 function initColors(){
   const grid=document.getElementById('colorGrid');
   grid.innerHTML='';
   colors.forEach(c=>{
     const d=document.createElement('div'); d.className='color-swatch'; d.style.background=c;
-    d.onclick=()=>updateProp('color', c);
+    d.onclick=()=>{ updateProp('color', c); vibrateAndroid(20); };
     grid.appendChild(d);
   });
 }
-
 function renderScreenTabs(){
   const el=document.getElementById('screenTabs');
-  const screens=[
-    {id:'tiktok-live', label:'📱 TIKTOK LIVE'},
-    {id:'tiktok-game', label:'🎮 GAME'},
-    {id:'youtube', label:'▶️ YOUTUBE'},
-    {id:'custom', label:'⚙️ CUSTOM'},
-  ];
+  const screens=[{id:'tiktok-live', label:'📱 LIVE'}, {id:'tiktok-game', label:'🎮 GAME'}, {id:'youtube', label:'▶️ YT'}, {id:'custom', label:'⚙️ CUSTOM'}];
   el.innerHTML='';
   screens.forEach(s=>{
-    const div=document.createElement('div');
-    div.className='screen-tab'+(s.id===currentProfile?' active':'');
-    div.textContent=s.label;
-    div.onclick=()=>switchProfile(s.id);
+    const div=document.createElement('div'); div.className='screen-tab'+(s.id===currentProfile?' active':''); div.textContent=s.label; div.onclick=()=>switchProfile(s.id);
     el.appendChild(div);
   });
-  document.getElementById('profileLabel').textContent=screens.find(x=>x.id===currentProfile)?.label+' • BRUTAL STUDIO v3';
+  document.getElementById('profileLabel').textContent=screens.find(x=>x.id===currentProfile)?.label+' • v4 ANDROID';
   document.getElementById('screenProfile').value=currentProfile;
 }
-
 function switchProfile(id){
-  // save current
   profiles[currentProfile]=layers;
-  localStorage.setItem('brutal_profiles', JSON.stringify(profiles));
+  localStorage.setItem('brutal_profiles_v4', JSON.stringify(profiles));
   currentProfile=id;
-  localStorage.setItem('brutal_current_profile', id);
+  localStorage.setItem('brutal_current_profile_v4', id);
   layers=profiles[id] || [];
-  if(layers.length===0 && id==='tiktok-game'){
-    layers=[
-      {id:'g1', type:'text', text:'🎮 MAIN GAME — RANK PUSH', x:0.04, y:0.04, w:0.7, h:0.07, fontFamily:'Syne', fontSize:28, color:'#000', brutalStyle:'box', bg:'#00FF88', rotation:-1, autoShow:true, stealth:false, visible:true},
-      {id:'g2', type:'text', text:'FOLLOW + SAWER = MASUK SQUAD', x:0.04, y:0.88, w:0.8, h:0.06, fontFamily:'Space Mono', fontSize:13, color:'#fff', brutalStyle:'box', bg:'#000', rotation:0, autoShow:true, stealth:false, visible:true},
-    ];
-  } else if(layers.length===0){
-    layers=[
-      {id:'n'+Date.now(), type:'text', text:'OVERLAY '+id.toUpperCase(), x:0.04, y:0.04, w:0.6, h:0.07, fontFamily:'Syne', fontSize:26, color:'#000', brutalStyle:'box', bg:'#FFE600', rotation:-1, autoShow:true, stealth:false, visible:true}
-    ];
+  if(layers.length===0){
+    if(id==='tiktok-game'){
+      layers=[{id:'g1', type:'text', text:'🎮 RANK PUSH', x:0.04, y:0.04, w:0.7, h:0.07, fontFamily:'Syne', fontSize:28, color:'#000', brutalStyle:'box', bg:'#00FF88', rotation:-1, autoShow:true, stealth:false, visible:true, animation:'slideLeft', duration:800}];
+    } else {
+      layers=[{id:'n'+Date.now(), type:'text', text:'OVERLAY '+id.toUpperCase(), x:0.04, y:0.04, w:0.6, h:0.07, fontFamily:'Syne', fontSize:26, color:'#000', brutalStyle:'box', bg:'#FFE600', rotation:-1, autoShow:true, stealth:false, visible:true, animation:'pop', duration:600}];
+    }
   }
   selected=layers[0]?.id||null;
-  renderScreenTabs();
-  renderList();
-  if(selected) select(selected);
-  render();
-  log('Switch screen: '+id+' — layers: '+layers.length);
+  renderScreenTabs(); renderList(); renderTimeline(); if(selected) select(selected);
+  log('Switch screen: '+id);
+  vibrateAndroid(30);
 }
-
 function savePerScreen(){
   profiles[currentProfile]=layers;
-  localStorage.setItem('brutal_profiles', JSON.stringify(profiles));
-  log('💾 Saved per screen: '+currentProfile+' ('+layers.length+' layers)');
-  // flash
-  const btn=document.activeElement;
-  if(btn) { btn.textContent='✅ SAVED!'; setTimeout(()=>btn.textContent='💾 SAVE SCREEN INI', 1500); }
+  localStorage.setItem('brutal_profiles_v4', JSON.stringify(profiles));
+  log('💾 Saved '+currentProfile+' ('+layers.length+' layers)');
+  vibrateAndroid(50);
 }
-
 function renderList(){
   const el=document.getElementById('layerList');
   el.innerHTML='';
@@ -508,18 +520,41 @@ function renderList(){
     const div=document.createElement('div');
     div.className='layer-item'+(l.id===selected?' active':'');
     const icon = l.type==='saweria'?'💸': l.type==='goal'?'🎯': l.brutalStyle==='tape'?'📼': l.brutalStyle==='stamp'?'🔴':'📝';
-    div.innerHTML=`<div style="display:flex; align-items:center;"><div class="layer-thumb" style="background:${l.bg}; color:${l.color===' #000000'?'white':l.color}">${icon}</div><div class="layer-meta"><div class="layer-type">${l.brutalStyle?.toUpperCase()||l.type.toUpperCase()} ${l.stealth?'• STEALTH':''}</div><div class="layer-name">${l.text}</div></div></div><div style="font-family:'Space Mono'; font-size:9px; font-weight:700;">${Math.round(l.x*100)}%<br>${l.marquee?'MARQUEE':''}</div>`;
+    const hasAnim = l.animation && l.animation!=='none';
+    div.innerHTML=`<div style="display:flex; align-items:center; flex:1; overflow:hidden;"><div class="layer-thumb" style="background:${l.bg}; color:${l.color}">${icon}</div><div class="layer-meta"><div class="layer-type">${(l.brutalStyle||'').toUpperCase()} ${l.stealth?'• S':''} ${hasAnim?'• ANIM':''}</div><div class="layer-name">${l.text}</div></div>${hasAnim?'<div class=\"layer-anim\"></div>':''}</div><div style="font-family:'Space Mono'; font-size:8px; font-weight:700; text-align:right;">${Math.round(l.x*100)}%<br>${l.animation||''}</div>`;
     div.onclick=()=>select(l.id);
+    // Long press duplicate
+    let pressTimer;
+    div.addEventListener('touchstart', ()=>{ pressTimer=setTimeout(()=>{ duplicateLayer(l.id); vibrateAndroid(100); }, 600); });
+    div.addEventListener('touchend', ()=>clearTimeout(pressTimer));
+    div.addEventListener('mousedown', ()=>{ pressTimer=setTimeout(()=>duplicateLayer(l.id), 600); });
+    div.addEventListener('mouseup', ()=>clearTimeout(pressTimer));
     el.appendChild(div);
   });
 }
-
+function renderTimeline(){
+  const el=document.getElementById('timelineTracks');
+  el.innerHTML='';
+  layers.forEach(l=>{
+    const track=document.createElement('div'); track.className='track';
+    track.innerHTML=`<div class="track-label">${l.text.slice(0,8)}</div><div class="track-keyframes" id="track-${l.id}"></div>`;
+    el.appendChild(track);
+    const kfContainer=track.querySelector('.track-keyframes');
+    (l.keyframes||[{t:0}]).forEach((kf,i)=>{
+      const k=document.createElement('div'); k.className='keyframe'+(i===0?' active':'');
+      k.style.left=(kf.t/5000*100)+'%';
+      k.onclick=()=>{ document.querySelectorAll('.keyframe').forEach(x=>x.classList.remove('active')); k.classList.add('active'); select(l.id); };
+      kfContainer.appendChild(k);
+    });
+  });
+}
 function select(id){
   selected=id;
   const l=layers.find(x=>x.id===id);
   if(!l) return;
   renderList();
   document.getElementById('props').style.display='block';
+  document.getElementById('animProps').style.display='block';
   document.getElementById('propText').value=l.text;
   document.getElementById('propSize').value=l.fontSize;
   document.getElementById('propRot').value=l.rotation||0;
@@ -527,31 +562,32 @@ function select(id){
   document.getElementById('propStyle').value=l.brutalStyle||'box';
   document.getElementById('propAuto').checked=l.autoShow;
   document.getElementById('propStealth').checked=l.stealth;
-  document.getElementById('propMarquee').checked=l.marquee||false;
-  render();
+  document.getElementById('propAnim').value=l.animation||'none';
+  document.getElementById('propDur').value=l.duration||800;
+  document.getElementById('durLabel').textContent=(l.duration||800)+'ms';
+  document.getElementById('propDelay').value=l.delay||0;
+  document.getElementById('delayLabel').textContent=(l.delay||0)+'ms';
+  document.getElementById('propLoop').checked=l.loop||false;
+  document.getElementById('propOnSawer').checked=l.onSawer||false;
+  document.getElementById('propShadow').checked=l.shadow!==false;
+  document.getElementById('propTape').checked=l.hasTape||false;
 }
-
 function quickAdd(type){
   const id='l'+Date.now();
-  const base={id,type, x:0.06, y:0.4+Math.random()*0.15, w:0.68, h:0.07, fontFamily:'Syne', fontSize:26, color:'#000000', brutalStyle:'box', bg:'#FFE600', rotation:-1, autoShow:true, stealth:false, visible:true, marquee:false, hasTape:false, borderStyle:'solid', shadow:true};
-  if(type==='text'){ base.text='TEKS BRUTAL BARU'; base.brutalStyle='box'; }
-  if(type==='saweria'){ base.text='{name} SAWER {amount} — {message}'; base.bg='#000000'; base.color='#FFFFFF'; base.brutalStyle='box'; }
-  if(type==='goal'){ base.text='GOAL 0 / 1JT'; base.progress=0.35; base.brutalStyle='ripped'; base.bg='#FFFFFF'; }
-  if(type==='tape'){ base.text='★ TAPE BRUTAL ★'; base.brutalStyle='tape'; base.bg='#FFE600'; base.rotation=-2; }
-  if(type==='stamp'){ base.text='LIVE • PAID • BRUTAL'; base.brutalStyle='stamp'; base.bg='#FF3B30'; base.color='#FFFFFF'; base.rotation=8; }
-  if(type==='highlight'){ base.text='HIGHLIGHT KUNING'; base.brutalStyle='highlight'; base.bg='#FFE600'; }
+  const base={id,type, x:0.06, y:0.4+Math.random()*0.15, w:0.68, h:0.07, fontFamily:'Syne', fontSize:26, color:'#000000', brutalStyle:'box', bg:'#FFE600', rotation:-1, autoShow:true, stealth:false, visible:true, animation:'pop', duration:600, delay:0, loop:false, onSawer:false, hasTape:false, shadow:true, borderDouble:false, keyframes:[{t:0}]};
+  if(type==='text'){ base.text='TEKS BRUTAL'; }
+  if(type==='saweria'){ base.text='{name} SAWER {amount}'; base.bg='#000000'; base.color='#FFFFFF'; base.animation='bounce'; }
+  if(type==='goal'){ base.text='GOAL 0 / 1JT'; base.progress=0.35; base.brutalStyle='ripped'; base.bg='#FFFFFF'; base.animation='slideLeft'; }
+  if(type==='tape'){ base.text='★ TAPE ★'; base.brutalStyle='tape'; base.rotation=-2; base.animation='slideRight'; }
+  if(type==='stamp'){ base.text='BRUTAL STAMP'; base.brutalStyle='stamp'; base.bg='#FF3B30'; base.color='#FFFFFF'; base.rotation=8; base.animation='pop'; }
+  if(type==='highlight'){ base.text='HIGHLIGHT'; base.brutalStyle='highlight'; base.animation='typewriter'; }
+  if(type==='neon'){ base.text='NEON BRUTAL'; base.brutalStyle='neon'; base.bg='#8A2BE2'; base.color='#00FF88'; base.animation='glitch'; }
+  if(type==='typewriter'){ base.text='KETIK BRUTAL...'; base.brutalStyle='box'; base.animation='typewriter'; base.duration=2000; }
   layers.push(base);
-  select(id);
-  renderList();
-  toggleAddMenu(false);
-  toggleBubbleMenu(false);
-  // auto save per screen
-  savePerScreen();
+  select(id); renderList(); renderTimeline(); toggleAddMenu(false); toggleBubbleMenu(false); savePerScreen(); vibrateAndroid(40);
 }
-
 function updateProp(k,v){
-  const l=layers.find(x=>x.id===selected);
-  if(!l) return;
+  const l=layers.find(x=>x.id===selected); if(!l) return;
   if(k==='text') l.text=v;
   if(k==='fontSize') l.fontSize=parseInt(v);
   if(k==='rotation') l.rotation=parseInt(v);
@@ -560,175 +596,151 @@ function updateProp(k,v){
   if(k==='color') l.color=v;
   if(k==='autoShow') l.autoShow=v;
   if(k==='stealth') l.stealth=v;
-  if(k==='marquee') l.marquee=v;
-  if(k==='borderStyle') l.borderStyle=v;
+  if(k==='animation') l.animation=v;
+  if(k==='duration'){ l.duration=parseInt(v); document.getElementById('durLabel').textContent=v+'ms'; }
+  if(k==='delay'){ l.delay=parseInt(v); document.getElementById('delayLabel').textContent=v+'ms'; }
+  if(k==='loop') l.loop=v;
+  if(k==='onSawer') l.onSawer=v;
   if(k==='shadow') l.shadow=v;
   if(k==='hasTape') l.hasTape=v;
-  render(); renderList();
-  // debounce save
-  clearTimeout(window.saveTimeout);
-  window.saveTimeout=setTimeout(savePerScreen, 800);
+  if(k==='borderDouble') l.borderDouble=v;
+  renderList(); renderTimeline();
+  clearTimeout(window.saveTimeout); window.saveTimeout=setTimeout(savePerScreen, 600);
+}
+function deleteLayer(){ layers=layers.filter(x=>x.id!==selected); selected=layers[0]?.id||null; if(selected) select(selected); else { document.getElementById('props').style.display='none'; document.getElementById('animProps').style.display='none'; } renderList(); renderTimeline(); savePerScreen(); vibrateAndroid(80); }
+function duplicateLayer(id){ const origId=id||selected; const orig=layers.find(x=>x.id===origId); if(!orig) return; const copy={...orig, id:'l'+Date.now(), x:orig.x+0.05, y:orig.y+0.05, text:orig.text+' COPY'}; layers.push(copy); select(copy.id); renderList(); renderTimeline(); savePerScreen(); log('Duplicated: '+orig.text); }
+
+// ANIMATION ENGINE - DA STUDIO 60FPS
+function getAnimOffset(l, elapsed){
+  if(!l.animation || l.animation==='none') return {x:0,y:0, scale:1, opacity:1, typeProgress:1};
+  const dur=l.duration||800;
+  const delay=l.delay||0;
+  if(elapsed < delay) return {x:0,y:0, scale:0, opacity:0, typeProgress:0};
+  let t = (elapsed - delay) % (l.loop ? dur : dur*2);
+  let progress = Math.min((elapsed - delay)/dur, 1);
+  if(l.loop) progress = ((elapsed - delay) % dur)/dur;
+  
+  // Easing brutal
+  const easeOutBack = (p)=>{ const c1=1.70158, c3=c1+1; return 1 + c3*Math.pow(p-1,3) + c1*Math.pow(p-1,2); };
+  const easeBounce = (p)=>{ if(p<1/2.75) return 7.5625*p*p; else if(p<2/2.75) return 7.5625*(p-=1.5/2.75)*p+0.75; else if(p<2.5/2.75) return 7.5625*(p-=2.25/2.75)*p+0.9375; else return 7.5625*(p-=2.625/2.75)*p+0.984375; };
+  
+  let offsetX=0, offsetY=0, scale=1, opacity=1, typeProg=progress;
+  
+  switch(l.animation){
+    case 'slideLeft': offsetX = (1-progress) * -res.w*0.8; opacity=progress; break;
+    case 'slideRight': offsetX = (1-progress) * res.w*0.8; opacity=progress; break;
+    case 'slideUp': offsetY = (1-progress) * res.h*0.5; opacity=progress; break;
+    case 'bounce': scale = l.loop? 1+Math.sin(progress*Math.PI*4)*0.15 : easeBounce(progress); break;
+    case 'typewriter': typeProg=progress; break;
+    case 'glitch': offsetX = (Math.random()-0.5)*10*(1-progress); offsetY = (Math.random()-0.5)*6*(1-progress); break;
+    case 'shake': offsetX = Math.sin(progress*30)*8*(1-progress); break;
+    case 'pop': scale = easeOutBack(progress); opacity=progress; break;
+  }
+  return {x:offsetX, y:offsetY, scale, opacity, typeProgress:typeProg};
 }
 
-function deleteLayer(){
-  layers=layers.filter(x=>x.id!==selected);
-  selected=layers[0]?.id||null;
-  if(selected) select(selected);
-  else document.getElementById('props').style.display='none';
-  renderList(); render(); savePerScreen();
-}
-
-function drawBrutal(c, l, isGhost, time){
+function drawBrutal(c, l, isGhost, time, animTime){
   const x=l.x*res.w, y=l.y*res.h, w=l.w*res.w, h=l.h*res.h;
+  const anim = getAnimOffset(l, animTime);
+  if(l.onSawer && !window.sawerAnimActive) { /* only anim on sawer */ }
+  
   c.save();
-  c.translate(x+w/2, y+h/2);
+  c.translate(x+w/2 + anim.x, y+h/2 + anim.y);
   c.rotate((l.rotation||0)*Math.PI/180);
+  c.scale(anim.scale, anim.scale);
   c.translate(-(x+w/2), -(y+h/2));
+  c.globalAlpha = (isGhost && l.stealth) ? 0.15 : anim.opacity;
 
-  const globalStealth=document.getElementById('bubbleOnTop')?.checked ? false : document.getElementById('globalStealth')?.checked;
-  const isStealthLayer = l.stealth || globalStealth;
-  if(isGhost && isStealthLayer) c.globalAlpha=0.15;
-
-  // Shadow keras
   if(l.shadow!==false && !isGhost){
     c.fillStyle='#000000';
     c.fillRect(x+8, y+8, w, h);
   }
 
-  // Background brutal per style
   if(l.brutalStyle!=='none'){
     if(l.brutalStyle==='tape'){
-      // Tape style - yellow tape
       c.fillStyle='#FFE600';
-      c.fillRect(x, y, w, h);
-      // tape texture
-      c.strokeStyle='#00000022';
-      c.lineWidth=1;
-      for(let i=0;i<w;i+=12){ c.beginPath(); c.moveTo(x+i, y); c.lineTo(x+i+6, y+h); c.stroke(); }
+      c.fillRect(x,y,w,h);
+      c.strokeStyle='#00000022'; c.lineWidth=1;
+      for(let i=0;i<w;i+=12){ c.beginPath(); c.moveTo(x+i,y); c.lineTo(x+i+6,y+h); c.stroke(); }
     } else if(l.brutalStyle==='stamp'){
-      // Stamp - red with rough border
       c.fillStyle=l.bg||'#FF3B30';
       c.fillRect(x,y,w,h);
-      c.strokeStyle='white';
-      c.lineWidth=2;
-      c.setLineDash([6,4]);
-      c.strokeRect(x+6,y+6,w-12,h-12);
-      c.setLineDash([]);
+      c.strokeStyle='white'; c.lineWidth=2; c.setLineDash([6,4]); c.strokeRect(x+6,y+6,w-12,h-12); c.setLineDash([]);
     } else if(l.brutalStyle==='ripped'){
-      // Ripped paper
-      c.fillStyle=l.bg||'#FFFFFF';
+      c.fillStyle=l.bg||'#FFF';
       c.beginPath();
-      c.moveTo(x, y+8);
-      c.lineTo(x+w*0.1, y+2); c.lineTo(x+w*0.3, y+6); c.lineTo(x+w*0.5, y+1); c.lineTo(x+w*0.7, y+5); c.lineTo(x+w, y+2);
-      c.lineTo(x+w, y+h-2); c.lineTo(x+w*0.8, y+h-6); c.lineTo(x+w*0.5, y+h-2); c.lineTo(x+w*0.2, y+h-5); c.lineTo(x, y+h-3);
-      c.closePath();
-      c.fill();
-      c.strokeStyle='black'; c.lineWidth=3; c.stroke();
+      c.moveTo(x, y+8); c.lineTo(x+w*0.1, y+2); c.lineTo(x+w*0.3, y+6); c.lineTo(x+w*0.5, y+1); c.lineTo(x+w*0.7, y+5); c.lineTo(x+w, y+2);
+      c.lineTo(x+w, y+h-2); c.lineTo(x+w*0.8, y+h-6); c.lineTo(x+w*0.5, y+h-2); c.lineTo(x+w*0.2, y+h-5); c.lineTo(x, y+h-3); c.closePath();
+      c.fill(); c.strokeStyle='black'; c.lineWidth=3; c.stroke();
     } else if(l.brutalStyle==='highlight'){
-      c.fillStyle='#FFE600';
-      c.fillRect(x, y+h*0.3, w, h*0.6);
+      c.fillStyle='#FFE600'; c.fillRect(x, y+h*0.3, w, h*0.6);
+    } else if(l.brutalStyle==='neon'){
+      c.shadowColor=l.bg||'#8A2BE2'; c.shadowBlur=20; c.fillStyle=l.bg; c.fillRect(x,y,w,h); c.shadowBlur=0;
     } else {
-      // box default
-      c.fillStyle=l.bg||'#FFFFFF';
-      c.fillRect(x,y,w,h);
+      c.fillStyle=l.bg||'#FFF'; c.fillRect(x,y,w,h);
     }
-    // border
-    c.strokeStyle='black';
-    c.lineWidth= l.borderStyle==='double'?5:3;
-    if(l.borderStyle==='dashed') c.setLineDash([10,6]);
-    else if(l.borderStyle==='double'){ c.setLineDash([]); c.strokeRect(x-2,y-2,w+4,h+4); }
-    c.strokeRect(x,y,w,h);
-    c.setLineDash([]);
+    c.strokeStyle='black'; c.lineWidth=l.borderDouble?5:3; c.strokeRect(x,y,w,h);
+    if(l.borderDouble){ c.strokeRect(x-4,y-4,w+8,h+8); }
   }
 
-  // Tape di atas
   if(l.hasTape){
-    c.fillStyle='rgba(255,230,0,0.85)';
-    c.fillRect(x+w*0.2, y-12, w*0.6, 18);
-    c.strokeStyle='#00000044'; c.strokeRect(x+w*0.2, y-12, w*0.6, 18);
+    c.fillStyle='rgba(255,230,0,0.85)'; c.fillRect(x+w*0.2, y-12, w*0.6, 18);
   }
-
-  // Goal bar
   if(l.type==='goal' && l.progress!=null){
     c.fillStyle='black'; c.fillRect(x, y+h-10, w, 10);
     c.fillStyle='#FFE600'; c.fillRect(x, y+h-10, w*l.progress, 10);
     c.strokeStyle='black'; c.lineWidth=2; c.strokeRect(x, y+h-10, w, 10);
   }
 
-  // Text
-  let textX = x+16;
-  if(l.marquee){
-    const offset = (time/20) % (w*1.5);
-    textX = x + w - offset;
-    // clip
-    c.save();
-    c.beginPath(); c.rect(x,y,w,h); c.clip();
+  // Text with typewriter
+  let displayText = l.text;
+  if(l.animation==='typewriter'){
+    const len = Math.floor(l.text.length * anim.typeProgress);
+    displayText = l.text.slice(0,len) + (anim.typeProgress<1 ? '█' : '');
   }
+
   c.font=`800 ${l.fontSize*(res.w/1080)}px "${l.fontFamily}", sans-serif`;
-  c.fillStyle=l.color||'#000000';
+  c.fillStyle=l.color||'#000';
   c.textBaseline='middle';
-  c.fillText(l.text, textX, y+h/2);
-  if(l.marquee) c.restore();
+  c.fillText(displayText, x+14, y+h/2);
 
-  // Selection
   if(l.id===selected && !isGhost){
-    c.strokeStyle='#0057FF';
-    c.lineWidth=3;
-    c.setLineDash([8,5]);
-    c.strokeRect(x-3,y-3,w+6,h+6);
-    c.setLineDash([]);
-    c.fillStyle='#0057FF';
-    c.fillRect(x+w-16, y+h-16, 16,16);
-    c.fillStyle='white'; c.font='10px monospace'; c.fillText('↔', x+w-12, y+h-8);
+    c.strokeStyle='#0057FF'; c.lineWidth=3; c.setLineDash([8,5]); c.strokeRect(x-3,y-3,w+6,h+6); c.setLineDash([]);
+    c.fillStyle='#0057FF'; c.fillRect(x+w-16, y+h-16, 16,16);
   }
-
   c.restore();
 }
 
-let startTime = Date.now();
-function render(){
-  const now = Date.now();
+let startTime=Date.now();
+function renderLoop(){
+  const now=Date.now();
+  const elapsed=now-startTime;
   ctx.clearRect(0,0,res.w,res.h);
   gctx.clearRect(0,0,res.w,res.h);
-  if(video.readyState>=2){
-    ctx.drawImage(video,0,0,res.w,res.h);
-    gctx.drawImage(video,0,0,res.w,res.h);
-  } else {
-    const grad=ctx.createLinearGradient(0,0,0,res.h);
-    grad.addColorStop(0,'#E8E6DE'); grad.addColorStop(1,'#d0cec5');
-    ctx.fillStyle=grad; ctx.fillRect(0,0,res.w,res.h);
-    gctx.fillStyle=grad; gctx.fillRect(0,0,res.w,res.h);
-  }
+  if(video.readyState>=2){ ctx.drawImage(video,0,0,res.w,res.h); gctx.drawImage(video,0,0,res.w,res.h); }
+  else { ctx.fillStyle='#E8E6DE'; ctx.fillRect(0,0,res.w,res.h); gctx.fillStyle='#E8E6DE'; gctx.fillRect(0,0,res.w,res.h); }
 
   layers.forEach(l=>{
     if(!l.visible) return;
-    if(!isLive && !l.autoShow){
-      ctx.save(); ctx.globalAlpha=0.25; drawBrutal(ctx,l,false, now-startTime); ctx.restore();
-      if(!(l.stealth)) { gctx.save(); gctx.globalAlpha=0.25; drawBrutal(gctx,l,true, now-startTime); gctx.restore(); }
-      return;
-    }
-    drawBrutal(ctx,l,false, now-startTime);
-    if(mode==='streamer'){
-      if(!(l.stealth)) drawBrutal(gctx,l,true, now-startTime);
-    } else {
-      // viewer mode ghost hidden, but we still draw ghost for streamer preview? No
-    }
+    if(!isLive && !l.autoShow){ ctx.save(); ctx.globalAlpha=0.25; drawBrutal(ctx,l,false, now, elapsed); ctx.restore(); return; }
+    drawBrutal(ctx,l,false, now, elapsed);
+    if(mode==='streamer' && !l.stealth) drawBrutal(gctx,l,true, now, elapsed);
   });
 
   if(mode==='viewer'){ canvas.style.opacity='1'; ghost.style.opacity='0'; }
   else { canvas.style.opacity='0'; ghost.style.opacity='1'; }
 
-  requestAnimationFrame(render);
+  // Timeline time
+  const secs = Math.floor((elapsed%5000)/1000);
+  const ms = Math.floor((elapsed%1000)/10);
+  document.getElementById('timelineTime').textContent=`00:0${secs}.${ms} / 05:00`;
+
+  requestAnimationFrame(renderLoop);
 }
 
 function bindDrag(){
   let dragging=false, sx,sy, ox,oy, handle=null;
-  function pos(e){
-    const r=canvas.getBoundingClientRect();
-    const cx=e.touches?e.touches[0].clientX:e.clientX;
-    const cy=e.touches?e.touches[0].clientY:e.clientY;
-    return {x:(cx-r.left)/r.width, y:(cy-r.top)/r.height};
-  }
+  function pos(e){ const r=canvas.getBoundingClientRect(); const cx=e.touches?e.touches[0].clientX:e.clientX; const cy=e.touches?e.touches[0].clientY:e.clientY; return {x:(cx-r.left)/r.width, y:(cy-r.top)/r.height}; }
   canvas.addEventListener('pointerdown', e=>{
     const p=pos(e);
     for(let i=layers.length-1;i>=0;i--){
@@ -744,204 +756,180 @@ function bindDrag(){
     if(!dragging) return;
     const l=layers.find(x=>x.id===selected); if(!l) return;
     const p=pos(e); const dx=p.x-sx, dy=p.y-sy;
-    if(handle==='move'){
-      l.x=Math.max(0,Math.min(1-l.w, ox+dx));
-      l.y=Math.max(0,Math.min(1-l.h, oy+dy));
-      if(document.getElementById('snap')?.checked){ l.x=Math.round(l.x*20)/20; l.y=Math.round(l.y*20)/20; }
-    } else {
-      l.w=Math.max(0.12,Math.min(0.95, l.w+dx)); l.h=Math.max(0.05,Math.min(0.5, l.h+dy)); sx=p.x; sy=p.y;
-    }
+    if(handle==='move'){ l.x=Math.max(0,Math.min(1-l.w, ox+dx)); l.y=Math.max(0,Math.min(1-l.h, oy+dy)); }
+    else { l.w=Math.max(0.12,Math.min(0.95, l.w+dx)); l.h=Math.max(0.05,Math.min(0.5, l.h+dy)); sx=p.x; sy=p.y; }
     renderList();
   });
   canvas.addEventListener('pointerup', ()=>{ dragging=false; handle=null; savePerScreen(); });
 }
-
 function bindDoubleClick(){
-  canvas.addEventListener('dblclick', (e)=>{
-    const r=canvas.getBoundingClientRect();
-    const x=(e.clientX-r.left)/r.width;
-    const y=(e.clientY-r.top)/r.height;
-    const id='l'+Date.now();
-    layers.push({id, type:'text', text:'DOUBLE CLICK TEXT', x, y, w:0.5, h:0.06, fontFamily:'Syne', fontSize:22, color:'#000', brutalStyle:'box', bg:'#FFE600', rotation:-1, autoShow:true, stealth:false, visible:true});
-    select(id); renderList(); savePerScreen();
+  canvas.addEventListener('dblclick', e=>{
+    const r=canvas.getBoundingClientRect(); const x=(e.clientX-r.left)/r.width; const y=(e.clientY-r.top)/r.height;
+    const id='l'+Date.now(); layers.push({id, type:'text', text:'DOUBLE TAP', x,y, w:0.5, h:0.06, fontFamily:'Syne', fontSize:22, color:'#000', brutalStyle:'box', bg:'#FFE600', rotation:-1, autoShow:true, stealth:false, visible:true, animation:'pop', duration:600}); select(id); renderList(); renderTimeline(); savePerScreen(); vibrateAndroid(30);
   });
 }
-
 function bindBubble(){
   const bubble=document.getElementById('bubble');
-  const menu=document.getElementById('bubbleMenu');
   let drag=false, startX, startY, origX, origY, moved=false;
-
-  bubble.addEventListener('pointerdown', e=>{
-    drag=true; moved=false;
-    startX=e.clientX; startY=e.clientY;
-    const rect=bubble.getBoundingClientRect();
-    origX=rect.left; origY=rect.top;
-    bubble.setPointerCapture(e.pointerId);
-  });
+  bubble.addEventListener('pointerdown', e=>{ drag=true; moved=false; startX=e.clientX; startY=e.clientY; const rect=bubble.getBoundingClientRect(); origX=rect.left; origY=rect.top; bubble.setPointerCapture(e.pointerId); });
   bubble.addEventListener('pointermove', e=>{
     if(!drag) return;
     const dx=e.clientX-startX, dy=e.clientY-startY;
-    if(Math.abs(dx)>5 || Math.abs(dy)>5) moved=true;
-    bubble.style.left=(origX+dx)+'px';
-    bubble.style.top=(origY+dy)+'px';
-    bubble.style.right='auto'; bubble.style.bottom='auto';
+    if(Math.abs(dx)>5||Math.abs(dy)>5) moved=true;
+    bubble.style.left=(origX+dx)+'px'; bubble.style.top=(origY+dy)+'px'; bubble.style.right='auto'; bubble.style.bottom='auto';
   });
   bubble.addEventListener('pointerup', e=>{
     drag=false;
     const now=Date.now();
     if(!moved){
-      if(now-lastClick<300){
-        // double click bubble = balik ke app
-        document.getElementById('sidebar').classList.add('open');
-        bubble.style.display='none'; // hide when back to app
-        setTimeout(()=>{ bubble.style.display='flex'; }, 500);
-        toggleBubbleMenu(false);
-      } else {
-        toggleBubbleMenu();
-      }
+      if(now-lastClick<300){ document.getElementById('sidebar').classList.add('open'); toggleBubbleMenu(false); vibrateAndroid(50); }
+      else toggleBubbleMenu();
       lastClick=now;
+    } else {
+      localStorage.setItem('bubble_pos', JSON.stringify({x:bubble.style.left, y:bubble.style.top}));
     }
   });
 }
-
-function toggleBubble(show){
-  const b=document.getElementById('bubble');
-  if(show===undefined) show=b.style.display==='none';
-  b.style.display=show?'flex':'none';
-  bubbleVisible=show;
-  localStorage.setItem('bubble_visible', show);
-}
-function toggleBubbleMenu(force){
-  const m=document.getElementById('bubbleMenu');
-  if(force===false) m.classList.remove('open');
-  else m.classList.toggle('open');
-}
-function toggleAddMenu(force){
-  const m=document.getElementById('addMenu');
-  if(force===false) m.classList.remove('open');
-  else m.classList.toggle('open');
-}
-
-function setMode(m){
-  mode=m;
-  document.getElementById('modeViewer').classList.toggle('active', m==='viewer');
-  document.getElementById('modeStreamer').classList.toggle('active', m==='streamer');
-}
-function switchTab(n){
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
-  document.getElementById('tab-'+n).classList.add('active');
-  document.querySelectorAll('.tab')[{layers:0,design:1,saweria:2,live:3}[n]].classList.add('active');
-}
+function toggleBubble(show){ const b=document.getElementById('bubble'); if(show===undefined) show=b.style.display==='none'; b.style.display=show?'flex':'none'; localStorage.setItem('bubble_visible', show); }
+function toggleBubbleMenu(force){ const m=document.getElementById('bubbleMenu'); if(force===false) m.classList.remove('open'); else m.classList.toggle('open'); }
+function toggleAddMenu(force){ const m=document.getElementById('addMenu'); if(force===false) m.classList.remove('open'); else m.classList.toggle('open'); }
+function setMode(m){ mode=m; document.getElementById('modeViewer').classList.toggle('active', m==='viewer'); document.getElementById('modeStreamer').classList.toggle('active', m==='streamer'); }
+function switchTab(n){ document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active')); document.getElementById('tab-'+n).classList.add('active'); document.querySelectorAll('.tab')[{layers:0,anim:1,design:2,saweria:3,export:4}[n]].classList.add('active'); }
 function toggleSidebar(){ document.getElementById('sidebar').classList.toggle('open'); }
-
 function toggleLive(){
   isLive=!isLive;
-  const btn=document.getElementById('liveBtn');
-  const ind=document.getElementById('liveIndicator');
-  const badge=document.getElementById('liveBadge');
+  const btn=document.getElementById('liveBtn'); const ind=document.getElementById('liveIndicator'); const badge=document.getElementById('liveBadge');
   if(isLive){
-    btn.textContent='■ STOP FLOATING LIVE'; btn.classList.remove('btn-red'); btn.classList.add('btn-black');
-    ind.textContent='● LIVE + FLOATING'; ind.style.background='#FF3B30';
-    badge.textContent='● LIVE • FLOATING ON'; badge.style.background='#FF3B30';
-    toggleBubble(true);
-    log('LIVE + FLOATING ON — bubble kuning ada di atas app lain');
-    if(document.getElementById('floatingNotif')?.checked) document.getElementById('bubbleNotif').style.display='flex';
-    startSaweriaPoll();
+    btn.textContent='■ STOP LIVE + BUBBLE'; btn.classList.remove('btn-red'); btn.classList.add('btn-black');
+    ind.textContent='● LIVE + BUBBLE'; ind.style.background='#FF3B30'; badge.textContent='● LIVE'; badge.style.background='#FF3B30';
+    toggleBubble(true); startSaweriaPoll(); vibrateAndroid([50,50,100]);
   } else {
-    btn.textContent='● MASUK MODE LIVE + FLOATING'; btn.classList.add('btn-red'); btn.classList.remove('btn-black');
-    ind.textContent='OFFLINE'; ind.style.background='black';
-    badge.textContent='● OFFLINE'; badge.style.background='';
-    toggleBubble(false);
-    stopSaweriaPoll();
-    log('Live off');
+    btn.textContent='● LIVE + FLOATING'; btn.classList.add('btn-red'); btn.classList.remove('btn-black');
+    ind.textContent='OFFLINE'; ind.style.background='black'; badge.textContent='OFF'; toggleBubble(false); stopSaweriaPoll();
   }
 }
-
-function connectSaweria(){
-  const u=document.getElementById('saweriaUser').value.trim();
-  if(!u){ alert('Isi username Saweria'); return; }
-  log('Connect Saweria: '+u);
-  if(isLive) startSaweriaPoll();
-}
-function startSaweriaPoll(){
-  if(saweriaPoll) clearInterval(saweriaPoll);
-  const user=document.getElementById('saweriaUser').value.trim();
-  if(!user) return;
-  saweriaPoll=setInterval(async()=>{
-    try{
-      const r=await fetch(`https://saweria.co/api/donations/${user}`).then(x=>x.json()).catch(()=>null);
-      if(r?.data?.length){
-        const latest=r.data[0];
-        if(window.lastId!==latest.id){ window.lastId=latest.id; triggerAlert(latest.donator, latest.amount_raw, latest.message); }
-      }
-    }catch(e){}
-  },3000);
-}
+function connectSaweria(){ const u=document.getElementById('saweriaUser').value.trim(); if(!u){ alert('Isi username'); return; } log('Connect Saweria: '+u); if(isLive) startSaweriaPoll(); }
+function startSaweriaPoll(){ if(saweriaPoll) clearInterval(saweriaPoll); const user=document.getElementById('saweriaUser').value.trim(); if(!user) return; saweriaPoll=setInterval(async()=>{ try{ const r=await fetch(`https://saweria.co/api/donations/${user}`).then(x=>x.json()).catch(()=>null); if(r?.data?.length){ const latest=r.data[0]; if(window.lastId!==latest.id){ window.lastId=latest.id; triggerAlert(latest.donator, latest.amount_raw, latest.message); } } }catch(e){} },3000); }
 function stopSaweriaPoll(){ if(saweriaPoll) clearInterval(saweriaPoll); }
-function testDonation(){ triggerAlert('Bang Jago', 50000, 'gas terus bang live brutal nya keren parah!'); }
+function testDonation(){ triggerAlert('Bang Jago', 50000, 'gas terus bang brutal nya!'); }
 function triggerAlert(name, amount, msg){
   const fmt=new Intl.NumberFormat('id-ID').format(amount);
   document.getElementById('alertTitle').textContent=`${name.toUpperCase()} SAWER ${fmt}!`;
-  document.getElementById('alertMsg').textContent=msg||'Makasih!';
-  document.getElementById('alertTime').textContent=new Date().toLocaleTimeString();
-  const box=document.getElementById('alertBox');
-  box.style.display='block';
+  document.getElementById('alertMsg').textContent=msg||'Makasih!'; document.getElementById('alertTime').textContent=new Date().toLocaleTimeString();
+  document.getElementById('alertBox').style.display='block';
+  window.sawerAnimActive=true; setTimeout(()=>window.sawerAnimActive=false, 2000);
+  // Bubble notif
+  const notif=document.getElementById('bubbleNotif'); notif.textContent='💸'; notif.style.display='flex';
   log(`💸 ${name} — ${fmt} — ${msg}`);
-  const l=layers.find(x=>x.type==='saweria');
-  if(l){ l.text=`${name} — ${fmt}`; }
-  // bubble notif
-  const notif=document.getElementById('bubbleNotif');
-  notif.textContent='💸'; notif.style.display='flex';
-  setTimeout(()=>{ if(!document.getElementById('floatingNotif').checked) notif.style.display='none'; }, 5000);
-  if(document.getElementById('tts').checked && 'speechSynthesis' in window){
-    const u=new SpeechSynthesisUtterance(`${name} sawer ${fmt}. ${msg}`);
-    u.lang='id-ID'; speechSynthesis.speak(u);
+  playSound(); vibrateAndroid([100,50,100,50,200]); 
+  if(document.getElementById('tts').checked && 'speechSynthesis' in window){ const u=new SpeechSynthesisUtterance(`${name} sawer ${fmt}. ${msg}`); u.lang='id-ID'; speechSynthesis.speak(u); }
+  setTimeout(()=>document.getElementById('alertBox').style.display='none',7000);
+}
+function log(m){ const el=document.getElementById('saweriaLog'); const t=new Date().toLocaleTimeString(); el.innerHTML=`[${t}] ${m}<br>`+el.innerHTML; }
+
+// SOUND SYSTEM - ANDROID
+const audioContext = new (window.AudioContext||window.webkitAudioContext)();
+function playSound(type){
+  const t=type||currentSound||document.getElementById('sawerSound')?.value||'cash';
+  try{
+    const osc=audioContext.createOscillator();
+    const gain=audioContext.createGain();
+    osc.connect(gain); gain.connect(audioContext.destination);
+    if(t==='cash'){
+      osc.frequency.setValueAtTime(800, audioContext.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(400, audioContext.currentTime+0.3);
+      gain.gain.setValueAtTime(0.8, audioContext.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime+0.5);
+      osc.start(); osc.stop(audioContext.currentTime+0.5);
+    } else if(t==='coin'){
+      osc.frequency.setValueAtTime(1200, audioContext.currentTime);
+      gain.gain.setValueAtTime(0.6, audioContext.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime+0.4);
+      osc.start(); osc.stop(audioContext.currentTime+0.4);
+    } else if(t==='airhorn'){
+      osc.frequency.setValueAtTime(200, audioContext.currentTime);
+      osc.frequency.setValueAtTime(400, audioContext.currentTime+0.1);
+      gain.gain.setValueAtTime(0.9, audioContext.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime+1);
+      osc.start(); osc.stop(audioContext.currentTime+1);
+    } else {
+      osc.frequency.setValueAtTime(600, audioContext.currentTime);
+      osc.frequency.linearRampToValueAtTime(100, audioContext.currentTime+0.2);
+      gain.gain.setValueAtTime(0.7, audioContext.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime+0.3);
+      osc.start(); osc.stop(audioContext.currentTime+0.3);
+    }
+  }catch(e){ log('Sound fail: '+e.message); }
+}
+function updateSound(v){ currentSound=v; playSound(v); }
+function vibrateAndroid(pattern){
+  if(!document.getElementById('vibrate')?.checked && typeof pattern!=='object') return;
+  if(isAndroid && navigator.vibrate){
+    if(Array.isArray(pattern)) navigator.vibrate(pattern);
+    else navigator.vibrate(pattern||40);
   }
-  setTimeout(()=>box.style.display='none',7000);
+  // Visual feedback
+  document.getElementById('phoneWrap').classList.add('vibrate');
+  setTimeout(()=>document.getElementById('phoneWrap').classList.remove('vibrate'), 100);
 }
-function log(m){
-  const el=document.getElementById('saweriaLog');
-  const t=new Date().toLocaleTimeString();
-  el.innerHTML=`[${t}] ${m}<br>`+el.innerHTML;
+function previewAnim(){
+  startTime=Date.now();
+  vibrateAndroid(30);
+  log('▶️ Preview anim: '+layers.find(x=>x.id===selected)?.animation);
 }
+
+// EXPORT VIDEO - DA STUDIO STYLE
+function exportVideo(){
+  if(isRecording){ alert('Lagi recording bre!'); return; }
+  const stream=canvas.captureStream(30);
+  mediaRecorder=new MediaRecorder(stream, {mimeType:'video/webm;codecs=vp9'});
+  const chunks=[];
+  mediaRecorder.ondataavailable=e=>{ if(e.data.size>0) chunks.push(e.data); };
+  mediaRecorder.onstop=()=>{
+    const blob=new Blob(chunks, {type:'video/webm'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a'); a.href=url; a.download=`brutal-${currentProfile}-${Date.now()}.webm`; a.click();
+    log('🎬 Video exported: '+a.download);
+    vibrateAndroid([50,50,100]);
+  };
+  mediaRecorder.start();
+  isRecording=true;
+  log('🔴 Recording video 5 detik...');
+  document.getElementById('liveIndicator').textContent='● REC 5s';
+  setTimeout(()=>{ mediaRecorder.stop(); isRecording=false; document.getElementById('liveIndicator').textContent=isLive?'● LIVE + BUBBLE':'OFFLINE'; }, 5000);
+}
+function exportGreenScreen(){
+  // Green screen version
+  const originalBg=document.getElementById('canvasWrap').style.background;
+  document.getElementById('canvasWrap').style.background='#00FF00';
+  setTimeout(()=>exportVideo(), 200);
+  setTimeout(()=>document.getElementById('canvasWrap').style.background=originalBg, 6000);
+}
+function exportJSON(){ const blob=new Blob([JSON.stringify({profiles, currentProfile, version:'v4-android'},null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`brutal-v4-${currentProfile}.json`; a.click(); }
+function copyOverlayLink(){ const b64=btoa(JSON.stringify(layers)); const url=location.href.split('?')[0]+`?overlay=1&c=${encodeURIComponent(b64)}`; navigator.clipboard.writeText(url).then(()=>alert('Link dicopy!')); }
 function applyTemplate(name){
   if(name==='brutal-live'){
-    layers=[
-      {id:'t1', type:'text', text:'🔴 LIVE NOW', x:0.04, y:0.04, w:0.38, h:0.06, fontFamily:'Syne', fontSize:22, color:'#fff', brutalStyle:'box', bg:'#FF3B30', rotation:-1, autoShow:true, stealth:false, visible:true},
-      {id:'t2', type:'text', text:'@JAMAL_GAMING', x:0.04, y:0.88, w:0.5, h:0.05, fontFamily:'Space Mono', fontSize:12, color:'#000', brutalStyle:'box', bg:'#FFE600', rotation:0, autoShow:true, stealth:false, visible:true},
-    ];
+    layers=[{id:'t1', type:'text', text:'🔴 LIVE NOW', x:0.04, y:0.04, w:0.38, h:0.06, fontFamily:'Syne', fontSize:22, color:'#fff', brutalStyle:'box', bg:'#FF3B30', rotation:-1, autoShow:true, stealth:false, visible:true, animation:'pop', duration:600}, {id:'t2', type:'text', text:'@JAMAL_GAMING', x:0.04, y:0.88, w:0.5, h:0.05, fontFamily:'Space Mono', fontSize:12, color:'#000', brutalStyle:'box', bg:'#FFE600', rotation:0, autoShow:true, stealth:false, visible:true, animation:'slideUp', duration:800, delay:300}];
   } else if(name==='saweria-tape'){
-    layers=[
-      {id:'s1', type:'text', text:'SAWERIA.CO/JAMAL', x:0.04, y:0.04, w:0.6, h:0.06, fontFamily:'Space Mono', fontSize:14, color:'#000', brutalStyle:'tape', bg:'#FFE600', rotation:-1, autoShow:true, stealth:false, visible:true},
-      {id:'s2', type:'text', text:'{name} SAWER {amount}', x:0.04, y:0.5, w:0.8, h:0.08, fontFamily:'Syne', fontSize:28, color:'#000', brutalStyle:'box', bg:'#FFFFFF', rotation:-1, hasTape:true, autoShow:true, stealth:false, visible:true},
-    ];
+    layers=[{id:'s1', type:'text', text:'SAWERIA.CO/JAMAL', x:0.04, y:0.04, w:0.6, h:0.06, fontFamily:'Space Mono', fontSize:14, color:'#000', brutalStyle:'tape', bg:'#FFE600', rotation:-1, autoShow:true, stealth:false, visible:true, animation:'slideLeft', duration:700}, {id:'s2', type:'text', text:'{name} SAWER {amount}', x:0.04, y:0.5, w:0.8, h:0.08, fontFamily:'Syne', fontSize:28, color:'#000', brutalStyle:'box', bg:'#FFFFFF', rotation:-1, hasTape:true, autoShow:true, stealth:false, visible:true, animation:'bounce', duration:1000}];
+  } else if(name==='gaming'){
+    layers=[{id:'g1', type:'text', text:'🎮 PUSH RANK', x:0.04, y:0.04, w:0.55, h:0.06, fontFamily:'Syne', fontSize:24, color:'#000', brutalStyle:'box', bg:'#00FF88', rotation:-1, autoShow:true, stealth:false, visible:true, animation:'glitch', duration:500, loop:true}, {id:'g2', type:'text', text:'FOLLOW = SQUAD', x:0.04, y:0.88, w:0.65, h:0.05, fontFamily:'Space Mono', fontSize:12, color:'#fff', brutalStyle:'box', bg:'#000', rotation:0, autoShow:true, stealth:false, visible:true, animation:'typewriter', duration:1500}];
   } else if(name==='goal-ripped'){
-    layers=[
-      {id:'g1', type:'goal', text:'TARGET 750K / 1JT', x:0.04, y:0.04, w:0.6, h:0.07, fontFamily:'Syne', fontSize:18, color:'#000', brutalStyle:'ripped', bg:'#FFFFFF', progress:0.75, rotation:-1, autoShow:true, stealth:false, visible:true},
-    ];
+    layers=[{id:'g1', type:'goal', text:'TARGET 750K / 1JT', x:0.04, y:0.04, w:0.6, h:0.07, fontFamily:'Syne', fontSize:18, color:'#000', brutalStyle:'ripped', bg:'#FFFFFF', progress:0.75, rotation:-1, autoShow:true, stealth:false, visible:true, animation:'slideLeft', duration:800}];
   } else if(name==='minimal'){
-    layers=[
-      {id:'m1', type:'text', text:'LIVE', x:0.04, y:0.04, w:0.18, h:0.05, fontFamily:'Space Mono', fontSize:14, color:'#fff', brutalStyle:'box', bg:'#000', rotation:0, autoShow:true, stealth:false, visible:true},
-    ];
+    layers=[{id:'m1', type:'text', text:'LIVE', x:0.04, y:0.04, w:0.18, h:0.05, fontFamily:'Space Mono', fontSize:14, color:'#fff', brutalStyle:'box', bg:'#000', rotation:0, autoShow:true, stealth:false, visible:true, animation:'pop', duration:400}];
   }
-  selected=layers[0]?.id; renderList(); if(selected) select(selected); savePerScreen(); log('Template applied: '+name);
+  selected=layers[0]?.id; renderList(); renderTimeline(); if(selected) select(selected); savePerScreen(); log('Template: '+name); vibrateAndroid(60);
 }
 function loadProfileToUI(){
   const saved=localStorage.getItem('bubble_visible');
   if(saved==='true') toggleBubble(true);
   renderScreenTabs();
-}
-function exportJSON(){
-  const blob=new Blob([JSON.stringify({profiles, currentProfile},null,2)],{type:'application/json'});
-  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='brutal-v3-per-screen.json'; a.click();
+  const pos=JSON.parse(localStorage.getItem('bubble_pos')||'null');
+  if(pos){ const b=document.getElementById('bubble'); b.style.left=pos.x; b.style.top=pos.y; b.style.right='auto'; b.style.bottom='auto'; }
 }
 
-// Close menus when click outside
-document.addEventListener('click', (e)=>{
-  if(!e.target.closest('#fabAdd') && !e.target.closest('#addMenu')) toggleAddMenu(false);
-});
+document.addEventListener('click', (e)=>{ if(!e.target.closest('#fabAdd') && !e.target.closest('#addMenu')) toggleAddMenu(false); });
 
 init();
 </script>
