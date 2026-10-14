@@ -11,8 +11,8 @@ android {
         applicationId = "com.saweroverlay.live"
         minSdk = 24
         targetSdk = 34
-        versionCode = 9
-        versionName = "9.0-bubble-floating-signed"
+        versionCode = 10
+        versionName = "10.0-super-gampang-bubble-luar"
 
         ndk {
             abiFilters += listOf("armeabi-v7a")
