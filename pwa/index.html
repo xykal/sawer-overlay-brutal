@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>SAWEROVERLAY — BRUTAL</title>
+<title>SAWEROVERLAY — BRUTAL STUDIO v3</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#000000">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Space+Mono:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Space+Mono:wght@400;700&family=Bebas+Neue&family=Syne:wght@800&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#E8E6DE;
@@ -14,107 +14,139 @@
   --ink:#000000;
   --yellow:#FFE600;
   --red:#FF3B30;
+  --blue:#0057FF;
+  --green:#00FF88;
   --border:3px solid #000;
-  --shadow:6px 6px 0px #000;
-  --shadow-sm:4px 4px 0px #000;
+  --shadow:8px 8px 0px #000;
+  --shadow-sm:5px 5px 0px #000;
+  --shadow-xs:3px 3px 0px #000;
 }
-*{margin:0;padding:0;box-sizing:border-box;}
+*{margin:0;padding:0;box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
 body{background:var(--bg); color:var(--ink); font-family:'Space Grotesk', sans-serif; height:100dvh; display:flex; flex-direction:column; overflow:hidden;}
 ::selection{background:var(--yellow);}
 
-/* HEADER BRUTAL */
-.header{height:64px; background:var(--ink); color:white; display:flex; align-items:center; justify-content:space-between; padding:0 18px; border-bottom:var(--border); position:relative; z-index:10;}
-.header::after{content:''; position:absolute; bottom:-8px; left:0; right:0; height:8px; background:var(--yellow); border-bottom:var(--border);}
-.logo{font-family:'Bebas Neue'; font-size:34px; letter-spacing:1px; line-height:1;}
-.logo span{background:var(--yellow); color:black; padding:0 6px; margin-right:4px;}
-.badge{border:2px solid white; padding:4px 10px; font-family:'Space Mono'; font-size:11px; font-weight:700; background:var(--red); color:white;}
+/* HEADER BRUTAL STUDIO */
+.header{height:68px; background:var(--ink); color:white; display:flex; align-items:center; justify-content:space-between; padding:0 16px; border-bottom:var(--border); position:relative; z-index:20;}
+.header::after{content:''; position:absolute; bottom:-10px; left:0; right:0; height:10px; background:var(--yellow); border-bottom:var(--border);}
+.logo{font-family:'Syne'; font-weight:800; font-size:28px; letter-spacing:-1px; display:flex; align-items:center; gap:8px;}
+.logo-box{background:var(--yellow); color:black; padding:2px 8px; border:2px solid white; transform:rotate(-2deg); box-shadow:3px 3px 0 white;}
+.header-actions{display:flex; gap:8px; align-items:center;}
+.badge-live{border:2px solid white; padding:5px 12px; font-family:'Space Mono'; font-size:11px; font-weight:700; background:var(--red); color:white; box-shadow:3px 3px 0 black;}
+.profile-select{background:white; color:black; border:var(--border); padding:8px 12px; font-family:'Space Mono'; font-size:11px; font-weight:700; box-shadow:3px 3px 0 black;}
 
 /* LAYOUT */
-.main{flex:1; display:flex; overflow:hidden;}
-.sidebar{width:400px; background:var(--paper); border-right:var(--border); display:flex; flex-direction:column; overflow:hidden;}
-.stage{flex:1; background:var(--bg); background-image: radial-gradient(#000 1.5px, transparent 1.5px); background-size:24px 24px; display:flex; align-items:center; justify-content:center; position:relative; padding:20px;}
+.main{flex:1; display:flex; overflow:hidden; position:relative;}
+.sidebar{width:420px; background:var(--paper); border-right:var(--border); display:flex; flex-direction:column; overflow:hidden; z-index:10; box-shadow:8px 0 0 rgba(0,0,0,.1);}
+.stage{flex:1; background:var(--bg); background-image: radial-gradient(#000 1.2px, transparent 1.2px); background-size:22px 22px; display:flex; align-items:center; justify-content:center; position:relative; padding:16px;}
 
-/* TABS BRUTAL */
+/* TABS */
 .tabs{display:flex; border-bottom:var(--border); background:var(--ink);}
-.tab{flex:1; padding:14px 8px; text-align:center; font-family:'Space Mono'; font-size:11px; font-weight:700; cursor:pointer; color:white; border-right:2px solid #333; letter-spacing:1px;}
+.tab{flex:1; padding:13px 6px; text-align:center; font-family:'Space Mono'; font-size:10px; font-weight:700; cursor:pointer; color:white; border-right:2px solid #333; letter-spacing:.5px; position:relative;}
 .tab.active{background:var(--yellow); color:black;}
-.tab:last-child{border-right:0;}
-
-.tab-content{flex:1; overflow-y:auto; padding:16px; display:none;}
+.tab.active::after{content:''; position:absolute; bottom:-3px; left:0; right:0; height:3px; background:var(--yellow);}
+.tab-content{flex:1; overflow-y:auto; padding:14px; display:none;}
 .tab-content.active{display:block;}
-.tab-content::-webkit-scrollbar{width:10px;}
+.tab-content::-webkit-scrollbar{width:12px;}
 .tab-content::-webkit-scrollbar-thumb{background:black; border:2px solid white;}
 
-/* BRUTAL BUTTONS */
-.btn{width:100%; padding:14px 16px; border:var(--border); font-family:'Space Mono'; font-weight:700; font-size:13px; letter-spacing:.5px; cursor:pointer; text-transform:uppercase; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:var(--shadow-sm); transition:.1s; background:white;}
-.btn:active{transform:translate(4px,4px); box-shadow:0 0 0 black;}
+/* BRUTAL COMPONENTS */
+.btn{width:100%; padding:13px 14px; border:var(--border); font-family:'Space Mono'; font-weight:700; font-size:12px; letter-spacing:.5px; cursor:pointer; text-transform:uppercase; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:var(--shadow-xs); transition:.08s; background:white; position:relative;}
+.btn:active{transform:translate(3px,3px); box-shadow:0 0 0 black;}
 .btn-black{background:black; color:white;}
 .btn-yellow{background:var(--yellow); color:black;}
 .btn-red{background:var(--red); color:white;}
-.btn-live{font-size:16px; padding:18px; margin-top:12px;}
+.btn-blue{background:var(--blue); color:white;}
+.btn-live{font-size:15px; padding:16px; font-family:'Syne'; font-weight:800;}
 
-/* CARDS */
-.card{background:white; border:var(--border); box-shadow:var(--shadow-sm); padding:14px; margin-bottom:12px;}
-.card-title{font-family:'Space Mono'; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; background:black; color:white; display:inline-block; padding:3px 8px; margin-bottom:10px;}
-.input{width:100%; border:var(--border); padding:12px; font-family:'Space Mono'; font-size:13px; background:white; outline:none; margin-top:6px;}
-.input:focus{background:var(--yellow);}
-.label{font-family:'Space Mono'; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-top:14px; display:block;}
-.select{width:100%; border:var(--border); padding:12px; font-family:'Space Mono'; font-size:13px; background:white; margin-top:6px;}
+.card{background:white; border:var(--border); box-shadow:var(--shadow-xs); padding:12px; margin-bottom:10px; position:relative;}
+.card::before{content:''; position:absolute; top:4px; left:4px; right:-4px; bottom:-4px; background:black; z-index:-1;}
+.card-title{font-family:'Space Mono'; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1px; background:black; color:white; display:inline-block; padding:3px 8px; margin-bottom:10px;}
+.input, .select, .textarea{width:100%; border:var(--border); padding:10px 12px; font-family:'Space Mono'; font-size:12px; background:white; outline:none; margin-top:5px; box-shadow:2px 2px 0 black inset;}
+.input:focus, .textarea:focus{background:var(--yellow);}
+.label{font-family:'Space Mono'; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-top:12px; display:block; opacity:.8;}
 
-/* LAYERS */
-.layer-item{background:white; border:var(--border); padding:12px; margin-bottom:8px; display:flex; align-items:center; justify-content:space-between; cursor:grab; box-shadow:3px 3px 0 black;}
-.layer-item.active{background:var(--yellow); transform:rotate(-0.5deg);}
-.layer-item .type{font-family:'Space Mono'; font-size:10px; font-weight:700; background:black; color:white; padding:2px 6px;}
-.layer-item .name{font-weight:700; font-size:13px; margin-top:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:180px;}
+/* LAYERS - DA STUDIO STYLE */
+.layer-item{background:white; border:var(--border); padding:10px 12px; margin-bottom:8px; display:flex; align-items:center; justify-content:space-between; cursor:grab; box-shadow:3px 3px 0 black; position:relative; transition:.1s;}
+.layer-item:hover{transform:translate(-1px,-1px); box-shadow:4px 4px 0 black;}
+.layer-item.active{background:var(--yellow); transform:rotate(-0.8deg) scale(1.02); box-shadow:5px 5px 0 black; z-index:2;}
+.layer-item.active::after{content:'◀ EDITING'; position:absolute; right:-2px; top:-10px; background:var(--red); color:white; font-family:'Space Mono'; font-size:8px; padding:2px 6px; border:2px solid black; font-weight:700;}
+.layer-thumb{width:36px; height:36px; border:2px solid black; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:14px; background:var(--bg);}
+.layer-meta{flex:1; margin-left:10px;}
+.layer-type{font-family:'Space Mono'; font-size:8px; font-weight:700; background:black; color:white; padding:2px 5px; display:inline-block;}
+.layer-name{font-weight:700; font-size:12px; margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:170px;}
 
-/* PHONE FRAME BRUTAL */
-.phone-wrap{position:relative; width:360px; max-width:90vw; height:720px; max-height:82vh; background:black; border:var(--border); box-shadow:12px 12px 0 black; display:flex; flex-direction:column;}
-.phone-top{height:28px; background:white; border-bottom:var(--border); display:flex; align-items:center; justify-content:space-between; padding:0 12px; font-family:'Space Mono'; font-size:10px; font-weight:700;}
-.dot{width:12px; height:12px; border-radius:50%; border:2px solid black; display:inline-block;}
+/* PHONE FRAME - BRUTAL STUDIO */
+.phone-wrap{position:relative; width:370px; max-width:92vw; height:740px; max-height:84vh; background:black; border:var(--border); box-shadow:var(--shadow); display:flex; flex-direction:column; overflow:hidden;}
+.phone-top{height:32px; background:white; border-bottom:var(--border); display:flex; align-items:center; justify-content:space-between; padding:0 12px; font-family:'Space Mono'; font-size:9px; font-weight:700;}
 .canvas-wrap{flex:1; position:relative; overflow:hidden; background:black;}
 #video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transform:scaleX(-1);}
-#canvas{position:absolute; inset:0; width:100%; height:100%; touch-action:none;}
-#canvasGhost{position:absolute; inset:0; width:100%; height:100%; pointer-events:none;}
+#canvas{position:absolute; inset:0; width:100%; height:100%; touch-action:none; z-index:2;}
+#ghost{position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:1;}
 
-.tiktok-ui{position:absolute; inset:0; pointer-events:none; z-index:5; font-family:'Space Grotesk';}
-.viewer-pill{position:absolute; top:10px; left:10px; background:black; color:white; border:2px solid white; padding:4px 8px; font-family:'Space Mono'; font-size:10px; font-weight:700;}
-.tiktok-right{position:absolute; right:8px; bottom:90px; display:flex; flex-direction:column; gap:14px; align-items:center;}
-.tiktok-right div{width:36px; height:36px; background:white; border:2px solid black; display:flex; align-items:center; justify-content:center; font-weight:700; box-shadow:3px 3px 0 black;}
-
-.mode-switch{position:absolute; top:10px; right:10px; z-index:20; display:flex; border:var(--border); box-shadow:var(--shadow-sm); background:white;}
-.mode-btn{padding:8px 12px; font-family:'Space Mono'; font-size:10px; font-weight:700; border:0; background:white; cursor:pointer; border-right:2px solid black;}
+.mode-switch{position:absolute; top:8px; right:8px; z-index:20; display:flex; border:var(--border); box-shadow:var(--shadow-xs); background:white; overflow:hidden;}
+.mode-btn{padding:7px 10px; font-family:'Space Mono'; font-size:9px; font-weight:700; border:0; background:white; cursor:pointer; border-right:2px solid black;}
 .mode-btn.active{background:black; color:white;}
 .mode-btn:last-child{border-right:0;}
 
-/* ALERT BRUTAL */
-.alert-box{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%) rotate(-1deg); width:88%; background:white; border:var(--border); box-shadow:8px 8px 0 black; padding:16px; z-index:30; display:none;}
-.alert-box .alert-top{display:flex; justify-content:space-between; align-items:center; background:black; color:white; margin:-16px -16px 12px -16px; padding:8px 12px; font-family:'Space Mono'; font-size:10px; font-weight:700;}
-.alert-box h2{font-family:'Bebas Neue'; font-size:36px; line-height:0.9; letter-spacing:0.5px;}
-.alert-box p{font-family:'Space Mono'; font-size:13px; margin-top:8px; font-weight:700; border-top:3px solid black; padding-top:8px;}
-.alert-stamp{position:absolute; top:-12px; right:-12px; background:var(--yellow); border:var(--border); padding:4px 8px; font-family:'Space Mono'; font-size:10px; font-weight:700; transform:rotate(8deg); box-shadow:3px 3px 0 black;}
+.viewer-pill{position:absolute; top:8px; left:8px; z-index:10; background:black; color:white; border:2px solid white; padding:4px 8px; font-family:'Space Mono'; font-size:9px; font-weight:700; box-shadow:3px 3px 0 black;}
+.tiktok-right{position:absolute; right:6px; bottom:80px; z-index:10; display:flex; flex-direction:column; gap:10px; align-items:center;}
+.tiktok-right div{width:38px; height:38px; background:white; border:2px solid black; display:flex; align-items:center; justify-content:center; font-weight:800; box-shadow:3px 3px 0 black; border-radius:50%;}
 
-/* COLOR PICKER BRUTAL */
-.color-grid{display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;}
-.color-swatch{width:32px; height:32px; border:var(--border); cursor:pointer; box-shadow:2px 2px 0 black;}
-.color-swatch.active{transform:translate(2px,2px); box-shadow:0 0 0 black; outline:3px solid var(--yellow);}
+/* ALERT BRUTAL v3 */
+.alert-box{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%) rotate(-1.5deg); width:90%; background:white; border:var(--border); box-shadow:10px 10px 0 black; padding:0; z-index:30; display:none; overflow:hidden;}
+.alert-header{display:flex; justify-content:space-between; align-items:center; background:black; color:white; padding:8px 12px; font-family:'Space Mono'; font-size:9px; font-weight:700;}
+.alert-stamp{position:absolute; top:38px; right:-6px; background:var(--yellow); border:var(--border); padding:4px 10px; font-family:'Space Mono'; font-size:10px; font-weight:800; transform:rotate(12deg); box-shadow:3px 3px 0 black; z-index:2;}
+.alert-body{padding:14px;}
+.alert-body h2{font-family:'Syne'; font-weight:800; font-size:34px; line-height:0.9; letter-spacing:-1px; text-transform:uppercase;}
+.alert-body p{font-family:'Space Mono'; font-size:12px; margin-top:10px; font-weight:700; border-top:var(--border); padding-top:8px; background:var(--yellow); margin:10px -14px -14px -14px; padding:10px 14px;}
+.tape{position:absolute; top:-10px; left:20%; width:60%; height:20px; background:rgba(255,230,0,.8); border-left:2px solid #00000044; border-right:2px solid #00000044; transform:rotate(-1deg);}
 
-/* TOGGLES */
-.row{display:flex; gap:8px;}
-.row > *{flex:1;}
-.switch{border:var(--border); padding:12px; display:flex; justify-content:space-between; align-items:center; background:white; margin-top:8px; box-shadow:2px 2px 0 black;}
-.switch span{font-family:'Space Mono'; font-size:11px; font-weight:700; text-transform:uppercase;}
-.switch input{width:44px; height:24px; appearance:none; border:2px solid black; background:white; position:relative; cursor:pointer;}
+/* FLOATING BUBBLE - DA STUDIO STYLE */
+.floating-bubble{position:fixed; width:64px; height:64px; background:var(--yellow); border:var(--border); border-radius:50%; box-shadow:var(--shadow-sm); display:flex; align-items:center; justify-content:center; font-family:'Syne'; font-weight:800; font-size:22px; cursor:grab; z-index:9999; user-select:none; transition:transform .1s; right:20px; bottom:100px;}
+.floating-bubble:active{transform:scale(.9);}
+.floating-bubble .notif{position:absolute; top:-4px; right:-4px; background:var(--red); color:white; border:2px solid black; border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700;}
+.bubble-menu{position:fixed; right:20px; bottom:180px; background:white; border:var(--border); box-shadow:var(--shadow); padding:10px; width:200px; z-index:9998; display:none;}
+.bubble-menu.open{display:block; animation:pop .2s cubic-bezier(.175,.885,.32,1.275);}
+@keyframes pop{0%{transform:scale(.8) translateY(10px)} 100%{transform:scale(1) translateY(0)}}
+.bubble-item{border:2px solid black; padding:10px; margin-bottom:8px; font-family:'Space Mono'; font-size:11px; font-weight:700; cursor:pointer; background:white; display:flex; gap:8px; align-items:center; box-shadow:2px 2px 0 black;}
+.bubble-item:hover{background:var(--yellow);}
+.bubble-item:last-child{margin-bottom:0;}
+
+/* FLOATING ADD MENU - DA STUDIO */
+.fab-add{position:absolute; bottom:16px; left:50%; transform:translateX(-50%); z-index:15; background:black; color:white; border:var(--border); border-radius:30px; padding:10px 18px; font-family:'Space Mono'; font-size:11px; font-weight:700; box-shadow:var(--shadow-xs); cursor:pointer; display:flex; gap:8px; align-items:center;}
+.fab-add:active{transform:translateX(-50%) translate(2px,2px); box-shadow:0 0 0 black;}
+
+.add-menu{position:absolute; bottom:60px; left:50%; transform:translateX(-50%); background:white; border:var(--border); box-shadow:var(--shadow); padding:8px; display:none; z-index:16; width:280px;}
+.add-menu.open{display:flex; flex-wrap:wrap; gap:6px;}
+.add-option{border:2px solid black; padding:8px 10px; font-family:'Space Mono'; font-size:10px; font-weight:700; background:white; cursor:pointer; flex:1 0 45%; text-align:center; box-shadow:2px 2px 0 black;}
+.add-option:hover{background:var(--yellow);}
+.add-option:active{transform:translate(2px,2px); box-shadow:0 0 0 black;}
+
+/* COLOR */
+.color-grid{display:flex; flex-wrap:wrap; gap:6px; margin-top:6px;}
+.color-swatch{width:30px; height:30px; border:var(--border); cursor:pointer; box-shadow:2px 2px 0 black; position:relative;}
+.color-swatch.active{transform:translate(2px,2px); box-shadow:0 0 0 black; outline:3px solid var(--blue);}
+.color-swatch.active::after{content:'✓'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-weight:800; color:white; text-shadow:0 0 3px black;}
+
+/* PER SCREEN */
+.screen-tabs{display:flex; gap:6px; overflow-x:auto; padding-bottom:6px; margin-bottom:10px;}
+.screen-tab{border:2px solid black; padding:6px 10px; font-family:'Space Mono'; font-size:9px; font-weight:700; white-space:nowrap; cursor:pointer; background:white; box-shadow:2px 2px 0 black; flex-shrink:0;}
+.screen-tab.active{background:black; color:white;}
+
+/* SWITCH */
+.switch{border:var(--border); padding:10px 12px; display:flex; justify-content:space-between; align-items:center; background:white; margin-top:8px; box-shadow:2px 2px 0 black;}
+.switch span{font-family:'Space Mono'; font-size:10px; font-weight:700; text-transform:uppercase;}
+.switch input{width:44px; height:24px; appearance:none; border:2px solid black; background:white; position:relative; cursor:pointer; flex-shrink:0;}
 .switch input:checked{background:var(--yellow);}
-.switch input::after{content:''; position:absolute; width:16px; height:16px; background:black; top:2px; left:2px; transition:.15s;}
+.switch input::after{content:''; position:absolute; width:16px; height:16px; background:black; top:2px; left:2px; transition:.12s;}
 .switch input:checked::after{left:22px;}
 
-.how-it-works{background:var(--yellow); border:var(--border); padding:12px; box-shadow:var(--shadow-sm); margin-top:12px;}
-.how-it-works ol{margin-left:18px; margin-top:6px;}
-.how-it-works li{font-family:'Space Mono'; font-size:11px; font-weight:700; margin-bottom:4px; line-height:1.4;}
+.row{display:flex; gap:8px;} .row > *{flex:1;}
+.how-box{background:var(--yellow); border:var(--border); padding:10px; box-shadow:var(--shadow-xs); margin-top:10px; font-family:'Space Mono'; font-size:10px; font-weight:700; line-height:1.4;}
 
-.mobile-bar{display:none; border-top:var(--border); background:white; height:64px;}
+.mobile-bar{display:none; border-top:var(--border); background:white; height:62px; z-index:15;}
 @media(max-width:900px){
-  .sidebar{position:absolute; inset:0; z-index:40; width:100%; transform:translateX(-100%); transition:.25s cubic-bezier(.8,0,.2,1);}
+  .sidebar{position:absolute; inset:0; z-index:40; width:100%; transform:translateX(-100%); transition:.28s cubic-bezier(.8,0,.2,1);}
   .sidebar.open{transform:translateX(0);}
   .mobile-bar{display:flex;}
   .phone-wrap{width:100%; height:100%; max-height:100%; box-shadow:none; border-left:0; border-right:0;}
@@ -125,177 +157,168 @@ body{background:var(--bg); color:var(--ink); font-family:'Space Grotesk', sans-s
 <body>
 
 <div class="header">
-  <div style="display:flex; gap:14px; align-items:center;">
-    <button id="menuBtn" onclick="toggleSidebar()" style="background:var(--yellow); border:var(--border); width:40px; height:40px; font-weight:700; box-shadow:3px 3px 0 black; display:none;">☰</button>
-    <div class="logo"><span>SAWER</span>OVERLAY</div>
-    <div style="background:white; color:black; border:2px solid white; padding:2px 8px; font-family:'Space Mono'; font-size:10px; font-weight:700;">BRUTAL v2 • NO RTMP</div>
+  <div class="logo"><div class="logo-box">SAWER</div>STUDIO</div>
+  <div class="header-actions">
+    <select id="screenProfile" class="profile-select" onchange="switchProfile(this.value)">
+      <option value="tiktok-live">📱 TIKTOK LIVE</option>
+      <option value="tiktok-game">🎮 TIKTOK GAME</option>
+      <option value="youtube">▶️ YOUTUBE</option>
+      <option value="custom">⚙️ CUSTOM SCREEN</option>
+    </select>
+    <div class="badge-live" id="liveBadge">● OFFLINE</div>
   </div>
-  <div class="badge">● LIVE READY</div>
 </div>
 
 <div class="main">
-  <!-- SIDEBAR -->
   <div class="sidebar" id="sidebar">
     <div class="tabs">
       <div class="tab active" onclick="switchTab('layers')">LAYERS</div>
+      <div class="tab" onclick="switchTab('design')">DESIGN</div>
       <div class="tab" onclick="switchTab('saweria')">SAWERIA</div>
       <div class="tab" onclick="switchTab('live')">LIVE</div>
-      <div class="tab" onclick="switchTab('style')">STYLE</div>
     </div>
 
     <!-- LAYERS -->
     <div class="tab-content active" id="tab-layers">
+      <div class="screen-tabs" id="screenTabs"></div>
+
       <div class="card">
-        <div class="card-title">TAMBAH ELEMENT</div>
+        <div class="card-title">QUICK ADD — TAP FLOATING + DI CANVAS</div>
         <div class="row">
-          <button class="btn btn-black" onclick="addLayer('text')">+ TEKS</button>
-          <button class="btn btn-yellow" onclick="addLayer('saweria')">+ SAWERIA</button>
+          <button class="btn btn-black" onclick="quickAdd('text')">+ TEKS BRUTAL</button>
+          <button class="btn btn-yellow" onclick="quickAdd('saweria')">+ SAWERIA</button>
         </div>
-        <div class="row" style="margin-top:8px;">
-          <button class="btn" onclick="addLayer('goal')">+ GOAL BAR</button>
-          <button class="btn" onclick="addLayer('sticker')">+ STICKER</button>
+        <div class="row" style="margin-top:6px;">
+          <button class="btn" onclick="quickAdd('goal')">+ GOAL</button>
+          <button class="btn" onclick="quickAdd('tape')">+ TAPE</button>
+          <button class="btn" onclick="quickAdd('stamp')">+ STAMP</button>
         </div>
+        <div style="margin-top:8px; font-family:'Space Mono'; font-size:9px; opacity:.6;">💡 Double-click canvas = add text. Drag bubble = pindah posisi. Double-click bubble = balik ke app.</div>
       </div>
 
-      <div style="font-family:'Space Mono'; font-size:10px; font-weight:700; letter-spacing:1px; margin:14px 0 8px 0;">LAYERS — DRAG UNTUK SUSUN</div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin:12px 0 8px 0;">
+        <div style="font-family:'Space Mono'; font-size:10px; font-weight:700;">LAYERS — PER SCREEN</div>
+        <button class="btn" style="width:auto; padding:4px 8px; font-size:9px;" onclick="savePerScreen()">💾 SAVE SCREEN INI</button>
+      </div>
       <div id="layerList"></div>
 
-      <div id="props" class="card" style="display:none; margin-top:14px;">
-        <div class="card-title">EDIT LAYER</div>
-        <label class="label">TULISAN / ISI</label>
-        <textarea id="propText" class="input" rows="2" style="font-family:'Space Grotesk'; font-weight:700;" oninput="updateProp('text', this.value)"></textarea>
+      <div id="props" class="card" style="display:none; margin-top:12px;">
+        <div class="card-title">EDIT — DA STUDIO STYLE</div>
+        <label class="label">TULISAN</label>
+        <textarea id="propText" class="textarea" rows="2" style="font-weight:700;" oninput="updateProp('text', this.value)"></textarea>
 
         <div class="row">
-          <div>
-            <label class="label">UKURAN</label>
-            <input id="propSize" type="range" min="12" max="90" value="28" style="width:100%; accent-color:black;" oninput="updateProp('fontSize', this.value)">
-          </div>
-          <div>
-            <label class="label">ROTASI</label>
-            <input id="propRot" type="range" min="-15" max="15" value="0" style="width:100%; accent-color:black;" oninput="updateProp('rotation', this.value)">
-          </div>
+          <div><label class="label">SIZE</label><input id="propSize" type="range" min="10" max="100" value="28" style="width:100%; accent-color:black;" oninput="updateProp('fontSize', this.value)"></div>
+          <div><label class="label">ROTASI</label><input id="propRot" type="range" min="-20" max="20" value="0" style="width:100%; accent-color:black;" oninput="updateProp('rotation', this.value)"></div>
         </div>
 
-        <label class="label">FONT</label>
+        <label class="label">FONT BRUTAL</label>
         <select id="propFont" class="select" onchange="updateProp('fontFamily', this.value)">
-          <option value="Bebas Neue">BEBAS NEUE — JUDUL BESAR</option>
+          <option value="Syne">SYNE — EXTRA BOLD</option>
+          <option value="Bebas Neue">BEBAS NEUE — TITEL</option>
           <option value="Space Grotesk">SPACE GROTESK — BRUTAL</option>
           <option value="Space Mono">SPACE MONO — TYPEWRITER</option>
         </select>
 
-        <label class="label">WARNA TEKS</label>
-        <div class="color-grid" id="colorGrid"></div>
-
-        <label class="label">BACKGROUND STYLE</label>
-        <select id="propBg" class="select" onchange="updateProp('bgType', this.value)">
-          <option value="white">PUTIH — KERTAS</option>
-          <option value="black">HITAM — PEKAT</option>
-          <option value="yellow">KUNING — HIGHLIGHT</option>
-          <option value="none">TRANSPARAN</option>
+        <label class="label">STYLE BRUTAL</label>
+        <select id="propStyle" class="select" onchange="updateProp('brutalStyle', this.value)">
+          <option value="box">BOX — KOTAK TEBAL + SHADOW</option>
+          <option value="tape">TAPE — SOLATIP KUNING</option>
+          <option value="stamp">STAMP — CAP MERAH MIRING</option>
+          <option value="highlight">HIGHLIGHT — STABILO</option>
+          <option value="ripped">RIPPED — KERTAS SOBEK</option>
+          <option value="none">NONE — TRANSPARAN</option>
         </select>
 
-        <div class="switch"><span>AUTO MUNCUL PAS LIVE</span><input type="checkbox" id="propAuto" checked onchange="updateProp('autoShow', this.checked)"></div>
-        <div class="switch"><span>STEALTH — DI HP LU TIPIS</span><input type="checkbox" id="propStealth" onchange="updateProp('stealth', this.checked)"></div>
+        <label class="label">WARNA</label>
+        <div class="color-grid" id="colorGrid"></div>
 
-        <button class="btn btn-red" style="margin-top:12px;" onclick="deleteLayer()">HAPUS LAYER — X</button>
+        <div class="switch"><span>AUTO MUNCUL PAS LIVE</span><input type="checkbox" id="propAuto" checked onchange="updateProp('autoShow', this.checked)"></div>
+        <div class="switch"><span>STEALTH — DI HP TIPIS 15%</span><input type="checkbox" id="propStealth" onchange="updateProp('stealth', this.checked)"></div>
+        <div class="switch"><span>ANIMASI MARQUEE</span><input type="checkbox" id="propMarquee" onchange="updateProp('marquee', this.checked)"></div>
+
+        <button class="btn btn-red" style="margin-top:10px;" onclick="deleteLayer()">HAPUS — X</button>
       </div>
 
-      <div class="how-it-works">
-        <div style="font-weight:700; font-size:12px;">⚠️ CARA KERJA TANPA RTMP:</div>
-        <ol>
-          <li>Edit overlay di sini, posisi auto % jadi konsisten all HP</li>
-          <li>Klik LIVE MODE → kamera + overlay jadi 1 layar</li>
-          <li>Di TikTok pilih LIVE > Mobile Gaming > Share Screen</li>
-          <li>Pilih app SawerOverlay — penonton langsung liat overlay!</li>
-          <li>Di HP lu aktifkan STEALTH biar overlay jadi tipis gak ganggu</li>
-        </ol>
+      <div class="how-box">
+        <b>DA STUDIO TRICK:</b><br>
+        • Keluar app? Floating bubble kuning tetap ada di atas TikTok<br>
+        • Double-click bubble = balik ke editor<br>
+        • Drag bubble = pindah posisi bubble<br>
+        • Tiap Screen (TikTok Live / Game) overlay beda — auto save per screen
+      </div>
+    </div>
+
+    <!-- DESIGN -->
+    <div class="tab-content" id="tab-design">
+      <div class="card">
+        <div class="card-title">TEMPLATE BRUTAL — 1 CLICK APPLY</div>
+        <div class="row">
+          <button class="btn btn-yellow" onclick="applyTemplate('brutal-live')">🔴 LIVE BRUTAL</button>
+          <button class="btn btn-black" onclick="applyTemplate('saweria-tape')">💸 SAWER TAPE</button>
+        </div>
+        <div class="row" style="margin-top:6px;">
+          <button class="btn" onclick="applyTemplate('goal-ripped')">🎯 GOAL RIPPED</button>
+          <button class="btn" onclick="applyTemplate('minimal')">⬜ MINIMAL BOX</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">EFFECT TAMBAHAN</div>
+        <label class="label">BORDER STYLE</label>
+        <select class="select" onchange="updateProp('borderStyle', this.value)">
+          <option value="solid">SOLID 3PX</option>
+          <option value="dashed">DASHED BRUTAL</option>
+          <option value="double">DOUBLE 5PX</option>
+        </select>
+        <div class="switch"><span>SHADOW KERAS 8PX</span><input type="checkbox" checked onchange="updateProp('shadow', this.checked)"></div>
+        <div class="switch"><span>TAPE DI ATAS</span><input type="checkbox" onchange="updateProp('hasTape', this.checked)"></div>
+      </div>
+
+      <div class="card" style="background:var(--yellow);">
+        <div class="card-title" style="background:white; color:black;">PRO TIP</div>
+        <div style="font-size:12px; font-weight:700;">Overlay brutal yang bagus itu: kontras tinggi, rotasi dikit (-2deg), shadow keras, jangan banyak warna. Hitam-putih-kuning aja.</div>
       </div>
     </div>
 
     <!-- SAWERIA -->
     <div class="tab-content" id="tab-saweria">
-      <div class="card" style="background:var(--yellow);">
-        <div class="card-title" style="background:white; color:black;">SAWERIA.CO</div>
-        <div style="font-weight:700; font-size:14px; line-height:1.2;">DONASI MASUK AUTO POPUP BRUTAL + TTS</div>
-        <div style="font-family:'Space Mono'; font-size:11px; margin-top:6px;">Tanpa RTMP, tetap work. Alert muncul di layar live lu.</div>
+      <div class="card" style="background:black; color:white;">
+        <div class="card-title" style="background:var(--yellow); color:black;">SAWERIA — AUTO POPUP</div>
+        <div style="font-weight:800; font-size:14px;">DONASI MASUK LANGSUNG MUNCUL DI OVERLAY + FLOATING BUBBLE NOTIF</div>
       </div>
-
       <label class="label">USERNAME SAWERIA</label>
       <input id="saweriaUser" class="input" placeholder="jamalstream">
-
-      <label class="label">OVERLAY URL (DARI SAWERIA > OVERLAY)</label>
-      <input id="saweriaUrl" class="input" placeholder="https://saweria.co/overlays/...">
-
-      <div class="row" style="margin-top:12px;">
+      <div class="row" style="margin-top:8px;">
         <button class="btn btn-black" onclick="connectSaweria()">CONNECT</button>
-        <button class="btn btn-yellow" onclick="testDonation()">TEST SAWER</button>
+        <button class="btn btn-yellow" onclick="testDonation()">TEST 💸</button>
       </div>
-
-      <div class="switch"><span>TTS SUARA INDONESIA</span><input type="checkbox" id="tts" checked></div>
-      <div class="switch"><span>AUTO HILANG 7 DETIK</span><input type="checkbox" id="autoHide" checked></div>
-
-      <label class="label">STYLE ALERT</label>
-      <select id="alertStyle" class="select">
-        <option value="brutal">BRUTAL — PUTIH HITAM KUNING</option>
-        <option value="stamp">STAMP — MERAH CAP</option>
-        <option value="paper">PAPER — KERTAS SOBEK</option>
-      </select>
-
-      <div id="saweriaLog" style="margin-top:12px; background:black; color:#00ff00; font-family:'Space Mono'; font-size:10px; padding:10px; height:130px; overflow-y:auto; border:var(--border);"></div>
+      <div class="switch"><span>TTS INDONESIA</span><input type="checkbox" id="tts" checked></div>
+      <div class="switch"><span>FLOATING NOTIF JUGA</span><input type="checkbox" id="floatingNotif" checked></div>
+      <div id="saweriaLog" style="margin-top:10px; background:black; color:#00ff00; font-family:'Space Mono'; font-size:10px; padding:10px; height:140px; overflow-y:auto; border:var(--border);"></div>
     </div>
 
     <!-- LIVE -->
     <div class="tab-content" id="tab-live">
-      <div class="card" style="background:black; color:white;">
-        <div class="card-title" style="background:var(--yellow); color:black;">LIVE TANPA RTMP</div>
-        <div style="font-weight:700;">PAKAI SCREEN SHARE TIKTOK — 100% WORK DI ANDROID</div>
-        <div style="font-family:'Space Mono'; font-size:11px; margin-top:8px; opacity:.8; line-height:1.4;">
-          Gak perlu 1000 followers. Gak perlu Stream Key. Cukup share layar app ini pas live TikTok.
-        </div>
+      <div class="card" style="background:var(--blue); color:white; border-color:white;">
+        <div class="card-title" style="background:white; color:black;">LIVE TANPA RTMP — SCREEN SHARE</div>
+        <div style="font-weight:700;">FLOATING BUBBLE TETAP ADA PAS LU KELUAR APP!</div>
       </div>
-
-      <button id="liveBtn" class="btn btn-red btn-live" onclick="toggleLive()">● MASUK MODE LIVE</button>
-
+      <button id="liveBtn" class="btn btn-red btn-live" onclick="toggleLive()">● MASUK MODE LIVE + FLOATING</button>
       <div class="card">
-        <div class="card-title">STEP BY STEP</div>
+        <div class="card-title">CARA PAKAI PER SCREEN</div>
         <div style="font-family:'Space Mono'; font-size:11px; line-height:1.6; font-weight:700;">
-          1. Edit overlay dulu di tab LAYERS<br>
-          2. Klik tombol MERAH di atas — masuk mode full screen<br>
-          3. Buka TikTok > + > LIVE > Mobile Gaming<br>
-          4. Pilih "Share Screen" > Pilih "SawerOverlay"<br>
-          5. Penonton auto liat kamera + overlay brutal lu<br><br>
-          <span style="background:var(--yellow); padding:2px 6px;">STEALTH TRICK:</span> Aktifkan toggle STEALTH per layer — di HP lu overlay jadi transparan 15% (gak ganggu mata), tapi di rekaman screen share tetap 100% solid buat penonton. Karena screen share ngerekam canvas program, bukan preview ghost.
+          1. Pilih Screen Profile di atas (TikTok Live / Game)<br>
+          2. Edit overlay beda per screen — auto save<br>
+          3. Klik LIVE + FLOATING — bubble kuning muncul<br>
+          4. Keluar app, buka TikTok<br>
+          5. Bubble tetap ada! Tap bubble = add overlay cepat<br>
+          6. Double-click bubble = balik ke Studio<br>
+          7. TikTok LIVE > Mobile Gaming > Share Screen > Pilih SawerOverlay<br>
         </div>
       </div>
-
-      <div class="switch"><span>STEALTH GLOBAL — HP LU BERSIH</span><input type="checkbox" id="globalStealth" onchange="render()"></div>
-      <div class="switch"><span>AUTO OVERLAY ON PAS LIVE</span><input type="checkbox" id="autoOnLive" checked></div>
-
-      <button class="btn" style="margin-top:12px;" onclick="copyOverlayLink()">COPY LINK OVERLAY — BUAT OBS</button>
-    </div>
-
-    <!-- STYLE -->
-    <div class="tab-content" id="tab-style">
-      <div class="card">
-        <div class="card-title">BRUTALISM SETTINGS</div>
-        <label class="label">RESOLUSI — KONSISTEN ALL HP</label>
-        <select id="res" class="select" onchange="changeRes()">
-          <option value="1080x1920">1080x1920 — TIKTOK VERTICAL</option>
-          <option value="720x1280">720x1280 — HEMAT KUOTA</option>
-        </select>
-        <div class="switch"><span>GRID BANTU — SNAP POSISI</span><input type="checkbox" id="snap" checked></div>
-        <div class="switch"><span>SAFE AREA TIKTOK UI</span><input type="checkbox" id="safe" checked onchange="toggleSafe()"></div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">EXPORT</div>
-        <button class="btn btn-black" onclick="exportJSON()">EXPORT CONFIG JSON</button>
-        <button class="btn" style="margin-top:8px;" onclick="downloadGuide()">DOWNLOAD BUILD GUIDE APK</button>
-      </div>
-
-      <div style="border:var(--border); padding:12px; background:white; box-shadow:var(--shadow-sm); font-family:'Space Mono'; font-size:10px; font-weight:700;">
-        DESIGN SYSTEM: NO NEON. NO CYBER. CUMA HITAM PUTIH KUNING MERAH, BORDER TEBAL, SHADOW KERAS. INI BRUTALISM BENERAN.
-      </div>
+      <div class="switch"><span>BUBBLE SELALU DI ATAS</span><input type="checkbox" id="bubbleOnTop" checked onchange="toggleBubble(this.checked)"></div>
+      <div class="switch"><span>DOUBLE-CLICK = BALIK APP</span><input type="checkbox" checked disabled></div>
     </div>
   </div>
 
@@ -303,34 +326,44 @@ body{background:var(--bg); color:var(--ink); font-family:'Space Grotesk', sans-s
   <div class="stage" id="stage">
     <div class="phone-wrap" id="phoneWrap">
       <div class="phone-top">
-        <div><span class="dot" style="background:var(--red);"></span> <span class="dot" style="background:var(--yellow);"></span> <span class="dot" style="background:white;"></span></div>
-        <div>SAWEROVERLAY — BRUTAL</div>
-        <div id="liveIndicator" style="background:black; color:white; padding:2px 6px;">OFFLINE</div>
+        <div>● ● ●</div>
+        <div id="profileLabel">TIKTOK LIVE • BRUTAL STUDIO v3</div>
+        <div id="liveIndicator" style="background:black; color:white; padding:3px 8px; border:2px solid black;">OFFLINE</div>
       </div>
       <div class="canvas-wrap" id="canvasWrap">
         <video id="video" autoplay muted playsinline></video>
-        <canvas id="canvasGhost"></canvas>
+        <canvas id="ghost"></canvas>
         <canvas id="canvas"></canvas>
 
         <div class="mode-switch">
-          <button class="mode-btn active" id="modeViewer" onclick="setMode('viewer')">PENONTON LIAT</button>
-          <button class="mode-btn" id="modeStreamer" onclick="setMode('streamer')">LU LIAT — STEALTH</button>
+          <button class="mode-btn active" id="modeViewer" onclick="setMode('viewer')">PENONTON</button>
+          <button class="mode-btn" id="modeStreamer" onclick="setMode('streamer')">STEALTH</button>
         </div>
+        <div class="viewer-pill">👁 1.2K • BRUTAL v3</div>
+        <div class="tiktok-right"><div>♥</div><div>💬</div><div>↗</div></div>
 
-        <div class="viewer-pill">👁 1.2K • BRUTAL LIVE</div>
-        <div class="tiktok-right">
-          <div>♥</div><div>💬</div><div>↗</div>
+        <button class="fab-add" id="fabAdd" onclick="toggleAddMenu()">+ ADD OVERLAY</button>
+        <div class="add-menu" id="addMenu">
+          <div class="add-option" onclick="quickAdd('text')">📝 TEKS</div>
+          <div class="add-option" onclick="quickAdd('saweria')">💸 SAWER</div>
+          <div class="add-option" onclick="quickAdd('goal')">🎯 GOAL</div>
+          <div class="add-option" onclick="quickAdd('tape')">📼 TAPE</div>
+          <div class="add-option" onclick="quickAdd('stamp')">🔴 STAMP</div>
+          <div class="add-option" onclick="quickAdd('highlight')">🟨 HIGHLIGHT</div>
         </div>
 
         <div class="alert-box" id="alertBox">
-          <div class="alert-top"><span>SAWERIA ALERT</span><span id="alertTime">12:00</span></div>
+          <div class="tape"></div>
+          <div class="alert-header"><span>SAWERIA • BRUTAL</span><span id="alertTime">12:00</span></div>
           <div class="alert-stamp">PAID!</div>
-          <h2 id="alertTitle">BANG JAGO SAWER 50K!</h2>
-          <p id="alertMsg">semangat bang live nya keren abis, gas terus!</p>
+          <div class="alert-body">
+            <h2 id="alertTitle">BANG JAGO SAWER 50K!</h2>
+            <p id="alertMsg">semangat bang live brutal nya keren parah!</p>
+          </div>
         </div>
 
-        <div id="safeArea" style="position:absolute; inset:5% 3% 16% 3%; border:2px dashed black; pointer-events:none; opacity:.4;">
-          <div style="position:absolute; top:-10px; left:8px; background:var(--yellow); border:2px solid black; font-family:'Space Mono'; font-size:8px; padding:2px 6px; font-weight:700;">SAFE — JANGAN TARUH SINI KETUTUP UI TIKTOK</div>
+        <div id="safeArea" style="position:absolute; inset:5% 3% 16% 3%; border:2px dashed black; pointer-events:none; opacity:.3;">
+          <div style="position:absolute; top:-10px; left:8px; background:var(--yellow); border:2px solid black; font-family:'Space Mono'; font-size:8px; padding:2px 6px; font-weight:700;">SAFE AREA</div>
         </div>
       </div>
     </div>
@@ -338,62 +371,134 @@ body{background:var(--bg); color:var(--ink); font-family:'Space Grotesk', sans-s
 </div>
 
 <div class="mobile-bar">
-  <button class="btn" style="flex:1; box-shadow:none; border:0; border-right:var(--border);" onclick="toggleSidebar()">EDIT</button>
+  <button class="btn" style="flex:1; box-shadow:none; border:0; border-right:var(--border);" onclick="toggleSidebar()">LAYERS</button>
+  <button class="btn btn-yellow" style="flex:1; box-shadow:none; border:0; border-right:var(--border);" onclick="toggleAddMenu()">+ ADD</button>
   <button class="btn btn-red" style="flex:1; box-shadow:none; border:0;" onclick="toggleLive()">● LIVE</button>
+</div>
+
+<!-- FLOATING BUBBLE - DA STUDIO -->
+<div class="floating-bubble" id="bubble" style="display:none;">
+  S
+  <div class="notif" id="bubbleNotif" style="display:none;">1</div>
+</div>
+<div class="bubble-menu" id="bubbleMenu">
+  <div style="font-family:'Space Mono'; font-size:9px; font-weight:700; margin-bottom:8px; background:black; color:white; padding:4px 8px; display:inline-block;">SAWER STUDIO — FLOATING</div>
+  <div class="bubble-item" onclick="quickAdd('text')">📝 + TEKS BARU</div>
+  <div class="bubble-item" onclick="quickAdd('saweria')">💸 + SAWERIA</div>
+  <div class="bubble-item" onclick="quickAdd('goal')">🎯 + GOAL</div>
+  <div class="bubble-item" onclick="toggleBubbleMenu(); document.getElementById('sidebar').classList.add('open')">🎨 BUKA EDITOR</div>
+  <div class="bubble-item" onclick="savePerScreen()" style="background:var(--yellow);">💾 SAVE SCREEN INI</div>
 </div>
 
 <script>
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-const ghost = document.getElementById('canvasGhost');
+const ghost = document.getElementById('ghost');
 const gctx = ghost.getContext('2d');
 const video = document.getElementById('video');
 
-let layers = [
-  {id:'a1', type:'text', text:'LIVE TIKTOK — JAMAL', x:0.04, y:0.04, w:0.62, h:0.07, fontFamily:'Bebas Neue', fontSize:32, color:'#000000', bgType:'yellow', rotation: -1, autoShow:true, stealth:false, visible:true},
-  {id:'a2', type:'text', text:'SAWERIA.CO/JAMALSTREAM', x:0.04, y:0.86, w:0.72, h:0.06, fontFamily:'Space Mono', fontSize:16, color:'#FFFFFF', bgType:'black', rotation:0, autoShow:true, stealth:false, visible:true},
-  {id:'a3', type:'goal', text:'TARGET: 500K / 1JT', x:0.04, y:0.13, w:0.55, h:0.05, fontFamily:'Space Grotesk', fontSize:14, color:'#000000', bgType:'white', progress:0.5, rotation:0, autoShow:false, stealth:true, visible:true},
+let profiles = JSON.parse(localStorage.getItem('brutal_profiles')||'{}');
+let currentProfile = localStorage.getItem('brutal_current_profile')||'tiktok-live';
+let layers = profiles[currentProfile] || [
+  {id:'b1', type:'text', text:'LIVE TIKTOK — JAMAL', x:0.04, y:0.04, w:0.62, h:0.07, fontFamily:'Syne', fontSize:32, color:'#000000', brutalStyle:'box', bg:'#FFE600', rotation:-1.5, autoShow:true, stealth:false, visible:true, marquee:false, hasTape:true},
+  {id:'b2', type:'text', text:'SAWERIA.CO/JAMALSTREAM', x:0.04, y:0.86, w:0.72, h:0.06, fontFamily:'Space Mono', fontSize:15, color:'#FFFFFF', brutalStyle:'box', bg:'#000000', rotation:0, autoShow:true, stealth:false, visible:true},
+  {id:'b3', type:'goal', text:'TARGET 500K / 1JT', x:0.04, y:0.13, w:0.55, h:0.05, fontFamily:'Space Grotesk', fontSize:14, color:'#000000', brutalStyle:'ripped', bg:'#FFFFFF', progress:0.5, rotation:0, autoShow:false, stealth:true, visible:true},
 ];
 
-let selected = 'a1';
+let selected = layers[0]?.id||null;
 let isLive = false;
 let mode = 'viewer';
 let res = {w:1080,h:1920};
 let saweriaPoll = null;
+let bubbleVisible = false;
+let lastClick = 0;
 
-const colors = ['#000000','#FFFFFF','#FFE600','#FF3B30','#0000FF','#00FF00'];
+const colors = ['#000000','#FFFFFF','#FFE600','#FF3B30','#0057FF','#00FF88'];
 
 function init(){
-  const grid = document.getElementById('colorGrid');
-  colors.forEach(c=>{
-    const d=document.createElement('div');
-    d.className='color-swatch';
-    d.style.background=c;
-    d.onclick=()=>updateProp('color', c);
-    grid.appendChild(d);
-  });
   setupCanvas();
   startCam();
+  initColors();
+  renderScreenTabs();
   renderList();
-  select(selected);
+  if(selected) select(selected);
   render();
   bindDrag();
-  log('System brutal siap. No RTMP, cuma screen share.');
-  if(innerWidth<900) document.getElementById('menuBtn').style.display='block';
+  bindBubble();
+  bindDoubleClick();
+  loadProfileToUI();
+  log('Brutal Studio v3 ready — floating bubble + per screen');
+  if(innerWidth<900) document.getElementById('menuBtn')?.style && (document.getElementById('menuBtn').style.display='block');
 }
 
 function setupCanvas(){
-  [canvas,ghost].forEach(c=>{
-    c.width=res.w; c.height=res.h;
-    c.style.width='100%'; c.style.height='100%';
+  [canvas,ghost].forEach(c=>{ c.width=res.w; c.height=res.h; c.style.width='100%'; c.style.height='100%'; });
+}
+async function startCam(){
+  try{ const s=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user', width:{ideal:1080}, height:{ideal:1920}}, audio:true}); video.srcObject=s; }catch(e){}
+}
+function initColors(){
+  const grid=document.getElementById('colorGrid');
+  grid.innerHTML='';
+  colors.forEach(c=>{
+    const d=document.createElement('div'); d.className='color-swatch'; d.style.background=c;
+    d.onclick=()=>updateProp('color', c);
+    grid.appendChild(d);
   });
 }
 
-async function startCam(){
-  try{
-    const s=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user', width:{ideal:1080}, height:{ideal:1920}}, audio:true});
-    video.srcObject=s;
-  }catch(e){ console.log('cam fail', e); }
+function renderScreenTabs(){
+  const el=document.getElementById('screenTabs');
+  const screens=[
+    {id:'tiktok-live', label:'📱 TIKTOK LIVE'},
+    {id:'tiktok-game', label:'🎮 GAME'},
+    {id:'youtube', label:'▶️ YOUTUBE'},
+    {id:'custom', label:'⚙️ CUSTOM'},
+  ];
+  el.innerHTML='';
+  screens.forEach(s=>{
+    const div=document.createElement('div');
+    div.className='screen-tab'+(s.id===currentProfile?' active':'');
+    div.textContent=s.label;
+    div.onclick=()=>switchProfile(s.id);
+    el.appendChild(div);
+  });
+  document.getElementById('profileLabel').textContent=screens.find(x=>x.id===currentProfile)?.label+' • BRUTAL STUDIO v3';
+  document.getElementById('screenProfile').value=currentProfile;
+}
+
+function switchProfile(id){
+  // save current
+  profiles[currentProfile]=layers;
+  localStorage.setItem('brutal_profiles', JSON.stringify(profiles));
+  currentProfile=id;
+  localStorage.setItem('brutal_current_profile', id);
+  layers=profiles[id] || [];
+  if(layers.length===0 && id==='tiktok-game'){
+    layers=[
+      {id:'g1', type:'text', text:'🎮 MAIN GAME — RANK PUSH', x:0.04, y:0.04, w:0.7, h:0.07, fontFamily:'Syne', fontSize:28, color:'#000', brutalStyle:'box', bg:'#00FF88', rotation:-1, autoShow:true, stealth:false, visible:true},
+      {id:'g2', type:'text', text:'FOLLOW + SAWER = MASUK SQUAD', x:0.04, y:0.88, w:0.8, h:0.06, fontFamily:'Space Mono', fontSize:13, color:'#fff', brutalStyle:'box', bg:'#000', rotation:0, autoShow:true, stealth:false, visible:true},
+    ];
+  } else if(layers.length===0){
+    layers=[
+      {id:'n'+Date.now(), type:'text', text:'OVERLAY '+id.toUpperCase(), x:0.04, y:0.04, w:0.6, h:0.07, fontFamily:'Syne', fontSize:26, color:'#000', brutalStyle:'box', bg:'#FFE600', rotation:-1, autoShow:true, stealth:false, visible:true}
+    ];
+  }
+  selected=layers[0]?.id||null;
+  renderScreenTabs();
+  renderList();
+  if(selected) select(selected);
+  render();
+  log('Switch screen: '+id+' — layers: '+layers.length);
+}
+
+function savePerScreen(){
+  profiles[currentProfile]=layers;
+  localStorage.setItem('brutal_profiles', JSON.stringify(profiles));
+  log('💾 Saved per screen: '+currentProfile+' ('+layers.length+' layers)');
+  // flash
+  const btn=document.activeElement;
+  if(btn) { btn.textContent='✅ SAVED!'; setTimeout(()=>btn.textContent='💾 SAVE SCREEN INI', 1500); }
 }
 
 function renderList(){
@@ -402,7 +507,8 @@ function renderList(){
   [...layers].reverse().forEach(l=>{
     const div=document.createElement('div');
     div.className='layer-item'+(l.id===selected?' active':'');
-    div.innerHTML=`<div><div class="type">${l.type.toUpperCase()} ${l.stealth?'• STEALTH':''} ${l.autoShow?'• AUTO':''}</div><div class="name">${l.text}</div></div><div style="font-family:'Space Mono'; font-size:10px; font-weight:700;">${Math.round(l.x*100)}% , ${Math.round(l.y*100)}%</div>`;
+    const icon = l.type==='saweria'?'💸': l.type==='goal'?'🎯': l.brutalStyle==='tape'?'📼': l.brutalStyle==='stamp'?'🔴':'📝';
+    div.innerHTML=`<div style="display:flex; align-items:center;"><div class="layer-thumb" style="background:${l.bg}; color:${l.color===' #000000'?'white':l.color}">${icon}</div><div class="layer-meta"><div class="layer-type">${l.brutalStyle?.toUpperCase()||l.type.toUpperCase()} ${l.stealth?'• STEALTH':''}</div><div class="layer-name">${l.text}</div></div></div><div style="font-family:'Space Mono'; font-size:9px; font-weight:700;">${Math.round(l.x*100)}%<br>${l.marquee?'MARQUEE':''}</div>`;
     div.onclick=()=>select(l.id);
     el.appendChild(div);
   });
@@ -418,22 +524,29 @@ function select(id){
   document.getElementById('propSize').value=l.fontSize;
   document.getElementById('propRot').value=l.rotation||0;
   document.getElementById('propFont').value=l.fontFamily;
-  document.getElementById('propBg').value=l.bgType;
+  document.getElementById('propStyle').value=l.brutalStyle||'box';
   document.getElementById('propAuto').checked=l.autoShow;
   document.getElementById('propStealth').checked=l.stealth;
+  document.getElementById('propMarquee').checked=l.marquee||false;
   render();
 }
 
-function addLayer(type){
+function quickAdd(type){
   const id='l'+Date.now();
-  const base={id,type, x:0.06, y:0.4+Math.random()*0.2, w:0.7, h:0.07, fontFamily:'Bebas Neue', fontSize:28, color:'#000000', bgType:'yellow', rotation:-1, autoShow:true, stealth:false, visible:true};
-  if(type==='text') base.text='TEKS BRUTAL BARU';
-  if(type==='saweria') base.text='{name} SAWER {amount} — {message}';
-  if(type==='goal'){ base.text='GOAL 0 / 1JT'; base.progress=0.3; }
-  if(type==='sticker'){ base.text='★ LIVE ★'; base.bgType='white'; }
+  const base={id,type, x:0.06, y:0.4+Math.random()*0.15, w:0.68, h:0.07, fontFamily:'Syne', fontSize:26, color:'#000000', brutalStyle:'box', bg:'#FFE600', rotation:-1, autoShow:true, stealth:false, visible:true, marquee:false, hasTape:false, borderStyle:'solid', shadow:true};
+  if(type==='text'){ base.text='TEKS BRUTAL BARU'; base.brutalStyle='box'; }
+  if(type==='saweria'){ base.text='{name} SAWER {amount} — {message}'; base.bg='#000000'; base.color='#FFFFFF'; base.brutalStyle='box'; }
+  if(type==='goal'){ base.text='GOAL 0 / 1JT'; base.progress=0.35; base.brutalStyle='ripped'; base.bg='#FFFFFF'; }
+  if(type==='tape'){ base.text='★ TAPE BRUTAL ★'; base.brutalStyle='tape'; base.bg='#FFE600'; base.rotation=-2; }
+  if(type==='stamp'){ base.text='LIVE • PAID • BRUTAL'; base.brutalStyle='stamp'; base.bg='#FF3B30'; base.color='#FFFFFF'; base.rotation=8; }
+  if(type==='highlight'){ base.text='HIGHLIGHT KUNING'; base.brutalStyle='highlight'; base.bg='#FFE600'; }
   layers.push(base);
   select(id);
   renderList();
+  toggleAddMenu(false);
+  toggleBubbleMenu(false);
+  // auto save per screen
+  savePerScreen();
 }
 
 function updateProp(k,v){
@@ -443,11 +556,18 @@ function updateProp(k,v){
   if(k==='fontSize') l.fontSize=parseInt(v);
   if(k==='rotation') l.rotation=parseInt(v);
   if(k==='fontFamily') l.fontFamily=v;
+  if(k==='brutalStyle') l.brutalStyle=v;
   if(k==='color') l.color=v;
-  if(k==='bgType') l.bgType=v;
   if(k==='autoShow') l.autoShow=v;
   if(k==='stealth') l.stealth=v;
+  if(k==='marquee') l.marquee=v;
+  if(k==='borderStyle') l.borderStyle=v;
+  if(k==='shadow') l.shadow=v;
+  if(k==='hasTape') l.hasTape=v;
   render(); renderList();
+  // debounce save
+  clearTimeout(window.saveTimeout);
+  window.saveTimeout=setTimeout(savePerScreen, 800);
 }
 
 function deleteLayer(){
@@ -455,101 +575,150 @@ function deleteLayer(){
   selected=layers[0]?.id||null;
   if(selected) select(selected);
   else document.getElementById('props').style.display='none';
-  renderList(); render();
+  renderList(); render(); savePerScreen();
 }
 
-function drawLayer(c, l, isGhost){
+function drawBrutal(c, l, isGhost, time){
   const x=l.x*res.w, y=l.y*res.h, w=l.w*res.w, h=l.h*res.h;
   c.save();
   c.translate(x+w/2, y+h/2);
   c.rotate((l.rotation||0)*Math.PI/180);
   c.translate(-(x+w/2), -(y+h/2));
 
-  // bg brutal
-  if(l.bgType!=='none'){
-    let bg = l.bgType;
-    if(bg==='yellow') c.fillStyle='#FFE600';
-    else if(bg==='black') c.fillStyle='#000000';
-    else if(bg==='white') c.fillStyle='#FFFFFF';
-    else c.fillStyle=bg;
-    c.fillStyle = isGhost && (l.stealth || document.getElementById('globalStealth')?.checked) ? c.fillStyle+'26' : c.fillStyle;
-    // brutal rect with hard shadow
-    if(!isGhost){
-      c.fillStyle='#000000';
-      c.fillRect(x+6, y+6, w, h);
-      c.fillStyle = l.bgType==='yellow'?'#FFE600': l.bgType==='black'?'#000000':'#FFFFFF';
-      if(isGhost && (l.stealth)) c.globalAlpha=0.15;
-    }
-    c.strokeStyle='#000000';
-    c.lineWidth=3*(res.w/1080);
-    c.fillRect(x,y,w,h);
-    c.strokeRect(x,y,w,h);
-  }
+  const globalStealth=document.getElementById('bubbleOnTop')?.checked ? false : document.getElementById('globalStealth')?.checked;
+  const isStealthLayer = l.stealth || globalStealth;
+  if(isGhost && isStealthLayer) c.globalAlpha=0.15;
 
-  if(l.type==='goal' && l.progress!=null){
+  // Shadow keras
+  if(l.shadow!==false && !isGhost){
     c.fillStyle='#000000';
-    c.fillRect(x, y+h-8, w, 8);
-    c.fillStyle='#FFE600';
-    c.fillRect(x, y+h-8, w*l.progress, 8);
-    c.strokeStyle='black'; c.lineWidth=2; c.strokeRect(x, y+h-8, w, 8);
+    c.fillRect(x+8, y+8, w, h);
   }
 
-  c.font=`700 ${l.fontSize*(res.w/1080)}px "${l.fontFamily}"`;
-  c.fillStyle = l.color;
-  if(isGhost && (l.stealth || document.getElementById('globalStealth')?.checked)){
-    c.globalAlpha=0.15;
-  }
-  c.textBaseline='middle';
-  c.fillText(l.text, x+14, y+h/2);
-
-  if(l.id===selected && !isGhost){
-    c.strokeStyle='#FF3B30';
-    c.lineWidth=3;
-    c.setLineDash([10,6]);
-    c.strokeRect(x-2,y-2,w+4,h+4);
+  // Background brutal per style
+  if(l.brutalStyle!=='none'){
+    if(l.brutalStyle==='tape'){
+      // Tape style - yellow tape
+      c.fillStyle='#FFE600';
+      c.fillRect(x, y, w, h);
+      // tape texture
+      c.strokeStyle='#00000022';
+      c.lineWidth=1;
+      for(let i=0;i<w;i+=12){ c.beginPath(); c.moveTo(x+i, y); c.lineTo(x+i+6, y+h); c.stroke(); }
+    } else if(l.brutalStyle==='stamp'){
+      // Stamp - red with rough border
+      c.fillStyle=l.bg||'#FF3B30';
+      c.fillRect(x,y,w,h);
+      c.strokeStyle='white';
+      c.lineWidth=2;
+      c.setLineDash([6,4]);
+      c.strokeRect(x+6,y+6,w-12,h-12);
+      c.setLineDash([]);
+    } else if(l.brutalStyle==='ripped'){
+      // Ripped paper
+      c.fillStyle=l.bg||'#FFFFFF';
+      c.beginPath();
+      c.moveTo(x, y+8);
+      c.lineTo(x+w*0.1, y+2); c.lineTo(x+w*0.3, y+6); c.lineTo(x+w*0.5, y+1); c.lineTo(x+w*0.7, y+5); c.lineTo(x+w, y+2);
+      c.lineTo(x+w, y+h-2); c.lineTo(x+w*0.8, y+h-6); c.lineTo(x+w*0.5, y+h-2); c.lineTo(x+w*0.2, y+h-5); c.lineTo(x, y+h-3);
+      c.closePath();
+      c.fill();
+      c.strokeStyle='black'; c.lineWidth=3; c.stroke();
+    } else if(l.brutalStyle==='highlight'){
+      c.fillStyle='#FFE600';
+      c.fillRect(x, y+h*0.3, w, h*0.6);
+    } else {
+      // box default
+      c.fillStyle=l.bg||'#FFFFFF';
+      c.fillRect(x,y,w,h);
+    }
+    // border
+    c.strokeStyle='black';
+    c.lineWidth= l.borderStyle==='double'?5:3;
+    if(l.borderStyle==='dashed') c.setLineDash([10,6]);
+    else if(l.borderStyle==='double'){ c.setLineDash([]); c.strokeRect(x-2,y-2,w+4,h+4); }
+    c.strokeRect(x,y,w,h);
     c.setLineDash([]);
-    c.fillStyle='#FF3B30';
-    c.fillRect(x+w-14, y+h-14, 14,14);
+  }
+
+  // Tape di atas
+  if(l.hasTape){
+    c.fillStyle='rgba(255,230,0,0.85)';
+    c.fillRect(x+w*0.2, y-12, w*0.6, 18);
+    c.strokeStyle='#00000044'; c.strokeRect(x+w*0.2, y-12, w*0.6, 18);
+  }
+
+  // Goal bar
+  if(l.type==='goal' && l.progress!=null){
+    c.fillStyle='black'; c.fillRect(x, y+h-10, w, 10);
+    c.fillStyle='#FFE600'; c.fillRect(x, y+h-10, w*l.progress, 10);
+    c.strokeStyle='black'; c.lineWidth=2; c.strokeRect(x, y+h-10, w, 10);
+  }
+
+  // Text
+  let textX = x+16;
+  if(l.marquee){
+    const offset = (time/20) % (w*1.5);
+    textX = x + w - offset;
+    // clip
+    c.save();
+    c.beginPath(); c.rect(x,y,w,h); c.clip();
+  }
+  c.font=`800 ${l.fontSize*(res.w/1080)}px "${l.fontFamily}", sans-serif`;
+  c.fillStyle=l.color||'#000000';
+  c.textBaseline='middle';
+  c.fillText(l.text, textX, y+h/2);
+  if(l.marquee) c.restore();
+
+  // Selection
+  if(l.id===selected && !isGhost){
+    c.strokeStyle='#0057FF';
+    c.lineWidth=3;
+    c.setLineDash([8,5]);
+    c.strokeRect(x-3,y-3,w+6,h+6);
+    c.setLineDash([]);
+    c.fillStyle='#0057FF';
+    c.fillRect(x+w-16, y+h-16, 16,16);
+    c.fillStyle='white'; c.font='10px monospace'; c.fillText('↔', x+w-12, y+h-8);
   }
 
   c.restore();
 }
 
+let startTime = Date.now();
 function render(){
+  const now = Date.now();
   ctx.clearRect(0,0,res.w,res.h);
   gctx.clearRect(0,0,res.w,res.h);
   if(video.readyState>=2){
     ctx.drawImage(video,0,0,res.w,res.h);
     gctx.drawImage(video,0,0,res.w,res.h);
   } else {
-    ctx.fillStyle='#E8E6DE'; ctx.fillRect(0,0,res.w,res.h);
-    gctx.fillStyle='#E8E6DE'; gctx.fillRect(0,0,res.w,res.h);
+    const grad=ctx.createLinearGradient(0,0,0,res.h);
+    grad.addColorStop(0,'#E8E6DE'); grad.addColorStop(1,'#d0cec5');
+    ctx.fillStyle=grad; ctx.fillRect(0,0,res.w,res.h);
+    gctx.fillStyle=grad; gctx.fillRect(0,0,res.w,res.h);
   }
-
-  const globalStealth = document.getElementById('globalStealth')?.checked;
 
   layers.forEach(l=>{
     if(!l.visible) return;
     if(!isLive && !l.autoShow){
-      ctx.save(); ctx.globalAlpha=0.25; drawLayer(ctx,l,false); ctx.restore();
-      if(!(l.stealth||globalStealth)){ gctx.save(); gctx.globalAlpha=0.25; drawLayer(gctx,l,true); gctx.restore(); }
+      ctx.save(); ctx.globalAlpha=0.25; drawBrutal(ctx,l,false, now-startTime); ctx.restore();
+      if(!(l.stealth)) { gctx.save(); gctx.globalAlpha=0.25; drawBrutal(gctx,l,true, now-startTime); gctx.restore(); }
       return;
     }
-    drawLayer(ctx,l,false);
-    if(!(l.stealth||globalStealth) || mode==='viewer'){
-      // ghost canvas = what streamer sees
-      if(mode==='streamer'){
-        if(!(l.stealth||globalStealth)) drawLayer(gctx,l,true);
-      }
+    drawBrutal(ctx,l,false, now-startTime);
+    if(mode==='streamer'){
+      if(!(l.stealth)) drawBrutal(gctx,l,true, now-startTime);
+    } else {
+      // viewer mode ghost hidden, but we still draw ghost for streamer preview? No
     }
   });
 
-  // mode toggle visibility
-  if(mode==='viewer'){
-    canvas.style.opacity='1'; ghost.style.opacity='0'; canvas.style.pointerEvents='auto';
-  } else {
-    canvas.style.opacity='0'; ghost.style.opacity='1'; canvas.style.pointerEvents='none';
-  }
+  if(mode==='viewer'){ canvas.style.opacity='1'; ghost.style.opacity='0'; }
+  else { canvas.style.opacity='0'; ghost.style.opacity='1'; }
+
+  requestAnimationFrame(render);
 }
 
 function bindDrag(){
@@ -566,7 +735,7 @@ function bindDrag(){
       const l=layers[i];
       if(p.x>=l.x && p.x<=l.x+l.w && p.y>=l.y && p.y<=l.y+l.h){
         select(l.id); dragging=true; sx=p.x; sy=p.y; ox=l.x; oy=l.y;
-        if(p.x>l.x+l.w-0.08 && p.y>l.y+l.h-0.08) handle='resize'; else handle='move';
+        if(p.x>l.x+l.w-0.1 && p.y>l.y+l.h-0.1) handle='resize'; else handle='move';
         canvas.setPointerCapture(e.pointerId); break;
       }
     }
@@ -578,28 +747,92 @@ function bindDrag(){
     if(handle==='move'){
       l.x=Math.max(0,Math.min(1-l.w, ox+dx));
       l.y=Math.max(0,Math.min(1-l.h, oy+dy));
-      if(document.getElementById('snap').checked){ l.x=Math.round(l.x*20)/20; l.y=Math.round(l.y*20)/20; }
+      if(document.getElementById('snap')?.checked){ l.x=Math.round(l.x*20)/20; l.y=Math.round(l.y*20)/20; }
     } else {
-      l.w=Math.max(0.12,Math.min(0.9, l.w+dx)); l.h=Math.max(0.05,Math.min(0.4, l.h+dy)); sx=p.x; sy=p.y;
+      l.w=Math.max(0.12,Math.min(0.95, l.w+dx)); l.h=Math.max(0.05,Math.min(0.5, l.h+dy)); sx=p.x; sy=p.y;
     }
-    render(); renderList();
+    renderList();
   });
-  canvas.addEventListener('pointerup', ()=>{dragging=false; handle=null;});
+  canvas.addEventListener('pointerup', ()=>{ dragging=false; handle=null; savePerScreen(); });
+}
+
+function bindDoubleClick(){
+  canvas.addEventListener('dblclick', (e)=>{
+    const r=canvas.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width;
+    const y=(e.clientY-r.top)/r.height;
+    const id='l'+Date.now();
+    layers.push({id, type:'text', text:'DOUBLE CLICK TEXT', x, y, w:0.5, h:0.06, fontFamily:'Syne', fontSize:22, color:'#000', brutalStyle:'box', bg:'#FFE600', rotation:-1, autoShow:true, stealth:false, visible:true});
+    select(id); renderList(); savePerScreen();
+  });
+}
+
+function bindBubble(){
+  const bubble=document.getElementById('bubble');
+  const menu=document.getElementById('bubbleMenu');
+  let drag=false, startX, startY, origX, origY, moved=false;
+
+  bubble.addEventListener('pointerdown', e=>{
+    drag=true; moved=false;
+    startX=e.clientX; startY=e.clientY;
+    const rect=bubble.getBoundingClientRect();
+    origX=rect.left; origY=rect.top;
+    bubble.setPointerCapture(e.pointerId);
+  });
+  bubble.addEventListener('pointermove', e=>{
+    if(!drag) return;
+    const dx=e.clientX-startX, dy=e.clientY-startY;
+    if(Math.abs(dx)>5 || Math.abs(dy)>5) moved=true;
+    bubble.style.left=(origX+dx)+'px';
+    bubble.style.top=(origY+dy)+'px';
+    bubble.style.right='auto'; bubble.style.bottom='auto';
+  });
+  bubble.addEventListener('pointerup', e=>{
+    drag=false;
+    const now=Date.now();
+    if(!moved){
+      if(now-lastClick<300){
+        // double click bubble = balik ke app
+        document.getElementById('sidebar').classList.add('open');
+        bubble.style.display='none'; // hide when back to app
+        setTimeout(()=>{ bubble.style.display='flex'; }, 500);
+        toggleBubbleMenu(false);
+      } else {
+        toggleBubbleMenu();
+      }
+      lastClick=now;
+    }
+  });
+}
+
+function toggleBubble(show){
+  const b=document.getElementById('bubble');
+  if(show===undefined) show=b.style.display==='none';
+  b.style.display=show?'flex':'none';
+  bubbleVisible=show;
+  localStorage.setItem('bubble_visible', show);
+}
+function toggleBubbleMenu(force){
+  const m=document.getElementById('bubbleMenu');
+  if(force===false) m.classList.remove('open');
+  else m.classList.toggle('open');
+}
+function toggleAddMenu(force){
+  const m=document.getElementById('addMenu');
+  if(force===false) m.classList.remove('open');
+  else m.classList.toggle('open');
 }
 
 function setMode(m){
   mode=m;
   document.getElementById('modeViewer').classList.toggle('active', m==='viewer');
   document.getElementById('modeStreamer').classList.toggle('active', m==='streamer');
-  render();
 }
-
 function switchTab(n){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
   document.getElementById('tab-'+n).classList.add('active');
-  const map={layers:0,saweria:1,live:2,style:3};
-  document.querySelectorAll('.tab')[map[n]].classList.add('active');
+  document.querySelectorAll('.tab')[{layers:0,design:1,saweria:2,live:3}[n]].classList.add('active');
 }
 function toggleSidebar(){ document.getElementById('sidebar').classList.toggle('open'); }
 
@@ -607,30 +840,31 @@ function toggleLive(){
   isLive=!isLive;
   const btn=document.getElementById('liveBtn');
   const ind=document.getElementById('liveIndicator');
+  const badge=document.getElementById('liveBadge');
   if(isLive){
-    btn.textContent='■ STOP MODE LIVE'; btn.classList.remove('btn-red'); btn.classList.add('btn-black');
-    ind.textContent='● LIVE — SCREEN SHARE AKTIF'; ind.style.background='#FF3B30';
-    if(document.getElementById('autoOnLive').checked) layers.forEach(l=>{ if(l.autoShow) l.visible=true; });
-    log('LIVE MODE ON — Sekarang share layar ini di TikTok Mobile Gaming');
+    btn.textContent='■ STOP FLOATING LIVE'; btn.classList.remove('btn-red'); btn.classList.add('btn-black');
+    ind.textContent='● LIVE + FLOATING'; ind.style.background='#FF3B30';
+    badge.textContent='● LIVE • FLOATING ON'; badge.style.background='#FF3B30';
+    toggleBubble(true);
+    log('LIVE + FLOATING ON — bubble kuning ada di atas app lain');
+    if(document.getElementById('floatingNotif')?.checked) document.getElementById('bubbleNotif').style.display='flex';
     startSaweriaPoll();
-    document.getElementById('phoneWrap').style.boxShadow='16px 16px 0 #FF3B30';
   } else {
-    btn.textContent='● MASUK MODE LIVE'; btn.classList.add('btn-red'); btn.classList.remove('btn-black');
+    btn.textContent='● MASUK MODE LIVE + FLOATING'; btn.classList.add('btn-red'); btn.classList.remove('btn-black');
     ind.textContent='OFFLINE'; ind.style.background='black';
+    badge.textContent='● OFFLINE'; badge.style.background='';
+    toggleBubble(false);
     stopSaweriaPoll();
-    document.getElementById('phoneWrap').style.boxShadow='12px 12px 0 black';
-    log('Live mode off');
+    log('Live off');
   }
-  render();
 }
 
 function connectSaweria(){
   const u=document.getElementById('saweriaUser').value.trim();
-  if(!u){ alert('Isi username Saweria dulu cou'); return; }
-  log(`Connect Saweria: ${u} — polling tiap 3 detik`);
+  if(!u){ alert('Isi username Saweria'); return; }
+  log('Connect Saweria: '+u);
   if(isLive) startSaweriaPoll();
 }
-
 function startSaweriaPoll(){
   if(saweriaPoll) clearInterval(saweriaPoll);
   const user=document.getElementById('saweriaUser').value.trim();
@@ -646,88 +880,68 @@ function startSaweriaPoll(){
   },3000);
 }
 function stopSaweriaPoll(){ if(saweriaPoll) clearInterval(saweriaPoll); }
-
 function testDonation(){ triggerAlert('Bang Jago', 50000, 'gas terus bang live brutal nya keren parah!'); }
-
 function triggerAlert(name, amount, msg){
   const fmt=new Intl.NumberFormat('id-ID').format(amount);
   document.getElementById('alertTitle').textContent=`${name.toUpperCase()} SAWER ${fmt}!`;
-  document.getElementById('alertMsg').textContent=msg||'Makasih banyak!';
+  document.getElementById('alertMsg').textContent=msg||'Makasih!';
   document.getElementById('alertTime').textContent=new Date().toLocaleTimeString();
   const box=document.getElementById('alertBox');
   box.style.display='block';
-  log(`💸 ${name} — Rp${fmt} — ${msg}`);
+  log(`💸 ${name} — ${fmt} — ${msg}`);
   const l=layers.find(x=>x.type==='saweria');
-  if(l){ l.text=`${name} — ${fmt} — ${msg.slice(0,30)}`; render(); }
+  if(l){ l.text=`${name} — ${fmt}`; }
+  // bubble notif
+  const notif=document.getElementById('bubbleNotif');
+  notif.textContent='💸'; notif.style.display='flex';
+  setTimeout(()=>{ if(!document.getElementById('floatingNotif').checked) notif.style.display='none'; }, 5000);
   if(document.getElementById('tts').checked && 'speechSynthesis' in window){
     const u=new SpeechSynthesisUtterance(`${name} sawer ${fmt}. ${msg}`);
     u.lang='id-ID'; speechSynthesis.speak(u);
   }
-  if(document.getElementById('autoHide').checked) setTimeout(()=>box.style.display='none',7000);
+  setTimeout(()=>box.style.display='none',7000);
 }
-
 function log(m){
   const el=document.getElementById('saweriaLog');
   const t=new Date().toLocaleTimeString();
   el.innerHTML=`[${t}] ${m}<br>`+el.innerHTML;
 }
-
-function changeRes(){
-  const v=document.getElementById('res').value; const [w,h]=v.split('x').map(Number); res={w,h}; setupCanvas(); render();
+function applyTemplate(name){
+  if(name==='brutal-live'){
+    layers=[
+      {id:'t1', type:'text', text:'🔴 LIVE NOW', x:0.04, y:0.04, w:0.38, h:0.06, fontFamily:'Syne', fontSize:22, color:'#fff', brutalStyle:'box', bg:'#FF3B30', rotation:-1, autoShow:true, stealth:false, visible:true},
+      {id:'t2', type:'text', text:'@JAMAL_GAMING', x:0.04, y:0.88, w:0.5, h:0.05, fontFamily:'Space Mono', fontSize:12, color:'#000', brutalStyle:'box', bg:'#FFE600', rotation:0, autoShow:true, stealth:false, visible:true},
+    ];
+  } else if(name==='saweria-tape'){
+    layers=[
+      {id:'s1', type:'text', text:'SAWERIA.CO/JAMAL', x:0.04, y:0.04, w:0.6, h:0.06, fontFamily:'Space Mono', fontSize:14, color:'#000', brutalStyle:'tape', bg:'#FFE600', rotation:-1, autoShow:true, stealth:false, visible:true},
+      {id:'s2', type:'text', text:'{name} SAWER {amount}', x:0.04, y:0.5, w:0.8, h:0.08, fontFamily:'Syne', fontSize:28, color:'#000', brutalStyle:'box', bg:'#FFFFFF', rotation:-1, hasTape:true, autoShow:true, stealth:false, visible:true},
+    ];
+  } else if(name==='goal-ripped'){
+    layers=[
+      {id:'g1', type:'goal', text:'TARGET 750K / 1JT', x:0.04, y:0.04, w:0.6, h:0.07, fontFamily:'Syne', fontSize:18, color:'#000', brutalStyle:'ripped', bg:'#FFFFFF', progress:0.75, rotation:-1, autoShow:true, stealth:false, visible:true},
+    ];
+  } else if(name==='minimal'){
+    layers=[
+      {id:'m1', type:'text', text:'LIVE', x:0.04, y:0.04, w:0.18, h:0.05, fontFamily:'Space Mono', fontSize:14, color:'#fff', brutalStyle:'box', bg:'#000', rotation:0, autoShow:true, stealth:false, visible:true},
+    ];
+  }
+  selected=layers[0]?.id; renderList(); if(selected) select(selected); savePerScreen(); log('Template applied: '+name);
 }
-function toggleSafe(){ const s=document.getElementById('safe').checked; document.getElementById('safeArea').style.display=s?'block':'none'; }
+function loadProfileToUI(){
+  const saved=localStorage.getItem('bubble_visible');
+  if(saved==='true') toggleBubble(true);
+  renderScreenTabs();
+}
 function exportJSON(){
-  const blob=new Blob([JSON.stringify({layers,res},null,2)],{type:'application/json'});
-  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='brutal-overlay-config.json'; a.click();
-}
-function copyOverlayLink(){
-  const b64=btoa(JSON.stringify(layers));
-  const url=location.href.split('?')[0]+`?overlay=1&c=${encodeURIComponent(b64)}`;
-  navigator.clipboard.writeText(url).then(()=>alert('Link brutal overlay dicopy! Buat OBS Browser Source:\n'+url));
-}
-function downloadGuide(){
-  const txt=`# BUILD APK BRUTAL — NO RTMP
-
-## Paling Gampang (PWABuilder)
-1. Upload folder pwa ke Netlify
-2. Buka pwabuilder.com > paste URL > Build APK
-
-## Tanpa RTMP Workflow (Screen Share)
-- User buka app SawerOverlay
-- Klik MODE LIVE
-- Buka TikTok > LIVE > Mobile Gaming > Share Screen > Pilih SawerOverlay
-- Penonton liat overlay brutal, streamer bisa stealth
-
-## Android Native — Floating Overlay (No RTMP)
-Pakai SYSTEM_ALERT_WINDOW:
-
-class FloatingService : Service() {
-  override fun onCreate() {
-    val params = WindowManager.LayoutParams(
-      WRAP_CONTENT, WRAP_CONTENT,
-      TYPE_APPLICATION_OVERLAY,
-      FLAG_NOT_FOCUSABLE, TRANSLUCENT
-    )
-    // addView dengan brutal layout
-  }
+  const blob=new Blob([JSON.stringify({profiles, currentProfile},null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='brutal-v3-per-screen.json'; a.click();
 }
 
-Stealth: overlay alpha 0.15 pas live, tapi pas screen share direkam 1.0
-`;
-  const blob=new Blob([txt],{type:'text/plain'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='BUILD-BRUTAL-NO-RTMP.txt'; a.click();
-}
-
-// overlay mode for OBS
-(function(){
-  const p=new URLSearchParams(location.search);
-  if(p.get('overlay')==='1'){
-    document.body.innerHTML='<canvas id="o" style="width:100vw;height:100vh;"></canvas>';
-    const c=document.getElementById('o'); c.width=1080; c.height=1920;
-    const x=c.getContext('2d');
-    try{ layers=JSON.parse(atob(p.get('c'))); }catch{}
-    setInterval(()=>{ x.clearRect(0,0,1080,1920); layers.forEach(l=>{ const xx=l.x*1080, yy=l.y*1920, ww=l.w*1080, hh=l.h*1920; x.fillStyle=l.bgType==='yellow'?'#FFE600':l.bgType==='black'?'#000':'#fff'; x.fillRect(xx,yy,ww,hh); x.strokeStyle='black'; x.lineWidth=4; x.strokeRect(xx,yy,ww,hh); x.fillStyle=l.color; x.font=`700 ${l.fontSize*2}px "${l.fontFamily}"`; x.fillText(l.text, xx+14, yy+hh/2); }); },100);
-  }
-})();
+// Close menus when click outside
+document.addEventListener('click', (e)=>{
+  if(!e.target.closest('#fabAdd') && !e.target.closest('#addMenu')) toggleAddMenu(false);
+});
 
 init();
 </script>
