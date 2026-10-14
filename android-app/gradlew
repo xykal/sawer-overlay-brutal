@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+# Minimal gradlew stub - will use gradle in PATH on CI
+exec gradle "$@"

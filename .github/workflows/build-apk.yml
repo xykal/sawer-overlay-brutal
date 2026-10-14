@@ -1,0 +1,96 @@
+name: Build Brutal APK armeabi-v7a
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+
+      - name: Make gradlew executable
+        run: chmod +x android-app/gradlew || true
+
+      - name: Copy PWA to assets
+        run: |
+          mkdir -p android-app/app/src/main/assets/www
+          cp -r pwa/* android-app/app/src/main/assets/www/ || true
+          ls -lh android-app/app/src/main/assets/www/
+
+      - name: Build APK armeabi-v7a Debug
+        working-directory: android-app
+        run: |
+          gradle --no-daemon assembleDebug --stacktrace
+          ls -lh app/build/outputs/apk/debug/ || ls -lh app/build/outputs/apk/ -R
+
+      - name: Build APK armeabi-v7a Release (unsigned)
+        working-directory: android-app
+        run: |
+          gradle --no-daemon assembleRelease --stacktrace || true
+          ls -lh app/build/outputs/apk/release/ || true
+
+      - name: Rename APK for armeabi-v7a
+        run: |
+          mkdir -p dist
+          find android-app -name "*.apk" -type f | while read apk; do
+            base=$(basename "$apk")
+            cp "$apk" "dist/saweroverlay-brutal-armeabi-v7a-${base}"
+          done
+          ls -lh dist/
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sawer-overlay-brutal-armeabi-v7a
+          path: dist/*.apk
+          retention-days: 30
+
+      - name: Create Release
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v2.0.${{ github.run_number }}-armeabi-v7a
+          name: "Brutal v2.0.${{ github.run_number }} — armeabi-v7a — No RTMP"
+          body: |
+            ## SawerOverlay Brutal — No RTMP Edition
+            
+            **Build:** armeabi-v7a only (sesuai request)
+            **Design:** Brutalism — hitam putih kuning, border tebal, no neon
+            
+            ### Cara pakai tanpa RTMP:
+            1. Install APK di Android
+            2. Buka app, edit overlay
+            3. Klik MASUK MODE LIVE
+            4. Buka TikTok > LIVE > Mobile Gaming > Share Screen > Pilih SawerOverlay
+            5. Penonton liat overlay, lu bisa stealth 15%
+            
+            **Saweria:** Isi username di tab SAWERIA, auto popup + TTS
+            
+            APK ini cuma untuk armeabi-v7a (32-bit ARM) — work di 90% HP Android lama & baru.
+          files: dist/*.apk
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
