@@ -11,8 +11,8 @@ android {
         applicationId = "com.saweroverlay.live"
         minSdk = 24
         targetSdk = 34
-        versionCode = 12
-        versionName = "12.0-teks-ai-elements-melayang"
+        versionCode = 13
+        versionName = "13.0-clean-no-emoji-bubble-kecil"
 
         ndk {
             abiFilters += listOf("armeabi-v7a")
