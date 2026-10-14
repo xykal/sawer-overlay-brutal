@@ -28,5 +28,11 @@
 # Untuk floating overlay service
 -keep class * extends android.app.Service { *; }
 
+# OkHttp & Saweria WebSocket v15
+-keep class okhttp3.** { *; }
+-keep class okio.** { *; }
+-dontwarn okhttp3.**
+-dontwarn okio.**
+
 # R8 gaperlu lib tambahan — ini udah built-in di Android Gradle Plugin
 # Jadi gak perlu library R8 eksternal, cukup enable isMinifyEnabled = true

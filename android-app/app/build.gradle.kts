@@ -11,8 +11,8 @@ android {
         applicationId = "com.saweroverlay.live"
         minSdk = 24
         targetSdk = 34
-        versionCode = 14
-        versionName = "14.0-clean-full-edit-bubble-v1v2"
+        versionCode = 15
+        versionName = "15.0-full-bubble-saweria-widget-live"
 
         ndk {
             abiFilters += listOf("armeabi-v7a")
@@ -70,4 +70,5 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.webkit:webkit:1.6.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
 }

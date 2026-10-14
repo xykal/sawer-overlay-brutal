@@ -377,7 +377,6 @@ class MainActivity : AppCompatActivity() {
 
         @JavascriptInterface
         fun setBubbleAlpha(alpha: Int) {
-            // Save bubble transparency
             getSharedPreferences("brutal_studio_v3", MODE_PRIVATE).edit().putInt("bubble_alpha", alpha).apply()
             val intent = Intent(this@MainActivity, FloatingOverlayService::class.java).apply {
                 putExtra("bubble_alpha", alpha)
@@ -386,8 +385,87 @@ class MainActivity : AppCompatActivity() {
         }
 
         @JavascriptInterface
+        fun setBubbleConfig(configJson: String) {
+            getSharedPreferences("brutal_studio_v3", MODE_PRIVATE).edit().putString("bubble_config_v15", configJson).apply()
+            val intent = Intent(this@MainActivity, FloatingOverlayService::class.java).apply {
+                putExtra("bubble_config", configJson)
+            }
+            startService(intent)
+        }
+
+        @JavascriptInterface
+        fun setSaweriaKey(key: String) {
+            getSharedPreferences("brutal_studio_v3", MODE_PRIVATE).edit().putString("saweria_stream_key", key).apply()
+            val intent = Intent(this@MainActivity, FloatingOverlayService::class.java).apply {
+                putExtra("saweria_key", key)
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) startForegroundService(intent) else startService(intent)
+        }
+
+        @JavascriptInterface
+        fun showDonationOverlay(donator: String, amount: String, message: String) {
+            val intent = Intent(this@MainActivity, FloatingOverlayService::class.java).apply {
+                putExtra("donation", true)
+                putExtra("donator", donator)
+                putExtra("amount", amount)
+                putExtra("message", message)
+            }
+            startService(intent)
+        }
+
+        @JavascriptInterface
+        fun enterLiveMode(configJson: String) {
+            getSharedPreferences("brutal_studio_v3", MODE_PRIVATE).edit().putString("profiles", configJson).apply()
+            try{
+                val obj=org.json.JSONObject(configJson)
+                if(obj.has("bubble")){
+                    val b=obj.getJSONObject("bubble")
+                    getSharedPreferences("brutal_studio_v3", MODE_PRIVATE).edit().putString("bubble_config_v15", b.toString()).apply()
+                }
+                if(obj.has("saweria")){
+                    val s=obj.getJSONObject("saweria")
+                    val key=s.optString("streamKey","")
+                    if(key.isNotEmpty()){
+                        getSharedPreferences("brutal_studio_v3", MODE_PRIVATE).edit().putString("saweria_stream_key", key).apply()
+                    }
+                }
+            }catch(e:Exception){}
+            val intent = Intent(this@MainActivity, FloatingOverlayService::class.java)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) startForegroundService(intent) else startService(intent)
+            isLiveMode = true
+            runOnUiThread { Toast.makeText(this@MainActivity, "LIVE! Bubble full kontrol + Saweria widget aktif. Pencet HOME!", Toast.LENGTH_LONG).show() }
+        }
+
+        @JavascriptInterface
+        fun exitLiveMode() {
+            isLiveMode = false
+            val intent = Intent(this@MainActivity, FloatingOverlayService::class.java)
+            stopService(intent)
+            runOnUiThread { Toast.makeText(this@MainActivity, "Keluar live", Toast.LENGTH_SHORT).show() }
+        }
+
+        @JavascriptInterface
         fun saveProfiles(profilesJson: String) {
             getSharedPreferences("brutal_studio_v3", MODE_PRIVATE).edit().putString("profiles", profilesJson).apply()
+            // also save bubble_config_v15 if present
+            try{
+                val obj=org.json.JSONObject(profilesJson)
+                if(obj.has("bubble")){
+                    getSharedPreferences("brutal_studio_v3", MODE_PRIVATE).edit().putString("bubble_config_v15", obj.getJSONObject("bubble").toString()).apply()
+                }
+                if(obj.has("saweria")){
+                    val s=obj.getJSONObject("saweria")
+                    getSharedPreferences("brutal_studio_v3", MODE_PRIVATE).edit()
+                        .putString("saweria_stream_key", s.optString("streamKey",""))
+                        .putString("saweria_template", s.optString("template","{donator} NYAWER Rp{amount}! {message}"))
+                        .putString("saweria_bg", s.optString("bg","#FFD700"))
+                        .putString("saweria_text_color", s.optString("textColor","#000000"))
+                        .putInt("saweria_duration", s.optInt("duration",6))
+                        .putInt("saweria_size", s.optInt("size",24))
+                        .putString("saweria_pos", s.optString("pos","center"))
+                        .apply()
+                }
+            }catch(e:Exception){}
         }
 
         @JavascriptInterface
