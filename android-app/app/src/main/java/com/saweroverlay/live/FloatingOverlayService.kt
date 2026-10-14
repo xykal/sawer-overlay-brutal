@@ -696,7 +696,7 @@ class FloatingOverlayService : Service() {
             gravity = Gravity.CENTER
             setOnClickListener { saveCurrentProfile(); Toast.makeText(this@FloatingOverlayService, "SAVE OK", Toast.LENGTH_SHORT).show() }
         }
-        val closeBtn = TextView(this).apply {
+        val closeBtnFooter = TextView(this).apply {
             text = "TUTUP"
             setBackgroundColor(Color.parseColor("#FF3B30"))
             setTextColor(Color.WHITE)
@@ -706,7 +706,7 @@ class FloatingOverlayService : Service() {
             setOnClickListener { hideBubbleMenu(); }
         }
         footer.addView(saveBtn, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { setMargins(0,0,4,0) })
-        footer.addView(closeBtn, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { setMargins(4,0,0,0) })
+        footer.addView(closeBtnFooter, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { setMargins(4,0,0,0) })
         menuLayout.addView(footer)
 
         try {
