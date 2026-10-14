@@ -11,8 +11,8 @@ android {
         applicationId = "com.saweroverlay.live"
         minSdk = 24
         targetSdk = 34
-        versionCode = 15
-        versionName = "15.0-full-bubble-saweria-widget-live"
+        versionCode = 16
+        versionName = "16.0-embed-asli-saweria-full-bubble"
 
         ndk {
             abiFilters += listOf("armeabi-v7a")

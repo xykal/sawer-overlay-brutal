@@ -414,6 +414,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         @JavascriptInterface
+        fun addSaweriaEmbed(url: String) {
+            val intent = Intent(this@MainActivity, FloatingOverlayService::class.java).apply {
+                putExtra("action", "add_saweria_embed")
+                putExtra("webUrl", url)
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) startForegroundService(intent) else startService(intent)
+            runOnUiThread { Toast.makeText(this@MainActivity, "Saweria embed asli ditambah — WebView", Toast.LENGTH_LONG).show() }
+        }
+
+        @JavascriptInterface
         fun enterLiveMode(configJson: String) {
             getSharedPreferences("brutal_studio_v3", MODE_PRIVATE).edit().putString("profiles", configJson).apply()
             try{

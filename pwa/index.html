@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>SAWER v15 FULL BUBBLE + SAWERIA WIDGET</title>
+<title>SAWER v16 EMBED ASLI + FULL BUBBLE</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#FFD700">
 <style>
@@ -11,72 +11,66 @@
 body{font-family:monospace;background:#0a0a0a;color:#fff;overflow:hidden;height:100vh;display:flex;flex-direction:column}
 .header{height:48px;background:#000;border-bottom:3px solid #FFD700;display:flex;align-items:center;padding:0 12px;gap:10px;flex-shrink:0}
 .header img{width:28px;height:28px;border:2px solid #FFD700;background:#FFD700}
-.header h1{font-size:11px;letter-spacing:2px}
-.header .status{margin-left:auto;font-size:8px;padding:4px 8px;border:2px solid #333;background:#111}
+.header h1{font-size:10px;letter-spacing:1px}
+.header .status{margin-left:auto;font-size:7px;padding:4px 8px;border:2px solid #333;background:#111}
 .header .status.live{background:#00FF88;color:#000;border-color:#00FF88}
 .main{flex:1;display:flex;overflow:hidden;position:relative}
 .canvas-wrap{flex:1;background:#111;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
 #canvas{width:360px;height:640px;background:#000;border:3px solid #333;position:relative;overflow:hidden;transform-origin:center}
 .canvas-bg{position:absolute;inset:0;background:linear-gradient(45deg,#1a1a1a 25%,transparent 25%),linear-gradient(-45deg,#1a1a1a 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#1a1a1a 75%),linear-gradient(-45deg,transparent 75%,#1a1a1a 75%);background-size:20px 20px;background-position:0 0,0 10px,10px -10px,-10px 0px;opacity:0.3}
 .layer{position:absolute;cursor:move;user-select:none;white-space:pre-wrap;word-break:break-word;transform-origin:center}
+.layer.webview{border:3px solid #FFD700;overflow:hidden;background:#fff}
+.layer.webview iframe{width:100%;height:100%;border:none;background:transparent}
 .layer.selected{outline:2px dashed #FFD700;outline-offset:2px}
-.layer.editing{outline:2px solid #00FF88}
 .sidebar{width:380px;background:#0f0f0f;border-left:3px solid #333;display:flex;flex-direction:column;overflow:hidden;flex-shrink:0}
 .tabs{display:flex;background:#000;border-bottom:3px solid #333;flex-shrink:0}
-.tab{flex:1;padding:10px 4px;text-align:center;font-size:7px;letter-spacing:1px;cursor:pointer;border-right:2px solid #222;transition:0.1s}
+.tab{flex:1;padding:8px 2px;text-align:center;font-size:6px;letter-spacing:0.5px;cursor:pointer;border-right:1px solid #222}
 .tab.active{background:#FFD700;color:#000;font-weight:bold}
-.tab-content{flex:1;overflow-y:auto;padding:12px;display:none}
+.tab-content{flex:1;overflow-y:auto;padding:10px;display:none}
 .tab-content.active{display:block}
-.card{background:#1a1a1a;border:2px solid #333;padding:10px;margin-bottom:10px}
-.card-title{font-size:8px;letter-spacing:2px;margin-bottom:8px;color:#FFD700;display:flex;justify-content:space-between;align-items:center}
-.input{width:100%;background:#000;border:2px solid #333;color:#fff;padding:8px;font-family:monospace;font-size:11px;outline:none}
+.card{background:#1a1a1a;border:2px solid #333;padding:8px;margin-bottom:8px}
+.card-title{font-size:7px;letter-spacing:1px;margin-bottom:6px;color:#FFD700;display:flex;justify-content:space-between;align-items:center}
+.input{width:100%;background:#000;border:2px solid #333;color:#fff;padding:6px;font-family:monospace;font-size:10px;outline:none}
 .input:focus{border-color:#FFD700}
-.btn{width:100%;padding:10px;background:#FFD700;color:#000;border:3px solid #000;font-family:monospace;font-size:9px;font-weight:bold;letter-spacing:1px;cursor:pointer;box-shadow:4px 4px 0 #000;transition:0.05s;text-align:center}
-.btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 #000}
-.btn.small{padding:6px;font-size:7px;box-shadow:2px 2px 0 #000}
+.btn{width:100%;padding:8px;background:#FFD700;color:#000;border:2px solid #000;font-family:monospace;font-size:8px;font-weight:bold;letter-spacing:0.5px;cursor:pointer;box-shadow:3px 3px 0 #000;text-align:center}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #000}
+.btn.small{padding:5px;font-size:6px;box-shadow:2px 2px 0 #000}
 .btn.green{background:#00FF88}
 .btn.red{background:#FF3B30;color:#fff}
 .btn.blue{background:#0A84FF;color:#fff}
 .btn.outline{background:#000;color:#fff;border-color:#FFD700}
-.row{display:flex;gap:6px;margin-top:6px}
+.row{display:flex;gap:4px;margin-top:4px}
 .row .btn{flex:1}
-.label{font-size:7px;letter-spacing:1px;color:#888;margin:8px 0 4px 0;display:block}
-.slider-row{display:flex;align-items:center;gap:8px;margin:6px 0}
-.slider-row span{font-size:7px;min-width:60px;color:#aaa}
+.label{font-size:6px;letter-spacing:0.5px;color:#888;margin:6px 0 3px 0;display:block}
+.slider-row{display:flex;align-items:center;gap:6px;margin:4px 0}
+.slider-row span{font-size:6px;min-width:50px;color:#aaa}
 .slider-row input[type=range]{flex:1;accent-color:#FFD700}
-.slider-row .val{font-size:8px;min-width:30px;text-align:right;color:#FFD700}
-.color-row{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
-.color-dot{width:28px;height:28px;border:2px solid #000;box-shadow:2px 2px 0 #000;cursor:pointer;transition:0.05s}
-.color-dot:active{transform:translate(1px,1px);box-shadow:1px 1px 0 #000}
-.color-dot.selected{outline:2px solid #FFD700;outline-offset:2px}
-.color-input-wrap{display:flex;gap:6px;align-items:center;margin:6px 0}
-.color-input-wrap input[type=color]{width:40px;height:32px;border:2px solid #333;background:#000;padding:2px;cursor:pointer}
-.color-input-wrap input[type=text]{flex:1;background:#000;border:2px solid #333;color:#fff;padding:6px;font-family:monospace;font-size:10px}
-.chip{display:inline-block;padding:4px 8px;background:#000;border:2px solid #333;font-size:7px;cursor:pointer;margin:2px}
+.slider-row .val{font-size:7px;min-width:26px;text-align:right;color:#FFD700}
+.color-row{display:flex;gap:4px;flex-wrap:wrap;margin:4px 0}
+.color-dot{width:22px;height:22px;border:2px solid #000;box-shadow:1px 1px 0 #000;cursor:pointer}
+.chip{display:inline-block;padding:3px 6px;background:#000;border:1px solid #333;font-size:6px;cursor:pointer;margin:1px}
 .chip.active{background:#FFD700;color:#000;border-color:#000;font-weight:bold}
-.bubble-preview-wrap{display:flex;justify-content:center;padding:16px;background:#000;border:2px solid #333;margin:8px 0}
-#bubblePreview{width:56px;height:56px;background:#FFD700;color:#000;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:20px;border:3px solid #000;box-shadow:4px 4px 0 #000;user-select:none;transition:0.1s}
-.bottom-nav{height:56px;background:#000;border-top:3px solid #FFD700;display:flex;flex-shrink:0}
-.bnav{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;border-right:2px solid #222}
+.bubble-preview-wrap{display:flex;justify-content:center;padding:10px;background:#000;border:2px solid #333;margin:6px 0}
+#bubblePreview{width:56px;height:56px;background:#FFD700;color:#000;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:20px;border:3px solid #000;box-shadow:3px 3px 0 #000;user-select:none}
+.bottom-nav{height:50px;background:#000;border-top:3px solid #FFD700;display:flex;flex-shrink:0}
+.bnav{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;cursor:pointer;border-right:1px solid #222}
 .bnav.active{background:#FFD700;color:#000}
-.bnav span{font-size:6px;letter-spacing:1px}
-.bnav .ico{font-size:14px;font-weight:bold}
-#bubble{position:absolute;left:20px;top:200px;width:48px;height:48px;background:#FFD700;color:#000;border:3px solid #000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:18px;cursor:move;box-shadow:4px 4px 0 #000;z-index:100;user-select:none;touch-action:none}
-#bubbleMenu{position:absolute;left:80px;top:200px;width:340px;background:#fff;color:#000;border:3px solid #000;box-shadow:6px 6px 0 #000;z-index:200;display:none;max-height:80vh;overflow:hidden;flex-direction:column}
-.bubble-menu-header{background:#000;color:#fff;padding:8px 10px;display:flex;justify-content:space-between;align-items:center;cursor:move;font-size:8px;letter-spacing:1px}
-.bubble-menu-body{padding:10px;overflow-y:auto;flex:1;background:#f5f5f5}
-.bubble-menu-item{padding:8px;background:#fff;border:2px solid #000;margin-bottom:6px;cursor:pointer;font-size:8px;display:flex;justify-content:space-between;align-items:center;box-shadow:2px 2px 0 #000}
-.bubble-menu-item:active{transform:translate(1px,1px);box-shadow:1px 1px 0 #000}
-.bubble-menu-item .actions{display:flex;gap:4px}
-.bubble-menu-item .actions span{padding:2px 6px;background:#000;color:#fff;font-size:6px;cursor:pointer}
-.saweria-status{padding:6px;background:#000;color:#00FF88;border:2px solid #00FF88;font-size:7px;margin:6px 0;text-align:center}
+.bnav span{font-size:5px;letter-spacing:0.5px}
+.bnav .ico{font-size:12px;font-weight:bold}
+#bubble{position:absolute;left:20px;top:200px;width:48px;height:48px;background:#FFD700;color:#000;border:3px solid #000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:18px;cursor:move;box-shadow:3px 3px 0 #000;z-index:100;user-select:none;touch-action:none}
+#bubbleMenu{position:absolute;left:80px;top:200px;width:340px;background:#fff;color:#000;border:3px solid #000;box-shadow:5px 5px 0 #000;z-index:200;display:none;max-height:80vh;overflow:hidden;flex-direction:column}
+.bubble-menu-header{background:#000;color:#fff;padding:6px 8px;display:flex;justify-content:space-between;align-items:center;cursor:move;font-size:7px;letter-spacing:0.5px}
+.bubble-menu-body{padding:8px;overflow-y:auto;flex:1;background:#f5f5f5}
+.bubble-menu-item{padding:6px;background:#fff;border:2px solid #000;margin-bottom:4px;cursor:pointer;font-size:7px;display:flex;justify-content:space-between;align-items:center;box-shadow:1px 1px 0 #000}
+.bubble-menu-item .actions{display:flex;gap:3px}
+.bubble-menu-item .actions span{padding:2px 5px;background:#000;color:#fff;font-size:5px;cursor:pointer}
+.saweria-status{padding:5px;background:#000;color:#00FF88;border:2px solid #00FF88;font-size:6px;margin:4px 0;text-align:center}
 .saweria-status.off{color:#FF3B30;border-color:#FF3B30}
 .saweria-status.connecting{color:#FFD700;border-color:#FFD700}
-.donation-history{max-height:120px;overflow-y:auto;background:#000;border:2px solid #333;padding:6px;margin-top:6px}
-.donation-item{font-size:7px;padding:4px;border-bottom:1px solid #222;color:#fff}
-.donation-item b{color:#FFD700}
-.template-preview{padding:8px;background:#FFD700;color:#000;border:2px solid #000;font-size:10px;margin:6px 0;min-height:40px;word-break:break-word}
-::-webkit-scrollbar{width:6px;height:6px}
+.donation-history{max-height:100px;overflow-y:auto;background:#000;border:2px solid #333;padding:4px;margin-top:4px}
+.donation-item{font-size:6px;padding:3px;border-bottom:1px solid #222;color:#fff}
+.template-preview{padding:6px;background:#FFD700;color:#000;border:2px solid #000;font-size:9px;margin:4px 0;min-height:30px;word-break:break-word}
+::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-thumb{background:#FFD700}
 ::-webkit-scrollbar-track{background:#000}
 </style>
@@ -84,19 +78,14 @@ body{font-family:monospace;background:#0a0a0a;color:#fff;overflow:hidden;height:
 <body>
 <div class="header">
 <img src="icon-512.png" alt="S">
-<h1>SAWER v15 FULL BUBBLE + SAWERIA WIDGET</h1>
+<h1>SAWER v16 EMBED ASLI + FULL BUBBLE + SAWERIA WIDGET</h1>
 <div class="status" id="status">READY</div>
 </div>
 <div class="main">
 <div class="canvas-wrap" id="canvasWrap">
-<div id="canvas">
-<div class="canvas-bg"></div>
-</div>
+<div id="canvas"><div class="canvas-bg"></div></div>
 <div id="bubble">S</div>
-<div id="bubbleMenu">
-<div class="bubble-menu-header" id="bubbleMenuHeader"><span>SAWER MENU — DRAG HEADER</span><span id="bubbleMenuClose" style="padding:2px 8px;background:#FF3B30;color:#fff;cursor:pointer">X</span></div>
-<div class="bubble-menu-body" id="bubbleMenuBody"></div>
-</div>
+<div id="bubbleMenu"><div class="bubble-menu-header" id="bubbleMenuHeader"><span>SAWER MENU — DRAG HEADER</span><span id="bubbleMenuClose" style="padding:2px 6px;background:#FF3B30;color:#fff;cursor:pointer">X</span></div><div class="bubble-menu-body" id="bubbleMenuBody"></div></div>
 </div>
 <div class="sidebar">
 <div class="tabs">
@@ -107,138 +96,81 @@ body{font-family:monospace;background:#0a0a0a;color:#fff;overflow:hidden;height:
 </div>
 
 <div class="tab-content active" id="tab-teks">
-<div class="card">
-<div class="card-title">TAMBAH TEKS OVERLAY</div>
-<input class="input" id="newText" placeholder="Ketik teks brutal..." value="SAWER BOS 🔥">
-<div class="row"><button class="btn small" onclick="addText()">+ TAMBAH TEKS</button><button class="btn small outline" onclick="clearAll()">HAPUS SEMUA</button></div>
-</div>
-<div class="card" id="propsCard" style="display:none">
-<div class="card-title">FULL EDIT — <span id="propsId"></span> <span onclick="closeProps()" style="cursor:pointer;background:#FF3B30;color:#fff;padding:2px 6px">X</span></div>
-<label class="label">TEKS</label>
-<textarea class="input" id="propText" rows="2" style="resize:none"></textarea>
-<label class="label">UKURAN FONT</label>
-<div class="slider-row"><span>SIZE</span><input type="range" id="propSize" min="12" max="100" value="24"><span class="val" id="propSizeVal">24</span></div>
-<label class="label">ROTASI</label>
-<div class="slider-row"><span>ROTATE</span><input type="range" id="propRotate" min="-45" max="45" value="0"><span class="val" id="propRotateVal">0°</span></div>
-<label class="label">TRANSPARANSI OVERLAY</label>
-<div class="slider-row"><span>ALPHA</span><input type="range" id="propAlpha" min="10" max="100" value="100"><span class="val" id="propAlphaVal">100%</span></div>
-<label class="label">LEBAR</label>
-<div class="slider-row"><span>WIDTH</span><input type="range" id="propW" min="50" max="600" value="200"><span class="val" id="propWVal">200</span></div>
-<label class="label">WARNA TEKS — FULL COLOR PICKER</label>
-<div class="color-input-wrap"><input type="color" id="propColorPicker" value="#FFFFFF"><input type="text" id="propColorHex" value="#FFFFFF" placeholder="#FFFFFF"><button class="btn small" style="width:auto;padding:4px 8px" onclick="applyPropColor()">APPLY</button></div>
-<div class="color-row" id="propColorPresets"></div>
-<label class="label">WARNA BACKGROUND — FULL COLOR</label>
-<div class="color-input-wrap"><input type="color" id="propBgPicker" value="#FFD700"><input type="text" id="propBgHex" value="#FFD700" placeholder="#FFD700"><button class="btn small" style="width:auto;padding:4px 8px" onclick="applyPropBg()">APPLY</button></div>
-<div class="color-row" id="propBgPresets"></div>
-<label class="label">STYLE / SHAPE</label>
-<div id="propStyleChips"></div>
-<label class="label">FONT FAMILY</label>
-<div id="propFontChips"></div>
-<label class="label">BORDER WIDTH</label>
-<div class="slider-row"><span>BORDER</span><input type="range" id="propBorder" min="0" max="8" value="3"><span class="val" id="propBorderVal">3</span></div>
+<div class="card"><div class="card-title">TAMBAH TEKS OVERLAY</div><input class="input" id="newText" placeholder="Ketik teks brutal..." value="SAWER BOS"><div class="row"><button class="btn small" onclick="addText()">+ TAMBAH</button><button class="btn small outline" onclick="clearAll()">HAPUS SEMUA</button></div></div>
+<div class="card" id="propsCard" style="display:none"><div class="card-title">FULL EDIT — <span id="propsId"></span> <span onclick="closeProps()" style="cursor:pointer;background:#FF3B30;color:#fff;padding:2px 5px">X</span></div>
+<label class="label">TEKS</label><textarea class="input" id="propText" rows="2" style="resize:none"></textarea>
+<label class="label">SIZE</label><div class="slider-row"><span>SIZE</span><input type="range" id="propSize" min="12" max="100" value="24"><span class="val" id="propSizeVal">24</span></div>
+<label class="label">ROTATE</label><div class="slider-row"><span>ROTATE</span><input type="range" id="propRotate" min="-45" max="45" value="0"><span class="val" id="propRotateVal">0°</span></div>
+<label class="label">ALPHA</label><div class="slider-row"><span>ALPHA</span><input type="range" id="propAlpha" min="10" max="100" value="100"><span class="val" id="propAlphaVal">100%</span></div>
+<label class="label">WIDTH</label><div class="slider-row"><span>WIDTH</span><input type="range" id="propW" min="50" max="600" value="200"><span class="val" id="propWVal">200</span></div>
+<label class="label">WARNA TEKS — HEX BEBAS</label><div style="display:flex;gap:4px"><input type="color" id="propColorPicker" value="#FFFFFF" style="width:36px;height:26px"><input class="input" id="propColorHex" value="#FFFFFF" style="flex:1"><button class="btn small" style="width:auto" onclick="applyPropColor()">APPLY</button></div><div class="color-row" id="propColorPresets"></div>
+<label class="label">WARNA BG — HEX BEBAS</label><div style="display:flex;gap:4px"><input type="color" id="propBgPicker" value="#FFD700" style="width:36px;height:26px"><input class="input" id="propBgHex" value="#FFD700" style="flex:1"><button class="btn small" style="width:auto" onclick="applyPropBg()">APPLY</button></div><div class="color-row" id="propBgPresets"></div>
+<label class="label">STYLE</label><div id="propStyleChips"></div>
+<label class="label">FONT</label><div id="propFontChips"></div>
 <div class="row"><button class="btn small green" onclick="saveProps()">SAVE</button><button class="btn small red" onclick="deleteCurrent()">HAPUS</button><button class="btn small outline" onclick="duplicateCurrent()">DUPLIKAT</button></div>
 </div>
-<div class="card">
-<div class="card-title">LIST OVERLAY</div>
-<div id="layerList"></div>
-</div>
+<div class="card"><div class="card-title">LIST OVERLAY</div><div id="layerList"></div></div>
 </div>
 
 <div class="tab-content" id="tab-bubble">
-<div class="card">
-<div class="card-title">PREVIEW BUBBLE — FULL KONTROL</div>
-<div class="bubble-preview-wrap"><div id="bubblePreview">S</div></div>
-<div class="row"><button class="btn small" onclick="resetBubble()">RESET DEFAULT</button><button class="btn small green" onclick="saveBubble()">SAVE BUBBLE</button></div>
-</div>
-<div class="card">
-<div class="card-title">UKURAN & TRANSPARANSI</div>
+<div class="card"><div class="card-title">PREVIEW BUBBLE — FULL KONTROL HEX BEBAS</div><div class="bubble-preview-wrap"><div id="bubblePreview">S</div></div><div class="row"><button class="btn small" onclick="resetBubble()">RESET</button><button class="btn small green" onclick="saveBubble()">SAVE BUBBLE</button></div></div>
+<div class="card"><div class="card-title">SIZE & ALPHA & BORDER & SHAPE & TEXT</div>
 <div class="slider-row"><span>SIZE</span><input type="range" id="bubbleSize" min="32" max="120" value="48"><span class="val" id="bubbleSizeVal">48px</span></div>
 <div class="slider-row"><span>ALPHA</span><input type="range" id="bubbleAlpha" min="20" max="100" value="100"><span class="val" id="bubbleAlphaVal">100%</span></div>
 <div class="slider-row"><span>BORDER</span><input type="range" id="bubbleBorderW" min="0" max="8" value="3"><span class="val" id="bubbleBorderWVal">3px</span></div>
-<label class="label">BENTUK / SHAPE</label>
 <div><span class="chip active" data-shape="circle" onclick="setBubbleShape('circle')">BULAT</span><span class="chip" data-shape="rounded" onclick="setBubbleShape('rounded')">KOTAK BULAT</span><span class="chip" data-shape="square" onclick="setBubbleShape('square')">KOTAK</span><span class="chip" data-shape="squircle" onclick="setBubbleShape('squircle')">SQUIRCLE</span></div>
-<label class="label">TEKS DALAM BUBBLE (1-2 HURUF)</label>
-<input class="input" id="bubbleText" value="S" maxlength="2" placeholder="S">
-<label class="label">SHADOW</label>
-<div><span class="chip active" id="shadowOn" onclick="setBubbleShadow(true)">SHADOW ON</span><span class="chip" id="shadowOff" onclick="setBubbleShadow(false)">SHADOW OFF</span></div>
+<input class="input" id="bubbleText" value="S" maxlength="2" placeholder="Teks bubble 1-2 huruf" style="margin-top:4px">
+<div style="margin-top:4px"><span class="chip active" id="shadowOn" onclick="setBubbleShadow(true)">SHADOW ON</span><span class="chip" id="shadowOff" onclick="setBubbleShadow(false)">SHADOW OFF</span></div>
 </div>
-<div class="card">
-<div class="card-title">WARNA BUBBLE — FULL COLOR PICKER</div>
-<label class="label">WARNA BACKGROUND BUBBLE</label>
-<div class="color-input-wrap"><input type="color" id="bubbleBgPicker" value="#FFD700"><input type="text" id="bubbleBgHex" value="#FFD700"><button class="btn small" style="width:auto" onclick="applyBubbleBg()">APPLY</button></div>
-<div class="color-row" id="bubbleBgPresets"></div>
-<label class="label">WARNA TEKS BUBBLE</label>
-<div class="color-input-wrap"><input type="color" id="bubbleTextColorPicker" value="#000000"><input type="text" id="bubbleTextColorHex" value="#000000"><button class="btn small" style="width:auto" onclick="applyBubbleTextColor()">APPLY</button></div>
-<div class="color-row" id="bubbleTextColorPresets"></div>
-<label class="label">WARNA BORDER BUBBLE</label>
-<div class="color-input-wrap"><input type="color" id="bubbleBorderPicker" value="#000000"><input type="text" id="bubbleBorderHex" value="#000000"><button class="btn small" style="width:auto" onclick="applyBubbleBorder()">APPLY</button></div>
-<div class="color-row" id="bubbleBorderPresets"></div>
+<div class="card"><div class="card-title">WARNA BUBBLE — HEX BEBAS</div>
+<label class="label">BG BUBBLE HEX BEBAS</label><div style="display:flex;gap:4px"><input type="color" id="bubbleBgPicker" value="#FFD700" style="width:36px;height:26px"><input class="input" id="bubbleBgHex" value="#FFD700" style="flex:1"><button class="btn small" style="width:auto" onclick="applyBubbleBg()">APPLY</button></div><div class="color-row" id="bubbleBgPresets"></div>
+<label class="label">TEKS BUBBLE HEX BEBAS</label><div style="display:flex;gap:4px"><input type="color" id="bubbleTextColorPicker" value="#000000" style="width:36px;height:26px"><input class="input" id="bubbleTextColorHex" value="#000000" style="flex:1"><button class="btn small" style="width:auto" onclick="applyBubbleTextColor()">APPLY</button></div><div class="color-row" id="bubbleTextColorPresets"></div>
+<label class="label">BORDER BUBBLE HEX BEBAS</label><div style="display:flex;gap:4px"><input type="color" id="bubbleBorderPicker" value="#000000" style="width:36px;height:26px"><input class="input" id="bubbleBorderHex" value="#000000" style="flex:1"><button class="btn small" style="width:auto" onclick="applyBubbleBorder()">APPLY</button></div><div class="color-row" id="bubbleBorderPresets"></div>
 </div>
-<div class="card">
-<div class="card-title">POSISI BUBBLE</div>
-<div class="row"><button class="btn small" onclick="snapBubble('left')">SNAP KIRI</button><button class="btn small" onclick="snapBubble('right')">SNAP KANAN</button></div>
-<div class="row"><button class="btn small outline" onclick="centerBubble()">TENGAH</button><button class="btn small outline" onclick="randomBubble()">RANDOM</button></div>
-</div>
+<div class="card"><div class="card-title">POSISI</div><div class="row"><button class="btn small" onclick="snapBubble('left')">KIRI</button><button class="btn small" onclick="snapBubble('right')">KANAN</button><button class="btn small outline" onclick="centerBubble()">TENGAH</button></div></div>
 </div>
 
 <div class="tab-content" id="tab-saweria">
-<div class="card">
-<div class="card-title">SAWERIA WIDGET — LIVE DONATION</div>
-<div style="font-size:7px;color:#aaa;line-height:1.4;margin-bottom:8px">Tempel link overlay atau streamKey Saweria. Widget akan connect WebSocket wss://events.saweria.co/stream dan munculin notifikasi donasi brutal di overlay HP tanpa perlu connect akun (cuma butuh streamKey).<br><br>Ambil streamKey di: Saweria.co → My Account → Overlay → Donation Alert → copy URL ada ?streamKey=xxx</div>
-<label class="label">STREAM KEY ATAU FULL URL</label>
-<input class="input" id="saweriaInput" placeholder="https://saweria.co/donation-alert?streamKey=xxx atau xxx">
-<div class="row"><button class="btn small" onclick="pasteSaweria()">PASTE</button><button class="btn small green" onclick="connectSaweria()">CONNECT</button><button class="btn small red" onclick="disconnectSaweria()">DISCONNECT</button></div>
-<div class="saweria-status off" id="saweriaStatus">DISCONNECTED — PASTE STREAMKEY LALU CONNECT</div>
-<div class="row"><button class="btn small blue" onclick="testSaweriaDonation()">TEST DONASI (FAKE)</button><button class="btn small outline" onclick="clearDonationHistory()">CLEAR HISTORY</button></div>
+<div class="card" style="background:#FFF9C4;border-color:#FFD700">
+<div class="card-title" style="color:#000">🔥 EMBED OVERLAY ASLI SAWERIA — LENGKAP DARI SAWERIA.CO (BUKAN BIKIN LAGI)</div>
+<div style="font-size:6px;color:#000;line-height:1.4;margin-bottom:6px">Saweria udah ada overlay lengkap! Tinggal paste link overlay asli dari Saweria.co → Overlay → copy link → embed sebagai WebView floating di atas TikTok. Jadi overlay tampil persis kayak di OBS, lengkap dengan animasi, suara, style asli Saweria. Gak perlu bikin lagi!<br><br><b>Link yang didukung:</b><br>- https://saweria.co/overlays/xxx<br>- https://saweria.co/overlay/xxx<br>- https://saweria.co/donation-alert?streamKey=xxx<br>- https://saweria.co/media-share?streamKey=xxx</div>
+<label class="label" style="color:#000">LINK OVERLAY ASLI SAWERIA</label>
+<input class="input" id="saweriaEmbedInput" placeholder="https://saweria.co/overlays/xxx atau donation-alert?streamKey=xxx" style="background:#fff;color:#000;border-color:#000">
+<div class="row"><button class="btn small" onclick="pasteSaweriaEmbed()">PASTE</button><button class="btn small green" onclick="addSaweriaEmbed()">+ TAMBAH OVERLAY ASLI (EMBED WEBVIEW)</button></div>
+<div style="font-size:5px;color:#666;margin-top:4px">Akan ditambahkan sebagai WebView overlay 400x300, bisa di-drag di mode EDIT POSISI, transparan background, auto play suara Saweria asli.</div>
 </div>
+
 <div class="card">
-<div class="card-title">TEMPLATE ALERT DONASI</div>
-<label class="label">TEMPLATE — GUNAKAN {donator} {amount} {message}</label>
+<div class="card-title">SAWERIA CUSTOM BRUTAL WIDGET — ALTERNATIF (WEBSOCKET LIVE)</div>
+<div style="font-size:6px;color:#aaa;line-height:1.3;margin-bottom:6px">Ini custom brutal widget kita pakai WebSocket wss://events.saweria.co/stream — kalau mau style brutal kuning hitam, pakai ini. Kalau mau overlay asli Saweria lengkap, pakai EMBED di atas.</div>
+<label class="label">STREAMKEY ATAU URL</label>
+<input class="input" id="saweriaInput" placeholder="streamKey atau URL donation-alert">
+<div class="row"><button class="btn small" onclick="pasteSaweria()">PASTE</button><button class="btn small green" onclick="connectSaweria()">CONNECT WS</button><button class="btn small red" onclick="disconnectSaweria()">DISCONNECT</button></div>
+<div class="saweria-status off" id="saweriaStatus">DISCONNECTED</div>
+<div class="row"><button class="btn small blue" onclick="testSaweriaDonation()">TEST DONASI FAKE</button><button class="btn small outline" onclick="clearDonationHistory()">CLEAR HISTORY</button></div>
+</div>
+
+<div class="card">
+<div class="card-title">TEMPLATE CUSTOM BRUTAL</div>
 <input class="input" id="saweriaTemplate" value="{donator} NYAWER Rp{amount}! {message}">
-<div class="template-preview" id="templatePreview">{donator} NYAWER Rp{amount}! {message}</div>
-<label class="label">STYLE ALERT</label>
-<div class="color-input-wrap"><input type="color" id="saweriaBgPicker" value="#FFD700"><input type="text" id="saweriaBgHex" value="#FFD700"><span style="font-size:7px">BG</span></div>
-<div class="color-input-wrap"><input type="color" id="saweriaTextPicker" value="#000000"><input type="text" id="saweriaTextHex" value="#000000"><span style="font-size:7px">TEXT</span></div>
-<div class="slider-row"><span>DURATION</span><input type="range" id="saweriaDuration" min="3" max="15" value="6"><span class="val" id="saweriaDurationVal">6s</span></div>
+<div class="template-preview" id="templatePreview"></div>
+<div style="display:flex;gap:4px"><input type="color" id="saweriaBgPicker" value="#FFD700" style="width:30px;height:22px"><input class="input" id="saweriaBgHex" value="#FFD700" style="flex:1"><span style="font-size:6px">BG</span></div>
+<div style="display:flex;gap:4px;margin-top:4px"><input type="color" id="saweriaTextPicker" value="#000000" style="width:30px;height:22px"><input class="input" id="saweriaTextHex" value="#000000" style="flex:1"><span style="font-size:6px">TEXT</span></div>
+<div class="slider-row"><span>DUR</span><input type="range" id="saweriaDuration" min="3" max="15" value="6"><span class="val" id="saweriaDurationVal">6s</span></div>
 <div class="slider-row"><span>SIZE</span><input type="range" id="saweriaSize" min="14" max="48" value="24"><span class="val" id="saweriaSizeVal">24</span></div>
 <div><span class="chip active" data-pos="center" onclick="setSaweriaPos('center')">TENGAH</span><span class="chip" data-pos="top" onclick="setSaweriaPos('top')">ATAS</span><span class="chip" data-pos="bottom" onclick="setSaweriaPos('bottom')">BAWAH</span></div>
-<div class="row"><button class="btn small green" onclick="saveSaweriaSettings()">SAVE SAWERIA</button><button class="btn small" onclick="addSaweriaLayer()">+ TAMBAH KE OVERLAY</button></div>
+<div class="row"><button class="btn small green" onclick="saveSaweriaSettings()">SAVE</button><button class="btn small" onclick="addSaweriaLayer()">+ TAMBAH CUSTOM KE OVERLAY</button></div>
 </div>
-<div class="card">
-<div class="card-title">RIWAYAT DONASI</div>
-<div class="donation-history" id="donationHistory"><div style="font-size:7px;color:#666;text-align:center;padding:10px">Belum ada donasi — connect dulu</div></div>
-</div>
-<div class="card">
-<div class="card-title">CARA AMBIL STREAMKEY</div>
-<div style="font-size:7px;line-height:1.6;color:#ccc">
-1. Login di saweria.co<br>
-2. My Account → Overlay<br>
-3. Pilih Donation Alert<br>
-4. Copy URL: https://saweria.co/donation-alert?streamKey=abc123...<br>
-5. Paste di atas (bisa full URL atau cuma key nya aja)<br>
-6. CONNECT → akan listen donasi real-time via WebSocket<br>
-7. Pas ada donasi, overlay muncul otomatis di HP + di bubble floating<br>
-8. TEST DONASI buat cek tampilan tanpa donasi beneran
-</div>
-</div>
+
+<div class="card"><div class="card-title">RIWAYAT DONASI</div><div class="donation-history" id="donationHistory"><div style="font-size:6px;color:#666;text-align:center;padding:8px">Belum ada donasi</div></div></div>
+
+<div class="card"><div class="card-title">CARA AMBIL LINK OVERLAY ASLI SAWERIA</div><div style="font-size:6px;line-height:1.5;color:#ccc">1. Login saweria.co<br>2. My Account → Overlay (atau Alerts)<br>3. Ada pilihan: Donation Alert / Overlays / QR / Media Share<br>4. Copy link: https://saweria.co/overlays/xxx atau donation-alert?streamKey=xxx<br>5. Paste di card kuning EMBED di atas → TAMBAH OVERLAY ASLI<br>6. Overlay asli Saweria akan muncul sebagai WebView floating di atas TikTok, lengkap animasi + suara asli Saweria<br>7. Drag di mode EDIT POSISI → SELESAI EDIT<br><br><b>Bedanya:</b><br>- EMBED = overlay asli Saweria lengkap (recommended) — WebView load URL asli<br>- CUSTOM BRUTAL = overlay brutal kuning hitam kita pakai WebSocket — style brutal</div></div>
 </div>
 
 <div class="tab-content" id="tab-save">
-<div class="card">
-<div class="card-title">SAVE & EXPORT</div>
-<button class="btn" onclick="saveProfile()">SAVE PROFILE V1+V2</button>
-<div class="row"><button class="btn small outline" onclick="exportJson()">EXPORT JSON</button><button class="btn small outline" onclick="importJson()">IMPORT JSON</button></div>
-<div class="row"><button class="btn small green" onclick="enterLiveMode()">MASUK LIVE + BUBBLE</button><button class="btn small red" onclick="exitLiveMode()">KELUAR LIVE</button></div>
-</div>
-<div class="card">
-<div class="card-title">BUBBLE KECIL 48px SNAP KIRI KANAN</div>
-<div style="font-size:7px;color:#aaa;line-height:1.4">Bubble sekarang full kontrol: warna bebas hex, size 32-120px, shape bulat/kotak, border, shadow, transparansi 20-100%, teks custom. Drag header menu buat geser. Tap bubble di edit mode = SELESAI EDIT.</div>
-<div class="row"><button class="btn small" onclick="showBubble()">SHOW BUBBLE</button><button class="btn small" onclick="hideBubble()">HIDE BUBBLE</button></div>
-</div>
-<div class="card">
-<div class="card-title">VERIFIKASI V1+V2+V3+V4</div>
-<div style="font-size:7px;color:#00FF88">APK signed v1+v2+v3+v4 enabled di build.gradle.kts — apksigner verify --verbose pass. Icon optimasi 21KB per density, PWA 177KB.</div>
-</div>
+<div class="card"><div class="card-title">SAVE & EXPORT</div><button class="btn" onclick="saveProfile()">SAVE PROFILE V1+V2+V3+V4</button><div class="row"><button class="btn small outline" onclick="exportJson()">EXPORT JSON</button><button class="btn small outline" onclick="importJson()">IMPORT JSON</button></div><div class="row"><button class="btn small green" onclick="enterLiveMode()">MASUK LIVE + BUBBLE</button><button class="btn small red" onclick="exitLiveMode()">KELUAR LIVE</button></div></div>
+<div class="card"><div class="card-title">WEBVIEW EMBED INFO</div><div style="font-size:6px;color:#aaa;line-height:1.4">v16 support WebView overlay — embed overlay asli Saweria lengkap sebagai WebView floating. Background transparan, JS enabled, auto play. Bisa di-drag di EDIT POSISI. Juga support custom brutal widget via WebSocket sebagai alternatif.</div></div>
+<div class="card"><div class="card-title">VERIFIKASI V1+V2+V3+V4</div><div style="font-size:6px;color:#00FF88">APK signed v1+v2+v3+v4 + OkHttp + WebView overlay embed</div></div>
 </div>
 
 </div>
@@ -246,26 +178,26 @@ body{font-family:monospace;background:#0a0a0a;color:#fff;overflow:hidden;height:
 <div class="bottom-nav">
 <div class="bnav active" data-bnav="teks"><div class="ico">T</div><span>TEKS</span></div>
 <div class="bnav" data-bnav="bubble"><div class="ico">B</div><span>BUBBLE FULL</span></div>
-<div class="bnav" data-bnav="saweria"><div class="ico">S</div><span>SAWERIA WIDGET</span></div>
-<div class="bnav" data-bnav="save"><div class="ico">V</div><span>SAVE V1+V2</span></div>
+<div class="bnav" data-bnav="saweria"><div class="ico">S</div><span>SAWERIA EMBED ASLI</span></div>
+<div class="bnav" data-bnav="save"><div class="ico">V</div><span>SAVE V1V2V3V4</span></div>
 </div>
 
 <script>
-const COLORS=["#FFFFFF","#000000","#FFD700","#00FF88","#FF3B30","#0A84FF","#FF00FF","#00FFFF","#FF8800","#8800FF","#FFFFFF","#CCCCCC","#888888","#333333","#FF0000","#00FF00","#0000FF","#FFFF00"];
+const COLORS=["#FFFFFF","#000000","#FFD700","#00FF88","#FF3B30","#0A84FF","#FF00FF","#00FFFF","#FF8800","#8800FF","#CCCCCC","#888888"];
 const STYLES=[{id:"box",label:"BOX"},{id:"tape",label:"TAPE"},{id:"stamp",label:"STAMP"},{id:"neon",label:"NEON"},{id:"outline",label:"OUTLINE"},{id:"none",label:"NONE"}];
 const FONTS=[{id:"monospace",label:"MONO"},{id:"sans",label:"SANS"},{id:"serif",label:"SERIF"},{id:"bold",label:"BOLD"}];
-let layers=[],selectedId=null,profiles={},currentProfile="default";
+let layers=[],selectedId=null;
 let bubble={size:48,alpha:100,borderW:3,shape:"circle",text:"S",bg:"#FFD700",textColor:"#000000",borderColor:"#000000",shadow:true,x:20,y:200};
-let saweria={streamKey:"",connected:false,ws:null,template:"{donator} NYAWER Rp{amount}! {message}",bg:"#FFD700",textColor:"#000000",duration:6,size:24,pos:"center",history:[]};
+let saweria={streamKey:"",connected:false,ws:null,template:"{donator} NYAWER Rp{amount}! {message}",bg:"#FFD700",textColor:"#000000",duration:6,size:24,pos:"center",history:[],embeds:[]};
 
 function genId(){return Math.random().toString(36).substr(2,9)}
-function saveLocal(){localStorage.setItem("brutal_v15",JSON.stringify({layers,bubble,saweria,profiles})); if(window.AndroidBridge){AndroidBridge.saveProfiles(JSON.stringify({layers,bubble,saweria}))}}
-function loadLocal(){try{const d=JSON.parse(localStorage.getItem("brutal_v15")||"{}"); if(d.layers) layers=d.layers; if(d.bubble) bubble={...bubble,...d.bubble}; if(d.saweria) saweria={...saweria,...d.saweria}; }catch(e){}}
-function renderCanvas(){const c=document.getElementById("canvas"); c.querySelectorAll(".layer").forEach(el=>el.remove()); layers.forEach(l=>{const el=document.createElement("div"); el.className="layer"+(l.id===selectedId?" selected":""); el.id="layer-"+l.id; el.style.left=l.x+"px"; el.style.top=l.y+"px"; el.style.fontSize=l.fontSize+"px"; el.style.color=l.color; el.style.background=l.bg; el.style.padding="6px 10px"; el.style.border=l.borderW+"px solid "+(l.borderColor||"#000"); el.style.transform=`rotate(${l.rotate}deg)`; el.style.opacity=(l.alpha||100)/100; el.style.width=l.w?l.w+"px":"auto"; el.style.fontFamily=l.fontFamily||"monospace"; el.style.fontWeight=l.fontFamily==="bold"?"bold":"normal"; el.style.boxShadow=l.style==="none"?"none":l.style==="neon"?"0 0 10px "+l.color:"4px 4px 0 #000"; el.textContent=l.text; el.onclick=(e)=>{e.stopPropagation();selectLayer(l.id)}; makeDraggable(el,l); c.appendChild(el);}); renderList(); updateBubblePreview(); }
+function saveLocal(){localStorage.setItem("brutal_v16",JSON.stringify({layers,bubble,saweria})); if(window.AndroidBridge){AndroidBridge.saveProfiles(JSON.stringify({layers,bubble,saweria}))}}
+function loadLocal(){try{const d=JSON.parse(localStorage.getItem("brutal_v16")||localStorage.getItem("brutal_v15")||"{}"); if(d.layers) layers=d.layers; if(d.bubble) bubble={...bubble,...d.bubble}; if(d.saweria) saweria={...saweria,...d.saweria}; }catch(e){}}
+function renderCanvas(){const c=document.getElementById("canvas"); c.querySelectorAll(".layer").forEach(el=>el.remove()); layers.forEach(l=>{if(l.isWebView){const el=document.createElement("div"); el.className="layer webview"; el.id="layer-"+l.id; el.style.left=l.x+"px"; el.style.top=l.y+"px"; el.style.width=(l.w||400)+"px"; el.style.height=(l.h||300)+"px"; el.style.transform=`rotate(${l.rotate||0}deg)`; el.style.opacity=(l.alpha||100)/100; const iframe=document.createElement("iframe"); iframe.src=l.webUrl; iframe.allow="autoplay"; el.appendChild(iframe); el.onclick=(e)=>{e.stopPropagation(); selectLayer(l.id)}; makeDraggable(el,l); c.appendChild(el);}else{const el=document.createElement("div"); el.className="layer"+(l.id===selectedId?" selected":""); el.id="layer-"+l.id; el.style.left=l.x+"px"; el.style.top=l.y+"px"; el.style.fontSize=l.fontSize+"px"; el.style.color=l.color; el.style.background=l.bg; el.style.padding="6px 10px"; el.style.border=l.borderW+"px solid "+(l.borderColor||"#000"); el.style.transform=`rotate(${l.rotate}deg)`; el.style.opacity=(l.alpha||100)/100; el.style.width=l.w?l.w+"px":"auto"; el.style.fontFamily=l.fontFamily||"monospace"; el.style.fontWeight=l.fontFamily==="bold"?"bold":"normal"; el.textContent=l.text; el.onclick=(e)=>{e.stopPropagation(); selectLayer(l.id)}; makeDraggable(el,l); c.appendChild(el);}}); renderList(); updateBubblePreview();}
 function makeDraggable(el,layer){let sx,sy,ox,oy,drag=false; el.addEventListener("mousedown",start); el.addEventListener("touchstart",e=>start(e.touches[0]),{passive:false}); function start(e){drag=true; sx=e.clientX; sy=e.clientY; ox=layer.x; oy=layer.y; document.addEventListener("mousemove",move); document.addEventListener("mouseup",end); document.addEventListener("touchmove",tmove,{passive:false}); document.addEventListener("touchend",end); e.preventDefault()} function move(e){if(!drag)return; layer.x=ox+(e.clientX-sx); layer.y=oy+(e.clientY-sy); el.style.left=layer.x+"px"; el.style.top=layer.y+"px";} function tmove(e){if(!drag)return; const t=e.touches[0]; layer.x=ox+(t.clientX-sx); layer.y=oy+(t.clientY-sy); el.style.left=layer.x+"px"; el.style.top=layer.y+"px"; e.preventDefault()} function end(){drag=false; document.removeEventListener("mousemove",move); document.removeEventListener("mouseup",end); document.removeEventListener("touchmove",tmove); document.removeEventListener("touchend",end); saveLocal()} }
 function addText(){const txt=document.getElementById("newText").value.trim(); if(!txt)return; layers.push({id:genId(),text:txt,x:50,y:100,fontSize:24,color:"#FFFFFF",bg:"#FFD700",borderW:3,borderColor:"#000",rotate:0,alpha:100,w:200,fontFamily:"monospace",style:"box"}); saveLocal(); renderCanvas(); document.getElementById("newText").value=""; setStatus("TEKS DITAMBAH")}
 function selectLayer(id){selectedId=id; renderCanvas(); showProps(id); renderBubbleMenu();}
-function showProps(id){const l=layers.find(x=>x.id===id); if(!l)return; document.getElementById("propsCard").style.display="block"; document.getElementById("propsId").textContent=id.substr(0,5); document.getElementById("propText").value=l.text; document.getElementById("propSize").value=l.fontSize; document.getElementById("propSizeVal").textContent=l.fontSize; document.getElementById("propRotate").value=l.rotate; document.getElementById("propRotateVal").textContent=l.rotate+"°"; document.getElementById("propAlpha").value=l.alpha||100; document.getElementById("propAlphaVal").textContent=(l.alpha||100)+"%"; document.getElementById("propW").value=l.w||200; document.getElementById("propWVal").textContent=l.w||200; document.getElementById("propColorPicker").value=l.color; document.getElementById("propColorHex").value=l.color; document.getElementById("propBgPicker").value=l.bg; document.getElementById("propBgHex").value=l.bg; document.getElementById("propBorder").value=l.borderW; document.getElementById("propBorderVal").textContent=l.borderW; renderPropPresets(); renderStyleChips(); renderFontChips();}
+function showProps(id){const l=layers.find(x=>x.id===id); if(!l)return; if(l.isWebView){alert("Ini WebView embed overlay asli Saweria: "+l.webUrl+"\nEdit posisi via drag, atau hapus via list. Size bisa diatur via props."); return;} document.getElementById("propsCard").style.display="block"; document.getElementById("propsId").textContent=id.substr(0,5); document.getElementById("propText").value=l.text; document.getElementById("propSize").value=l.fontSize; document.getElementById("propSizeVal").textContent=l.fontSize; document.getElementById("propRotate").value=l.rotate; document.getElementById("propRotateVal").textContent=l.rotate+"°"; document.getElementById("propAlpha").value=l.alpha||100; document.getElementById("propAlphaVal").textContent=(l.alpha||100)+"%"; document.getElementById("propW").value=l.w||200; document.getElementById("propWVal").textContent=l.w||200; document.getElementById("propColorPicker").value=l.color; document.getElementById("propColorHex").value=l.color; document.getElementById("propBgPicker").value=l.bg; document.getElementById("propBgHex").value=l.bg; document.getElementById("propBorder").value=l.borderW; document.getElementById("propBorderVal").textContent=l.borderW; renderPropPresets(); renderStyleChips(); renderFontChips();}
 function closeProps(){document.getElementById("propsCard").style.display="none"; selectedId=null; renderCanvas();}
 function renderPropPresets(){const c=document.getElementById("propColorPresets"); c.innerHTML=""; COLORS.forEach(col=>{const d=document.createElement("div"); d.className="color-dot"; d.style.background=col; d.onclick=()=>{const l=layers.find(x=>x.id===selectedId); if(l){l.color=col; document.getElementById("propColorPicker").value=col; document.getElementById("propColorHex").value=col; saveLocal(); renderCanvas();}}; c.appendChild(d);}); const bg=document.getElementById("propBgPresets"); bg.innerHTML=""; COLORS.forEach(col=>{const d=document.createElement("div"); d.className="color-dot"; d.style.background=col; d.onclick=()=>{const l=layers.find(x=>x.id===selectedId); if(l){l.bg=col; document.getElementById("propBgPicker").value=col; document.getElementById("propBgHex").value=col; saveLocal(); renderCanvas();}}; bg.appendChild(d);});}
 function renderStyleChips(){const c=document.getElementById("propStyleChips"); c.innerHTML=""; STYLES.forEach(s=>{const ch=document.createElement("span"); ch.className="chip"+(layers.find(x=>x.id===selectedId)?.style===s.id?" active":""); ch.textContent=s.label; ch.onclick=()=>{const l=layers.find(x=>x.id===selectedId); if(l){l.style=s.id; saveLocal(); renderCanvas(); renderStyleChips();}}; c.appendChild(ch);});}
@@ -275,14 +207,12 @@ function applyPropBg(){const col=document.getElementById("propBgHex").value||doc
 function saveProps(){const l=layers.find(x=>x.id===selectedId); if(!l)return; l.text=document.getElementById("propText").value; l.fontSize=parseInt(document.getElementById("propSize").value); l.rotate=parseInt(document.getElementById("propRotate").value); l.alpha=parseInt(document.getElementById("propAlpha").value); l.w=parseInt(document.getElementById("propW").value); l.borderW=parseInt(document.getElementById("propBorder").value); l.color=document.getElementById("propColorHex").value; l.bg=document.getElementById("propBgHex").value; saveLocal(); renderCanvas(); setStatus("SAVE OK");}
 function deleteCurrent(){if(!selectedId)return; layers=layers.filter(x=>x.id!==selectedId); selectedId=null; document.getElementById("propsCard").style.display="none"; saveLocal(); renderCanvas(); renderBubbleMenu();}
 function duplicateCurrent(){if(!selectedId)return; const l=layers.find(x=>x.id===selectedId); if(!l)return; const nl={...l,id:genId(),x:l.x+20,y:l.y+20}; layers.push(nl); saveLocal(); renderCanvas();}
-function renderList(){const list=document.getElementById("layerList"); list.innerHTML=""; layers.forEach(l=>{const d=document.createElement("div"); d.className="bubble-menu-item"; d.innerHTML=`<span>${l.text.substr(0,20)}</span><div class="actions"><span onclick="selectLayer('${l.id}')">EDIT</span><span onclick="deleteLayer('${l.id}')">HAPUS</span></div>`; list.appendChild(d);});}
+function renderList(){const list=document.getElementById("layerList"); list.innerHTML=""; layers.forEach(l=>{const d=document.createElement("div"); d.className="bubble-menu-item"; const label=l.isWebView?"[WEBVIEW] "+l.webUrl.substr(0,30):l.text.substr(0,20); d.innerHTML=`<span>${label}</span><div class="actions"><span onclick="selectLayer('${l.id}')">EDIT</span><span onclick="deleteLayer('${l.id}')">HAPUS</span></div>`; list.appendChild(d);});}
 function deleteLayer(id){layers=layers.filter(x=>x.id!==id); if(selectedId===id) selectedId=null; saveLocal(); renderCanvas(); renderBubbleMenu();}
 function clearAll(){if(confirm("Hapus semua?")){layers=[]; saveLocal(); renderCanvas();}}
 
-// BUBBLE FULL CONTROL
-function updateBubblePreview(){const p=document.getElementById("bubblePreview"); p.style.width=bubble.size+"px"; p.style.height=bubble.size+"px"; p.style.background=bubble.bg; p.style.color=bubble.textColor; p.style.border=bubble.borderW+"px solid "+bubble.borderColor; p.style.opacity=bubble.alpha/100; p.textContent=bubble.text||"S"; if(bubble.shape==="circle") p.style.borderRadius="50%"; else if(bubble.shape==="rounded") p.style.borderRadius="16px"; else if(bubble.shape==="square") p.style.borderRadius="0"; else p.style.borderRadius="30%"; p.style.boxShadow=bubble.shadow?"4px 4px 0 #000":"none"; p.style.fontSize=Math.max(12,bubble.size*0.4)+"px"; // also update real bubble
- const b=document.getElementById("bubble"); b.style.width=bubble.size+"px"; b.style.height=bubble.size+"px"; b.style.background=bubble.bg; b.style.color=bubble.textColor; b.style.border=bubble.borderW+"px solid "+bubble.borderColor; b.style.opacity=bubble.alpha/100; b.textContent=bubble.text||"S"; if(bubble.shape==="circle") b.style.borderRadius="50%"; else if(bubble.shape==="rounded") b.style.borderRadius="16px"; else if(bubble.shape==="square") b.style.borderRadius="0"; else b.style.borderRadius="30%"; b.style.boxShadow=bubble.shadow?"4px 4px 0 #000":"none"; b.style.fontSize=Math.max(10,bubble.size*0.38)+"px"; b.style.left=bubble.x+"px"; b.style.top=bubble.y+"px";
-}
+// BUBBLE
+function updateBubblePreview(){const p=document.getElementById("bubblePreview"); p.style.width=bubble.size+"px"; p.style.height=bubble.size+"px"; p.style.background=bubble.bg; p.style.color=bubble.textColor; p.style.border=bubble.borderW+"px solid "+bubble.borderColor; p.style.opacity=bubble.alpha/100; p.textContent=bubble.text||"S"; if(bubble.shape==="circle") p.style.borderRadius="50%"; else if(bubble.shape==="rounded") p.style.borderRadius="16px"; else if(bubble.shape==="square") p.style.borderRadius="0"; else p.style.borderRadius="30%"; p.style.boxShadow=bubble.shadow?"3px 3px 0 #000":"none"; p.style.fontSize=Math.max(12,bubble.size*0.4)+"px"; const b=document.getElementById("bubble"); b.style.width=bubble.size+"px"; b.style.height=bubble.size+"px"; b.style.background=bubble.bg; b.style.color=bubble.textColor; b.style.border=bubble.borderW+"px solid "+bubble.borderColor; b.style.opacity=bubble.alpha/100; b.textContent=bubble.text||"S"; if(bubble.shape==="circle") b.style.borderRadius="50%"; else if(bubble.shape==="rounded") b.style.borderRadius="16px"; else if(bubble.shape==="square") b.style.borderRadius="0"; else b.style.borderRadius="30%"; b.style.boxShadow=bubble.shadow?"3px 3px 0 #000":"none"; b.style.fontSize=Math.max(10,bubble.size*0.38)+"px"; b.style.left=bubble.x+"px"; b.style.top=bubble.y+"px";}
 function renderBubblePresets(){["Bg","TextColor","Border"].forEach(type=>{const el=document.getElementById("bubble"+type+"Presets"); if(!el)return; el.innerHTML=""; COLORS.forEach(col=>{const d=document.createElement("div"); d.className="color-dot"; d.style.background=col; d.onclick=()=>{if(type==="Bg") bubble.bg=col; else if(type==="TextColor") bubble.textColor=col; else bubble.borderColor=col; document.getElementById("bubble"+type+"Picker").value=col; document.getElementById("bubble"+type+"Hex").value=col; updateBubblePreview();}; el.appendChild(d);});});}
 function applyBubbleBg(){bubble.bg=document.getElementById("bubbleBgHex").value||document.getElementById("bubbleBgPicker").value; updateBubblePreview();}
 function applyBubbleTextColor(){bubble.textColor=document.getElementById("bubbleTextColorHex").value||document.getElementById("bubbleTextColorPicker").value; updateBubblePreview();}
@@ -293,44 +223,34 @@ function resetBubble(){bubble={size:48,alpha:100,borderW:3,shape:"circle",text:"
 function saveBubble(){saveLocal(); if(window.AndroidBridge){AndroidBridge.setBubbleConfig(JSON.stringify(bubble)); AndroidBridge.setBubbleAlpha(bubble.alpha);} setStatus("BUBBLE SAVE OK");}
 function snapBubble(side){const wrap=document.getElementById("canvasWrap"); const w=wrap.clientWidth; if(side==="left") bubble.x=10; else bubble.x=w-bubble.size-10; updateBubblePreview(); saveLocal();}
 function centerBubble(){const wrap=document.getElementById("canvasWrap"); bubble.x=(wrap.clientWidth-bubble.size)/2; bubble.y=(wrap.clientHeight-bubble.size)/2; updateBubblePreview(); saveLocal();}
-function randomBubble(){const wrap=document.getElementById("canvasWrap"); bubble.x=Math.random()*(wrap.clientWidth-bubble.size-20); bubble.y=Math.random()*(wrap.clientHeight-bubble.size-20); updateBubblePreview(); saveLocal();}
 
-// SAWERIA WIDGET
+// SAWERIA EMBED ASLI + CUSTOM
 function parseStreamKey(input){if(!input) return ""; input=input.trim(); try{const url=new URL(input); const key=url.searchParams.get("streamKey")||url.searchParams.get("stream_key")||""; if(key) return key; const parts=url.pathname.split("/"); const last=parts[parts.length-1]; if(last.length>10) return last; }catch(e){} if(input.includes("streamKey=")){const m=input.match(/streamKey=([^&]+)/); if(m) return m[1];} return input;}
-function pasteSaweria(){navigator.clipboard.readText().then(t=>{document.getElementById("saweriaInput").value=t;}).catch(()=>{const v=prompt("Paste streamKey atau URL saweria:"); if(v) document.getElementById("saweriaInput").value=v;});}
-function connectSaweria(){const raw=document.getElementById("saweriaInput").value.trim(); if(!raw){alert("Paste streamKey dulu jir"); return;} const key=parseStreamKey(raw); if(!key||key.length<10){alert("StreamKey invalid — ambil dari saweria.co → Overlay → Donation Alert → copy URL"); return;} saweria.streamKey=key; saveLocal(); if(saweria.ws) try{saweria.ws.close()}catch(e){} setSaweriaStatus("connecting","CONNECTING... "+key.substr(0,8)+"..."); try{const ws=new WebSocket(`wss://events.saweria.co/stream?streamKey=${key}`); saweria.ws=ws; ws.onopen=()=>{saweria.connected=true; setSaweriaStatus("on","CONNECTED — LISTENING DONASI LIVE"); setStatus("SAWERIA CONNECTED"); if(window.AndroidBridge) AndroidBridge.setSaweriaKey(key);}; ws.onmessage=(e)=>{try{const data=JSON.parse(e.data); if(data.type==="donation"){handleDonations(data.data);} }catch(err){console.log("ws msg",e.data)}}; ws.onerror=()=>{setSaweriaStatus("off","ERROR — CEK STREAMKEY");}; ws.onclose=()=>{saweria.connected=false; setSaweriaStatus("off","DISCONNECTED — RECONNECT?");}; }catch(err){setSaweriaStatus("off","FAILED — "+err.message);}}
+function pasteSaweria(){navigator.clipboard.readText().then(t=>{document.getElementById("saweriaInput").value=t;}).catch(()=>{const v=prompt("Paste streamKey atau URL:"); if(v) document.getElementById("saweriaInput").value=v;});}
+function pasteSaweriaEmbed(){navigator.clipboard.readText().then(t=>{document.getElementById("saweriaEmbedInput").value=t;}).catch(()=>{const v=prompt("Paste link overlay asli Saweria:"); if(v) document.getElementById("saweriaEmbedInput").value=v;});}
+function addSaweriaEmbed(){const url=document.getElementById("saweriaEmbedInput").value.trim(); if(!url||!url.startsWith("http")){alert("Paste link overlay asli Saweria yang valid — contoh https://saweria.co/overlays/xxx"); return;} layers.push({id:genId(),text:"SAWERIA EMBED",x:20,y:100,w:400,h:300,isWebView:true,webUrl:url,rotate:0,alpha:100}); saveLocal(); renderCanvas(); setStatus("SAWERIA EMBED ASLI DITAMBAH — WEBVIEW"); if(window.AndroidBridge){AndroidBridge.addSaweriaEmbed(url);} document.getElementById("saweriaEmbedInput").value="";}
+function connectSaweria(){const raw=document.getElementById("saweriaInput").value.trim(); if(!raw){alert("Paste streamKey dulu"); return;} const key=parseStreamKey(raw); if(!key||key.length<10){alert("StreamKey invalid"); return;} saweria.streamKey=key; saveLocal(); if(saweria.ws) try{saweria.ws.close()}catch(e){} setSaweriaStatus("connecting","CONNECTING... "+key.substr(0,8)+"..."); try{const ws=new WebSocket(`wss://events.saweria.co/stream?streamKey=${key}`); saweria.ws=ws; ws.onopen=()=>{saweria.connected=true; setSaweriaStatus("on","CONNECTED — LISTENING DONASI LIVE"); setStatus("SAWERIA CONNECTED"); if(window.AndroidBridge) AndroidBridge.setSaweriaKey(key);}; ws.onmessage=(e)=>{try{const data=JSON.parse(e.data); if(data.type==="donation"){handleDonations(data.data);} }catch(err){}}; ws.onerror=()=>{setSaweriaStatus("off","ERROR");}; ws.onclose=()=>{saweria.connected=false; setSaweriaStatus("off","DISCONNECTED");}; }catch(err){setSaweriaStatus("off","FAILED — "+err.message);}}
 function disconnectSaweria(){if(saweria.ws) try{saweria.ws.close()}catch(e){} saweria.ws=null; saweria.connected=false; setSaweriaStatus("off","DISCONNECTED"); setStatus("SAWERIA DISCONNECT");}
 function setSaweriaStatus(state,text){const el=document.getElementById("saweriaStatus"); el.textContent=text; el.className="saweria-status "+state;}
 function handleDonations(donations){if(!Array.isArray(donations)) donations=[donations]; donations.forEach(d=>{const amount=d.amount||d.amount_raw||0; const donator=d.donator||d.donator_name||"Anon"; const message=d.message||d.msg||""; const entry={donator,amount,message,time:new Date().toLocaleTimeString()}; saweria.history.unshift(entry); if(saweria.history.length>20) saweria.history.pop(); showDonationOverlay(donator,amount,message); addDonationHistory(entry); saveLocal();});}
-function showDonationOverlay(donator,amount,message){const tpl=saweria.template||"{donator} NYAWER Rp{amount}! {message}"; let text=tpl.replace("{donator}",donator).replace("{amount}",amount).replace("{message}",message).replace("{amount_raw}",amount); const c=document.getElementById("canvas"); const el=document.createElement("div"); el.className="layer"; el.style.left="50%"; el.style.top=saweria.pos==="top"?"20px":saweria.pos==="bottom"?"auto":"50%"; el.style.bottom=saweria.pos==="bottom"?"20px":"auto"; el.style.transform=saweria.pos==="center"?"translate(-50%,-50%)":saweria.pos==="top"?"translateX(-50%)":"translateX(-50%)"; el.style.fontSize=saweria.size+"px"; el.style.background=saweria.bg; el.style.color=saweria.textColor; el.style.padding="12px 16px"; el.style.border="3px solid #000"; el.style.boxShadow="6px 6px 0 #000"; el.style.zIndex="999"; el.style.maxWidth="90%"; el.style.textAlign="center"; el.style.fontFamily="monospace"; el.style.fontWeight="bold"; el.textContent=text; c.appendChild(el); if(window.AndroidBridge) AndroidBridge.showDonationOverlay(donator,amount+"",message); setTimeout(()=>{try{c.removeChild(el)}catch(e){}},saweria.duration*1000); // also play sound if available
- try{const a=new Audio("https://cdn.pixabay.com/download/audio/2022/03/24/audio_5b2b2b2b2b.mp3?"); a.volume=0.5; a.play().catch(()=>{});}catch(e){}
-}
+function showDonationOverlay(donator,amount,message){const tpl=saweria.template||"{donator} NYAWER Rp{amount}! {message}"; let text=tpl.replace("{donator}",donator).replace("{amount}",amount).replace("{message}",message); const c=document.getElementById("canvas"); const el=document.createElement("div"); el.className="layer"; el.style.left="50%"; el.style.top=saweria.pos==="top"?"20px":saweria.pos==="bottom"?"auto":"50%"; el.style.bottom=saweria.pos==="bottom"?"20px":"auto"; el.style.transform=saweria.pos==="center"?"translate(-50%,-50%)":"translateX(-50%)"; el.style.fontSize=saweria.size+"px"; el.style.background=saweria.bg; el.style.color=saweria.textColor; el.style.padding="12px 16px"; el.style.border="3px solid #000"; el.style.boxShadow="6px 6px 0 #000"; el.style.zIndex="999"; el.style.maxWidth="90%"; el.style.textAlign="center"; el.style.fontWeight="bold"; el.textContent=text; c.appendChild(el); if(window.AndroidBridge) AndroidBridge.showDonationOverlay(donator,amount+"",message); setTimeout(()=>{try{c.removeChild(el)}catch(e){}},saweria.duration*1000);}
 function addDonationHistory(entry){const h=document.getElementById("donationHistory"); if(h.children.length===1 && h.children[0].textContent.includes("Belum ada")) h.innerHTML=""; const d=document.createElement("div"); d.className="donation-item"; d.innerHTML=`<b>${entry.donator}</b> Rp${entry.amount} — ${entry.message} <span style="color:#666">${entry.time}</span>`; h.prepend(d);}
 function testSaweriaDonation(){const fakeDonator=["Budi","Siti","Joko","Anon","Boss"][Math.floor(Math.random()*5)]; const fakeAmount=[10000,25000,50000,100000][Math.floor(Math.random()*4)]; const fakeMsg=["Mantap bos!","Gokil overlaynya","Semangat live!","Keren jir"][Math.floor(Math.random()*4)]; handleDonations([{donator:fakeDonator,amount:fakeAmount,message:fakeMsg}]); setStatus("TEST DONASI MUNCUL");}
-function clearDonationHistory(){saweria.history=[]; document.getElementById("donationHistory").innerHTML='<div style="font-size:7px;color:#666;text-align:center;padding:10px">Belum ada donasi</div>'; saveLocal();}
+function clearDonationHistory(){saweria.history=[]; document.getElementById("donationHistory").innerHTML='<div style="font-size:6px;color:#666;text-align:center;padding:8px">Belum ada donasi</div>'; saveLocal();}
 function saveSaweriaSettings(){saweria.template=document.getElementById("saweriaTemplate").value; saweria.bg=document.getElementById("saweriaBgHex").value||document.getElementById("saweriaBgPicker").value; saweria.textColor=document.getElementById("saweriaTextHex").value||document.getElementById("saweriaTextPicker").value; saweria.duration=parseInt(document.getElementById("saweriaDuration").value); saweria.size=parseInt(document.getElementById("saweriaSize").value); saveLocal(); updateTemplatePreview(); setStatus("SAWERIA SAVE OK");}
 function updateTemplatePreview(){const tpl=document.getElementById("saweriaTemplate").value; document.getElementById("templatePreview").textContent=tpl.replace("{donator}","Budi").replace("{amount}","50000").replace("{message}","Mantap bos!"); document.getElementById("templatePreview").style.background=saweria.bg; document.getElementById("templatePreview").style.color=saweria.textColor; document.getElementById("templatePreview").style.fontSize=saweria.size+"px";}
 function setSaweriaPos(p){saweria.pos=p; document.querySelectorAll("[data-pos]").forEach(ch=>ch.classList.toggle("active",ch.dataset.pos===p)); saveLocal();}
 function addSaweriaLayer(){const tpl=saweria.template; const text=tpl.replace("{donator}","Budi").replace("{amount}","50000").replace("{message}","Test"); layers.push({id:genId(),text:text,x:50,y:300,fontSize:saweria.size,color:saweria.textColor,bg:saweria.bg,borderW:3,borderColor:"#000",rotate:0,alpha:100,w:300,fontFamily:"monospace",style:"box"}); saveLocal(); renderCanvas(); setStatus("SAWERIA LAYER DITAMBAH");}
 
 // BUBBLE MENU
-function renderBubbleMenu(){const body=document.getElementById("bubbleMenuBody"); body.innerHTML=""; // bubble full control mini
- const bubbleCard=document.createElement("div"); bubbleCard.className="card"; bubbleCard.style.margin="0 0 8px 0"; bubbleCard.innerHTML=`<div class="card-title">BUBBLE FULL KONTROL</div><div style="display:flex;justify-content:center"><div id="miniBubblePreview" style="width:${bubble.size}px;height:${bubble.size}px;background:${bubble.bg};color:${bubble.textColor};border:${bubble.borderW}px solid ${bubble.borderColor};border-radius:${bubble.shape==="circle"?"50%":bubble.shape==="rounded"?"12px":"0"};display:flex;align-items:center;justify-content:center;font-weight:bold">${bubble.text}</div></div><div class="slider-row"><span>SIZE</span><input type="range" min="32" max="120" value="${bubble.size}" oninput="bubble.size=this.value;document.getElementById('miniBubblePreview').style.width=this.value+'px';document.getElementById('miniBubblePreview').style.height=this.value+'px';updateBubblePreview();saveLocal()"><span class="val">${bubble.size}</span></div><div class="slider-row"><span>ALPHA</span><input type="range" min="20" max="100" value="${bubble.alpha}" oninput="bubble.alpha=this.value;updateBubblePreview();saveLocal();if(window.AndroidBridge)AndroidBridge.setBubbleAlpha(parseInt(this.value))"><span class="val">${bubble.alpha}%</span></div>`; body.appendChild(bubbleCard);
- // saweria quick
- const sawCard=document.createElement("div"); sawCard.className="card"; sawCard.style.margin="0 0 8px 0"; sawCard.innerHTML=`<div class="card-title">SAWERIA QUICK</div><input class="input" id="bubbleSaweriaInput" placeholder="streamKey atau URL saweria" value="${saweria.streamKey}"><div class="row"><button class="btn small green" onclick="const v=document.getElementById('bubbleSaweriaInput').value;document.getElementById('saweriaInput').value=v;connectSaweria();renderBubbleMenu()">CONNECT</button><button class="btn small blue" onclick="testSaweriaDonation()">TEST</button></div><div class="saweria-status ${saweria.connected?"":"off"}" style="margin-top:6px">${saweria.connected?"CONNECTED":"DISCONNECTED"}</div>`; body.appendChild(sawCard);
- // layers list
- layers.forEach(l=>{const item=document.createElement("div"); item.className="bubble-menu-item"; item.innerHTML=`<span>${l.text.substr(0,18)}</span><div class="actions"><span onclick="selectLayer('${l.id}');document.getElementById('bubbleMenu').style.display='none'">EDIT</span><span onclick="deleteLayer('${l.id}')">HAPUS</span></div>`; body.appendChild(item);});
- const addBtn=document.createElement("button"); addBtn.className="btn small"; addBtn.textContent="+ TAMBAH TEKS BARU"; addBtn.onclick=()=>{const t=prompt("Teks overlay:"); if(t){layers.push({id:genId(),text:t,x:50,y:100,fontSize:24,color:"#FFFFFF",bg:"#FFD700",borderW:3,borderColor:"#000",rotate:0,alpha:100,w:200,fontFamily:"monospace",style:"box"}); saveLocal(); renderCanvas(); renderBubbleMenu();}}; body.appendChild(addBtn);
-}
+function renderBubbleMenu(){const body=document.getElementById("bubbleMenuBody"); body.innerHTML=""; const bubbleCard=document.createElement("div"); bubbleCard.className="card"; bubbleCard.style.margin="0 0 6px 0"; bubbleCard.innerHTML=`<div class="card-title">BUBBLE FULL KONTROL</div><div style="display:flex;justify-content:center"><div id="miniBubblePreview" style="width:${bubble.size}px;height:${bubble.size}px;background:${bubble.bg};color:${bubble.textColor};border:${bubble.borderW}px solid ${bubble.borderColor};border-radius:${bubble.shape==="circle"?"50%":bubble.shape==="rounded"?"12px":"0"};display:flex;align-items:center;justify-content:center;font-weight:bold">${bubble.text}</div></div><div class="slider-row"><span>SIZE</span><input type="range" min="32" max="120" value="${bubble.size}" oninput="bubble.size=this.value;document.getElementById('miniBubblePreview').style.width=this.value+'px';document.getElementById('miniBubblePreview').style.height=this.value+'px';updateBubblePreview();saveLocal()"><span class="val">${bubble.size}</span></div><div class="slider-row"><span>ALPHA</span><input type="range" min="20" max="100" value="${bubble.alpha}" oninput="bubble.alpha=this.value;updateBubblePreview();saveLocal();if(window.AndroidBridge)AndroidBridge.setBubbleAlpha(parseInt(this.value))"><span class="val">${bubble.alpha}%</span></div>`; body.appendChild(bubbleCard); const sawCard=document.createElement("div"); sawCard.className="card"; sawCard.style.margin="0 0 6px 0"; sawCard.innerHTML=`<div class="card-title">SAWERIA EMBED ASLI + CUSTOM</div><input class="input" id="bubbleSaweriaEmbed" placeholder="https://saweria.co/overlays/xxx"><div class="row"><button class="btn small green" onclick="const v=document.getElementById('bubbleSaweriaEmbed').value;if(v){layers.push({id:genId(),text:'SAWERIA EMBED',x:20,y:100,w:400,h:300,isWebView:true,webUrl:v,rotate:0,alpha:100});saveLocal();renderCanvas();renderBubbleMenu();if(window.AndroidBridge)AndroidBridge.addSaweriaEmbed(v);}">EMBED ASLI</button><button class="btn small blue" onclick="testSaweriaDonation()">TEST CUSTOM</button></div><div class="saweria-status ${saweria.connected?"":"off"}" style="margin-top:4px">${saweria.connected?"CONNECTED":"DISCONNECTED"}</div>`; body.appendChild(sawCard); layers.forEach(l=>{const item=document.createElement("div"); item.className="bubble-menu-item"; const label=l.isWebView?"[WEBVIEW] "+(l.webUrl||"").substr(0,24):l.text.substr(0,18); item.innerHTML=`<span>${label}</span><div class="actions"><span onclick="selectLayer('${l.id}');document.getElementById('bubbleMenu').style.display='none'">EDIT</span><span onclick="deleteLayer('${l.id}')">HAPUS</span></div>`; body.appendChild(item);}); const addBtn=document.createElement("button"); addBtn.className="btn small"; addBtn.textContent="+ TAMBAH TEKS BARU"; addBtn.onclick=()=>{const t=prompt("Teks overlay:"); if(t){layers.push({id:genId(),text:t,x:50,y:100,fontSize:24,color:"#FFFFFF",bg:"#FFD700",borderW:3,borderColor:"#000",rotate:0,alpha:100,w:200,fontFamily:"monospace",style:"box"}); saveLocal(); renderCanvas(); renderBubbleMenu();}}; body.appendChild(addBtn);}
 function showBubble(){document.getElementById("bubble").style.display="flex"; renderBubbleMenu();}
 function hideBubble(){document.getElementById("bubble").style.display="none"; document.getElementById("bubbleMenu").style.display="none";}
 function setStatus(t){document.getElementById("status").textContent=t; setTimeout(()=>{document.getElementById("status").textContent=saweria.connected?"SAWERIA LIVE":"READY"},2000);}
 
-// Tabs
 document.querySelectorAll(".tab").forEach(tab=>{tab.addEventListener("click",()=>{document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active")); document.querySelectorAll(".tab-content").forEach(c=>c.classList.remove("active")); tab.classList.add("active"); document.getElementById("tab-"+tab.dataset.tab).classList.add("active"); document.querySelectorAll(".bnav").forEach(b=>b.classList.toggle("active",b.dataset.bnav===tab.dataset.tab));});});
 document.querySelectorAll(".bnav").forEach(b=>{b.addEventListener("click",()=>{document.querySelectorAll(".bnav").forEach(x=>x.classList.remove("active")); b.classList.add("active"); document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("active",t.dataset.tab===b.dataset.bnav)); document.querySelectorAll(".tab-content").forEach(c=>c.classList.toggle("active",c.id==="tab-"+b.dataset.bnav));});});
 
-// Bubble drag + menu
 let bubbleDragging=false,bubbleStartX,bubbleStartY,bubbleOrigX,bubbleOrigY;
 const bubbleEl=document.getElementById("bubble");
 bubbleEl.addEventListener("mousedown",startBubbleDrag);
@@ -338,21 +258,16 @@ bubbleEl.addEventListener("touchstart",e=>startBubbleDrag(e.touches[0]),{passive
 function startBubbleDrag(e){bubbleDragging=true; bubbleStartX=e.clientX; bubbleStartY=e.clientY; bubbleOrigX=bubble.x; bubbleOrigY=bubble.y; document.addEventListener("mousemove",moveBubble); document.addEventListener("mouseup",endBubbleDrag); document.addEventListener("touchmove",moveBubbleTouch,{passive:false}); document.addEventListener("touchend",endBubbleDrag); e.preventDefault();}
 function moveBubble(e){if(!bubbleDragging)return; bubble.x=bubbleOrigX+(e.clientX-bubbleStartX); bubble.y=bubbleOrigY+(e.clientY-bubbleStartY); updateBubblePreview();}
 function moveBubbleTouch(e){if(!bubbleDragging)return; const t=e.touches[0]; bubble.x=bubbleOrigX+(t.clientX-bubbleStartX); bubble.y=bubbleOrigY+(t.clientY-bubbleStartY); updateBubblePreview(); e.preventDefault();}
-function endBubbleDrag(e){if(!bubbleDragging)return; bubbleDragging=false; document.removeEventListener("mousemove",moveBubble); document.removeEventListener("mouseup",endBubbleDrag); document.removeEventListener("touchmove",moveBubbleTouch); document.removeEventListener("touchend",endBubbleDrag); const dx=Math.abs(bubble.x-bubbleOrigX); const dy=Math.abs(bubble.y-bubbleOrigY); if(dx<5&&dy<5){ // click
- const menu=document.getElementById("bubbleMenu"); if(menu.style.display==="flex") menu.style.display="none"; else {menu.style.display="flex"; renderBubbleMenu(); menu.style.left=(bubble.x+ bubble.size+10)+"px"; menu.style.top=bubble.y+"px";} } else { // snap left/right
- const wrap=document.getElementById("canvasWrap"); if(bubble.x < wrap.clientWidth/2) bubble.x=10; else bubble.x=wrap.clientWidth-bubble.size-10; updateBubblePreview();} saveLocal(); if(window.AndroidBridge) AndroidBridge.setBubbleConfig(JSON.stringify(bubble));}
+function endBubbleDrag(e){if(!bubbleDragging)return; bubbleDragging=false; document.removeEventListener("mousemove",moveBubble); document.removeEventListener("mouseup",endBubbleDrag); document.removeEventListener("touchmove",moveBubbleTouch); document.removeEventListener("touchend",endBubbleDrag); const dx=Math.abs(bubble.x-bubbleOrigX); const dy=Math.abs(bubble.y-bubbleOrigY); if(dx<5&&dy<5){const menu=document.getElementById("bubbleMenu"); if(menu.style.display==="flex") menu.style.display="none"; else {menu.style.display="flex"; renderBubbleMenu(); menu.style.left=(bubble.x+ bubble.size+10)+"px"; menu.style.top=bubble.y+"px";} } else {const wrap=document.getElementById("canvasWrap"); if(bubble.x < wrap.clientWidth/2) bubble.x=10; else bubble.x=wrap.clientWidth-bubble.size-10; updateBubblePreview();} saveLocal(); if(window.AndroidBridge) AndroidBridge.setBubbleConfig(JSON.stringify(bubble));}
 document.getElementById("bubbleMenuClose").onclick=()=>{document.getElementById("bubbleMenu").style.display="none";};
-// bubble menu drag header
 let menuDrag=false,mStartX,mStartY,mOrigX,mOrigY;
 document.getElementById("bubbleMenuHeader").addEventListener("mousedown",e=>{menuDrag=true; mStartX=e.clientX; mStartY=e.clientY; const menu=document.getElementById("bubbleMenu"); mOrigX=parseInt(menu.style.left)||80; mOrigY=parseInt(menu.style.top)||200; document.addEventListener("mousemove",moveMenu); document.addEventListener("mouseup",()=>{menuDrag=false; document.removeEventListener("mousemove",moveMenu);});});
 function moveMenu(e){if(!menuDrag)return; const menu=document.getElementById("bubbleMenu"); menu.style.left=(mOrigX+(e.clientX-mStartX))+"px"; menu.style.top=(mOrigY+(e.clientY-mStartY))+"px";}
 
-// Sliders
 document.getElementById("propSize").addEventListener("input",e=>{document.getElementById("propSizeVal").textContent=e.target.value; const l=layers.find(x=>x.id===selectedId); if(l){l.fontSize=parseInt(e.target.value); renderCanvas();}});
 document.getElementById("propRotate").addEventListener("input",e=>{document.getElementById("propRotateVal").textContent=e.target.value+"°"; const l=layers.find(x=>x.id===selectedId); if(l){l.rotate=parseInt(e.target.value); renderCanvas();}});
 document.getElementById("propAlpha").addEventListener("input",e=>{document.getElementById("propAlphaVal").textContent=e.target.value+"%"; const l=layers.find(x=>x.id===selectedId); if(l){l.alpha=parseInt(e.target.value); renderCanvas();}});
 document.getElementById("propW").addEventListener("input",e=>{document.getElementById("propWVal").textContent=e.target.value; const l=layers.find(x=>x.id===selectedId); if(l){l.w=parseInt(e.target.value); renderCanvas();}});
-document.getElementById("propBorder").addEventListener("input",e=>{document.getElementById("propBorderVal").textContent=e.target.value; const l=layers.find(x=>x.id===selectedId); if(l){l.borderW=parseInt(e.target.value); renderCanvas();}});
 document.getElementById("bubbleSize").addEventListener("input",e=>{bubble.size=parseInt(e.target.value); document.getElementById("bubbleSizeVal").textContent=e.target.value+"px"; updateBubblePreview();});
 document.getElementById("bubbleAlpha").addEventListener("input",e=>{bubble.alpha=parseInt(e.target.value); document.getElementById("bubbleAlphaVal").textContent=e.target.value+"%"; updateBubblePreview(); if(window.AndroidBridge) AndroidBridge.setBubbleAlpha(bubble.alpha);});
 document.getElementById("bubbleBorderW").addEventListener("input",e=>{bubble.borderW=parseInt(e.target.value); document.getElementById("bubbleBorderWVal").textContent=e.target.value+"px"; updateBubblePreview();});
@@ -368,13 +283,13 @@ document.getElementById("saweriaDuration").addEventListener("input",e=>{document
 document.getElementById("saweriaSize").addEventListener("input",e=>{document.getElementById("saweriaSizeVal").textContent=e.target.value; saweria.size=parseInt(e.target.value); updateTemplatePreview();});
 document.getElementById("saweriaTemplate").addEventListener("input",updateTemplatePreview());
 
-function saveProfile(){saveLocal(); setStatus("PROFILE SAVE V1+V2 OK"); if(window.AndroidBridge) AndroidBridge.saveProfiles(JSON.stringify({layers,bubble,saweria}));}
-function exportJson(){const data=JSON.stringify({layers,bubble,saweria},null,2); const blob=new Blob([data],{type:"application/json"}); const url=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=url; a.download="sawer-v15-full.json"; a.click();}
+function saveProfile(){saveLocal(); setStatus("PROFILE SAVE V1+V2+V3+V4 OK"); if(window.AndroidBridge) AndroidBridge.saveProfiles(JSON.stringify({layers,bubble,saweria}));}
+function exportJson(){const data=JSON.stringify({layers,bubble,saweria},null,2); const blob=new Blob([data],{type:"application/json"}); const url=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=url; a.download="sawer-v16-embed-asli.json"; a.click();}
 function importJson(){const input=document.createElement("input"); input.type="file"; input.accept=".json"; input.onchange=e=>{const file=e.target.files[0]; const r=new FileReader(); r.onload=ev=>{try{const d=JSON.parse(ev.target.result); if(d.layers) layers=d.layers; if(d.bubble) bubble=d.bubble; if(d.saweria) saweria=d.saweria; saveLocal(); renderCanvas(); setStatus("IMPORT OK");}catch(err){alert("Invalid JSON");}}; r.readAsText(file);}; input.click();}
-function enterLiveMode(){saveLocal(); if(window.AndroidBridge){AndroidBridge.enterLiveMode(JSON.stringify({layers,bubble,saweria}));} setStatus("LIVE + BUBBLE AKTIF"); document.getElementById("status").classList.add("live");}
+function enterLiveMode(){saveLocal(); if(window.AndroidBridge){AndroidBridge.enterLiveMode(JSON.stringify({layers,bubble,saweria}));} setStatus("LIVE + BUBBLE + SAWERIA EMBED AKTIF"); document.getElementById("status").classList.add("live");}
 function exitLiveMode(){if(window.AndroidBridge){AndroidBridge.exitLiveMode();} setStatus("KELUAR LIVE"); document.getElementById("status").classList.remove("live");}
 
-function init(){loadLocal(); renderCanvas(); renderBubblePresets(); updateBubblePreview(); updateTemplatePreview(); if(saweria.streamKey){document.getElementById("saweriaInput").value=saweria.streamKey; document.getElementById("saweriaTemplate").value=saweria.template; document.getElementById("saweriaBgHex").value=saweria.bg; document.getElementById("saweriaBgPicker").value=saweria.bg; document.getElementById("saweriaTextHex").value=saweria.textColor; document.getElementById("saweriaTextPicker").value=saweria.textColor; document.getElementById("saweriaDuration").value=saweria.duration; document.getElementById("saweriaSize").value=saweria.size; if(saweria.history) saweria.history.forEach(addDonationHistory);} setStatus("READY v15 FULL BUBBLE + SAWERIA");}
+function init(){loadLocal(); renderCanvas(); renderBubblePresets(); updateBubblePreview(); updateTemplatePreview(); if(saweria.streamKey){document.getElementById("saweriaInput").value=saweria.streamKey; document.getElementById("saweriaTemplate").value=saweria.template; document.getElementById("saweriaBgHex").value=saweria.bg; document.getElementById("saweriaBgPicker").value=saweria.bg; document.getElementById("saweriaTextHex").value=saweria.textColor; document.getElementById("saweriaTextPicker").value=saweria.textColor; document.getElementById("saweriaDuration").value=saweria.duration; document.getElementById("saweriaSize").value=saweria.size; if(saweria.history) saweria.history.forEach(addDonationHistory);} setStatus("READY v16 EMBED ASLI + FULL BUBBLE");}
 init();
 </script>
 </body>

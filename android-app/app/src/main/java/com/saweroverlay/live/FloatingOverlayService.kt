@@ -92,7 +92,9 @@ class FloatingOverlayService : Service() {
         var fontSize: Int = 14,
         var fontFamily: String = "Syne",
         var stealth: Boolean = false,
-        var autoShow: Boolean = true
+        var autoShow: Boolean = true,
+        var isWebView: Boolean = false,
+        var webUrl: String = ""
     )
 
     private val layersByProfile = mutableMapOf<String, MutableList<BrutalLayer>>()
@@ -418,6 +420,16 @@ class FloatingOverlayService : Service() {
                 "test_donation" -> {
                     testDonation()
                 }
+                "add_saweria_embed" -> {
+                    val url=it.getStringExtra("webUrl")?:""
+                    if(url.isNotEmpty()){
+                        val list=layersByProfile.getOrPut(currentProfile){ mutableListOf() }
+                        list.add(BrutalLayer("web_${System.currentTimeMillis()}", "SAWERIA EMBED", 20f, 100f, 400f, 300f, "box", "#FFFFFF", "#000000", 0f, 1f, 14, "monospace", false, true, true, url))
+                        saveCurrentProfile()
+                        showPerScreenOverlays()
+                        Toast.makeText(this,"SAWERIA EMBED DITAMBAH — OVERLAY ASLI SAWERIA",Toast.LENGTH_LONG).show()
+                    }
+                }
             }
             if (it.hasExtra("donation")) {
                 val donator=it.getStringExtra("donator")?:"Anon"
@@ -612,61 +624,121 @@ class FloatingOverlayService : Service() {
         val layers=layersByProfile[currentProfile]?: mutableListOf()
         layers.forEach{ layer ->
             if(!layer.autoShow && !isEditMode) return@forEach
-            val tv=TextView(this).apply{
-                text=layer.text
-                textSize=layer.fontSize.toFloat()
-                setTextColor(Color.parseColor(layer.color))
-                setPadding(12,8,12,8)
-                rotation=layer.rotation
-                alpha=layer.alpha
-                gravity=android.view.Gravity.CENTER
-                maxWidth=(layer.w).toInt()
-            }
-            val bgDrawable=GradientDrawable()
-            try{ bgDrawable.setColor(Color.parseColor(layer.bg)) }catch(e:Exception){ bgDrawable.setColor(Color.parseColor("#FFD700")) }
-            bgDrawable.setStroke(3, Color.BLACK)
-            when(layer.brutalStyle){
-                "box"-> bgDrawable.cornerRadius=0f
-                "tape"-> bgDrawable.cornerRadius=4f
-                "stamp"-> bgDrawable.cornerRadius=20f
-                "neon"-> { bgDrawable.cornerRadius=8f; tv.setShadowLayer(10f,0f,0f,Color.parseColor(layer.color)) }
-                "outline"-> { bgDrawable.setColor(Color.TRANSPARENT); bgDrawable.setStroke(3, Color.parseColor(layer.color)) }
-                else-> bgDrawable.cornerRadius=0f
-            }
-            tv.background=bgDrawable
 
-            val lp=FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT)
-            lp.leftMargin=layer.x.toInt()
-            lp.topMargin=layer.y.toInt()
-            container.addView(tv,lp)
+            if(layer.isWebView && layer.webUrl.isNotEmpty()){
+                // v16 EMBED SAWERIA OVERLAY ASLI — WebView floating
+                try{
+                    val webView=android.webkit.WebView(this).apply{
+                        setBackgroundColor(Color.TRANSPARENT)
+                        settings.javaScriptEnabled=true
+                        settings.domStorageEnabled=true
+                        settings.mediaPlaybackRequiresUserGesture=false
+                        setLayerType(View.LAYER_TYPE_HARDWARE,null)
+                        webViewClient=android.webkit.WebViewClient()
+                        webChromeClient=android.webkit.WebChromeClient()
+                    }
+                    webView.loadUrl(layer.webUrl)
 
-            if(isEditMode){
-                var startX=0f
-                var startY=0f
-                var origX=0f
-                var origY=0f
-                tv.setOnTouchListener{ v, event ->
-                    when(event.action){
-                        MotionEvent.ACTION_DOWN->{
-                            startX=event.rawX
-                            startY=event.rawY
-                            origX=layer.x
-                            origY=layer.y
-                            true
+                    val lp=FrameLayout.LayoutParams(layer.w.toInt().coerceAtLeast(300), (layer.h.toInt().coerceAtLeast(200)))
+                    lp.leftMargin=layer.x.toInt()
+                    lp.topMargin=layer.y.toInt()
+                    lp.gravity=android.view.Gravity.TOP or android.view.Gravity.START
+                    container.addView(webView,lp)
+
+                    if(isEditMode){
+                        var startX=0f
+                        var startY=0f
+                        var origX=0f
+                        var origY=0f
+                        val dragHandle=TextView(this).apply{
+                            text="DRAG SAWERIA EMBED — ${layer.webUrl.take(30)}"
+                            setBackgroundColor(Color.parseColor("#CCFFD700"))
+                            setTextColor(Color.BLACK)
+                            textSize=7f
+                            setPadding(6,4,6,4)
                         }
-                        MotionEvent.ACTION_MOVE->{
-                            layer.x=origX + (event.rawX-startX)
-                            layer.y=origY + (event.rawY-startY)
-                            lp.leftMargin=layer.x.toInt()
-                            lp.topMargin=layer.y.toInt()
-                            v.layoutParams=lp
-                            true
+                        val handleLp=FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT)
+                        handleLp.leftMargin=layer.x.toInt()
+                        handleLp.topMargin=(layer.y-24).toInt()
+                        container.addView(dragHandle,handleLp)
+
+                        dragHandle.setOnTouchListener{ v, event ->
+                            when(event.action){
+                                MotionEvent.ACTION_DOWN->{ startX=event.rawX; startY=event.rawY; origX=layer.x; origY=layer.y; true }
+                                MotionEvent.ACTION_MOVE->{
+                                    layer.x=origX + (event.rawX-startX)
+                                    layer.y=origY + (event.rawY-startY)
+                                    lp.leftMargin=layer.x.toInt()
+                                    lp.topMargin=layer.y.toInt()
+                                    handleLp.leftMargin=layer.x.toInt()
+                                    handleLp.topMargin=(layer.y-24).toInt()
+                                    webView.layoutParams=lp
+                                    v.layoutParams=handleLp
+                                    true
+                                }
+                                MotionEvent.ACTION_UP->{ saveCurrentProfile(); true }
+                                else->false
+                            }
                         }
-                        MotionEvent.ACTION_UP->{
-                            saveCurrentProfile()
-                            true
+                    }
+                }catch(e:Exception){ e.printStackTrace() }
+            }else{
+                val tv=TextView(this).apply{
+                    text=layer.text
+                    textSize=layer.fontSize.toFloat()
+                    setTextColor(Color.parseColor(layer.color))
+                    setPadding(12,8,12,8)
+                    rotation=layer.rotation
+                    alpha=layer.alpha
+                    gravity=android.view.Gravity.CENTER
+                    maxWidth=(layer.w).toInt()
+                }
+                val bgDrawable=GradientDrawable()
+                try{ bgDrawable.setColor(Color.parseColor(layer.bg)) }catch(e:Exception){ bgDrawable.setColor(Color.parseColor("#FFD700")) }
+                bgDrawable.setStroke(3, Color.BLACK)
+                when(layer.brutalStyle){
+                    "box"-> bgDrawable.cornerRadius=0f
+                    "tape"-> bgDrawable.cornerRadius=4f
+                    "stamp"-> bgDrawable.cornerRadius=20f
+                    "neon"-> { bgDrawable.cornerRadius=8f; tv.setShadowLayer(10f,0f,0f,Color.parseColor(layer.color)) }
+                    "outline"-> { bgDrawable.setColor(Color.TRANSPARENT); bgDrawable.setStroke(3, Color.parseColor(layer.color)) }
+                    else-> bgDrawable.cornerRadius=0f
+                }
+                tv.background=bgDrawable
+
+                val lp=FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT)
+                lp.leftMargin=layer.x.toInt()
+                lp.topMargin=layer.y.toInt()
+                container.addView(tv,lp)
+
+                if(isEditMode){
+                    var startX=0f
+                    var startY=0f
+                    var origX=0f
+                    var origY=0f
+                    tv.setOnTouchListener{ v, event ->
+                        when(event.action){
+                            MotionEvent.ACTION_DOWN->{
+                                startX=event.rawX
+                                startY=event.rawY
+                                origX=layer.x
+                                origY=layer.y
+                                true
+                            }
+                            MotionEvent.ACTION_MOVE->{
+                                layer.x=origX + (event.rawX-startX)
+                                layer.y=origY + (event.rawY-startY)
+                                lp.leftMargin=layer.x.toInt()
+                                lp.topMargin=layer.y.toInt()
+                                v.layoutParams=lp
+                                true
+                            }
+                            MotionEvent.ACTION_UP->{
+                                saveCurrentProfile()
+                                true
+                            }
+                            else->false
                         }
-                        else->false
                     }
                 }
             }
@@ -961,7 +1033,7 @@ class FloatingOverlayService : Service() {
             }
         }
         val testBtn=TextView(this).apply{
-            text="TEST DONASI FAKE"
+            text="TEST DONASI FAKE (CUSTOM BRUTAL)"
             setBackgroundColor(Color.parseColor("#0A84FF"))
             setTextColor(Color.WHITE)
             textSize=8f
@@ -969,9 +1041,46 @@ class FloatingOverlayService : Service() {
             gravity=android.view.Gravity.CENTER
             setOnClickListener{ testDonation() }
         }
+        // v16 EMBED OVERLAY ASLI SAWERIA — WebView langsung
+        val embedTitle=TextView(this).apply{
+            text="ATAU EMBED OVERLAY ASLI SAWERIA (LENGKAP) — Paste link overlay dari Saweria.co → Overlay → copy link"
+            setTextColor(Color.BLACK)
+            textSize=6f
+            setPadding(0,8,0,4)
+        }
+        val embedInput=EditText(this).apply{
+            hint="https://saweria.co/overlays/xxx atau https://saweria.co/donation-alert?streamKey=xxx"
+            textSize=7f
+            setBackgroundColor(Color.WHITE)
+            setPadding(8,8,8,8)
+        }
+        val embedBtn=TextView(this).apply{
+            text="TAMBAH OVERLAY ASLI SAWERIA (WEBVIEW EMBED)"
+            setBackgroundColor(Color.parseColor("#FFD700"))
+            setTextColor(Color.BLACK)
+            textSize=8f
+            setPadding(12,8,12,8)
+            gravity=android.view.Gravity.CENTER
+            setOnClickListener{
+                val url=embedInput.text.toString().trim()
+                if(url.isEmpty() || !url.startsWith("http")){
+                    Toast.makeText(this@FloatingOverlayService,"Paste link overlay Saweria yang valid jir",Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                val list=layersByProfile.getOrPut(currentProfile){ mutableListOf() }
+                list.add(BrutalLayer("web_${System.currentTimeMillis()}", "SAWERIA EMBED", 20f, 100f, 400f, 300f, "box", "#FFFFFF", "#000000", 0f, 1f, 14, "monospace", false, true, true, url))
+                saveCurrentProfile()
+                showPerScreenOverlays()
+                hideBubbleMenu()
+                Toast.makeText(this@FloatingOverlayService,"SAWERIA EMBED ASLI DITAMBAH — OVERLAY LENGKAP DARI SAWERIA",Toast.LENGTH_LONG).show()
+            }
+        }
         saweriaCard.addView(saweriaInput, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply{ setMargins(0,6,0,0) })
         saweriaCard.addView(saweriaConnectBtn, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply{ setMargins(0,6,0,0) })
         saweriaCard.addView(testBtn, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply{ setMargins(0,6,0,0) })
+        saweriaCard.addView(embedTitle)
+        saweriaCard.addView(embedInput, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply{ setMargins(0,2,0,0) })
+        saweriaCard.addView(embedBtn, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply{ setMargins(0,6,0,0) })
         body.addView(saweriaCard, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply{ setMargins(0,0,0,10) })
 
         // OVERLAY LIST
@@ -1288,13 +1397,14 @@ class FloatingOverlayService : Service() {
                     for(i in 0 until arr.length()){
                         val o=arr.getJSONObject(i)
                         list.add(BrutalLayer(
-                            o.getString("id"), o.getString("text"),
+                            o.getString("id"), o.optString("text",""),
                             o.getDouble("x").toFloat(), o.getDouble("y").toFloat(),
-                            o.optDouble("w",200.0).toFloat(), o.optDouble("h",0.0).toFloat(),
+                            o.optDouble("w",200.0).toFloat(), o.optDouble("h",200.0).toFloat(),
                             o.optString("brutalStyle","box"), o.optString("bg","#FFD700"),
                             o.optString("color","#000000"), o.optDouble("rotation",0.0).toFloat(),
                             o.optDouble("alpha",1.0).toFloat(), o.optInt("fontSize",18),
-                            o.optString("fontFamily","monospace"), false, true
+                            o.optString("fontFamily","monospace"), false, true,
+                            o.optBoolean("isWebView",false), o.optString("webUrl","")
                         ))
                     }
                     layersByProfile[key]=list
@@ -1330,6 +1440,8 @@ class FloatingOverlayService : Service() {
                     o.put("alpha",l.alpha)
                     o.put("fontSize",l.fontSize)
                     o.put("fontFamily",l.fontFamily)
+                    o.put("isWebView",l.isWebView)
+                    o.put("webUrl",l.webUrl)
                     arr.put(o)
                 }
                 obj.put(k,arr)
