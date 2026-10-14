@@ -46,15 +46,7 @@ android {
         viewBinding = true
     }
 
-    // Split APK per ABI biar cuma armeabi-v7a
-    splits {
-        abi {
-            isEnable = true
-            reset()
-            include("armeabi-v7a")
-            isUniversalApk = false
-        }
-    }
+    // Hanya armeabi-v7a - tanpa splits biar gak conflict
 }
 
 dependencies {
