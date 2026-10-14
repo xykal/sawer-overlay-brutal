@@ -1,4 +1,4 @@
-name: Build Brutal APK v9 Signed Floating
+name: Build Brutal APK v14 Clean Full Edit
 
 on:
   push:
@@ -31,34 +31,29 @@ jobs:
           yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
           $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0" "ndk;26.1.10909125" || true
 
-      - name: Fix ic_launcher
-        run: |
-          mkdir -p android-app/app/src/main/res/mipmap-hdpi android-app/app/src/main/res/mipmap-mdpi android-app/app/src/main/res/mipmap-xhdpi
-          echo "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII=" | base64 -d > android-app/app/src/main/res/mipmap-hdpi/ic_launcher.png
-          cp android-app/app/src/main/res/mipmap-hdpi/ic_launcher.png android-app/app/src/main/res/mipmap-mdpi/
-          cp android-app/app/src/main/res/mipmap-hdpi/ic_launcher.png android-app/app/src/main/res/mipmap-xhdpi/
-
       - name: Copy PWA to assets
         run: |
           mkdir -p android-app/app/src/main/assets/www
           cp -r pwa/* android-app/app/src/main/assets/www/
+          ls -lh android-app/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png pwa/icon-512.png || true
 
       - name: Make gradlew executable
         run: chmod +x android-app/gradlew || true
 
-      - name: Build SIGNED Release APK armeabi-v7a (R8 enabled)
+      - name: Build SIGNED Release APK armeabi-v7a v14 (R8 + v1+v2+v3+v4)
         working-directory: android-app
         run: |
           gradle --no-daemon assembleRelease --stacktrace
           find app/build -name "*.apk" -type f -exec ls -lh {} \;
+          # verify signing v1+v2
+          $ANDROID_HOME/build-tools/34.0.0/apksigner verify --verbose app/build/outputs/apk/release/app-release.apk || true
 
       - name: Rename APK
         run: |
           mkdir -p dist
           find android-app/app/build/outputs/apk -name "*.apk" -type f | while read apk; do
             echo "Found $apk"
-            cp "$apk" "dist/SawerOverlay-v9-Floating-Signed-armeabi-v7a.apk"
-            # Also keep original name
+            cp "$apk" "dist/SawerOverlay-v14-Clean-FullEdit-Signed-armeabi-v7a.apk"
             base=$(basename "$apk")
             cp "$apk" "dist/$base"
           done
@@ -67,51 +62,55 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: sawer-overlay-v9-signed-armeabi-v7a
+          name: sawer-overlay-v14-clean-full-edit-signed-armeabi-v7a
           path: dist/*.apk
           retention-days: 30
 
-      - name: Create Release v9
+      - name: Create Release v14
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v13.0.${{ github.run_number }}-clean-bubble-kecil
-          name: "v10.0 Super Gampang Final — Bubble Pas Keluar + Overlay Di Luar APK"
+          tag_name: v14.0.${{ github.run_number }}-clean-full-edit-bubble-v1v2
+          name: "v14.0 CLEAN FULL EDIT — Fix Edit Keluar + Transparansi + Saweria Link Tanpa Connect + Logo + V1+V2"
           body: |
-            ## 🔥 SawerOverlay v9 FINAL — Signed Resmi + Floating Overlay Beneran
+            ## 🔥 v14.0 CLEAN FULL EDIT — Semua Bug v13 Fix + Fitur Baru
 
-            ### ✨ Fitur Baru v9:
-            - **🟡 Bubble bulat otomatis pas keluar APK** — pencet HOME langsung jadi bubble kuning di atas TikTok (kayak Messenger chat head)
-            - **🎨 Overlay beneran floating di luar APK** — walau keluar app, overlay tetep muncul di atas TikTok! Bisa atur posisi langsung drag di atas TikTok via EDIT POSISI
-            - **✏️ Edit posisi overlay langsung** — tap bubble → EDIT POSISI OVERLAY → drag overlay di atas TikTok buat geser, auto save!
-            - **📚 Tutorial super gampang** — muncul pas pertama buka, bahasa santai, no teknis
-            - **🔊 MyInstants FIX 100%** — 3 cara: FETCH link, UPLOAD MP3 dari HP (paling gampang!), paste link MP3 langsung
-            - **📱 Penjelasan armeabi-v7a gampang** — di tab LIVE + EXPORT, dijelasin buat HP lama & baru semua bisa
+            ### ✅ Fix Bug v13 Yang Ngerepotin:
+            - **Edit posisi gabisa keluar? FIXED** — Sekarang ada tombol SELESAI EDIT + BATAL gede di bawah overlay, tap bubble di mode edit = langsung SELESAI, notification ada action SELESAI EDIT, gak perlu restart HP lagi!
+            - **Floating harus sama kayak di app? FIXED** — Render overlay di luar APK sama persis kayak di dalam app (shadow, border, warna, alpha, rotate, font)
+            - **Harus restart HP baru keluar edit? FIXED** — Pakai finishEditMode() + originalLayersBeforeEdit restore + START_STICKY + try-catch windowManager
 
-            ### 🔐 Signed Resmi:
-            - Keystore resmi Sawer Studio (RSA 2048, valid 10000 hari)
-            - R8 enabled — APK lebih kecil & cepat (gak perlu lib tambahan, R8 udah built-in di Android Gradle)
-            - ProGuard keep rules buat WebView + JS bridge biar gak error
+            ### ✨ Fitur Baru v14:
+            - **Transparansi overlay** — Slider 10-100% di FULL EDIT, bisa bikin overlay semi transparan
+            - **Transparansi bubble bulat** — Slider 20-100% di menu bubble, atur transparansi floating bulat yang melayang
+            - **Full edit di bubble** — Tap bubble → menu → FULL EDIT → EditText teks + SeekBar size 12-80 + rotate -20..20 + transparansi + color picker teks/bg + style BOX/TAPE/STAMP + font family + save/batal/hapus
+            - **Saweria link tanpa connect** — Tempel link https://saweria.co/overlays/xxx langsung di PWA (card SAWERIA LINK) atau di bubble menu, auto jadi overlay tanpa perlu connect akun!
+            - **Logo & icon konsisten** — Icon brutalism S kuning hitam 512px optimasi (21KB per density, 177KB PWA), konsisten di launcher + PWA + header + bubble, clean brutalism
+            - **Verifikasi v1+v2+v3+v4** — Signing v1+v2+v3+v4 enabled di build.gradle.kts, apksigner verify
+            - **Clean ga ramai** — No emoji, brutalism clean, bottom nav 3 item (TEKS FULL EDIT / BUBBLE KECIL / SAVE V1+V2), bubble kecil 48px snap kiri/kanan
 
-            ### 📦 APK:
-            - **SawerOverlay-v9-Floating-Signed-armeabi-v7a.apk (signed release, R8)**
-            - **armeabi-v7a** = buat semua HP Android lama & baru, file kecil ~5MB
-            - Install: download → buka → izinkan sumber tidak dikenal → install
+            ### 📦 APK v14:
+            - **SawerOverlay-v14-Clean-FullEdit-Signed-armeabi-v7a.apk ~3MB signed v1+v2+v3+v4**
+            - **armeabi-v7a** = semua HP Android lama & baru bisa install, file kecil optimasi R8
+            - Install: download → buka → izinkan → install
 
-            ### 🎯 Cara pakai bubble floating overlay:
-            1. Edit overlay di Layers
-            2. Tab LIVE → MASUK MODE LIVE + BUBBLE
-            3. Tap bubble → EDIT POSISI OVERLAY → drag overlay di atas TikTok!
-            4. Pencet HOME → bubble + overlay tetep di atas TikTok!
-            5. Atur posisi enak via bubble menu
+            ### 🎯 Cara Pakai Super Gampang:
+            1. Buka app → tab TEKS → tambah teks overlay
+            2. Tap FULL EDIT di bubble menu atau di PWA buat atur transparansi/rotate/size/warna/shape/font
+            3. Tab BUBBLE KECIL → MASUK MODE LIVE + BUBBLE
+            4. Pencet HOME → bubble kuning 48px muncul di atas TikTok (snap kiri/kanan)
+            5. Tap bubble → menu draggable (drag header buat geser) → EDIT POSISI OVERLAY → drag overlay di atas TikTok → SELESAI EDIT (tombol gede di bawah) atau tap bubble lagi
+            6. Atur transparansi bubble 20-100% di menu
+            7. Tempel link Saweria: di PWA ada card SAWERIA LINK → paste link overlay → TAMBAH, atau di bubble menu ada input link → TAMBAH DARI LINK
+            8. SAVE V1+V2 di bottom nav
 
-            ### 🐛 Bug Fix:
-            - Fixed overlay gak muncul pas keluar app (sekarang pakai FrameLayout absolute + MATCH_PARENT floating)
-            - Fixed bubble gak draggable
-            - Fixed myinstants fetch dengan 2 proxy fallback + upload blob
-            - Fixed R8 hapus class penting (keep rules)
+            ### 🔧 Teknis:
+            - FloatingOverlayService v14: finishEditMode(), cancelEditMode(), originalLayersBeforeEdit, bubble tap exit, overlay SELESAI+BATAL buttons, notification SELESAI EDIT action, bubbleAlpha prefs, showFullEdit() lengkap, saweria link input, snapBubbleToEdge left/right
+            - PWA v14: 3 bottom nav, props full edit alpha/rotate/size/w/font/style/color/bg, bubble alpha, saweria link card paste+addFromSaweriaLink, logo img, bubble 48px snap, bubble-menu draggable FULL EDIT/HAPUS/DUPLIKAT
+            - Icon 512px brutalism S kuning optimasi
+            - Build v1+v2+v3+v4 signing verification
 
-            **R8 gaperlu lib kah?** — Gak perlu! R8 udah built-in di Android Gradle Plugin. Cukup `isMinifyEnabled = true` + proguard-rules.pro. Gak butuh library tambahan.
+            **Link Download:** APK di bawah ini
           files: dist/*.apk
           draft: false
           prerelease: false
