@@ -11,8 +11,8 @@ android {
         applicationId = "com.saweroverlay.live"
         minSdk = 24
         targetSdk = 34
-        versionCode = 11
-        versionName = "11.0-backend-fix-rest-polling"
+        versionCode = 12
+        versionName = "12.0-teks-ai-elements-melayang"
 
         ndk {
             abiFilters += listOf("armeabi-v7a")

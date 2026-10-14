@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>SAWER STUDIO v10 — SUPER GAMPANG BUBBLE LUAR</title>
+<title>SAWER STUDIO v12 — TEKS OVERLAY + ELEMEN MELAYANG AI</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#000000">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
@@ -12,44 +12,36 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',sans-serif;height:100dvh;display:flex;flex-direction:column;overflow:hidden;}
 .header{height:56px;background:var(--ink);color:white;display:flex;align-items:center;justify-content:space-between;padding:0 10px;border-bottom:var(--border);position:relative;z-index:30;flex-shrink:0;}
-.header::after{content:'';position:absolute;bottom:-8px;left:0;right:0;height:8px;background:var(--green);border-bottom:var(--border);}
+.header::after{content:'';position:absolute;bottom:-8px;left:0;right:0;height:8px;background:var(--yellow);border-bottom:var(--border);}
 .logo{font-family:'Syne';font-weight:800;font-size:16px;display:flex;align-items:center;gap:5px;}
-.logo-box{background:var(--green);color:black;padding:2px 6px;border:2px solid white;transform:rotate(-2deg);box-shadow:2px 2px 0 white;}
+.logo-box{background:var(--yellow);color:black;padding:2px 6px;border:2px solid white;transform:rotate(-2deg);box-shadow:2px 2px 0 white;}
 .badge{border:2px solid white;padding:2px 6px;font-family:'Space Mono';font-size:7px;font-weight:700;box-shadow:2px 2px 0 black;}
-.badge-live{background:var(--red);color:white;} .badge-v10{background:var(--green);color:black;}
+.badge-live{background:var(--red);color:white;} .badge-v12{background:var(--purple);color:white;}
 .main{flex:1;display:flex;overflow:hidden;position:relative;}
 .sidebar{width:420px;background:var(--paper);border-right:var(--border);display:flex;flex-direction:column;overflow:hidden;z-index:20;}
 .stage{flex:1;background:var(--bg);background-image:radial-gradient(#000 1px, transparent 1px);background-size:20px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;padding:8px;}
-.tab-content{flex:1;overflow-y:auto;padding:8px;display:none;padding-bottom:90px;}
+.tab-content{flex:1;overflow-y:auto;padding:10px;display:none;padding-bottom:90px;}
 .tab-content.active{display:block;}
 .btn{width:100%;padding:14px 10px;border:var(--border);font-family:'Space Mono';font-weight:700;font-size:11px;cursor:pointer;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:var(--shadow-xs);background:white;min-height:48px;border-radius:10px;}
 .btn:active{transform:translate(2px,2px);box-shadow:0 0 0 black;}
-.btn-black{background:black;color:white;} .btn-yellow{background:var(--yellow);color:black;} .btn-red{background:var(--red);color:white;} .btn-blue{background:var(--blue);color:white;} .btn-pink{background:var(--pink);color:white;} .btn-green{background:var(--green);color:black;}
+.btn-black{background:black;color:white;} .btn-yellow{background:var(--yellow);color:black;} .btn-red{background:var(--red);color:white;} .btn-blue{background:var(--blue);color:white;} .btn-pink{background:var(--pink);color:white;} .btn-green{background:var(--green);color:black;} .btn-purple{background:var(--purple);color:white;}
 .card{background:white;border:var(--border);box-shadow:var(--shadow-xs);padding:12px;margin-bottom:10px;border-radius:12px;}
 .card-title{font-family:'Space Mono';font-size:8px;font-weight:700;text-transform:uppercase;background:black;color:white;display:inline-block;padding:3px 8px;margin-bottom:8px;border-radius:4px;}
-.input,.select,.textarea{width:100%;border:var(--border);padding:12px;font-family:'Space Mono';font-size:11px;background:white;outline:none;margin-top:4px;box-shadow:1px 1px 0 black inset;min-height:42px;border-radius:10px;}
+.input,.select,.textarea{width:100%;border:var(--border);padding:12px;font-family:'Space Mono';font-size:12px;background:white;outline:none;margin-top:4px;box-shadow:1px 1px 0 black inset;min-height:44px;border-radius:10px;}
 .input:focus{background:var(--yellow);}
 .label{font-family:'Space Mono';font-size:7px;font-weight:700;text-transform:uppercase;margin-top:10px;display:block;opacity:.8;}
-.layer-item{background:white;border:var(--border);padding:10px;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;box-shadow:2px 2px 0 black;border-radius:10px;}
-.layer-item.active{background:var(--yellow);transform:rotate(-0.5deg) scale(1.01);}
-.phone-wrap{position:relative;width:350px;max-width:94vw;height:580px;max-height:68vh;background:black;border:var(--border);box-shadow:var(--shadow);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0;border-radius:12px;}
+.phone-wrap{position:relative;width:360px;max-width:94vw;height:620px;max-height:72vh;background:black;border:var(--border);box-shadow:var(--shadow);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0;border-radius:12px;}
 .phone-top{height:26px;background:white;border-bottom:var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 8px;font-family:'Space Mono';font-size:7px;font-weight:700;flex-shrink:0;}
 .canvas-wrap{flex:1;position:relative;overflow:hidden;background:black;}
 #video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scaleX(-1);}
 #canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;z-index:2;}
 #ghost{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;}
 #particles{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3;}
+#aiElements{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:4;}
 .viewer-pill{position:absolute;top:6px;left:6px;z-index:10;background:black;color:white;border:2px solid white;padding:3px 6px;font-family:'Space Mono';font-size:7px;font-weight:700;box-shadow:2px 2px 0 black;border-radius:6px;}
-.tiktok-right{position:absolute;right:4px;bottom:65px;z-index:10;display:flex;flex-direction:column;gap:6px;}
-.tiktok-right div{width:28px;height:28px;background:white;border:2px solid black;display:flex;align-items:center;justify-content:center;font-weight:800;box-shadow:2px 2px 0 black;border-radius:50%;font-size:10px;}
-.alert-box{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-1deg);width:88%;background:white;border:var(--border);box-shadow:8px 8px 0 black;padding:0;z-index:25;display:none;overflow:hidden;border-radius:12px;}
-.alert-header{display:flex;justify-content:space-between;background:black;color:white;padding:6px 10px;font-family:'Space Mono';font-size:7px;font-weight:700;}
-.alert-body{padding:10px;}
-.alert-body h2{font-family:'Syne';font-weight:800;font-size:22px;line-height:.9;text-transform:uppercase;}
-.alert-body p{font-family:'Space Mono';font-size:9px;margin-top:6px;font-weight:700;border-top:var(--border);background:var(--yellow);margin:6px -10px -10px -10px;padding:6px 10px;}
 .bottom-nav{height:70px; background:white; border-top:var(--border); display:flex; align-items:center; justify-content:space-around; padding:0 4px; padding-bottom:env(safe-area-inset-bottom); flex-shrink:0; z-index:30; box-shadow:0 -4px 0 black;}
 .bottom-nav-item{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; padding:8px 2px; cursor:pointer; border:2px solid transparent; border-radius:12px; transition:.15s; min-width:0;}
-.bottom-nav-item.active{background:var(--green); border:var(--border); box-shadow:2px 2px 0 black; transform:translate(-1px,-1px);}
+.bottom-nav-item.active{background:var(--yellow); border:var(--border); box-shadow:2px 2px 0 black; transform:translate(-1px,-1px);}
 .bottom-nav-icon{font-size:22px; line-height:1;}
 .bottom-nav-label{font-family:'Space Mono'; font-size:7px; font-weight:700; text-transform:uppercase; max-width:100%; overflow:hidden; text-overflow:ellipsis;}
 .floating-bubble{position:fixed; width:62px; height:62px; background:var(--yellow); border:3px solid black; border-radius:50%; box-shadow:4px 4px 0 black; display:flex; align-items:center; justify-content:center; font-family:'Syne'; font-weight:800; font-size:20px; cursor:grab; z-index:9999; right:12px; bottom:84px; user-select:none; touch-action:none;}
@@ -57,44 +49,19 @@ body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',sans-seri
 .bubble-menu.open{display:block; animation:pop .22s cubic-bezier(.175,.885,.32,1.275);}
 @keyframes pop{0%{transform:scale(.8) translateY(10px)} 100%{transform:scale(1)}}
 .bubble-item{border:2px solid black; padding:12px; margin-bottom:8px; font-family:'Space Mono'; font-size:9px; font-weight:700; cursor:pointer; background:white; display:flex; gap:6px; align-items:center; box-shadow:2px 2px 0 black; min-height:44px; border-radius:10px;}
-.bubble-item.highlight{background:var(--yellow);}
 .fab-add{position:absolute; bottom:8px; left:50%; transform:translateX(-50%); z-index:12; background:black; color:white; border:var(--border); border-radius:20px; padding:8px 14px; font-family:'Space Mono'; font-size:8px; font-weight:700; box-shadow:var(--shadow-xs); cursor:pointer;}
-.add-menu{position:absolute; bottom:42px; left:50%; transform:translateX(-50%); background:white; border:var(--border); box-shadow:var(--shadow); padding:6px; display:none; z-index:13; width:260px; border-radius:14px;}
-.add-menu.open{display:flex; flex-wrap:wrap; gap:6px;}
-.add-option{border:2px solid black; padding:8px; font-family:'Space Mono'; font-size:8px; font-weight:700; background:white; cursor:pointer; flex:1 0 46%; text-align:center; box-shadow:1px 1px 0 black; min-height:36px; display:flex; align-items:center; justify-content:center; border-radius:10px;}
 .color-grid{display:flex; flex-wrap:wrap; gap:6px; margin-top:6px;}
 .color-swatch{width:30px; height:30px; border:var(--border); cursor:pointer; box-shadow:1px 1px 0 black; border-radius:50%;}
-.screen-tabs{display:flex; gap:4px; overflow-x:auto; padding-bottom:4px; margin-bottom:8px;}
-.screen-tab{border:2px solid black; padding:6px 8px; font-family:'Space Mono'; font-size:7px; font-weight:700; white-space:nowrap; cursor:pointer; background:white; box-shadow:1px 1px 0 black; flex-shrink:0; border-radius:8px;}
-.screen-tab.active{background:black; color:white;}
-.switch{border:var(--border); padding:10px; display:flex; justify-content:space-between; align-items:center; background:white; margin-top:6px; box-shadow:1px 1px 0 black; border-radius:10px;}
-.switch span{font-family:'Space Mono'; font-size:8px; font-weight:700; text-transform:uppercase; flex:1;}
-.switch input{width:40px; height:22px; appearance:none; border:2px solid black; background:white; position:relative; cursor:pointer; flex-shrink:0; border-radius:12px;}
-.switch input:checked{background:var(--yellow);}
-.switch input::after{content:''; position:absolute; width:16px; height:16px; background:black; top:1px; left:1px; transition:.1s; border-radius:50%;}
-.switch input:checked::after{left:20px;}
-.row{display:flex; gap:6px;} .row > *{flex:1;}
-.how-box{background:var(--yellow); border:var(--border); padding:10px; box-shadow:var(--shadow-xs); margin-top:8px; font-family:'Space Mono'; font-size:9px; font-weight:700; line-height:1.4; border-radius:10px;}
-.event-card{border:3px solid black; padding:12px; margin-bottom:12px; background:white; box-shadow:3px 3px 0 black; border-radius:12px; position:relative;}
-.event-card.active{border-color:var(--blue); background:#FFFEF0;}
-.event-header{display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;}
-.event-icon{width:36px; height:36px; border:2px solid black; display:flex; align-items:center; justify-content:center; font-size:18px; background:white; box-shadow:2px 2px 0 black; border-radius:8px;}
-.event-title{font-family:'Syne'; font-weight:800; font-size:14px; flex:1; margin-left:8px;}
-.event-toggle{width:40px; height:24px; appearance:none; border:2px solid black; background:white; position:relative; cursor:pointer; border-radius:12px;}
-.event-toggle:checked{background:var(--green);}
-.event-toggle::after{content:''; position:absolute; width:16px; height:16px; background:black; top:2px; left:2px; transition:.1s; border-radius:50%;}
-.event-toggle:checked::after{left:20px;}
-.sound-wave{display:flex; gap:3px; align-items:end; height:20px;}
-.sound-bar{width:4px; background:var(--blue); animation:wave 0.5s infinite alternate; border-radius:3px;}
-@keyframes wave{0%{height:4px} 100%{height:18px}}
-.tutorial-overlay{position:fixed; inset:0; background:rgba(0,0,0,.88); z-index:10000; display:flex; align-items:center; justify-content:center; padding:16px;}
-.tutorial-box{background:white; border:var(--border); box-shadow:12px 12px 0 black; max-width:420px; width:100%; max-height:85vh; overflow-y:auto; border-radius:16px; animation:pop .3s ease;}
-.tutorial-header{background:black; color:white; padding:14px 16px; display:flex; justify-content:space-between; align-items:center;}
-.tutorial-body{padding:16px;}
-.tutorial-step{background:var(--yellow); border:var(--border); padding:12px; margin-bottom:12px; border-radius:10px; box-shadow:2px 2px 0 black;}
-.tutorial-step h3{font-family:'Syne'; font-size:13px; font-weight:800; margin-bottom:6px;}
-.tutorial-step p{font-family:'Space Mono'; font-size:10px; font-weight:600; line-height:1.5;}
-.armeabi-card{background:#000; color:white; border:var(--border); padding:12px; border-radius:12px; margin-top:10px; box-shadow:4px 4px 0 black;}
+.ai-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:8px;}
+.ai-item{border:var(--border); background:white; border-radius:12px; padding:8px; text-align:center; cursor:pointer; box-shadow:2px 2px 0 black; transition:.1s;}
+.ai-item:active{transform:translate(1px,1px); box-shadow:0 0 0 black;}
+.ai-item.active{border-color:var(--purple); background:var(--yellow); transform:rotate(-1deg) scale(1.05);}
+.ai-item img{width:100%; height:60px; object-fit:contain; border-radius:8px; background:#f5f5f5;}
+.ai-item div{font-family:'Space Mono'; font-size:7px; font-weight:700; margin-top:4px;}
+.style-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:6px; margin-top:8px;}
+.style-item{border:var(--border); padding:10px; font-family:'Space Mono'; font-size:8px; font-weight:700; background:white; cursor:pointer; box-shadow:2px 2px 0 black; border-radius:10px; text-align:center;}
+.style-item.active{background:black; color:white;}
+.floating-element{position:absolute; pointer-events:none; user-select:none; z-index:5; font-size:24px; text-shadow:2px 2px 0 black;}
 @media(max-width:900px){
   .sidebar{position:absolute; inset:0; z-index:40; width:100%; transform:translateX(-100%); transition:.25s cubic-bezier(.8,0,.2,1);}
   .sidebar.open{transform:translateX(0);}
@@ -106,235 +73,157 @@ body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',sans-seri
 </head>
 <body>
 
-<div id="tutorialModal" class="tutorial-overlay" style="display:none;">
-  <div class="tutorial-box">
-    <div class="tutorial-header">
-      <h2>📚 v10 SUPER GAMPANG — 1 MENIT PAHAM!</h2>
-      <button onclick="hideTutorial()" style="background:white; color:black; border:2px solid white; padding:4px 10px; font-weight:800; cursor:pointer; border-radius:6px;">X</button>
-    </div>
-    <div class="tutorial-body">
-      <div style="background:var(--red); color:white; border:var(--border); padding:10px; border-radius:10px; margin-bottom:12px; font-family:'Space Mono'; font-size:10px; font-weight:800; text-align:center;">
-        ❗ BUBBLE GAK MUNCUL DI LUAR? BACA INI DULU! ❗<br>
-        KLIK TOMBOL KUNING DI ATAS WEBVIEW (DI APP ANDROID) — ADA 4 TOMBOL TEST GAMPANG!
-      </div>
-
-      <div class="tutorial-step" style="background:var(--red); color:white;">
-        <h3>🚨 STEP 0 — WAJIB! IZIN OVERLAY</h3>
-        <p>Di app Android, di atas ada 4 tombol besar:<br>
-        • Klik <b>1️⃣ CEK IZIN OVERLAY</b><br>
-        • Aktifin "Tampilkan di atas aplikasi lain"<br>
-        • Kalo gak dikasih izin, bubble & teks gak bakal nempel di luar APK! Ini penyebab utama!</p>
-      </div>
-
-      <div class="tutorial-step" style="background:var(--green); color:black;">
-        <h3>1️⃣ TEST BUBBLE DI LUAR APK</h3>
-        <p>• Klik tombol <b>2️⃣ TEST BUBBLE KUNING DI LUAR APK</b> (di atas WebView)<br>
-        • Bubble kuning S muncul!<br>
-        • Pencet tombol <b>HOME</b> di HP → bubble tetep ada di atas TikTok! Kayak chat head Messenger!<br>
-        • Kalo bubble ilang pas HOME, berarti izin overlay belum dikasih bener!</p>
-      </div>
-
-      <div class="tutorial-step" style="background:var(--pink); color:white;">
-        <h3>2️⃣ TEST TEKS OVERLAY NEMPEL DI LAYAR HP</h3>
-        <p>• Klik tombol <b>3️⃣ TEST TEKS OVERLAY NEMPEL DI LAYAR HP</b><br>
-        • Teks kuning "TEKS OVERLAY NEMPEL DI LAYAR HP! v10" muncul & nempel di layar!<br>
-        • Pencet HOME → teks tetep nempel di atas TikTok!<br>
-        • Ini bukti overlay beneran di luar APK, bukan cuma di dalam!</p>
-      </div>
-
-      <div class="tutorial-step" style="background:black; color:white;">
-        <h3>3️⃣ EDIT POSISI OVERLAY LANGSUNG DI ATAS TIKTOK</h3>
-        <p>• Tap bubble kuning → pilih <b>✏️ EDIT POSISI TEKS OVERLAY</b><br>
-        • Sekarang <b>drag teks overlay langsung di atas TikTok</b> buat geser posisi!<br>
-        • Posisi auto save!<br>
-        • Tap bubble lagi → <b>✅ SELESAI EDIT</b></p>
-      </div>
-
-      <div class="tutorial-step" style="background:var(--blue); color:white;">
-        <h3>4️⃣ SOUND GAK BUNYI? PAKE UPLOAD HP!</h3>
-        <p>• Tab <b>Events 🔔</b> di bawah<br>
-        • Pilih FOLLOW/SAWER/GIFT<br>
-        • Cari box <b>"CARA 2: UPLOAD DARI HP — PALING GAMPANG! ✅"</b><br>
-        • Klik <b>UPLOAD MP3</b> → pilih file mp3 dari HP<br>
-        • Klik <b>TEST</b> → langsung bunyi 100%!<br>
-        • Jangan pake FETCH kalo gagal, langsung UPLOAD aja!</p>
-      </div>
-
-      <div class="armeabi-card">
-        <h4 style="color:var(--green);">📱 ARMEABI-V7A = SEMUA HP BISA!</h4>
-        <p style="font-size:9px; line-height:1.5;">
-        • File kecil 2.88MB (v10 R8)<br>
-        • HP lama & baru semua bisa!<br>
-        • Samsung J2, Oppo A3s, Redmi 5, Vivo Y91, Samsung A54, Poco X6, Infinix Hot 40 → BISA SEMUA!<br>
-        • Langsung install aja, gak perlu pilih versi!
-        </p>
-      </div>
-
-      <button class="btn btn-green" style="font-size:12px; padding:16px; margin-top:12px;" onclick="hideTutorial()">✅ MENGERTI, COBA TOMBOL 1-2-3 DI ATAS!</button>
-    </div>
-  </div>
-</div>
-
 <div class="header">
-  <div class="logo"><div class="logo-box">SAWER</div>STUDIO v10</div>
+  <div class="logo"><div class="logo-box">SAWER</div>STUDIO v12</div>
   <div class="header-actions">
-    <button onclick="showTutorial()" style="background:var(--green); color:black; border:2px solid white; padding:5px 8px; font-family:'Space Mono'; font-size:7px; font-weight:800; cursor:pointer; box-shadow:2px 2px 0 black; border-radius:6px;">📚 BANTUAN</button>
-    <div class="badge badge-v10">v10 SUPER</div>
-    <div class="badge badge-live" id="liveBadge">OFF</div>
+    <div class="badge badge-v12">AI ELEMENTS</div>
+    <div class="badge badge-live" id="liveBadge">TEKS ONLY</div>
   </div>
 </div>
 
 <div class="main">
   <div class="sidebar" id="sidebar">
-    <div class="tab-content active" id="tab-layers">
-      <div class="screen-tabs" id="screenTabs"></div>
-      <div class="card">
-        <div class="card-title">TAMBAH TEKS OVERLAY — NEMPEL DI LAYAR HP!</div>
-        <div class="row">
-          <button class="btn btn-black" onclick="quickAdd('text')">+ TEKS NEMPEL</button>
-          <button class="btn btn-yellow" onclick="quickAdd('follow')">+ FOLLOW NEMPEL</button>
+    
+    <div class="tab-content active" id="tab-text">
+      <div class="card" style="background:var(--yellow);">
+        <div class="card-title">✏️ OVERLAY TEKS — FOKUS TEKS AJA!</div>
+        <div style="font-family:'Space Mono'; font-size:9px; font-weight:800; line-height:1.4;">
+          Gak perlu pusing event dll — fokus teks overlay bergaya + elemen melayang AI aja!<br>
+          Ketik teks, pilih style brutalism, tambah elemen AI melayang!
         </div>
-        <div class="row" style="margin-top:4px;">
-          <button class="btn btn-pink" onclick="quickAdd('saweria')">+ SAWER NEMPEL</button>
-          <button class="btn btn-green" onclick="quickAdd('goal')">+ GOAL NEMPEL</button>
-        </div>
-        <div class="how-box">💡 Teks yang lu tambah di sini bakal nempel di layar HP beneran di atas TikTok! Bukan cuma di dalam app! Klik LIVE → bubble → EDIT POSISI buat geser!</div>
       </div>
-      <div id="layerList"></div>
-      <div id="props" class="card" style="display:none; margin-top:8px;">
-        <div class="card-title">EDIT TEKS — WARNA & UKURAN</div>
-        <label class="label">TEKS — {name} {amount} {gift}</label>
-        <textarea id="propText" class="textarea" rows="2" style="font-weight:700;" oninput="updateProp('text', this.value)"></textarea>
-        <div class="row">
-          <div><label class="label">UKURAN</label><input id="propSize" type="range" min="10" max="100" value="28" style="width:100%;" oninput="updateProp('fontSize', this.value)"></div>
-          <div><label class="label">MIRING</label><input id="propRot" type="range" min="-25" max="25" value="0" style="width:100%;" oninput="updateProp('rotation', this.value)"></div>
+
+      <div class="card">
+        <div class="card-title">TEKS OVERLAY — KETIK DI SINI</div>
+        <textarea id="mainText" class="textarea" rows="3" style="font-family:'Syne'; font-weight:800; font-size:16px; text-transform:uppercase;" placeholder="CONTOH: LIVE TIKTOK JAMAL">LIVE TIKTOK JAMAL v12</textarea>
+        <div class="row" style="margin-top:8px;">
+          <button class="btn btn-black" onclick="addTextLayer()">➕ TAMBAH TEKS KE LAYAR</button>
         </div>
-        <label class="label">WARNA — TAP BULAT</label>
+      </div>
+
+      <div class="card">
+        <div class="card-title">STYLE BRUTALISM — PILIH GAYA</div>
+        <div class="style-grid" id="styleGrid">
+          <div class="style-item active" data-style="box" onclick="setBrutalStyle('box')">📦 BOX + SHADOW HITAM</div>
+          <div class="style-item" data-style="tape" onclick="setBrutalStyle('tape')">📼 TAPE KUNING MIRING</div>
+          <div class="style-item" data-style="stamp" onclick="setBrutalStyle('stamp')">🔴 STAMP MERAH BRUTAL</div>
+          <div class="style-item" data-style="highlight" onclick="setBrutalStyle('highlight')">🟡 HIGHLIGHT KUNING</div>
+          <div class="style-item" data-style="neon" onclick="setBrutalStyle('neon')">✨ NEON GLOW (no neon? tapi ini glow halus)</div>
+          <div class="style-item" data-style="ripped" onclick="setBrutalStyle('ripped')">📄 RIPPED PAPER</div>
+        </div>
+        
+        <label class="label">UKURAN TEKS</label>
+        <input id="textSize" type="range" min="12" max="80" value="32" style="width:100%;" oninput="updateTextStyle()">
+        <span id="sizeLabel" style="font-family:'Space Mono'; font-size:9px; font-weight:700;">32px</span>
+
+        <label class="label">MIRING / ROTASI</label>
+        <input id="textRot" type="range" min="-20" max="20" value="-2" style="width:100%;" oninput="updateTextStyle()">
+        <span id="rotLabel" style="font-family:'Space Mono'; font-size:9px; font-weight:700;">-2°</span>
+
+        <label class="label">WARNA TEKS & BACKGROUND — TAP BULAT</label>
         <div class="color-grid" id="colorGrid"></div>
-        <button class="btn btn-red" style="margin-top:8px;" onclick="deleteLayer()">🗑️ HAPUS TEKS</button>
+        <div class="color-grid" id="bgGrid" style="margin-top:4px;"></div>
       </div>
+
+      <div id="layerList"></div>
     </div>
 
-    <div class="tab-content" id="tab-events">
-      <div class="card" style="background:var(--red); color:white;">
-        <div class="card-title" style="background:white; color:black;">🔊 SOUND FIX v10 — UPLOAD HP 100% WORK!</div>
-        <div style="font-weight:800; font-size:11px; line-height:1.3;">KALO GAK BUNYI, PAKE UPLOAD MP3 DARI HP — JANGAN FETCH!</div>
-      </div>
-
-      <div class="card" style="background:var(--green); color:black; border-color:black;">
-        <div class="card-title" style="background:black; color:white;">✅ CARA SOUND PALING GAMPANG — 10 DETIK!</div>
-        <div style="font-family:'Space Mono'; font-size:10px; font-weight:800; line-height:1.5;">
-          1. Download suara dulu: buka myinstants.com cari "vine boom" → download MP3<br>
-          2. Di bawah ini pilih event FOLLOW/SAWER/GIFT<br>
-          3. Cari tulisan <b>"CARA 2: UPLOAD DARI HP — PALING GAMPANG! ✅"</b><br>
-          4. Klik <b>UPLOAD MP3</b> → pilih file MP3 tadi<br>
-          5. Klik <b>🔊 TEST</b> → langsung bunyi!<br><br>
-          <span style="background:black; color:var(--green); padding:4px 8px; border-radius:6px;">JANGAN PAKE FETCH KALO GAGAL! LANGSUNG UPLOAD AJA!</span>
-        </div>
-      </div>
-
-      <div id="eventsList"></div>
-      
-      <div class="card">
-        <div class="card-title">🧪 TEST EVENT + SOUND</div>
-        <div class="row">
-          <button class="btn btn-pink" onclick="testEvent('follow')">👤 TEST FOLLOW + SOUND</button>
-          <button class="btn btn-yellow" onclick="testEvent('saweria')">💸 TEST SAWER + SOUND</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="tab-content" id="tab-gifts">
+    <div class="tab-content" id="tab-ai">
       <div class="card" style="background:var(--purple); color:white;">
-        <div class="card-title" style="background:white; color:black;">TIKTOK LIVE REAL</div>
+        <div class="card-title" style="background:white; color:black;">🤖 ELEMEN MELAYANG AI — GENERATE!</div>
+        <div style="font-weight:800; font-size:10px; line-height:1.3;">Elemen brutalism melayang di sekitar teks — bintang, api, hati, petir, tape — generate dari AI!</div>
       </div>
-      <label class="label">USERNAME TIKTOK (tanpa @)</label>
-      <input id="tiktokUser" class="input" placeholder="jamalgaming">
-      <div class="row" style="margin-top:6px;">
-        <button class="btn btn-green" onclick="connectTikTokLive()">🔌 CONNECT REAL</button>
-        <button class="btn btn-black" onclick="connectTikTokLive(true)">🧪 SIMULASI</button>
-      </div>
-      <div id="backendStatus" style="margin-top:8px; font-family:'Space Mono'; font-size:8px; padding:8px; border:2px solid black; background:#111; color:#0f0; border-radius:10px;">Klik SIMULASI buat coba follow/gift</div>
-      <div id="giftLog" style="margin-top:8px; font-family:'Space Mono'; font-size:8px; height:80px; overflow-y:auto; background:#111; color:#0ff; padding:8px; border:var(--border); border-radius:10px;"></div>
-    </div>
 
-    <div class="tab-content" id="tab-live">
       <div class="card" style="background:var(--green);">
-        <div class="card-title">🔴 LIVE + BUBBLE LUAR — v10 FIX!</div>
-        <div style="font-weight:800; font-size:11px;">BUBBLE & TEKS NEMPEL DI LAYAR HP WALAU APK KELUAR!</div>
-      </div>
-
-      <div class="card" style="background:black; color:white; border-color:var(--green);">
-        <div class="card-title" style="background:var(--green); color:black;">🚨 KENAPA BUBBLE GAK MUNCUL DI LUAR?</div>
-        <div style="font-family:'Space Mono'; font-size:10px; font-weight:700; line-height:1.5;">
-          • Penyebab: izin overlay belum dikasih!<br>
-          • Solusi: di app Android, di ATAS WebView ada 4 tombol besar<br>
-          • Klik <b>1️⃣ CEK IZIN OVERLAY</b> → aktifin izin<br>
-          • Baru klik <b>2️⃣ TEST BUBBLE</b> → pencet HOME → bubble nempel!<br><br>
-          <span style="background:var(--red); color:white; padding:3px 6px; border-radius:4px;">WAJIB IZIN OVERLAY!</span>
+        <div class="card-title">✨ GENERATE ELEMEN BARU DARI AI</div>
+        <input id="aiPrompt" class="input" placeholder="Contoh: brutal fire sticker, pink heart brutalism, star yellow" value="brutalism star yellow sticker">
+        <div class="row" style="margin-top:6px;">
+          <button class="btn btn-purple" onclick="generateAIElement()">🤖 GENERATE ELEMEN AI</button>
+          <button class="btn btn-yellow" onclick="addRandomFloating()">🎲 RANDOM MELAYANG</button>
         </div>
+        <div style="font-family:'Space Mono'; font-size:8px; font-weight:700; margin-top:6px;">Prompt AI bakal generate elemen brutalism baru yang melayang di sekitar teks!</div>
       </div>
 
-      <button id="liveBtn" class="btn btn-red" style="font-size:12px; padding:16px;" onclick="toggleLive()">● MASUK MODE LIVE + BUBBLE LUAR</button>
-      <button id="minimizeBtn" class="btn btn-yellow" style="margin-top:8px; font-size:11px; padding:16px; display:none;" onclick="minimizeToBubble()">🟡 KECILKAN JADI BUBBLE + TEKS NEMPEL</button>
-      
       <div class="card">
-        <div class="card-title">📚 TOMBOL TEST GAMPANG DI ATAS</div>
-        <div style="font-family:'Space Mono'; font-size:9px; font-weight:700; line-height:1.4;">
-          Di atas WebView (di app Android) ada 4 tombol besar buat test:<br>
-          1️⃣ CEK IZIN OVERLAY — wajib!<br>
-          2️⃣ TEST BUBBLE KUNING DI LUAR APK<br>
-          3️⃣ TEST TEKS OVERLAY NEMPEL DI LAYAR HP<br>
-          4️⃣ TEST SOUND<br><br>
-          Klik berurutan 1-2-3 ya bre!
+        <div class="card-title">📚 LIBRARY ELEMEN AI — TAP BUAT TAMBAH MELAYANG</div>
+        <div class="ai-grid" id="aiGrid">
+          <!-- Diisi JS -->
         </div>
       </div>
 
       <div class="card">
-        <div class="card-title">✏️ EDIT POSISI TEKS DI ATAS TIKTOK</div>
-        <div style="font-family:'Space Mono'; font-size:9px; font-weight:700; line-height:1.4;">
-          • Tap bubble kuning → EDIT POSISI TEKS OVERLAY<br>
-          • Drag teks overlay langsung di atas TikTok buat geser!<br>
-          • Auto save posisi<br>
-          • Tap bubble lagi → SELESAI EDIT
+        <div class="card-title">⚙️ SETTING ELEMEN MELAYANG</div>
+        <label class="label">JUMLAH ELEMEN MELAYANG</label>
+        <input id="aiCount" type="range" min="0" max="20" value="6" style="width:100%;" oninput="updateAIElements()">
+        <span id="aiCountLabel" style="font-size:9px; font-weight:700;">6 elemen</span>
+
+        <label class="label">KECEPATAN MELAYANG</label>
+        <input id="aiSpeed" type="range" min="1" max="10" value="3" style="width:100%;" oninput="updateAIElements()">
+        <span id="aiSpeedLabel" style="font-size:9px; font-weight:700;">3 — santai</span>
+
+        <div class="row" style="margin-top:8px;">
+          <button class="btn btn-black" onclick="clearAIElements()">🗑️ HAPUS SEMUA ELEMEN</button>
+          <button class="btn btn-green" onclick="shuffleAIElements()">🔀 ACAK POSISI</button>
+        </div>
+      </div>
+
+      <div class="card" style="background:#000; color:white;">
+        <div class="card-title" style="background:var(--yellow); color:black;">💡 CARA PAKAI ELEMEN MELAYANG AI</div>
+        <div style="font-family:'Space Mono'; font-size:9px; line-height:1.5;">
+          • Ketik prompt di atas → GENERATE → elemen baru muncul di library<br>
+          • Tap elemen di library → langsung melayang di sekitar teks!<br>
+          • Atur jumlah & kecepatan di slider<br>
+          • Elemen bakal melayang, muter, mantul di sekitar teks overlay<br>
+          • Cocok buat TikTok Live biar teks gak sepi!
         </div>
       </div>
     </div>
 
     <div class="tab-content" id="tab-export">
       <div class="card" style="background:var(--green);">
-        <div class="card-title">💾 SIMPAN</div>
+        <div class="card-title">💾 EXPORT + LIVE</div>
       </div>
-      <button class="btn btn-black" onclick="exportJSON()">💾 SIMPAN SETTING</button>
-      <button class="btn btn-yellow" style="margin-top:6px;" onclick="exportVideo()">🎬 REKAM VIDEO</button>
+      <button class="btn btn-black" onclick="exportJSON()">💾 SAVE TEKS + ELEMEN (JSON)</button>
+      <button class="btn btn-yellow" style="margin-top:6px;" onclick="exportImage()">🖼️ EXPORT GAMBAR PNG</button>
+      <button class="btn btn-purple" style="margin-top:6px;" onclick="exportVideo()">🎬 REKAM VIDEO 5 DETIK</button>
+      <button class="btn btn-green" style="margin-top:6px;" onclick="toggleLive()">🔴 MODE LIVE + BUBBLE LUAR</button>
+      <button id="minimizeBtn" class="btn btn-yellow" style="margin-top:6px; display:none;" onclick="minimizeToBubble()">🟡 KECILKAN JADI BUBBLE NEMPEL LAYAR</button>
+
+      <div class="card" style="margin-top:10px;">
+        <div class="card-title">📱 TOMBOL TEST GAMPANG (DI ATAS WEBVIEW)</div>
+        <div style="font-family:'Space Mono'; font-size:9px; font-weight:700; line-height:1.4;">
+          Di app Android ada 4 tombol native di atas:<br>
+          1️⃣ CEK IZIN OVERLAY WAJIB<br>
+          2️⃣ TEST BUBBLE LUAR<br>
+          3️⃣ TEST TEKS NEMPEL LAYAR HP<br>
+          4️⃣ TEST SOUND<br>
+          Klik 1-2-3 buat test bubble & teks nempel di luar APK!
+        </div>
+      </div>
     </div>
+
   </div>
 
   <div class="stage" id="stage">
     <div class="phone-wrap" id="phoneWrap">
       <div class="phone-top">
         <div>● ● ●</div>
-        <div id="profileLabel">TIKTOK LIVE • v10 NEMPEL LAYAR</div>
-        <div id="liveIndicator" style="background:black; color:white; padding:2px 6px; border:2px solid black; font-size:7px; border-radius:4px;">OFFLINE</div>
+        <div id="profileLabel">TEKS + AI ELEMENTS • v12</div>
+        <div id="liveIndicator" style="background:black; color:white; padding:2px 6px; border:2px solid black; font-size:7px; border-radius:4px;">TEKS ONLY</div>
       </div>
       <div class="canvas-wrap" id="canvasWrap">
         <video id="video" autoplay muted playsinline></video>
         <canvas id="ghost"></canvas>
         <canvas id="canvas"></canvas>
         <canvas id="particles"></canvas>
-        <div class="viewer-pill">👁 1.2K • v10 NEMPEL LAYAR HP</div>
-        <div class="tiktok-right"><div>♥</div><div>💬</div><div>↗</div></div>
-        <button class="fab-add" id="fabAdd" onclick="toggleAddMenu()">+ TEKS NEMPEL</button>
-        <div class="add-menu" id="addMenu">
-          <div class="add-option" onclick="quickAdd('text')">📝 TEKS NEMPEL</div>
-          <div class="add-option" onclick="quickAdd('follow')">👤 FOLLOW NEMPEL</div>
-          <div class="add-option" onclick="quickAdd('saweria')">💸 SAWER NEMPEL</div>
-        </div>
+        <div id="aiElements"></div>
+        <div class="viewer-pill">👁 1.2K • v12 TEKS + AI MELAYANG</div>
+        <button class="fab-add" id="fabAdd" onclick="quickAddText()">+ TEKS NEMPEL</button>
         <div class="alert-box" id="alertBox">
-          <div class="alert-header"><span id="alertEventType">FOLLOW • v10</span><span id="alertTime">12:00</span></div>
+          <div class="alert-header"><span id="alertEventType">TEKS v12</span><span>AI</span></div>
           <div class="alert-body">
-            <h2 id="alertTitle">BANG JAGO FOLLOW!</h2>
-            <p id="alertMsg">makasih follow bre!</p>
+            <h2 id="alertTitle">TEKS BRUTAL!</h2>
+            <p id="alertMsg">+ elemen AI melayang</p>
           </div>
         </div>
       </div>
@@ -343,434 +232,438 @@ body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',sans-seri
 </div>
 
 <div class="bottom-nav" id="bottomNav">
-  <div class="bottom-nav-item active" data-tab="layers" onclick="switchTabViaBottom('layers')">
-    <div class="bottom-nav-icon">🎨</div>
-    <div class="bottom-nav-label">Layers Nempel</div>
+  <div class="bottom-nav-item active" data-tab="text" onclick="switchTabViaBottom('text')">
+    <div class="bottom-nav-icon">📝</div>
+    <div class="bottom-nav-label">Teks</div>
   </div>
-  <div class="bottom-nav-item" data-tab="events" onclick="switchTabViaBottom('events')">
-    <div class="bottom-nav-icon">🔔</div>
-    <div class="bottom-nav-label">Sound</div>
-  </div>
-  <div class="bottom-nav-item" data-tab="gifts" onclick="switchTabViaBottom('gifts')">
-    <div class="bottom-nav-icon">🎁</div>
-    <div class="bottom-nav-label">Live</div>
-  </div>
-  <div class="bottom-nav-item" data-tab="live" onclick="switchTabViaBottom('live')">
-    <div class="bottom-nav-icon">🔴</div>
-    <div class="bottom-nav-label">Bubble Luar</div>
+  <div class="bottom-nav-item" data-tab="ai" onclick="switchTabViaBottom('ai')">
+    <div class="bottom-nav-icon">🤖</div>
+    <div class="bottom-nav-label">AI Melayang</div>
   </div>
   <div class="bottom-nav-item" data-tab="export" onclick="switchTabViaBottom('export')">
     <div class="bottom-nav-icon">💾</div>
-    <div class="bottom-nav-label">Save</div>
+    <div class="bottom-nav-label">Export/Live</div>
   </div>
 </div>
 
 <div class="floating-bubble" id="bubble" style="display:none;">S</div>
 <div class="bubble-menu" id="bubbleMenu">
-  <div style="font-size:8px; font-weight:700; background:black; color:white; padding:6px 8px; border-radius:8px; margin-bottom:8px; text-align:center;">v10 NEMPEL LAYAR HP</div>
-  <div class="bubble-item highlight" onclick="quickAdd('text')">➕ TEKS NEMPEL</div>
-  <div class="bubble-item" onclick="savePerScreen()" style="background:var(--green);">💾 SAVE POSISI</div>
+  <div style="font-size:8px; font-weight:700; background:black; color:white; padding:6px 8px; border-radius:8px; margin-bottom:8px; text-align:center;">v12 TEKS + AI</div>
+  <div class="bubble-item highlight" onclick="quickAddText()">➕ TEKS NEMPEL</div>
+  <div class="bubble-item" onclick="addRandomFloating()">🤖 + ELEMEN AI MELAYANG</div>
+  <div class="bubble-item" onclick="savePerScreen()" style="background:var(--green);">💾 SAVE</div>
 </div>
 
-<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 <script>
-// v10 SUPER GAMPANG — BUBBLE LUAR + TEKS NEMPEL + SOUND UPLOAD
 const canvas=document.getElementById('canvas');
 const ctx=canvas.getContext('2d');
 const ghost=document.getElementById('ghost');
 const gctx=ghost.getContext('2d');
 const particlesCanvas=document.getElementById('particles');
 const pctx=particlesCanvas.getContext('2d');
+const aiContainer=document.getElementById('aiElements');
 const video=document.getElementById('video');
 
-let profiles=JSON.parse(localStorage.getItem('brutal_profiles_v10')||'{}');
-let currentProfile=localStorage.getItem('brutal_current_profile_v10')||'tiktok-live';
+let profiles=JSON.parse(localStorage.getItem('brutal_profiles_v12')||'{}');
+let currentProfile='tiktok-live';
 let layers=profiles[currentProfile] || [
-  {id:'f1', type:'follow', text:'{name} FOLLOWED!', x:0.04, y:0.08, w:0.65, h:0.07, fontFamily:'Syne', fontSize:26, color:'#FFFFFF', brutalStyle:'follow', bg:'#FF2D95', rotation:-1, autoShow:true, visible:true, animation:'pop', duration:800},
-  {id:'b1', type:'text', text:'TEKS NEMPEL DI LAYAR HP v10', x:0.04, y:0.86, w:0.72, h:0.06, fontFamily:'Space Mono', fontSize:14, color:'#FFFFFF', brutalStyle:'box', bg:'#000000', rotation:0, autoShow:true, visible:true, animation:'pop', duration:600},
+  {id:'t1', type:'text', text:'LIVE TIKTOK JAMAL v12', x:0.06, y:0.08, w:0.7, h:0.08, fontFamily:'Syne', fontSize:32, color:'#000000', brutalStyle:'box', bg:'#FFE600', rotation:-2, visible:true, animation:'pop', duration:800},
+  {id:'t2', type:'text', text:'FOLLOW = MASUK SQUAD 🔥', x:0.06, y:0.86, w:0.75, h:0.07, fontFamily:'Space Grotesk', fontSize:18, color:'#FFFFFF', brutalStyle:'box', bg:'#000000', rotation:1, visible:true, animation:'pop', duration:800},
 ];
 
-let eventsConfig = JSON.parse(localStorage.getItem('events_config_v10')||'{}');
-if(Object.keys(eventsConfig).length===0){
-  eventsConfig={
-    follow:{enabled:true, text:'{name} FOLLOWED! 🔥', style:'follow', bg:'#FF2D95', color:'#FFFFFF', animation:'pop', duration:1000, soundUrl:'', myinstantsUrl:'', volume:0.8},
-    saweria:{enabled:true, text:'{name} SAWER {amount}! 💸', style:'box', bg:'#000000', color:'#FFFFFF', animation:'bounce', duration:1000, soundUrl:'', myinstantsUrl:'', volume:0.9},
-    gift:{enabled:true, text:'{name} KIRIM {gift}! 🎁', style:'particle', bg:'#8A2BE2', color:'#FFFFFF', animation:'particle', duration:1500, soundUrl:'', myinstantsUrl:'', volume:0.8},
-  };
-}
-
 let selected=layers[0]?.id||null;
-let isLive=false;
-let mode='viewer';
 let res={w:1080,h:1920};
 let particles=[];
-let audioElements={};
-let uploadedAudioBlobs={};
+let floatingElements=[];
+let currentStyle='box';
+let textColor='#000000';
+let bgColor='#FFE600';
 
 const colors=['#000000','#FFFFFF','#FFE600','#FF3B30','#0057FF','#00FF88','#8A2BE2','#FF6B00','#FF2D95'];
+const bgColors=['#FFE600','#FFFFFF','#000000','#FF3B30','#0057FF','#00FF88','#FF2D95','#8A2BE2'];
 
-function showTutorial(){ document.getElementById('tutorialModal').style.display='flex'; localStorage.setItem('tutorial_seen_v10','1'); }
-function hideTutorial(){ document.getElementById('tutorialModal').style.display='none'; }
+const aiLibrary=[
+  {id:'star', name:'BINTANG KUNING', icon:'⭐', img:'assets/ai-star.png', emoji:'⭐'},
+  {id:'fire', name:'API BRUTAL', icon:'🔥', img:'assets/ai-fire.png', emoji:'🔥'},
+  {id:'heart', name:'HATI PINK', icon:'💖', img:'assets/ai-heart.png', emoji:'💖'},
+  {id:'lightning', name:'PETIR KUNING', icon:'⚡', img:'assets/ai-lightning.png', emoji:'⚡'},
+  {id:'tape', name:'TAPE KUNING', icon:'📼', img:'assets/ai-tape.png', emoji:'📼'},
+  {id:'crown', name:'MAHKOTA', icon:'👑', emoji:'👑'},
+  {id:'rocket', name:'ROKET', icon:'🚀', emoji:'🚀'},
+  {id:'boom', name:'BOOM', icon:'💥', emoji:'💥'},
+  {id:'spark', name:'SPARKLE', icon:'✨', emoji:'✨'},
+];
+
+let aiGeneratedCount=0;
 
 function init(){
-  setupCanvas(); startCam(); initColors(); renderScreenTabs(); renderList(); renderEvents();
+  setupCanvas(); startCam(); initColors(); initAILibrary(); renderList();
   if(selected) select(selected);
-  renderLoop(); particleLoop(); bindDrag(); bindBubble(); bindDoubleClick(); loadProfileToUI(); preloadSounds();
-  if(!localStorage.getItem('tutorial_seen_v10')) setTimeout(showTutorial, 1000);
-  log('v10 SUPER GAMPANG ready — bubble luar + teks nempel!');
+  renderLoop(); particleLoop(); aiLoop(); bindDrag(); bindBubble();
+  loadProfileToUI();
+  // Auto add some floating elements
+  setTimeout(()=>{ for(let i=0;i<6;i++) addRandomFloating(); }, 500);
+  console.log('v12 TEKS + AI ELEMENTS MELAYANG ready!');
 }
+
 function setupCanvas(){ [canvas,ghost,particlesCanvas].forEach(c=>{ c.width=res.w; c.height=res.h; c.style.width='100%'; c.style.height='100%'; }); }
 async function startCam(){ try{ const s=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user', width:{ideal:1080}, height:{ideal:1920}}, audio:true}); video.srcObject=s; }catch(e){} }
+
 function initColors(){
-  const grid=document.getElementById('colorGrid'); if(!grid) return; grid.innerHTML='';
-  colors.forEach(c=>{ const d=document.createElement('div'); d.className='color-swatch'; d.style.background=c; d.onclick=()=>updateProp('color', c); grid.appendChild(d); });
+  const grid=document.getElementById('colorGrid');
+  const bgGrid=document.getElementById('bgGrid');
+  if(grid){ grid.innerHTML=''; colors.forEach(c=>{ const d=document.createElement('div'); d.className='color-swatch'; d.style.background=c; d.onclick=()=>{ textColor=c; updateTextStyle(); }; grid.appendChild(d); }); }
+  if(bgGrid){ bgGrid.innerHTML=''; bgColors.forEach(c=>{ const d=document.createElement('div'); d.className='color-swatch'; d.style.background=c; d.onclick=()=>{ bgColor=c; updateTextStyle(); }; bgGrid.appendChild(d); }); }
 }
-function renderScreenTabs(){
-  const el=document.getElementById('screenTabs'); if(!el) return;
-  const screens=[{id:'tiktok-live', label:'📱 LIVE'}, {id:'tiktok-game', label:'🎮 GAME'}];
-  el.innerHTML=''; screens.forEach(s=>{ const div=document.createElement('div'); div.className='screen-tab'+(s.id===currentProfile?' active':''); div.textContent=s.label; div.onclick=()=>switchProfile(s.id); el.appendChild(div); });
-  const label=document.getElementById('profileLabel'); if(label) label.textContent=screens.find(x=>x.id===currentProfile)?.label+' • v10 NEMPEL';
+
+function initAILibrary(){
+  const grid=document.getElementById('aiGrid');
+  if(!grid) return;
+  grid.innerHTML='';
+  aiLibrary.forEach(item=>{
+    const div=document.createElement('div');
+    div.className='ai-item';
+    div.innerHTML=`<div style="font-size:32px;">${item.emoji}</div><div>${item.name}</div>`;
+    div.onclick=()=>{ addFloatingElement(item); div.classList.add('active'); setTimeout(()=>div.classList.remove('active'), 300); };
+    grid.appendChild(div);
+  });
 }
-function renderEvents(){
-  const el=document.getElementById('eventsList'); if(!el) return; el.innerHTML='';
-  Object.keys(eventsConfig).forEach(eventType=>{
-    const cfg=eventsConfig[eventType];
-    const icons={follow:'👤', saweria:'💸', gift:'🎁'};
-    const div=document.createElement('div'); div.className='event-card'+(cfg.enabled?' active':'');
-    div.innerHTML=`
-      <div class="event-header">
-        <div class="event-icon" style="background:${cfg.bg}; color:${cfg.color}">${icons[eventType]||'🔔'}</div>
-        <div class="event-title">${eventType.toUpperCase()} ${cfg.enabled?'• ON':'• OFF'}</div>
-        <input type="checkbox" class="event-toggle" ${cfg.enabled?'checked':''} onchange="toggleEvent('${eventType}', this.checked)">
-      </div>
-      <label class="label">TEKS MUNCUL — {name} {amount} {gift}</label>
-      <input class="input" value="${cfg.text}" onchange="updateEvent('${eventType}','text',this.value)">
-      <div style="background:#000; color:white; padding:10px; border-radius:10px; margin-top:10px;">
-        <div style="font-family:'Space Mono'; font-size:8px; font-weight:800; margin-bottom:8px; color:var(--green);">🔊 SOUND — 3 CARA, PILIH YANG GAMPANG:</div>
-        
-        <label class="label" style="color:var(--green);">✅ CARA 2: UPLOAD DARI HP — PALING GAMPANG! (SARAN)</label>
-        <input type="file" accept=".mp3,.wav,.ogg,.m4a" onchange="handleSoundUpload('${eventType}', this)" style="width:100%; margin-top:4px; font-size:10px; background:white; padding:8px; border-radius:8px; border:2px solid #00FF88;">
-        <div style="font-size:8px; margin-top:4px; color:var(--green);">Klik, pilih file MP3 dari HP, langsung TEST! 100% work!</div>
-        
-        <label class="label" style="color:var(--yellow); margin-top:8px;">CARA 1: LINK MYINSTANTS.COM</label>
-        <input class="input" value="${cfg.myinstantsUrl||''}" onchange="updateEvent('${eventType}','myinstantsUrl',this.value)" placeholder="https://www.myinstants.com/instant/vine-boom/" style="font-size:9px;">
-        <div class="row" style="margin-top:4px;">
-          <button class="btn btn-black" style="font-size:8px; min-height:36px;" onclick="fetchMyInstants('${eventType}')">🔍 FETCH</button>
-          <button class="btn btn-yellow" style="font-size:8px; min-height:36px;" onclick="testSound('${eventType}')">🔊 TEST</button>
-        </div>
-        
-        <label class="label" style="color:var(--blue);">CARA 3: LINK MP3 LANGSUNG</label>
-        <input class="input" value="${cfg.soundUrl||''}" onchange="updateEventDirectMp3('${eventType}', this.value)" placeholder="https://...mp3" style="font-size:9px;">
-        
-        <div id="sound-status-${eventType}" style="margin-top:8px; font-size:9px; padding:8px; border-radius:8px; background:${cfg.soundUrl||uploadedAudioBlobs[eventType] ? '#00FF88' : '#333'}; color:${cfg.soundUrl||uploadedAudioBlobs[eventType] ? 'black' : 'white'}; font-weight:800;">
-          ${cfg.soundUrl||uploadedAudioBlobs[eventType] ? '✅ Suara siap! Klik TEST FOLLOW di bawah!' : '❌ Belum ada suara — klik UPLOAD MP3 di atas!'}
-        </div>
-      </div>
-    `;
+
+function setBrutalStyle(style){
+  currentStyle=style;
+  document.querySelectorAll('.style-item').forEach(el=>el.classList.toggle('active', el.dataset.style===style));
+  updateTextStyle();
+}
+
+function updateTextStyle(){
+  const size=document.getElementById('textSize')?.value||32;
+  const rot=document.getElementById('textRot')?.value||-2;
+  document.getElementById('sizeLabel').textContent=size+'px';
+  document.getElementById('rotLabel').textContent=rot+'°';
+  const l=layers.find(x=>x.id===selected);
+  if(l){
+    l.fontSize=parseInt(size);
+    l.rotation=parseInt(rot);
+    l.brutalStyle=currentStyle;
+    l.color=textColor;
+    l.bg=bgColor;
+    renderList();
+    savePerScreen();
+  }
+}
+
+function addTextLayer(){
+  const text=document.getElementById('mainText').value.trim();
+  if(!text){ alert('Ketik teks dulu bre!'); return; }
+  const id='t'+Date.now();
+  const size=parseInt(document.getElementById('textSize')?.value||32);
+  const rot=parseInt(document.getElementById('textRot')?.value||-2);
+  layers.push({
+    id, type:'text', text: text.toUpperCase(),
+    x:0.06+Math.random()*0.1, y:0.2+Math.random()*0.5, w:0.7, h:0.08,
+    fontFamily:'Syne', fontSize:size, color:textColor, brutalStyle:currentStyle, bg:bgColor,
+    rotation:rot, visible:true, animation:'pop', duration:800
+  });
+  select(id); renderList(); savePerScreen();
+  // Add floating elements around new text
+  setTimeout(()=>{ addRandomFloating(); addRandomFloating(); }, 200);
+}
+
+function quickAddText(){
+  const id='t'+Date.now();
+  layers.push({
+    id, type:'text', text:'TEKS NEMPEL v12', x:0.06, y:0.4, w:0.6, h:0.07,
+    fontFamily:'Syne', fontSize:28, color:'#000', brutalStyle:'box', bg:'#FFE600',
+    rotation:-2, visible:true, animation:'pop', duration:800
+  });
+  select(id); renderList(); savePerScreen();
+}
+
+function renderList(){
+  const el=document.getElementById('layerList');
+  if(!el) return;
+  el.innerHTML='';
+  [...layers].reverse().forEach(l=>{
+    const div=document.createElement('div');
+    div.className='layer-item'+(l.id===selected?' active':'');
+    div.innerHTML=`<div style="flex:1; overflow:hidden;"><div style="font-size:7px; background:black; color:white; padding:2px 6px; display:inline-block; border-radius:4px;">${l.brutalStyle.toUpperCase()} • NEMPEL LAYAR</div><div style="font-weight:800; font-size:12px; margin-top:2px;">${l.text}</div></div><div style="font-size:10px;">✏️</div>`;
+    div.onclick=()=>select(l.id);
     el.appendChild(div);
   });
 }
-function handleSoundUpload(eventType, input){
-  const file = input.files[0]; if(!file) return;
-  const url = URL.createObjectURL(file);
-  uploadedAudioBlobs[eventType] = url;
-  eventsConfig[eventType].soundUrl = url;
-  localStorage.setItem('events_config_v10', JSON.stringify(eventsConfig));
-  try{ const audio = new Audio(); audio.src = url; audio.volume = eventsConfig[eventType].volume || 0.8; audioElements[eventType] = audio; }catch(e){}
-  renderEvents();
-  setTimeout(()=>testSound(eventType), 400);
-  log(`📁 Upload ${eventType}: ${file.name} OK!`);
+
+function select(id){
+  selected=id;
+  const l=layers.find(x=>x.id===id);
+  if(!l) return;
+  renderList();
+  const props=document.getElementById('props');
+  if(props) props.style.display='block';
+  const propText=document.getElementById('mainText');
+  if(propText) propText.value=l.text;
+  document.getElementById('textSize').value=l.fontSize;
+  document.getElementById('textRot').value=l.rotation;
+  document.getElementById('sizeLabel').textContent=l.fontSize+'px';
+  document.getElementById('rotLabel').textContent=l.rotation+'°';
+  currentStyle=l.brutalStyle;
+  textColor=l.color;
+  bgColor=l.bg;
+  document.querySelectorAll('.style-item').forEach(el=>el.classList.toggle('active', el.dataset.style===l.brutalStyle));
 }
-function updateEventDirectMp3(eventType, url){
-  if(!url) return;
-  eventsConfig[eventType].soundUrl = url;
-  localStorage.setItem('events_config_v10', JSON.stringify(eventsConfig));
-  preloadSound(eventType, url);
-  renderEvents();
+
+function generateAIElement(){
+  const prompt=document.getElementById('aiPrompt').value.trim() || 'brutalism star';
+  aiGeneratedCount++;
+  
+  // Simulate AI generation with random emoji + brutalism style
+  const emojis=['🔥','⭐','💖','⚡','💥','🚀','👑','✨','🎯','💸','🌟','❤️‍🔥','💎','🎨'];
+  const randomEmoji=emojis[Math.floor(Math.random()*emojis.length)];
+  const id='ai-gen-'+Date.now();
+  const name=prompt.slice(0,20).toUpperCase()+' AI';
+  
+  const newItem={id, name, icon:randomEmoji, emoji:randomEmoji, isGenerated:true, prompt};
+  aiLibrary.unshift(newItem);
+  initAILibrary();
+  
+  // Auto add as floating
+  addFloatingElement(newItem);
+  
+  // Show alert
+  const alertBox=document.getElementById('alertBox');
+  document.getElementById('alertEventType').textContent='AI GENERATED';
+  document.getElementById('alertTitle').textContent=randomEmoji+' '+name;
+  document.getElementById('alertMsg').textContent='Elemen AI baru melayang di sekitar teks!';
+  alertBox.style.display='block';
+  setTimeout(()=>alertBox.style.display='none', 2500);
+  
+  log(`🤖 AI Generated: ${randomEmoji} ${name} dari prompt: ${prompt}`);
 }
-async function fetchMyInstants(eventType){
-  const cfg=eventsConfig[eventType]; const url=cfg.myinstantsUrl;
-  if(!url || !url.includes('myinstants.com')){ alert('Paste link myinstants! Contoh: https://www.myinstants.com/instant/vine-boom/'); return; }
-  const statusEl = document.getElementById(`sound-status-${eventType}`);
-  if(statusEl){ statusEl.textContent = '🔍 Ngambil MP3...'; statusEl.style.background = '#FFE600'; statusEl.style.color = 'black'; }
-  try{
-    let mp3Url = null;
-    try{
-      const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-      const res = await fetch(proxyUrl).then(r=>r.json());
-      if(res && res.contents){
-        const ogMatch = res.contents.match(/<meta property="og:audio" content="([^"]+)"/);
-        if(ogMatch) mp3Url = ogMatch[1];
-        if(!mp3Url){ const match = res.contents.match(/\/media\/sounds\/[^"']+\.mp3/); if(match) mp3Url = 'https://www.myinstants.com'+match[0]; }
-      }
-    }catch(e){}
-    if(!mp3Url){
-      const slug = url.split('/instant/')[1]?.replace(/\/$/, '').split('?')[0];
-      if(slug) mp3Url = `https://www.myinstants.com/media/sounds/${slug}.mp3`;
-    }
-    if(mp3Url){
-      eventsConfig[eventType].soundUrl = mp3Url;
-      localStorage.setItem('events_config_v10', JSON.stringify(eventsConfig));
-      preloadSound(eventType, mp3Url);
-      renderEvents();
-      if(statusEl){ statusEl.textContent = `✅ Dapet! Klik TEST!`; statusEl.style.background = '#00FF88'; statusEl.style.color = 'black'; }
-      setTimeout(()=>testSound(eventType), 600);
-    }else throw new Error('MP3 gak ketemu');
-  }catch(e){
-    if(statusEl){ statusEl.textContent = `❌ Gagal — pake UPLOAD MP3 aja!`; statusEl.style.background = '#FF3B30'; statusEl.style.color = 'white'; }
-    alert('FETCH gagal, pake UPLOAD MP3 dari HP aja — paling gampang 100% work!');
-  }
+
+function addFloatingElement(item){
+  const count=parseInt(document.getElementById('aiCount')?.value||6);
+  if(floatingElements.length >= count+5) return; // limit
+  
+  const el={
+    id:'float-'+Date.now()+Math.random(),
+    item,
+    x: Math.random()*0.8 + 0.1,
+    y: Math.random()*0.8 + 0.1,
+    vx: (Math.random()-0.5)*0.008,
+    vy: (Math.random()-0.5)*0.008,
+    rotation: Math.random()*360,
+    rotSpeed: (Math.random()-0.5)*4,
+    scale: 0.8 + Math.random()*0.8,
+    life: 1,
+    type: item.emoji
+  };
+  floatingElements.push(el);
+  renderFloatingDOM();
 }
-function switchProfile(id){
-  profiles[currentProfile]=layers; localStorage.setItem('brutal_profiles_v10', JSON.stringify(profiles));
-  currentProfile=id; localStorage.setItem('brutal_current_profile_v10', id);
-  layers=profiles[id] || []; if(layers.length===0){ layers=[{id:'n'+Date.now(), type:'text', text:'OVERLAY '+id.toUpperCase()+' v10 NEMPEL', x:0.04, y:0.04, w:0.6, h:0.07, fontFamily:'Syne', fontSize:26, color:'#000', brutalStyle:'box', bg:'#FFE600', rotation:-1, autoShow:true, visible:true, animation:'pop', duration:600}]; }
-  selected=layers[0]?.id||null; renderScreenTabs(); renderList(); if(selected) select(selected);
+
+function addRandomFloating(){
+  const randomItem=aiLibrary[Math.floor(Math.random()*aiLibrary.length)];
+  addFloatingElement(randomItem);
 }
-function savePerScreen(){ profiles[currentProfile]=layers; localStorage.setItem('brutal_profiles_v10', JSON.stringify(profiles)); log('💾 Saved '+currentProfile); }
-function renderList(){
-  const el=document.getElementById('layerList'); if(!el) return; el.innerHTML='';
-  [...layers].reverse().forEach(l=>{
-    const div=document.createElement('div'); div.className='layer-item'+(l.id===selected?' active':'');
-    div.innerHTML=`<div style="display:flex; align-items:center; flex:1; overflow:hidden;"><div style="width:28px; height:28px; background:${l.bg}; color:${l.color}; border:2px solid black; display:flex; align-items:center; justify-content:center; font-weight:800; border-radius:6px;">📝</div><div style="flex:1; margin-left:8px; overflow:hidden;"><div style="font-size:6px; background:black; color:white; padding:1px 4px; display:inline-block; border-radius:3px;">NEMPEL LAYAR</div><div style="font-weight:700; font-size:11px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${l.text}</div></div></div>`;
-    div.onclick=()=>select(l.id); el.appendChild(div);
+
+function clearAIElements(){
+  floatingElements=[];
+  renderFloatingDOM();
+  aiContainer.innerHTML='';
+}
+
+function shuffleAIElements(){
+  floatingElements.forEach(el=>{
+    el.x=Math.random()*0.8+0.1;
+    el.y=Math.random()*0.8+0.1;
+    el.vx=(Math.random()-0.5)*0.01;
+    el.vy=(Math.random()-0.5)*0.01;
   });
 }
-function select(id){
-  selected=id; const l=layers.find(x=>x.id===id); if(!l) return; renderList();
-  const props=document.getElementById('props'); if(props) props.style.display='block';
-  const propText=document.getElementById('propText'); if(propText) propText.value=l.text;
-  const propSize=document.getElementById('propSize'); if(propSize) propSize.value=l.fontSize;
-  const propRot=document.getElementById('propRot'); if(propRot) propRot.value=l.rotation||0;
+
+function updateAIElements(){
+  const count=parseInt(document.getElementById('aiCount').value);
+  const speed=parseInt(document.getElementById('aiSpeed').value);
+  document.getElementById('aiCountLabel').textContent=count+' elemen';
+  document.getElementById('aiSpeedLabel').textContent=speed+' — '+(speed<3?'santai':speed<6?'sedang':'ngebut');
+  
+  // Adjust count
+  while(floatingElements.length < count){
+    addRandomFloating();
+  }
+  while(floatingElements.length > count){
+    floatingElements.pop();
+  }
+  renderFloatingDOM();
 }
-function quickAdd(type){
-  const id='l'+Date.now();
-  const base={id,type, x:0.06, y:0.4+Math.random()*0.15, w:0.68, h:0.07, fontFamily:'Syne', fontSize:26, color:'#000000', brutalStyle:'box', bg:'#FFE600', rotation:-1, autoShow:true, visible:true, animation:'pop', duration:800};
-  if(type==='text') base.text='TEKS NEMPEL LAYAR v10';
-  if(type==='follow') base.text='{name} FOLLOWED! NEMPEL!';
-  if(type==='saweria') base.text='{name} SAWER {amount} NEMPEL!';
-  if(type==='goal') base.text='GOAL NEMPEL LAYAR';
-  layers.push(base); select(id); renderList(); savePerScreen();
+
+function renderFloatingDOM(){
+  aiContainer.innerHTML='';
+  floatingElements.forEach(el=>{
+    const div=document.createElement('div');
+    div.className='floating-element';
+    div.textContent=el.item.emoji;
+    div.style.left=(el.x*100)+'%';
+    div.style.top=(el.y*100)+'%';
+    div.style.transform=`translate(-50%,-50%) rotate(${el.rotation}deg) scale(${el.scale})`;
+    div.style.fontSize=(el.scale*28)+'px';
+    aiContainer.appendChild(div);
+  });
 }
-function updateProp(k,v){
-  const l=layers.find(x=>x.id===selected); if(!l) return;
-  if(k==='text') l.text=v; if(k==='fontSize') l.fontSize=parseInt(v); if(k==='rotation') l.rotation=parseInt(v); if(k==='color') l.color=v;
-  renderList(); clearTimeout(window.saveTimeout); window.saveTimeout=setTimeout(savePerScreen, 600);
+
+function aiLoop(){
+  const speed=parseInt(document.getElementById('aiSpeed')?.value||3) * 0.3;
+  floatingElements.forEach(el=>{
+    el.x+=el.vx*speed;
+    el.y+=el.vy*speed;
+    el.rotation+=el.rotSpeed*speed*0.5;
+    
+    // Bounce
+    if(el.x<0.05 || el.x>0.95){ el.vx*=-1; el.x=Math.max(0.05, Math.min(0.95, el.x)); }
+    if(el.y<0.05 || el.y>0.95){ el.vy*=-1; el.y=Math.max(0.05, Math.min(0.95, el.y)); }
+  });
+  renderFloatingDOM();
+  requestAnimationFrame(aiLoop);
 }
-function deleteLayer(){ layers=layers.filter(x=>x.id!==selected); selected=layers[0]?.id||null; if(selected) select(selected); else { const p=document.getElementById('props'); if(p) p.style.display='none'; } renderList(); savePerScreen(); }
+
 function getAnimOffset(l, elapsed){
-  if(!l.animation || l.animation==='none') return {x:0,y:0, scale:1, opacity:1};
-  const dur=l.duration||800; const delay=l.delay||0; if(elapsed < delay) return {x:0,y:0, scale:0, opacity:0};
-  let progress=Math.min((elapsed-delay)/dur,1); let scale=1, opacity=1, offsetX=0;
-  if(l.animation==='pop'){ const c1=1.70158,c3=c1+1; scale=1 + c3*Math.pow(progress-1,3) + c1*Math.pow(progress-1,2); opacity=progress; }
-  return {x:offsetX, y:0, scale, opacity};
+  const dur=l.duration||800; let progress=Math.min(elapsed/dur,1);
+  const easeOutBack=(p)=>{ const c1=1.70158,c3=c1+1; return 1 + c3*Math.pow(p-1,3) + c1*Math.pow(p-1,2); };
+  return {scale:easeOutBack(progress), opacity:progress};
 }
-function drawBrutal(c, l, isGhost, time, animTime){
-  const x=l.x*res.w, y=l.y*res.h, w=l.w*res.w, h=l.h*res.h; const anim=getAnimOffset(l, animTime);
-  c.save(); c.translate(x+w/2 + anim.x, y+h/2); c.rotate((l.rotation||0)*Math.PI/180); c.scale(anim.scale, anim.scale); c.translate(-(x+w/2), -(y+h/2)); c.globalAlpha = anim.opacity;
-  c.fillStyle='#000000'; c.fillRect(x+8, y+8, w, h);
-  c.fillStyle=l.bg||'#FFF'; c.fillRect(x,y,w,h); c.strokeStyle='black'; c.lineWidth=3; c.strokeRect(x,y,w,h);
-  c.font=`800 ${l.fontSize*(res.w/1080)}px Syne, sans-serif`; c.fillStyle=l.color||'#000'; c.textBaseline='middle'; c.fillText(l.text, x+14, y+h/2);
-  if(l.id===selected){ c.strokeStyle='#00FF88'; c.lineWidth=4; c.setLineDash([8,5]); c.strokeRect(x-3,y-3,w+6,h+6); c.setLineDash([]); }
+
+function drawBrutal(c, l, isGhost, animTime){
+  const x=l.x*res.w, y=l.y*res.h, w=l.w*res.w, h=l.h*res.h;
+  const anim=getAnimOffset(l, animTime);
+  c.save();
+  c.translate(x+w/2, y+h/2);
+  c.rotate((l.rotation||0)*Math.PI/180);
+  c.scale(anim.scale, anim.scale);
+  c.translate(-(x+w/2), -(y+h/2));
+  c.globalAlpha=anim.opacity;
+  
+  // Shadow
+  c.fillStyle='#000000'; c.fillRect(x+10, y+10, w, h);
+  
+  // Background by style
+  if(l.brutalStyle==='tape'){
+    c.fillStyle='#FFE600'; c.fillRect(x,y,w,h);
+    // Tape effect
+    c.fillStyle='rgba(0,0,0,0.1)'; c.fillRect(x,y,20,h); c.fillRect(x+w-20,y,20,h);
+  } else if(l.brutalStyle==='stamp'){
+    c.fillStyle=l.bg||'#FF3B30'; c.fillRect(x,y,w,h);
+    c.strokeStyle='white'; c.lineWidth=3; c.setLineDash([6,4]); c.strokeRect(x+6,y+6,w-12,h-12); c.setLineDash([]);
+  } else if(l.brutalStyle==='highlight'){
+    c.fillStyle='#FFE600'; c.fillRect(x,y,w,h);
+    c.fillStyle=l.bg||'#000'; c.fillRect(x,y,w*0.08,h);
+  } else if(l.brutalStyle==='ripped'){
+    c.fillStyle='#FFFFFF'; c.fillRect(x,y,w,h);
+    // Ripped edge
+    c.fillStyle='#E8E6DE'; 
+    for(let i=0;i<w;i+=12){ c.fillRect(x+i, y+h-8, 8, 8); }
+  } else {
+    c.fillStyle=l.bg||'#FFE600'; c.fillRect(x,y,w,h);
+  }
+  
+  c.strokeStyle='black'; c.lineWidth=4; c.strokeRect(x,y,w,h);
+  
+  // Text
+  c.font=`800 ${l.fontSize*(res.w/1080)}px Syne, sans-serif`;
+  c.fillStyle=l.color||'#000';
+  c.textBaseline='middle';
+  // Wrap text if too long
+  const maxWidth=w-28;
+  let text=l.text;
+  if(c.measureText(text).width > maxWidth){
+    // Simple truncate
+    while(c.measureText(text+'...').width > maxWidth && text.length>0){ text=text.slice(0,-1); }
+    text=text+'...';
+  }
+  c.fillText(text, x+14, y+h/2);
+  
+  if(l.id===selected){
+    c.strokeStyle='#8A2BE2'; c.lineWidth=4; c.setLineDash([10,6]); c.strokeRect(x-4,y-4,w+8,h+8); c.setLineDash([]);
+  }
   c.restore();
 }
+
 let startTime=Date.now();
 function renderLoop(){
   const now=Date.now(); const elapsed=now-startTime;
   ctx.clearRect(0,0,res.w,res.h); gctx.clearRect(0,0,res.w,res.h);
-  if(video.readyState>=2){ ctx.drawImage(video,0,0,res.w,res.h); gctx.drawImage(video,0,0,res.w,res.h); }
+  if(video.readyState>=2){ ctx.drawImage(video,0,0,res.w,res.h); }
   else { ctx.fillStyle='#E8E6DE'; ctx.fillRect(0,0,res.w,res.h); }
-  layers.forEach(l=>{ if(!l.visible) return; drawBrutal(ctx,l,false, now, elapsed); });
+  
+  layers.forEach(l=>{
+    if(!l.visible) return;
+    drawBrutal(ctx,l,false,elapsed);
+  });
   requestAnimationFrame(renderLoop);
 }
-function triggerConfetti(){ for(let i=0;i<50;i++){ particles.push({x: res.w/2 + (Math.random()-0.5)*200, y: res.h/2, vx:(Math.random()-0.5)*18, vy:Math.random()*-12 -4, color:colors[Math.floor(Math.random()*colors.length)], size:Math.random()*7+3, life:1, decay:Math.random()*0.02+0.01}); } }
+
 function particleLoop(){
   pctx.clearRect(0,0,res.w,res.h);
-  for(let i=particles.length-1;i>=0;i--){ const p=particles[i]; p.x+=p.vx; p.y+=p.vy; p.vy+=0.4; p.life-=p.decay; if(p.life<=0){ particles.splice(i,1); continue; } pctx.save(); pctx.translate(p.x, p.y); pctx.globalAlpha=p.life; pctx.fillStyle=p.color; pctx.fillRect(-p.size/2, -p.size/2, p.size, p.size); pctx.restore(); }
+  for(let i=particles.length-1;i>=0;i--){
+    const p=particles[i];
+    p.x+=p.vx; p.y+=p.vy; p.vy+=0.3; p.life-=p.decay;
+    if(p.life<=0){ particles.splice(i,1); continue; }
+    pctx.save(); pctx.globalAlpha=p.life; pctx.fillStyle=p.color; pctx.fillRect(p.x, p.y, p.size, p.size); pctx.restore();
+  }
   requestAnimationFrame(particleLoop);
 }
+
 function bindDrag(){
-  let dragging=false, sx,sy, ox,oy, handle=null;
+  let dragging=false, sx,sy, ox,oy;
   function pos(e){ const r=canvas.getBoundingClientRect(); const cx=e.touches?e.touches[0].clientX:e.clientX; const cy=e.touches?e.touches[0].clientY:e.clientY; return {x:(cx-r.left)/r.width, y:(cy-r.top)/r.height}; }
-  canvas.addEventListener('pointerdown', e=>{ const p=pos(e); for(let i=layers.length-1;i>=0;i--){ const l=layers[i]; if(p.x>=l.x && p.x<=l.x+l.w && p.y>=l.y && p.y<=l.y+l.h){ select(l.id); dragging=true; sx=p.x; sy=p.y; ox=l.x; oy=l.y; handle='move'; canvas.setPointerCapture(e.pointerId); break; } } });
-  canvas.addEventListener('pointermove', e=>{ if(!dragging) return; const l=layers.find(x=>x.id===selected); if(!l) return; const p=pos(e); const dx=p.x-sx, dy=p.y-sy; l.x=Math.max(0,Math.min(1-l.w, ox+dx)); l.y=Math.max(0,Math.min(1-l.h, oy+dy)); renderList(); });
+  canvas.addEventListener('pointerdown', e=>{
+    const p=pos(e);
+    for(let i=layers.length-1;i>=0;i--){
+      const l=layers[i];
+      if(p.x>=l.x && p.x<=l.x+l.w && p.y>=l.y && p.y<=l.y+l.h){
+        select(l.id); dragging=true; sx=p.x; sy=p.y; ox=l.x; oy=l.y; canvas.setPointerCapture(e.pointerId); break;
+      }
+    }
+  });
+  canvas.addEventListener('pointermove', e=>{
+    if(!dragging) return;
+    const l=layers.find(x=>x.id===selected); if(!l) return;
+    const p=pos(e); const dx=p.x-sx, dy=p.y-sy;
+    l.x=Math.max(0,Math.min(1-l.w, ox+dx)); l.y=Math.max(0,Math.min(1-l.h, oy+dy));
+    renderList();
+  });
   canvas.addEventListener('pointerup', ()=>{ dragging=false; savePerScreen(); });
 }
-function bindDoubleClick(){ canvas.addEventListener('dblclick', e=>{ const r=canvas.getBoundingClientRect(); const x=(e.clientX-r.left)/r.width; const y=(e.clientY-r.top)/r.height; const id='l'+Date.now(); layers.push({id, type:'text', text:'TEKS NEMPEL v10', x,y, w:0.5, h:0.06, fontFamily:'Syne', fontSize:22, color:'#000', brutalStyle:'box', bg:'#FFE600', rotation:-1, autoShow:true, visible:true, animation:'pop', duration:600}); select(id); renderList(); savePerScreen(); }); }
+
 function bindBubble(){
-  const bubble=document.getElementById('bubble'); let drag=false, startX, startY, origX, origY, moved=false;
+  const bubble=document.getElementById('bubble');
+  let drag=false, startX, startY, origX, origY, moved=false, lastClick=0;
   bubble.addEventListener('pointerdown', e=>{ drag=true; moved=false; startX=e.clientX; startY=e.clientY; const rect=bubble.getBoundingClientRect(); origX=rect.left; origY=rect.top; bubble.setPointerCapture(e.pointerId); });
   bubble.addEventListener('pointermove', e=>{ if(!drag) return; const dx=e.clientX-startX, dy=e.clientY-startY; if(Math.abs(dx)>5||Math.abs(dy)>5) moved=true; bubble.style.left=(origX+dx)+'px'; bubble.style.top=(origY+dy)+'px'; bubble.style.right='auto'; bubble.style.bottom='auto'; });
-  bubble.addEventListener('pointerup', e=>{ drag=false; if(!moved){ const now=Date.now(); if(now-lastClick<300){ document.getElementById('sidebar').classList.add('open'); } else { const m=document.getElementById('bubbleMenu'); m.classList.toggle('open'); } lastClick=now; } });
+  bubble.addEventListener('pointerup', e=>{ drag=false; if(!moved){ const now=Date.now(); if(now-lastClick<300){ document.getElementById('sidebar').classList.add('open'); } else { document.getElementById('bubbleMenu').classList.toggle('open'); } lastClick=now; } });
 }
-let lastClick=0;
-function toggleBubble(show){ const b=document.getElementById('bubble'); if(show===undefined) show=b.style.display==='none'; b.style.display=show?'flex':'none'; }
-function toggleAddMenu(force){ const m=document.getElementById('addMenu'); if(force===false) m.classList.remove('open'); else m.classList.toggle('open'); }
+
 function switchTab(tab){ document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active')); document.getElementById('tab-'+tab).classList.add('active'); document.querySelectorAll('.bottom-nav-item').forEach(item=>{ item.classList.toggle('active', item.dataset.tab===tab); }); }
 function switchTabViaBottom(tab){ document.getElementById('sidebar').classList.add('open'); switchTab(tab); if(navigator.vibrate) navigator.vibrate(20); }
-function minimizeToBubble(){
-  if(window.BrutalAndroid && BrutalAndroid.minimizeToBubble){ BrutalAndroid.minimizeToBubble(); }
-  else { alert('Di HP Android: Pencet HOME, bubble kuning + teks overlay tetep nempel di atas TikTok!'); toggleBubble(true); }
-}
-function toggleLive(){
-  isLive=!isLive; const btn=document.getElementById('liveBtn'); const ind=document.getElementById('liveIndicator'); const badge=document.getElementById('liveBadge'); const minBtn=document.getElementById('minimizeBtn');
-  if(isLive){ btn.textContent='■ STOP LIVE'; btn.classList.remove('btn-red'); btn.classList.add('btn-black'); ind.textContent='● LIVE + NEMPEL'; ind.style.background='#FF3B30'; badge.textContent='● LIVE'; if(minBtn) minBtn.style.display='flex'; toggleBubble(true); if(window.BrutalAndroid && BrutalAndroid.startFloatingOverlay){ try{ BrutalAndroid.startFloatingOverlay(JSON.stringify(profiles)); }catch(e){} } }
-  else { btn.textContent='● MASUK MODE LIVE + BUBBLE LUAR'; btn.classList.add('btn-red'); btn.classList.remove('btn-black'); ind.textContent='OFFLINE'; ind.style.background='black'; badge.textContent='OFF'; if(minBtn) minBtn.style.display='none'; toggleBubble(false); if(window.BrutalAndroid && BrutalAndroid.stopFloatingOverlay){ try{ BrutalAndroid.stopFloatingOverlay(); }catch(e){} } }
-}
-function toggleEvent(type, enabled){ eventsConfig[type].enabled=enabled; localStorage.setItem('events_config_v10', JSON.stringify(eventsConfig)); renderEvents(); }
-function updateEvent(type, key, value){ eventsConfig[type][key]=value; localStorage.setItem('events_config_v10', JSON.stringify(eventsConfig)); if(key==='soundUrl' && value) preloadSound(type, value); }
-function preloadSound(type, url){ if(!url) return; try{ const audio=new Audio(); audio.src=url; audio.preload='auto'; audio.volume=eventsConfig[type]?.volume||0.8; audioElements[type]=audio; }catch(e){} }
-function preloadSounds(){ Object.keys(eventsConfig).forEach(type=>{ if(eventsConfig[type].soundUrl) preloadSound(type, eventsConfig[type].soundUrl); }); }
-function testSound(type){
-  if(!type) type='follow';
-  const cfg=eventsConfig[type]; let audio = audioElements[type];
-  if(uploadedAudioBlobs[type]){ const a = new Audio(uploadedAudioBlobs[type]); a.volume = cfg.volume||0.8; a.play().then(()=>log(`🔊 TEST ${type} UPLOAD OK`)).catch(e=>log(`❌ ${e.message}`)); return; }
-  if(audio && cfg.soundUrl){ audio.currentTime=0; audio.volume=cfg.volume||0.8; audio.play().then(()=>log(`🔊 TEST ${type} OK`)).catch(e=>{ log(`❌ ${e.message} — coba UPLOAD MP3`); }); }
-  else if(cfg.soundUrl){ const a = new Audio(cfg.soundUrl); a.volume = cfg.volume||0.8; a.play().catch(e=>log(`❌ ${e.message}`)); }
-  else { log(`❌ Belum ada suara ${type} — klik UPLOAD MP3 dulu!`); alert('Belum ada suara! Klik UPLOAD MP3 dulu pilih file dari HP!'); }
-}
-function testEvent(type){
-  const names=['Bang Jago','Siti Brutal']; const name=names[Math.floor(Math.random()*names.length)];
-  if(type==='follow') triggerEvent('follow', {name}); else if(type==='saweria') triggerEvent('saweria', {name, amount:50000, message:'semangat!'}); else triggerEvent('gift', {name, gift:'Rose', amount:10});
-}
-function triggerEvent(eventType, data){
-  const cfg=eventsConfig[eventType]; if(!cfg || !cfg.enabled) return;
-  let text=cfg.text; text=text.replace(/{name}/g, data.name||'Someone'); text=text.replace(/{amount}/g, data.amount? new Intl.NumberFormat('id-ID').format(data.amount) : ''); text=text.replace(/{gift}/g, data.gift||'Gift'); text=text.replace(/{message}/g, data.message||'');
-  const alertBox=document.getElementById('alertBox'); document.getElementById('alertEventType').textContent=`${eventType.toUpperCase()} • v10 NEMPEL`; document.getElementById('alertTitle').textContent=text; document.getElementById('alertMsg').textContent=data.message||''; document.getElementById('alertTime').textContent=new Date().toLocaleTimeString(); alertBox.style.display='block'; testSound(eventType); triggerConfetti(); if(navigator.vibrate) navigator.vibrate([80,40,80]); log(`🔔 ${eventType}: ${text}`); setTimeout(()=>alertBox.style.display='none', cfg.duration||3000);
-}
+function savePerScreen(){ profiles[currentProfile]=layers; localStorage.setItem('brutal_profiles_v12', JSON.stringify(profiles)); }
 function log(m){ console.log(m); }
-function giftLog(m){ const el=document.getElementById('giftLog'); if(!el) return; const t=new Date().toLocaleTimeString(); el.innerHTML=`[${t}] ${m}<br>`+el.innerHTML; }
-let restPollInterval=null;
-let lastPollTimestamp=0;
-let currentPollUsername=null;
-
-function connectTikTokLive(isSimulate){
-  const user=document.getElementById('tiktokUser').value.trim().replace('@','');
-  const backendUrl=document.getElementById('backendUrl')?.value.trim() || 'https://sawer-studio-backend.vercel.app';
-  if(!user){ alert('Isi username TikTok dulu! Contoh: jamalgaming (tanpa @)'); return; }
-  const st=document.getElementById('backendStatus');
-  
-  // Clear previous polling
-  if(restPollInterval){ clearInterval(restPollInterval); restPollInterval=null; }
-  if(tiktokLiveConnection){ clearInterval(tiktokLiveConnection); tiktokLiveConnection=null; }
-  if(socketIoConnection){ try{ socketIoConnection.disconnect(); }catch(e){} socketIoConnection=null; }
-  
-  if(isSimulate){
-    if(st){ st.textContent=`🧪 SIMULASI @${user} aktif — follow/gift random`; st.style.background='#FFE600'; st.style.color='black'; }
-    giftLog(`🧪 SIM @${user} aktif`);
-    tiktokLiveConnection=setInterval(()=>{
-      if(Math.random()<0.3){
-        const names=['Bang Jago','Siti Brutal','Budi Gaming','User'+Math.floor(Math.random()*1000)];
-        const name=names[Math.floor(Math.random()*names.length)];
-        if(Math.random()<0.6){ triggerEvent('follow', {name}); giftLog(`👤 ${name} FOLLOWED! (SIM)`); }
-        else { triggerEvent('gift', {name, gift:'Rose', amount:10}); giftLog(`🎁 ${name} gift Rose (SIM)`); }
-      }
-    }, 3500);
-    return;
-  }
-
-  // REAL MODE — Try Socket.IO first, fallback to REST polling
-  log(`🔌 Connecting REAL @${user} via ${backendUrl}`);
-  if(st){ st.innerHTML=`🔌 Connecting REAL @${user}...<br>⏳ Coba Socket.IO dulu, kalo gagal fallback ke REST polling`; st.style.background='#111'; st.style.color='#0ff'; }
-
-  let socketFailed=false;
-  let socketConnected=false;
-
-  // Try Socket.IO
-  try{
-    if(typeof io === 'undefined'){
-      throw new Error('Socket.IO lib not loaded');
-    }
-    socketIoConnection = io(backendUrl, {transports:['websocket','polling'], timeout:8000, reconnectionAttempts:2});
-    
-    const socketTimeout = setTimeout(()=>{
-      if(!socketConnected){
-        log('⚠️ Socket.IO timeout — fallback ke REST polling');
-        socketFailed=true;
-        try{ socketIoConnection.disconnect(); }catch(e){}
-        startRestPolling(user, backendUrl);
-      }
-    }, 5000);
-
-    socketIoConnection.on('connect', ()=>{
-      clearTimeout(socketTimeout);
-      socketConnected=true;
-      log(`✅ Socket.IO connected!`);
-      if(st){ st.innerHTML=`✅ Socket.IO Connected<br>Joining @${user}...`; st.style.background='#00FF88'; st.style.color='black'; }
-      socketIoConnection.emit('join', {username:user});
-    });
-    socketIoConnection.on('joined', (data)=>{
-      log(`✅ Joined @${data.username} via Socket.IO`);
-      if(st) st.innerHTML=`✅ Joined @${data.username} via Socket.IO<br>🔥 Tunggu follow/gift asli!`;
-      giftLog(`✅ Joined @${data.username} (Socket.IO)`);
-    });
-    socketIoConnection.on('follow', (data)=>{ log(`👤 REAL FOLLOW: ${data.name}`); giftLog(`👤 REAL FOLLOW: ${data.name}`); triggerEvent('follow', {name:data.name}); });
-    socketIoConnection.on('gift', (data)=>{ log(`🎁 REAL GIFT: ${data.name} ${data.gift}`); giftLog(`🎁 REAL GIFT: ${data.name} ${data.gift}`); triggerEvent('gift', {name:data.name, gift:data.gift, amount:data.amount}); });
-    socketIoConnection.on('like', (data)=>{ log(`❤️ LIKE: ${data.name}`); triggerEvent('like', {name:data.name}); });
-    socketIoConnection.on('tiktok_connected', (data)=>{ log(`🔥 TikTok @${data.username} LIVE! Room ${data.roomId}`); if(st) st.innerHTML=`🔥 TikTok @${data.username} LIVE!<br>Room: ${data.roomId}`; giftLog(`🔥 @${data.username} LIVE!`); });
-    socketIoConnection.on('tiktok_error', (data)=>{ log(`❌ TikTok error: ${data.error}`); if(st){ st.innerHTML=`❌ ${data.error}<br>Coba SIMULASI atau cek username`; st.style.background='#FF3B30'; st.style.color='white'; } });
-    socketIoConnection.on('disconnect', ()=>{ log('🔌 Socket.IO disconnected'); if(!socketFailed){ if(st){ st.innerHTML=`🔌 Socket.IO disconnected<br>Fallback ke REST polling...`; st.style.background='#FF3B30'; st.style.color='white'; } startRestPolling(user, backendUrl); } });
-    socketIoConnection.on('connect_error', (err)=>{
-      clearTimeout(socketTimeout);
-      log(`❌ Socket.IO connect_error: ${err.message} — fallback REST`);
-      if(st){ st.innerHTML=`❌ Socket.IO gagal: ${err.message}<br>🔄 Fallback ke REST polling...`; st.style.background='#FFE600'; st.style.color='black'; }
-      socketFailed=true;
-      try{ socketIoConnection.disconnect(); }catch(e){}
-      startRestPolling(user, backendUrl);
-    });
-  }catch(e){
-    log(`❌ Socket.IO init fail: ${e.message} — langsung REST polling`);
-    if(st){ st.innerHTML=`❌ Socket.IO error: ${e.message}<br>🔄 Pakai REST polling...`; st.style.background='#FFE600'; st.style.color='black'; }
-    startRestPolling(user, backendUrl);
+function minimizeToBubble(){ if(window.BrutalAndroid && BrutalAndroid.minimizeToBubble){ BrutalAndroid.minimizeToBubble(); } else { alert('Pencet HOME di HP Android biar bubble + teks + elemen AI nempel di atas TikTok!'); } }
+function toggleLive(){
+  const btn=document.getElementById('liveBtn'); const ind=document.getElementById('liveIndicator'); const minBtn=document.getElementById('minimizeBtn');
+  if(!window.isLive){
+    window.isLive=true; btn.textContent='■ STOP LIVE'; btn.classList.remove('btn-red'); btn.classList.add('btn-black'); ind.textContent='● LIVE NEMPEL'; ind.style.background='#FF3B30'; if(minBtn) minBtn.style.display='flex';
+    if(window.BrutalAndroid && BrutalAndroid.startFloatingOverlay){ try{ BrutalAndroid.startFloatingOverlay(JSON.stringify(profiles)); }catch(e){} }
+  } else {
+    window.isLive=false; btn.textContent='● LIVE + BUBBLE NEMPEL'; btn.classList.add('btn-red'); btn.classList.remove('btn-black'); ind.textContent='TEKS ONLY'; ind.style.background='black'; if(minBtn) minBtn.style.display='none';
+    if(window.BrutalAndroid && BrutalAndroid.stopFloatingOverlay){ try{ BrutalAndroid.stopFloatingOverlay(); }catch(e){} }
   }
 }
-
-function startRestPolling(username, backendUrl){
-  if(restPollInterval) clearInterval(restPollInterval);
-  currentPollUsername=username;
-  lastPollTimestamp=Date.now();
-  
-  const st=document.getElementById('backendStatus');
-  
-  // First, join via REST
-  fetch(`${backendUrl}/api/join`, {
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({username})
-  }).then(r=>r.json()).then(data=>{
-    log(`✅ REST JOIN @${username}: ${data.message || 'ok'}`);
-    if(st){ st.innerHTML=`✅ REST Connected @${username}<br>📡 Polling tiap 2 detik...<br>HasConnector: ${data.hasConnector}`; st.style.background='#00FF88'; st.style.color='black'; }
-    giftLog(`✅ REST JOIN @${username}`);
-  }).catch(e=>{
-    log(`❌ REST JOIN fail: ${e.message}`);
-    if(st){ st.innerHTML=`❌ REST JOIN fail: ${e.message}<br>Coba SIMULASI aja`; st.style.background='#FF3B30'; st.style.color='white'; }
-  });
-
-  // Poll events every 2s
-  restPollInterval=setInterval(async()=>{
-    try{
-      const since=lastPollTimestamp;
-      const res=await fetch(`${backendUrl}/api/events/${username}?since=${since}`).then(r=>r.json());
-      if(res.events && res.events.length>0){
-        res.events.forEach(ev=>{
-          if(ev.timestamp > lastPollTimestamp) lastPollTimestamp=ev.timestamp;
-          if(ev.type==='follow'){ triggerEvent('follow', {name:ev.name}); giftLog(`👤 REST FOLLOW: ${ev.name}`); }
-          else if(ev.type==='gift'){ triggerEvent('gift', {name:ev.name, gift:ev.gift, amount:ev.amount}); giftLog(`🎁 REST GIFT: ${ev.name} ${ev.gift}`); }
-          else if(ev.type==='like'){ triggerEvent('like', {name:ev.name}); }
-          else if(ev.type==='tiktok_connected'){ log(`🔥 REST TikTok @${ev.username} LIVE!`); if(st) st.innerHTML=`🔥 TikTok @${ev.username} LIVE! (REST)<br>Room: ${ev.roomId}`; }
-        });
-      }
-    }catch(e){
-      log(`❌ REST poll error: ${e.message}`);
-    }
-  }, 2000);
-  
-  log(`📡 REST polling started @${username} tiap 2 detik`);
+function exportJSON(){ const blob=new Blob([JSON.stringify({profiles, layers, floatingElements: floatingElements.map(f=>({emoji:f.item.emoji, x:f.x, y:f.y})), version:'v12-ai-elements'},null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`v12-teks-ai-${Date.now()}.json`; a.click(); }
+function exportImage(){
+  const link=document.createElement('a'); link.download=`v12-teks-${Date.now()}.png`; link.href=canvas.toDataURL(); link.click();
 }
-function exportJSON(){ const blob=new Blob([JSON.stringify({profiles, eventsConfig, currentProfile, version:'v10-super-gampang'},null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`brutal-v10-${currentProfile}.json`; a.click(); }
-function exportVideo(){ const stream=canvas.captureStream(30); const recorder=new MediaRecorder(stream, {mimeType:'video/webm;codecs=vp9'}); const chunks=[]; recorder.ondataavailable=e=>{ if(e.data.size>0) chunks.push(e.data); }; recorder.onstop=()=>{ const blob=new Blob(chunks, {type:'video/webm'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=`brutal-v10-${Date.now()}.webm`; a.click(); }; recorder.start(); setTimeout(()=>recorder.stop(), 5000); }
-function loadProfileToUI(){ const saved=localStorage.getItem('bubble_visible'); if(saved==='true') toggleBubble(true); renderScreenTabs(); }
-document.addEventListener('click', (e)=>{ if(!e.target.closest('#fabAdd') && !e.target.closest('#addMenu')){ const m=document.getElementById('addMenu'); if(m) m.classList.remove('open'); } });
+function exportVideo(){
+  const stream=canvas.captureStream(30); const recorder=new MediaRecorder(stream, {mimeType:'video/webm;codecs=vp9'}); const chunks=[]; recorder.ondataavailable=e=>{ if(e.data.size>0) chunks.push(e.data); }; recorder.onstop=()=>{ const blob=new Blob(chunks, {type:'video/webm'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=`v12-teks-ai-${Date.now()}.webm`; a.click(); }; recorder.start(); setTimeout(()=>recorder.stop(), 5000);
+}
+function loadProfileToUI(){ renderList(); }
 
 init();
 </script>
