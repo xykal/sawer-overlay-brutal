@@ -5,6 +5,9 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -26,27 +29,20 @@ jobs:
       - name: Setup Android SDK (fix)
         run: |
           echo "ANDROID_HOME=$ANDROID_HOME"
-          echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT"
-          ls -lh $ANDROID_HOME/cmdline-tools/ || true
-          # Install required SDK packages if missing
           yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
           $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0" "ndk;26.1.10909125" || true
 
       - name: Fix ic_launcher placeholder
         run: |
-          # Create real placeholder PNG from base64 1x1 pixel
           mkdir -p android-app/app/src/main/res/mipmap-hdpi android-app/app/src/main/res/mipmap-mdpi android-app/app/src/main/res/mipmap-xhdpi
-          # 1x1 transparent png base64
           echo "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII=" | base64 -d > android-app/app/src/main/res/mipmap-hdpi/ic_launcher.png
           cp android-app/app/src/main/res/mipmap-hdpi/ic_launcher.png android-app/app/src/main/res/mipmap-mdpi/
           cp android-app/app/src/main/res/mipmap-hdpi/ic_launcher.png android-app/app/src/main/res/mipmap-xhdpi/
-          ls -lh android-app/app/src/main/res/mipmap-hdpi/
 
       - name: Copy PWA to assets
         run: |
           mkdir -p android-app/app/src/main/assets/www
           cp -r pwa/* android-app/app/src/main/assets/www/
-          ls -lh android-app/app/src/main/assets/www/
 
       - name: Make gradlew executable
         run: chmod +x android-app/gradlew || true
@@ -75,14 +71,14 @@ jobs:
 
       - name: Create Release
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: v2.0.${{ github.run_number }}-armeabi-v7a
           name: "Brutal v2.0.${{ github.run_number }} — armeabi-v7a — No RTMP"
           body: |
             ## SawerOverlay Brutal — No RTMP Edition
             
-            **Build:** armeabi-v7a only (32-bit ARM)
+            **Build:** armeabi-v7a only (32-bit ARM) — 5.4MB
             **Design:** Brutalism — hitam putih kuning, border tebal, no neon
             
             ### Cara pakai tanpa RTMP:
