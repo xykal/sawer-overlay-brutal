@@ -53,7 +53,7 @@ jobs:
           mkdir -p dist
           find android-app/app/build/outputs/apk -name "*.apk" -type f | while read apk; do
             echo "Found $apk"
-            cp "$apk" "dist/SawerOverlay-v15-FullBubble-SaweriaWidget-Live-Signed-armeabi-v7a.apk"
+            cp "$apk" "dist/SawerOverlay-v16-EmbedAsli-Saweria-FullBubble-Signed-armeabi-v7a.apk"
             base=$(basename "$apk")
             cp "$apk" "dist/$base"
           done
@@ -62,16 +62,16 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: sawer-overlay-v15-full-bubble-saweria-widget-live-signed-armeabi-v7a
+          name: sawer-overlay-v16-embed-asli-saweria-full-bubble-signed-armeabi-v7a
           path: dist/*.apk
           retention-days: 30
 
-      - name: Create Release v15
+      - name: Create Release v16
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v15.0.${{ github.run_number }}-full-bubble-saweria-widget-live
-          name: "v15.0 FULL BUBBLE CONTROL + SAWERIA WIDGET LIVE WEBSOCKET — Warna Bebas HEX + Donasi Real-time"
+          tag_name: v16.0.${{ github.run_number }}-embed-asli-saweria-full-bubble
+          name: "v16.0 EMBED OVERLAY ASLI SAWERIA LENGKAP + FULL BUBBLE — WebView Floating"
           body: |
             ## 🔥 v14.0 CLEAN FULL EDIT — Semua Bug v13 Fix + Fitur Baru
 
