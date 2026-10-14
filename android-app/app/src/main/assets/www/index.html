@@ -640,9 +640,132 @@ function triggerEvent(eventType, data){
 }
 function log(m){ console.log(m); }
 function giftLog(m){ const el=document.getElementById('giftLog'); if(!el) return; const t=new Date().toLocaleTimeString(); el.innerHTML=`[${t}] ${m}<br>`+el.innerHTML; }
+let restPollInterval=null;
+let lastPollTimestamp=0;
+let currentPollUsername=null;
+
 function connectTikTokLive(isSimulate){
-  const user=document.getElementById('tiktokUser').value.trim().replace('@',''); if(!user){ alert('Isi username TikTok tanpa @'); return; }
-  const st=document.getElementById('backendStatus'); if(isSimulate){ if(st) st.textContent=`🧪 SIMULASI @${user} aktif`; giftLog(`SIM @${user}`); setInterval(()=>{ if(Math.random()<0.3){ triggerEvent('follow', {name:'User'+Math.floor(Math.random()*1000)}); } }, 4000); return; }
+  const user=document.getElementById('tiktokUser').value.trim().replace('@','');
+  const backendUrl=document.getElementById('backendUrl')?.value.trim() || 'https://sawer-studio-backend.vercel.app';
+  if(!user){ alert('Isi username TikTok dulu! Contoh: jamalgaming (tanpa @)'); return; }
+  const st=document.getElementById('backendStatus');
+  
+  // Clear previous polling
+  if(restPollInterval){ clearInterval(restPollInterval); restPollInterval=null; }
+  if(tiktokLiveConnection){ clearInterval(tiktokLiveConnection); tiktokLiveConnection=null; }
+  if(socketIoConnection){ try{ socketIoConnection.disconnect(); }catch(e){} socketIoConnection=null; }
+  
+  if(isSimulate){
+    if(st){ st.textContent=`🧪 SIMULASI @${user} aktif — follow/gift random`; st.style.background='#FFE600'; st.style.color='black'; }
+    giftLog(`🧪 SIM @${user} aktif`);
+    tiktokLiveConnection=setInterval(()=>{
+      if(Math.random()<0.3){
+        const names=['Bang Jago','Siti Brutal','Budi Gaming','User'+Math.floor(Math.random()*1000)];
+        const name=names[Math.floor(Math.random()*names.length)];
+        if(Math.random()<0.6){ triggerEvent('follow', {name}); giftLog(`👤 ${name} FOLLOWED! (SIM)`); }
+        else { triggerEvent('gift', {name, gift:'Rose', amount:10}); giftLog(`🎁 ${name} gift Rose (SIM)`); }
+      }
+    }, 3500);
+    return;
+  }
+
+  // REAL MODE — Try Socket.IO first, fallback to REST polling
+  log(`🔌 Connecting REAL @${user} via ${backendUrl}`);
+  if(st){ st.innerHTML=`🔌 Connecting REAL @${user}...<br>⏳ Coba Socket.IO dulu, kalo gagal fallback ke REST polling`; st.style.background='#111'; st.style.color='#0ff'; }
+
+  let socketFailed=false;
+  let socketConnected=false;
+
+  // Try Socket.IO
+  try{
+    if(typeof io === 'undefined'){
+      throw new Error('Socket.IO lib not loaded');
+    }
+    socketIoConnection = io(backendUrl, {transports:['websocket','polling'], timeout:8000, reconnectionAttempts:2});
+    
+    const socketTimeout = setTimeout(()=>{
+      if(!socketConnected){
+        log('⚠️ Socket.IO timeout — fallback ke REST polling');
+        socketFailed=true;
+        try{ socketIoConnection.disconnect(); }catch(e){}
+        startRestPolling(user, backendUrl);
+      }
+    }, 5000);
+
+    socketIoConnection.on('connect', ()=>{
+      clearTimeout(socketTimeout);
+      socketConnected=true;
+      log(`✅ Socket.IO connected!`);
+      if(st){ st.innerHTML=`✅ Socket.IO Connected<br>Joining @${user}...`; st.style.background='#00FF88'; st.style.color='black'; }
+      socketIoConnection.emit('join', {username:user});
+    });
+    socketIoConnection.on('joined', (data)=>{
+      log(`✅ Joined @${data.username} via Socket.IO`);
+      if(st) st.innerHTML=`✅ Joined @${data.username} via Socket.IO<br>🔥 Tunggu follow/gift asli!`;
+      giftLog(`✅ Joined @${data.username} (Socket.IO)`);
+    });
+    socketIoConnection.on('follow', (data)=>{ log(`👤 REAL FOLLOW: ${data.name}`); giftLog(`👤 REAL FOLLOW: ${data.name}`); triggerEvent('follow', {name:data.name}); });
+    socketIoConnection.on('gift', (data)=>{ log(`🎁 REAL GIFT: ${data.name} ${data.gift}`); giftLog(`🎁 REAL GIFT: ${data.name} ${data.gift}`); triggerEvent('gift', {name:data.name, gift:data.gift, amount:data.amount}); });
+    socketIoConnection.on('like', (data)=>{ log(`❤️ LIKE: ${data.name}`); triggerEvent('like', {name:data.name}); });
+    socketIoConnection.on('tiktok_connected', (data)=>{ log(`🔥 TikTok @${data.username} LIVE! Room ${data.roomId}`); if(st) st.innerHTML=`🔥 TikTok @${data.username} LIVE!<br>Room: ${data.roomId}`; giftLog(`🔥 @${data.username} LIVE!`); });
+    socketIoConnection.on('tiktok_error', (data)=>{ log(`❌ TikTok error: ${data.error}`); if(st){ st.innerHTML=`❌ ${data.error}<br>Coba SIMULASI atau cek username`; st.style.background='#FF3B30'; st.style.color='white'; } });
+    socketIoConnection.on('disconnect', ()=>{ log('🔌 Socket.IO disconnected'); if(!socketFailed){ if(st){ st.innerHTML=`🔌 Socket.IO disconnected<br>Fallback ke REST polling...`; st.style.background='#FF3B30'; st.style.color='white'; } startRestPolling(user, backendUrl); } });
+    socketIoConnection.on('connect_error', (err)=>{
+      clearTimeout(socketTimeout);
+      log(`❌ Socket.IO connect_error: ${err.message} — fallback REST`);
+      if(st){ st.innerHTML=`❌ Socket.IO gagal: ${err.message}<br>🔄 Fallback ke REST polling...`; st.style.background='#FFE600'; st.style.color='black'; }
+      socketFailed=true;
+      try{ socketIoConnection.disconnect(); }catch(e){}
+      startRestPolling(user, backendUrl);
+    });
+  }catch(e){
+    log(`❌ Socket.IO init fail: ${e.message} — langsung REST polling`);
+    if(st){ st.innerHTML=`❌ Socket.IO error: ${e.message}<br>🔄 Pakai REST polling...`; st.style.background='#FFE600'; st.style.color='black'; }
+    startRestPolling(user, backendUrl);
+  }
+}
+
+function startRestPolling(username, backendUrl){
+  if(restPollInterval) clearInterval(restPollInterval);
+  currentPollUsername=username;
+  lastPollTimestamp=Date.now();
+  
+  const st=document.getElementById('backendStatus');
+  
+  // First, join via REST
+  fetch(`${backendUrl}/api/join`, {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({username})
+  }).then(r=>r.json()).then(data=>{
+    log(`✅ REST JOIN @${username}: ${data.message || 'ok'}`);
+    if(st){ st.innerHTML=`✅ REST Connected @${username}<br>📡 Polling tiap 2 detik...<br>HasConnector: ${data.hasConnector}`; st.style.background='#00FF88'; st.style.color='black'; }
+    giftLog(`✅ REST JOIN @${username}`);
+  }).catch(e=>{
+    log(`❌ REST JOIN fail: ${e.message}`);
+    if(st){ st.innerHTML=`❌ REST JOIN fail: ${e.message}<br>Coba SIMULASI aja`; st.style.background='#FF3B30'; st.style.color='white'; }
+  });
+
+  // Poll events every 2s
+  restPollInterval=setInterval(async()=>{
+    try{
+      const since=lastPollTimestamp;
+      const res=await fetch(`${backendUrl}/api/events/${username}?since=${since}`).then(r=>r.json());
+      if(res.events && res.events.length>0){
+        res.events.forEach(ev=>{
+          if(ev.timestamp > lastPollTimestamp) lastPollTimestamp=ev.timestamp;
+          if(ev.type==='follow'){ triggerEvent('follow', {name:ev.name}); giftLog(`👤 REST FOLLOW: ${ev.name}`); }
+          else if(ev.type==='gift'){ triggerEvent('gift', {name:ev.name, gift:ev.gift, amount:ev.amount}); giftLog(`🎁 REST GIFT: ${ev.name} ${ev.gift}`); }
+          else if(ev.type==='like'){ triggerEvent('like', {name:ev.name}); }
+          else if(ev.type==='tiktok_connected'){ log(`🔥 REST TikTok @${ev.username} LIVE!`); if(st) st.innerHTML=`🔥 TikTok @${ev.username} LIVE! (REST)<br>Room: ${ev.roomId}`; }
+        });
+      }
+    }catch(e){
+      log(`❌ REST poll error: ${e.message}`);
+    }
+  }, 2000);
+  
+  log(`📡 REST polling started @${username} tiap 2 detik`);
 }
 function exportJSON(){ const blob=new Blob([JSON.stringify({profiles, eventsConfig, currentProfile, version:'v10-super-gampang'},null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`brutal-v10-${currentProfile}.json`; a.click(); }
 function exportVideo(){ const stream=canvas.captureStream(30); const recorder=new MediaRecorder(stream, {mimeType:'video/webm;codecs=vp9'}); const chunks=[]; recorder.ondataavailable=e=>{ if(e.data.size>0) chunks.push(e.data); }; recorder.onstop=()=>{ const blob=new Blob(chunks, {type:'video/webm'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=`brutal-v10-${Date.now()}.webm`; a.click(); }; recorder.start(); setTimeout(()=>recorder.stop(), 5000); }
