@@ -1,26 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="#E8E6DE">
 
-    <WebView
-        android:id="@+id/webview"
+    <!-- SUPER GAMPANG TEST CONTAINER — NATIVE ANDROID -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <TextView
-        android:id="@+id/brutalLabel"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|start"
-        android:layout_margin="12dp"
-        android:background="#FFE600"
-        android:text="BRUTAL • NO RTMP • ARMEABI-V7A"
-        android:fontFamily="monospace"
-        android:textStyle="bold"
-        android:textSize="10sp"
-        android:padding="6dp"
-        android:elevation="4dp" />
+        android:maxHeight="320dp"
+        android:background="#FFFFFF">
 
-</FrameLayout>
+        <LinearLayout
+            android:id="@+id/superGampangContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp" />
+
+    </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="#000000" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/brutalLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:layout_margin="8dp"
+            android:background="#FFE600"
+            android:text="v10 SUPER GAMPANG • BUBBLE LUAR"
+            android:fontFamily="monospace"
+            android:textStyle="bold"
+            android:textSize="8sp"
+            android:padding="4dp"
+            android:elevation="4dp" />
+
+    </FrameLayout>
+
+</LinearLayout>
