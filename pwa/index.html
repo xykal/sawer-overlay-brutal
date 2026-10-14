@@ -245,7 +245,14 @@ body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',sans-seri
       </div>
       <label class="label">TIKTOK USERNAME FOR LIVE TRACKING</label>
       <input id="tiktokUser" class="input" placeholder="@jamalgaming">
-      <button class="btn btn-purple" style="margin-top:4px;" onclick="connectTikTokLive()">🔌 CONNECT TIKTOK LIVE (FOLLOW+GIFT)</button>
+      <label class="label">BACKEND URL — REAL TIKTOK LIVE (VERCEL / TERMUX ANDROID)</label>
+      <input id="backendUrl" class="input" placeholder="https://sawer-studio-backend.vercel.app atau http://localhost:3000" value="https://sawer-studio-backend.vercel.app">
+      <div class="row" style="margin-top:4px;">
+        <button class="btn btn-purple" onclick="connectTikTokLive()">🔌 CONNECT REAL TIKTOK LIVE</button>
+        <button class="btn btn-black" onclick="connectTikTokLive(true)">🧪 SIMULASI (TANPA BACKEND)</button>
+      </div>
+      <div class="switch"><span>AUTO RECONNECT</span><input type="checkbox" id="autoReconnect" checked></div>
+      <div id="backendStatus" style="margin-top:6px; font-family:'Space Mono'; font-size:8px; padding:6px; border:2px solid black; background:#111; color:#0f0;">Backend: Not connected</div>
       <div id="giftGrid" class="gift-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:4px; margin-top:6px;"></div>
       <div id="giftLog" style="margin-top:6px; font-family:'Space Mono'; font-size:8px; height:70px; overflow-y:auto; background:#111; color:#0ff; padding:6px; border:var(--border);"></div>
     </div>
@@ -343,8 +350,10 @@ body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',sans-seri
   <div class="bubble-item" onclick="savePerScreen()" style="background:var(--yellow);">💾 SAVE</div>
 </div>
 
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 <script>
-// v6 FOLLOW + MYINSTANTS INTEGRATION
+// v6 FOLLOW + MYINSTANTS INTEGRATION + REAL TIKTOK LIVE BACKEND
+
 const canvas=document.getElementById('canvas');
 const ctx=canvas.getContext('2d');
 const ghost=document.getElementById('ghost');
@@ -1011,29 +1020,146 @@ function log(m){ const el=document.getElementById('saweriaLog'); const t=new Dat
 function giftLog(m){ const el=document.getElementById('giftLog'); const t=new Date().toLocaleTimeString(); el.innerHTML=`[${t}] ${m}<br>`+el.innerHTML; }
 function triggerGift(g){ triggerEvent('gift', {name:'Viewer'+Math.floor(Math.random()*100), gift:g.name, giftIcon:g.icon, amount:g.price}); }
 
-function connectTikTokLive(){
-  const user=document.getElementById('tiktokUser').value.trim();
+let socketIoConnection = null;
+
+function connectTikTokLive(isSimulate){
+  const user=document.getElementById('tiktokUser').value.trim().replace('@','');
+  const backendUrl=document.getElementById('backendUrl').value.trim() || 'https://sawer-studio-backend.vercel.app';
+  
   if(!user){ alert('Isi username TikTok dulu bre! Contoh: @jamalgaming'); return; }
-  log(`🔌 Connecting TikTok Live for ${user} — follow & gift detection via WebCast API...`);
-  // Simulate connection - real implementation would use TikTokLive library via backend proxy
-  // For demo, we simulate random follows/gifts
-  if(tiktokLiveConnection) clearInterval(tiktokLiveConnection);
-  tiktokLiveConnection=setInterval(()=>{
-    if(Math.random()<0.15){
-      const names=['User'+Math.floor(Math.random()*1000), 'FollowerBaru', 'TikTokLover'];
-      const name=names[Math.floor(Math.random()*names.length)];
-      if(Math.random()<0.5){
-        triggerEvent('follow', {name});
-        giftLog(`👤 ${name} FOLLOWED!`);
-      } else {
-        const g=gifts[Math.floor(Math.random()*gifts.length)];
-        triggerEvent('gift', {name, gift:g.name, giftIcon:g.icon});
-        giftLog(`🎁 ${name} sent ${g.icon} ${g.name}`);
+
+  if(isSimulate){
+    log(`🧪 SIMULASI TikTok Live @${user} — random follow/gift tiap 4 detik`);
+    if(tiktokLiveConnection) clearInterval(tiktokLiveConnection);
+    tiktokLiveConnection=setInterval(()=>{
+      if(Math.random()<0.2){
+        const names=['User'+Math.floor(Math.random()*1000), 'FollowerBaru', 'TikTokLover', 'AnakBrutal'];
+        const name=names[Math.floor(Math.random()*names.length)];
+        if(Math.random()<0.5){
+          triggerEvent('follow', {name});
+          giftLog(`👤 ${name} FOLLOWED! (SIMULASI)`);
+        } else {
+          const g=gifts[Math.floor(Math.random()*gifts.length)];
+          triggerEvent('gift', {name, gift:g.name, giftIcon:g.icon, amount:g.price});
+          giftLog(`🎁 ${name} sent ${g.icon} ${g.name} (SIMULASI)`);
+        }
       }
+    }, 3500);
+    document.getElementById('backendStatus').textContent=`Backend: SIMULASI MODE @${user} — random event`;
+    document.getElementById('backendStatus').style.background='#FFE600';
+    document.getElementById('backendStatus').style.color='black';
+    return;
+  }
+
+  // REAL BACKEND via Socket.IO
+  log(`🔌 Connecting REAL TikTok Live @${user} via backend ${backendUrl}...`);
+  document.getElementById('backendStatus').textContent=`Backend: Connecting to ${backendUrl}...`;
+  document.getElementById('backendStatus').style.background='#111';
+  document.getElementById('backendStatus').style.color='#0ff';
+
+  try{
+    if(socketIoConnection){
+      socketIoConnection.disconnect();
     }
-  }, 4000);
-  log('✅ TikTok Live connected (simulated) — random follow/gift every 4s for demo. Real: pakai tiktok-live-connector Node.js backend.');
-  alert('Connected TikTok Live (simulasi) — untuk real TikTok follow detection, butuh backend Node.js pakai library tiktok-live-connector. Gua udah siapin kodenya di README, tinggal deploy di Vercel!');
+
+    // Connect to backend
+    socketIoConnection = io(backendUrl, {
+      transports: ['websocket', 'polling'],
+      timeout: 10000
+    });
+
+    socketIoConnection.on('connect', ()=>{
+      log(`✅ Socket.IO connected to backend! ID: ${socketIoConnection.id}`);
+      document.getElementById('backendStatus').textContent=`Backend: Connected ✅ | Joining @${user}...`;
+      document.getElementById('backendStatus').style.background='#00FF88';
+      document.getElementById('backendStatus').style.color='black';
+      
+      // Join room
+      socketIoConnection.emit('join', { username: user });
+    });
+
+    socketIoConnection.on('joined', (data)=>{
+      log(`✅ Joined room @${data.username} | Clients: ${data.clients}`);
+      document.getElementById('backendStatus').textContent=`Backend: Joined @${data.username} ✅ | ${data.clients} clients`;
+      giftLog(`✅ Joined @${data.username} — waiting for real follow/gift...`);
+    });
+
+    socketIoConnection.on('tiktok_connected', (data)=>{
+      log(`🔥 TikTok Live @${data.username} CONNECTED! Room ID: ${data.roomId}`);
+      document.getElementById('backendStatus').textContent=`🔥 TikTok @${data.username} LIVE! Room ${data.roomId}`;
+      document.getElementById('backendStatus').style.background='#00FF88';
+      giftLog(`🔥 TikTok @${data.username} LIVE CONNECTED!`);
+    });
+
+    socketIoConnection.on('follow', (data)=>{
+      log(`👤 REAL FOLLOW: ${data.name} (@${data.uniqueId})`);
+      giftLog(`👤 REAL FOLLOW: ${data.name}`);
+      triggerEvent('follow', {name: data.name, uniqueId: data.uniqueId, avatar: data.avatar});
+    });
+
+    socketIoConnection.on('gift', (data)=>{
+      log(`🎁 REAL GIFT: ${data.name} sent ${data.gift} x${data.repeatCount}`);
+      giftLog(`🎁 REAL GIFT: ${data.name} — ${data.gift} x${data.repeatCount} (${data.amount} diamonds)`);
+      triggerEvent('gift', {name: data.name, gift: data.gift, giftIcon: '🎁', amount: data.amount});
+    });
+
+    socketIoConnection.on('like', (data)=>{
+      if(data.likeCount < 20){
+        triggerEvent('like', {name: data.name});
+        giftLog(`❤️ ${data.name} liked x${data.likeCount}`);
+      }
+    });
+
+    socketIoConnection.on('share', (data)=>{
+      triggerEvent('share', {name: data.name});
+      giftLog(`↗️ ${data.name} shared!`);
+    });
+
+    socketIoConnection.on('event', (data)=>{
+      // Generic event handler
+      if(data.eventType && data.eventType!=='follow' && data.eventType!=='gift'){
+        // Already handled via specific handlers, but log
+      }
+    });
+
+    socketIoConnection.on('tiktok_disconnected', (data)=>{
+      log(`❌ TikTok @${data.username} disconnected`);
+      document.getElementById('backendStatus').textContent=`❌ TikTok @${data.username} disconnected`;
+      document.getElementById('backendStatus').style.background='#FF3B30';
+      document.getElementById('backendStatus').style.color='white';
+      if(document.getElementById('autoReconnect')?.checked){
+        setTimeout(()=>connectTikTokLive(false), 5000);
+      }
+    });
+
+    socketIoConnection.on('tiktok_error', (data)=>{
+      log(`❌ TikTok error @${data.username}: ${data.error}`);
+      document.getElementById('backendStatus').textContent=`❌ Error: ${data.error}`;
+      document.getElementById('backendStatus').style.background='#FF3B30';
+      giftLog(`❌ Error: ${data.error} — pastikan username benar & sedang LIVE!`);
+    });
+
+    socketIoConnection.on('disconnect', ()=>{
+      log('🔌 Socket.IO disconnected from backend');
+      document.getElementById('backendStatus').textContent='Backend: Disconnected — retrying...';
+      document.getElementById('backendStatus').style.background='#FF3B30';
+      if(document.getElementById('autoReconnect')?.checked){
+        setTimeout(()=>connectTikTokLive(false), 3000);
+      }
+    });
+
+    socketIoConnection.on('connect_error', (err)=>{
+      log(`❌ Socket connect error: ${err.message} — backend mungkin belum deploy atau URL salah`);
+      document.getElementById('backendStatus').textContent=`❌ Backend connect error: ${err.message}`;
+      document.getElementById('backendStatus').style.background='#FF3B30';
+      document.getElementById('backendStatus').style.color='white';
+      giftLog(`❌ Backend ${backendUrl} gak bisa dijangkau — coba pakai simulasi atau deploy backend dulu di Vercel/Termux`);
+    });
+
+  }catch(e){
+    log(`❌ Connect error: ${e.message}`);
+    document.getElementById('backendStatus').textContent=`❌ Error: ${e.message}`;
+  }
 }
 
 function exportJSON(){ const blob=new Blob([JSON.stringify({profiles, eventsConfig, currentProfile, version:'v6-follow-myinstants'},null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`brutal-v6-${currentProfile}.json`; a.click(); }
