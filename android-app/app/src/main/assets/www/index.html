@@ -3,151 +3,113 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>SAWER STUDIO v4 — ANDROID ULTIMATE</title>
+<title>SAWER STUDIO v5 — FINAL BOSS ANDROID</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#000000">
-<meta name="apple-mobile-web-app-capable" content="yes">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Space+Mono:wght@400;700&family=Bebas+Neue&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#E8E6DE; --paper:#FFF; --ink:#000; --yellow:#FFE600; --red:#FF3B30; --blue:#0057FF; --green:#00FF88; --purple:#8A2BE2;
-  --border:3px solid #000; --shadow:8px 8px 0 #000; --shadow-sm:5px 5px 0 #000; --shadow-xs:3px 3px 0 #000;
-}
-*{margin:0;padding:0;box-sizing:border-box; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none;}
-body{background:var(--bg); color:var(--ink); font-family:'Space Grotesk', sans-serif; height:100dvh; display:flex; flex-direction:column; overflow:hidden; overscroll-behavior:none;}
-::selection{background:var(--yellow);}
-
-/* ANDROID OPTIMIZED HEADER */
-.header{height:64px; background:var(--ink); color:white; display:flex; align-items:center; justify-content:space-between; padding:0 12px; border-bottom:var(--border); position:relative; z-index:30; padding-top:env(safe-area-inset-top);}
-.header::after{content:''; position:absolute; bottom:-10px; left:0; right:0; height:10px; background:var(--yellow); border-bottom:var(--border);}
-.logo{font-family:'Syne'; font-weight:800; font-size:24px; letter-spacing:-1px; display:flex; align-items:center; gap:6px;}
-.logo-box{background:var(--yellow); color:black; padding:2px 6px; border:2px solid white; transform:rotate(-2deg); box-shadow:2px 2px 0 white; font-size:20px;}
-.header-actions{display:flex; gap:6px; align-items:center;}
-.badge{border:2px solid white; padding:4px 8px; font-family:'Space Mono'; font-size:9px; font-weight:700; box-shadow:2px 2px 0 black;}
-.badge-live{background:var(--red); color:white;}
-.badge-android{background:var(--green); color:black;}
-.profile-select{background:white; color:black; border:var(--border); padding:6px 8px; font-family:'Space Mono'; font-size:9px; font-weight:700; box-shadow:2px 2px 0 black; max-width:110px;}
-
-/* MAIN */
-.main{flex:1; display:flex; overflow:hidden; position:relative;}
-.sidebar{width:420px; background:var(--paper); border-right:var(--border); display:flex; flex-direction:column; overflow:hidden; z-index:20; box-shadow:8px 0 0 rgba(0,0,0,.1);}
-.stage{flex:1; background:var(--bg); background-image: radial-gradient(#000 1px, transparent 1px); background-size:20px 20px; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; padding:10px;}
-
-/* TABS */
-.tabs{display:flex; border-bottom:var(--border); background:var(--ink); overflow-x:auto;}
-.tab{flex:1; padding:11px 4px; text-align:center; font-family:'Space Mono'; font-size:9px; font-weight:700; cursor:pointer; color:white; border-right:2px solid #333; white-space:nowrap; min-width:60px;}
-.tab.active{background:var(--yellow); color:black;}
-.tab-content{flex:1; overflow-y:auto; padding:10px; display:none; -webkit-overflow-scrolling: touch;}
+:root{--bg:#E8E6DE;--paper:#FFF;--ink:#000;--yellow:#FFE600;--red:#FF3B30;--blue:#0057FF;--green:#00FF88;--purple:#8A2BE2;--orange:#FF6B00;--border:3px solid #000;--shadow:8px 8px 0 #000;--shadow-sm:5px 5px 0 #000;--shadow-xs:3px 3px 0 #000;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',sans-serif;height:100dvh;display:flex;flex-direction:column;overflow:hidden;overscroll-behavior:none;}
+.header{height:62px;background:var(--ink);color:white;display:flex;align-items:center;justify-content:space-between;padding:0 10px;border-bottom:var(--border);position:relative;z-index:30;}
+.header::after{content:'';position:absolute;bottom:-10px;left:0;right:0;height:10px;background:var(--yellow);border-bottom:var(--border);}
+.logo{font-family:'Syne';font-weight:800;font-size:22px;display:flex;align-items:center;gap:6px;letter-spacing:-1px;}
+.logo-box{background:var(--yellow);color:black;padding:2px 6px;border:2px solid white;transform:rotate(-2deg);box-shadow:2px 2px 0 white;}
+.header-actions{display:flex;gap:5px;align-items:center;}
+.badge{border:2px solid white;padding:3px 7px;font-family:'Space Mono';font-size:8px;font-weight:700;box-shadow:2px 2px 0 black;}
+.badge-live{background:var(--red);color:white;} .badge-android{background:var(--green);color:black;} .badge-v5{background:var(--purple);color:white;}
+.profile-select{background:white;color:black;border:var(--border);padding:5px 6px;font-family:'Space Mono';font-size:8px;font-weight:700;box-shadow:2px 2px 0 black;max-width:90px;}
+.main{flex:1;display:flex;overflow:hidden;position:relative;}
+.sidebar{width:430px;background:var(--paper);border-right:var(--border);display:flex;flex-direction:column;overflow:hidden;z-index:20;box-shadow:8px 0 0 rgba(0,0,0,.1);}
+.stage{flex:1;background:var(--bg);background-image:radial-gradient(#000 1px, transparent 1px);background-size:20px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;padding:8px;}
+.tabs{display:flex;border-bottom:var(--border);background:var(--ink);overflow-x:auto;scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{flex:1;padding:10px 3px;text-align:center;font-family:'Space Mono';font-size:8px;font-weight:700;cursor:pointer;color:white;border-right:2px solid #333;white-space:nowrap;min-width:52px;}
+.tab.active{background:var(--yellow);color:black;}
+.tab-content{flex:1;overflow-y:auto;padding:8px;display:none;-webkit-overflow-scrolling:touch;}
 .tab-content.active{display:block;}
-
-/* BUTTONS - ANDROID BIG TOUCH TARGETS */
-.btn{width:100%; padding:14px 12px; border:var(--border); font-family:'Space Mono'; font-weight:700; font-size:11px; cursor:pointer; text-transform:uppercase; display:flex; align-items:center; justify-content:center; gap:6px; box-shadow:var(--shadow-xs); background:white; min-height:44px; touch-action:manipulation;}
-.btn:active{transform:translate(2px,2px); box-shadow:0 0 0 black;}
-.btn-black{background:black; color:white;}
-.btn-yellow{background:var(--yellow); color:black;}
-.btn-red{background:var(--red); color:white;}
-.btn-blue{background:var(--blue); color:white;}
-.btn-green{background:var(--green); color:black;}
-.btn-live{font-family:'Syne'; font-weight:800; font-size:14px; padding:16px;}
-
-.card{background:white; border:var(--border); box-shadow:var(--shadow-xs); padding:10px; margin-bottom:8px; position:relative;}
-.card-title{font-family:'Space Mono'; font-size:9px; font-weight:700; text-transform:uppercase; background:black; color:white; display:inline-block; padding:2px 6px; margin-bottom:8px;}
-.input, .select, .textarea{width:100%; border:var(--border); padding:10px; font-family:'Space Mono'; font-size:12px; background:white; outline:none; margin-top:4px; box-shadow:1px 1px 0 black inset; min-height:40px;}
+.btn{width:100%;padding:12px 10px;border:var(--border);font-family:'Space Mono';font-weight:700;font-size:10px;cursor:pointer;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:5px;box-shadow:var(--shadow-xs);background:white;min-height:40px;touch-action:manipulation;}
+.btn:active{transform:translate(2px,2px);box-shadow:0 0 0 black;}
+.btn-black{background:black;color:white;} .btn-yellow{background:var(--yellow);color:black;} .btn-red{background:var(--red);color:white;} .btn-blue{background:var(--blue);color:white;} .btn-green{background:var(--green);color:black;} .btn-purple{background:var(--purple);color:white;} .btn-orange{background:var(--orange);color:black;}
+.btn-live{font-family:'Syne';font-weight:800;font-size:13px;padding:14px;}
+.card{background:white;border:var(--border);box-shadow:var(--shadow-xs);padding:8px;margin-bottom:6px;position:relative;}
+.card-title{font-family:'Space Mono';font-size:8px;font-weight:700;text-transform:uppercase;background:black;color:white;display:inline-block;padding:2px 6px;margin-bottom:6px;}
+.input,.select,.textarea{width:100%;border:var(--border);padding:8px 10px;font-family:'Space Mono';font-size:11px;background:white;outline:none;margin-top:3px;box-shadow:1px 1px 0 black inset;min-height:36px;}
 .input:focus{background:var(--yellow);}
-.label{font-family:'Space Mono'; font-size:8px; font-weight:700; text-transform:uppercase; margin-top:10px; display:block; opacity:.7; letter-spacing:.5px;}
-
-/* LAYERS DA STUDIO */
-.layer-item{background:white; border:var(--border); padding:8px 10px; margin-bottom:6px; display:flex; align-items:center; justify-content:space-between; cursor:pointer; box-shadow:2px 2px 0 black; position:relative;}
-.layer-item.active{background:var(--yellow); transform:rotate(-0.5deg) scale(1.01); box-shadow:4px 4px 0 black; z-index:2;}
-.layer-thumb{width:32px; height:32px; border:2px solid black; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:12px; flex-shrink:0;}
-.layer-meta{flex:1; margin-left:8px; overflow:hidden;}
-.layer-type{font-family:'Space Mono'; font-size:7px; font-weight:700; background:black; color:white; padding:1px 4px; display:inline-block;}
-.layer-name{font-weight:700; font-size:11px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
-.layer-anim{width:8px; height:8px; background:var(--blue); border-radius:50%; margin-left:6px; animation:blink 1s infinite;}
+.label{font-family:'Space Mono';font-size:7px;font-weight:700;text-transform:uppercase;margin-top:8px;display:block;opacity:.7;letter-spacing:.5px;}
+.layer-item{background:white;border:var(--border);padding:6px 8px;margin-bottom:5px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;box-shadow:2px 2px 0 black;position:relative;}
+.layer-item.active{background:var(--yellow);transform:rotate(-0.5deg) scale(1.01);box-shadow:4px 4px 0 black;z-index:2;}
+.layer-thumb{width:28px;height:28px;border:2px solid black;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;flex-shrink:0;}
+.layer-meta{flex:1;margin-left:6px;overflow:hidden;}
+.layer-type{font-family:'Space Mono';font-size:6px;font-weight:700;background:black;color:white;padding:1px 3px;display:inline-block;}
+.layer-name{font-weight:700;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.layer-anim{width:7px;height:7px;background:var(--blue);border-radius:50%;margin-left:4px;animation:blink 1s infinite;}
 @keyframes blink{0%,100%{opacity:1} 50%{opacity:.3}}
-
-/* PHONE FRAME ANDROID */
-.phone-wrap{position:relative; width:360px; max-width:94vw; height:680px; max-height:78vh; background:black; border:var(--border); box-shadow:var(--shadow); display:flex; flex-direction:column; overflow:hidden; flex-shrink:0;}
-.phone-top{height:28px; background:white; border-bottom:var(--border); display:flex; align-items:center; justify-content:space-between; padding:0 10px; font-family:'Space Mono'; font-size:8px; font-weight:700; flex-shrink:0;}
-.canvas-wrap{flex:1; position:relative; overflow:hidden; background:black;}
-#video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transform:scaleX(-1);}
-#canvas{position:absolute; inset:0; width:100%; height:100%; touch-action:none; z-index:2;}
-#ghost{position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:1;}
-
-.mode-switch{position:absolute; top:6px; right:6px; z-index:15; display:flex; border:var(--border); box-shadow:var(--shadow-xs); background:white; overflow:hidden;}
-.mode-btn{padding:6px 8px; font-family:'Space Mono'; font-size:8px; font-weight:700; border:0; background:white; cursor:pointer; border-right:2px solid black;}
-.mode-btn.active{background:black; color:white;}
-.viewer-pill{position:absolute; top:6px; left:6px; z-index:10; background:black; color:white; border:2px solid white; padding:3px 6px; font-family:'Space Mono'; font-size:8px; font-weight:700; box-shadow:2px 2px 0 black;}
-.tiktok-right{position:absolute; right:4px; bottom:70px; z-index:10; display:flex; flex-direction:column; gap:8px;}
-.tiktok-right div{width:32px; height:32px; background:white; border:2px solid black; display:flex; align-items:center; justify-content:center; font-weight:800; box-shadow:2px 2px 0 black; border-radius:50%; font-size:12px;}
-
-/* TIMELINE DA STUDIO */
-.timeline{height:90px; background:black; border-top:var(--border); display:flex; flex-direction:column; flex-shrink:0; width:100%;}
-.timeline-header{height:24px; background:var(--yellow); border-bottom:2px solid black; display:flex; align-items:center; padding:0 8px; font-family:'Space Mono'; font-size:8px; font-weight:700; justify-content:space-between;}
-.timeline-tracks{flex:1; overflow-x:auto; overflow-y:hidden; display:flex; flex-direction:column; padding:4px; gap:3px;}
-.track{height:18px; background:#222; border:1px solid #444; display:flex; align-items:center; position:relative; min-width:800px;}
-.track-label{width:60px; background:#333; color:white; font-family:'Space Mono'; font-size:7px; padding:2px 4px; flex-shrink:0; border-right:2px solid black; font-weight:700;}
-.track-keyframes{flex:1; position:relative; height:100%; background:repeating-linear-gradient(90deg, transparent, transparent 19px, #333 20px);}
-.keyframe{position:absolute; top:2px; width:12px; height:12px; background:var(--yellow); border:2px solid black; transform:rotate(45deg); cursor:pointer;}
-.keyframe.active{background:var(--red);}
-
-/* ALERT BRUTAL v4 WITH SOUND */
-.alert-box{position:absolute; left:50%; top:50%; transform:translate(-50%,-50%) rotate(-1deg); width:88%; background:white; border:var(--border); box-shadow:8px 8px 0 black; padding:0; z-index:25; display:none; overflow:hidden;}
-.alert-header{display:flex; justify-content:space-between; background:black; color:white; padding:6px 10px; font-family:'Space Mono'; font-size:8px; font-weight:700;}
-.alert-stamp{position:absolute; top:32px; right:-4px; background:var(--yellow); border:var(--border); padding:3px 8px; font-family:'Space Mono'; font-size:9px; font-weight:800; transform:rotate(10deg); box-shadow:2px 2px 0 black; z-index:2;}
-.alert-body{padding:12px;}
-.alert-body h2{font-family:'Syne'; font-weight:800; font-size:30px; line-height:.9; text-transform:uppercase; letter-spacing:-1px;}
-.alert-body p{font-family:'Space Mono'; font-size:11px; margin-top:8px; font-weight:700; border-top:var(--border); background:var(--yellow); margin:8px -12px -12px -12px; padding:8px 12px;}
-.tape{position:absolute; top:-8px; left:20%; width:60%; height:16px; background:rgba(255,230,0,.85); border-left:2px solid #00000033; border-right:2px solid #00000033; transform:rotate(-1deg);}
-
-/* FLOATING BUBBLE ANDROID */
-.floating-bubble{position:fixed; width:60px; height:60px; background:var(--yellow); border:var(--border); border-radius:50%; box-shadow:var(--shadow-sm); display:flex; align-items:center; justify-content:center; font-family:'Syne'; font-weight:800; font-size:20px; cursor:grab; z-index:9999; right:16px; bottom:90px; user-select:none; touch-action:none;}
-.floating-bubble .notif{position:absolute; top:-6px; right:-6px; background:var(--red); color:white; border:2px solid black; border-radius:50%; width:20px; height:20px; display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:700;}
-.bubble-menu{position:fixed; right:12px; bottom:160px; background:white; border:var(--border); box-shadow:var(--shadow); padding:8px; width:190px; z-index:9998; display:none; max-height:60vh; overflow-y:auto;}
-.bubble-menu.open{display:block; animation:pop .2s cubic-bezier(.175,.885,.32,1.275);}
+.phone-wrap{position:relative;width:360px;max-width:94vw;height:640px;max-height:76vh;background:black;border:var(--border);box-shadow:var(--shadow);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0;}
+.phone-top{height:26px;background:white;border-bottom:var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 8px;font-family:'Space Mono';font-size:7px;font-weight:700;flex-shrink:0;}
+.canvas-wrap{flex:1;position:relative;overflow:hidden;background:black;}
+#video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scaleX(-1);}
+#canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;z-index:2;}
+#ghost{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;}
+#particles{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3;}
+.mode-switch{position:absolute;top:4px;right:4px;z-index:15;display:flex;border:var(--border);box-shadow:var(--shadow-xs);background:white;overflow:hidden;}
+.mode-btn{padding:5px 7px;font-family:'Space Mono';font-size:7px;font-weight:700;border:0;background:white;cursor:pointer;border-right:2px solid black;}
+.mode-btn.active{background:black;color:white;}
+.viewer-pill{position:absolute;top:4px;left:4px;z-index:10;background:black;color:white;border:2px solid white;padding:2px 5px;font-family:'Space Mono';font-size:7px;font-weight:700;box-shadow:2px 2px 0 black;}
+.tiktok-right{position:absolute;right:3px;bottom:60px;z-index:10;display:flex;flex-direction:column;gap:6px;}
+.tiktok-right div{width:28px;height:28px;background:white;border:2px solid black;display:flex;align-items:center;justify-content:center;font-weight:800;box-shadow:2px 2px 0 black;border-radius:50%;font-size:10px;}
+.timeline{height:80px;background:black;border-top:var(--border);display:flex;flex-direction:column;flex-shrink:0;width:100%;}
+.timeline-header{height:20px;background:var(--yellow);border-bottom:2px solid black;display:flex;align-items:center;padding:0 6px;font-family:'Space Mono';font-size:7px;font-weight:700;justify-content:space-between;}
+.timeline-tracks{flex:1;overflow-x:auto;overflow-y:hidden;display:flex;flex-direction:column;padding:3px;gap:2px;}
+.track{height:16px;background:#222;border:1px solid #444;display:flex;align-items:center;position:relative;min-width:700px;}
+.track-label{width:50px;background:#333;color:white;font-family:'Space Mono';font-size:6px;padding:2px 3px;flex-shrink:0;border-right:2px solid black;font-weight:700;}
+.track-keyframes{flex:1;position:relative;height:100%;background:repeating-linear-gradient(90deg, transparent, transparent 19px, #333 20px);}
+.keyframe{position:absolute;top:1px;width:10px;height:10px;background:var(--yellow);border:2px solid black;transform:rotate(45deg);cursor:pointer;}
+.alert-box{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-1deg);width:88%;background:white;border:var(--border);box-shadow:8px 8px 0 black;padding:0;z-index:25;display:none;overflow:hidden;}
+.alert-header{display:flex;justify-content:space-between;background:black;color:white;padding:5px 8px;font-family:'Space Mono';font-size:7px;font-weight:700;}
+.alert-stamp{position:absolute;top:28px;right:-4px;background:var(--yellow);border:var(--border);padding:2px 6px;font-family:'Space Mono';font-size:8px;font-weight:800;transform:rotate(10deg);box-shadow:2px 2px 0 black;z-index:2;}
+.alert-body{padding:10px;}
+.alert-body h2{font-family:'Syne';font-weight:800;font-size:26px;line-height:.9;text-transform:uppercase;letter-spacing:-1px;}
+.alert-body p{font-family:'Space Mono';font-size:10px;margin-top:6px;font-weight:700;border-top:var(--border);background:var(--yellow);margin:6px -10px -10px -10px;padding:6px 10px;}
+.tape{position:absolute;top:-8px;left:20%;width:60%;height:14px;background:rgba(255,230,0,.85);border-left:2px solid #00000033;border-right:2px solid #00000033;transform:rotate(-1deg);}
+.floating-bubble{position:fixed;width:56px;height:56px;background:var(--yellow);border:var(--border);border-radius:50%;box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;font-family:'Syne';font-weight:800;font-size:18px;cursor:grab;z-index:9999;right:14px;bottom:80px;user-select:none;touch-action:none;}
+.floating-bubble .notif{position:absolute;top:-5px;right:-5px;background:var(--red);color:white;border:2px solid black;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;}
+.bubble-menu{position:fixed;right:10px;bottom:145px;background:white;border:var(--border);box-shadow:var(--shadow);padding:6px;width:180px;z-index:9998;display:none;max-height:60vh;overflow-y:auto;}
+.bubble-menu.open{display:block;animation:pop .2s cubic-bezier(.175,.885,.32,1.275);}
 @keyframes pop{0%{transform:scale(.8) translateY(10px)} 100%{transform:scale(1)}}
-.bubble-item{border:2px solid black; padding:8px; margin-bottom:6px; font-family:'Space Mono'; font-size:10px; font-weight:700; cursor:pointer; background:white; display:flex; gap:6px; align-items:center; box-shadow:2px 2px 0 black; min-height:36px;}
-.bubble-item:active{transform:translate(2px,2px); box-shadow:0 0 0 black;}
-
-.fab-add{position:absolute; bottom:10px; left:50%; transform:translateX(-50%); z-index:12; background:black; color:white; border:var(--border); border-radius:20px; padding:8px 14px; font-family:'Space Mono'; font-size:10px; font-weight:700; box-shadow:var(--shadow-xs); cursor:pointer; display:flex; gap:6px; align-items:center;}
-.add-menu{position:absolute; bottom:46px; left:50%; transform:translateX(-50%); background:white; border:var(--border); box-shadow:var(--shadow); padding:6px; display:none; z-index:13; width:260px; max-height:200px; overflow-y:auto;}
-.add-menu.open{display:flex; flex-wrap:wrap; gap:5px;}
-.add-option{border:2px solid black; padding:6px 8px; font-family:'Space Mono'; font-size:9px; font-weight:700; background:white; cursor:pointer; flex:1 0 45%; text-align:center; box-shadow:1px 1px 0 black; min-height:32px; display:flex; align-items:center; justify-content:center;}
-
-.color-grid{display:flex; flex-wrap:wrap; gap:5px; margin-top:6px;}
-.color-swatch{width:28px; height:28px; border:var(--border); cursor:pointer; box-shadow:2px 2px 0 black;}
-.color-swatch.active{transform:translate(1px,1px); box-shadow:0 0 0 black; outline:3px solid var(--blue);}
-.screen-tabs{display:flex; gap:4px; overflow-x:auto; padding-bottom:4px; margin-bottom:8px;}
-.screen-tab{border:2px solid black; padding:5px 8px; font-family:'Space Mono'; font-size:8px; font-weight:700; white-space:nowrap; cursor:pointer; background:white; box-shadow:1px 1px 0 black; flex-shrink:0;}
-.screen-tab.active{background:black; color:white;}
-.switch{border:var(--border); padding:8px 10px; display:flex; justify-content:space-between; align-items:center; background:white; margin-top:6px; box-shadow:1px 1px 0 black;}
-.switch span{font-family:'Space Mono'; font-size:9px; font-weight:700; text-transform:uppercase; flex:1;}
-.switch input{width:40px; height:20px; appearance:none; border:2px solid black; background:white; position:relative; cursor:pointer; flex-shrink:0;}
+.bubble-item{border:2px solid black;padding:7px;margin-bottom:5px;font-family:'Space Mono';font-size:9px;font-weight:700;cursor:pointer;background:white;display:flex;gap:5px;align-items:center;box-shadow:1px 1px 0 black;min-height:32px;}
+.bubble-item:active{transform:translate(1px,1px);box-shadow:0 0 0 black;}
+.fab-add{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);z-index:12;background:black;color:white;border:var(--border);border-radius:16px;padding:6px 12px;font-family:'Space Mono';font-size:9px;font-weight:700;box-shadow:var(--shadow-xs);cursor:pointer;display:flex;gap:5px;align-items:center;}
+.add-menu{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);background:white;border:var(--border);box-shadow:var(--shadow);padding:5px;display:none;z-index:13;width:250px;max-height:180px;overflow-y:auto;}
+.add-menu.open{display:flex;flex-wrap:wrap;gap:4px;}
+.add-option{border:2px solid black;padding:5px 6px;font-family:'Space Mono';font-size:8px;font-weight:700;background:white;cursor:pointer;flex:1 0 45%;text-align:center;box-shadow:1px 1px 0 black;min-height:28px;display:flex;align-items:center;justify-content:center;}
+.color-grid{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;}
+.color-swatch{width:26px;height:26px;border:var(--border);cursor:pointer;box-shadow:1px 1px 0 black;}
+.color-swatch.active{transform:translate(1px,1px);box-shadow:0 0 0 black;outline:2px solid var(--blue);}
+.screen-tabs{display:flex;gap:3px;overflow-x:auto;padding-bottom:3px;margin-bottom:6px;}
+.screen-tab{border:2px solid black;padding:4px 6px;font-family:'Space Mono';font-size:7px;font-weight:700;white-space:nowrap;cursor:pointer;background:white;box-shadow:1px 1px 0 black;flex-shrink:0;}
+.screen-tab.active{background:black;color:white;}
+.switch{border:var(--border);padding:6px 8px;display:flex;justify-content:space-between;align-items:center;background:white;margin-top:4px;box-shadow:1px 1px 0 black;}
+.switch span{font-family:'Space Mono';font-size:8px;font-weight:700;text-transform:uppercase;flex:1;}
+.switch input{width:36px;height:18px;appearance:none;border:2px solid black;background:white;position:relative;cursor:pointer;flex-shrink:0;}
 .switch input:checked{background:var(--yellow);}
-.switch input::after{content:''; position:absolute; width:14px; height:14px; background:black; top:1px; left:1px; transition:.1s;}
-.switch input:checked::after{left:20px;}
-.row{display:flex; gap:6px;} .row > *{flex:1;}
-.how-box{background:var(--yellow); border:var(--border); padding:8px; box-shadow:var(--shadow-xs); margin-top:8px; font-family:'Space Mono'; font-size:9px; font-weight:700; line-height:1.3;}
-
-.mobile-bar{display:none; border-top:var(--border); background:white; height:56px; z-index:15; padding-bottom:env(safe-area-inset-bottom);}
-@media(max-width:900px){
-  .sidebar{position:absolute; inset:0; z-index:40; width:100%; transform:translateX(-100%); transition:.25s cubic-bezier(.8,0,.2,1);}
-  .sidebar.open{transform:translateX(0);}
-  .mobile-bar{display:flex;}
-  .phone-wrap{width:100%; height:100%; max-height:100%; box-shadow:none; border:0;}
-  .stage{padding:0;}
-  .timeline{height:80px;}
-}
-
-/* ANDROID VIBRATION FEEDBACK */
-.vibrate{animation:vib .1s;}
-@keyframes vib{0%,100%{transform:translateX(0)} 25%{transform:translateX(-2px)} 75%{transform:translateX(2px)}}
+.switch input::after{content:'';position:absolute;width:12px;height:12px;background:black;top:1px;left:1px;transition:.1s;}
+.switch input:checked::after{left:18px;}
+.row{display:flex;gap:4px;} .row > *{flex:1;}
+.how-box{background:var(--yellow);border:var(--border);padding:6px;box-shadow:var(--shadow-xs);margin-top:6px;font-family:'Space Mono';font-size:8px;font-weight:700;line-height:1.3;}
+.mobile-bar{display:none;border-top:var(--border);background:white;height:52px;z-index:15;padding-bottom:env(safe-area-inset-bottom);}
+@media(max-width:900px){.sidebar{position:absolute;inset:0;z-index:40;width:100%;transform:translateX(-100%);transition:.25s cubic-bezier(.8,0,.2,1);} .sidebar.open{transform:translateX(0);} .mobile-bar{display:flex;} .phone-wrap{width:100%;height:100%;max-height:100%;box-shadow:none;border:0;} .stage{padding:0;} .timeline{height:70px;}}
+.vibrate{animation:vib .1s;} @keyframes vib{0%,100%{transform:translateX(0)} 25%{transform:translateX(-1px)} 75%{transform:translateX(1px)}}
+.font-preview{border:2px dashed black; padding:8px; margin-top:6px; font-size:18px; background:#f5f5f5; min-height:40px; display:flex; align-items:center;}
+.gift-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:4px; margin-top:6px;}
+.gift-item{border:2px solid black; padding:6px; text-align:center; font-family:'Space Mono'; font-size:8px; font-weight:700; background:white; cursor:pointer; box-shadow:1px 1px 0 black;}
+.gift-item:hover{background:var(--yellow);} .gift-item.active{background:var(--green);}
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="logo"><div class="logo-box">SAWER</div>STUDIO v4</div>
+  <div class="logo"><div class="logo-box">SAWER</div>STUDIO v5</div>
   <div class="header-actions">
     <select id="screenProfile" class="profile-select" onchange="switchProfile(this.value)">
       <option value="tiktok-live">📱 LIVE</option>
@@ -156,6 +118,7 @@ body{background:var(--bg); color:var(--ink); font-family:'Space Grotesk', sans-s
       <option value="custom">⚙️ CUSTOM</option>
     </select>
     <div class="badge badge-android">🤖 ANDROID</div>
+    <div class="badge badge-v5">FINAL BOSS</div>
     <div class="badge badge-live" id="liveBadge">OFF</div>
   </div>
 </div>
@@ -167,44 +130,55 @@ body{background:var(--bg); color:var(--ink); font-family:'Space Grotesk', sans-s
       <div class="tab" onclick="switchTab('anim')">ANIM</div>
       <div class="tab" onclick="switchTab('design')">DESIGN</div>
       <div class="tab" onclick="switchTab('saweria')">SAWERIA</div>
+      <div class="tab" onclick="switchTab('gifts')">GIFTS</div>
       <div class="tab" onclick="switchTab('export')">EXPORT</div>
     </div>
 
     <div class="tab-content active" id="tab-layers">
       <div class="screen-tabs" id="screenTabs"></div>
       <div class="card">
-        <div class="card-title">QUICK ADD — ANDROID OPTIMIZED</div>
+        <div class="card-title">QUICK ADD — v5 FINAL BOSS</div>
         <div class="row">
           <button class="btn btn-black" onclick="quickAdd('text')">+ TEKS</button>
           <button class="btn btn-yellow" onclick="quickAdd('saweria')">+ SAWER</button>
         </div>
-        <div class="row" style="margin-top:4px;">
+        <div class="row" style="margin-top:3px;">
           <button class="btn" onclick="quickAdd('goal')">+ GOAL</button>
           <button class="btn" onclick="quickAdd('tape')">+ TAPE</button>
           <button class="btn" onclick="quickAdd('stamp')">+ STAMP</button>
         </div>
-        <div style="margin-top:6px; font-family:'Space Mono'; font-size:8px; opacity:.6;">Double-tap canvas = add. Drag bubble = pindah. Double-tap bubble = balik app. Long-press layer = duplicate.</div>
+        <div class="row" style="margin-top:3px;">
+          <button class="btn btn-purple" onclick="quickAdd('neon')">+ NEON</button>
+          <button class="btn btn-blue" onclick="quickAdd('particle')">+ PARTICLE</button>
+          <button class="btn btn-green" onclick="quickAdd('typewriter')">+ TYPEWRITER</button>
+        </div>
       </div>
-      <div style="display:flex; justify-content:space-between; align-items:center; margin:8px 0 6px 0;">
-        <div style="font-family:'Space Mono'; font-size:9px; font-weight:700;">LAYERS — PER SCREEN</div>
-        <button class="btn" style="width:auto; padding:4px 8px; font-size:8px;" onclick="savePerScreen()">💾 SAVE</button>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin:6px 0 4px 0;">
+        <div style="font-family:'Space Mono'; font-size:8px; font-weight:700;">LAYERS — PER SCREEN + LONG-PRESS DUPLICATE</div>
+        <button class="btn" style="width:auto; padding:3px 6px; font-size:7px;" onclick="savePerScreen()">💾 SAVE</button>
       </div>
       <div id="layerList"></div>
-      <div id="props" class="card" style="display:none; margin-top:8px;">
-        <div class="card-title">EDIT LAYER — DA STUDIO</div>
-        <label class="label">TEXT</label>
-        <textarea id="propText" class="textarea" rows="2" style="font-weight:700;" oninput="updateProp('text', this.value)"></textarea>
+      <div id="props" class="card" style="display:none; margin-top:6px;">
+        <div class="card-title">EDIT LAYER</div>
+        <label class="label">TEXT + AUTO-TRANSLATE</label>
+        <div class="row">
+          <textarea id="propText" class="textarea" rows="2" style="font-weight:700; flex:3;" oninput="updateProp('text', this.value)"></textarea>
+          <button class="btn btn-blue" style="flex:1; font-size:7px;" onclick="translateText()">🌐 TRANSLATE ID→EN</button>
+        </div>
         <div class="row">
           <div><label class="label">SIZE</label><input id="propSize" type="range" min="10" max="100" value="28" style="width:100%;" oninput="updateProp('fontSize', this.value)"></div>
           <div><label class="label">ROTASI</label><input id="propRot" type="range" min="-25" max="25" value="0" style="width:100%;" oninput="updateProp('rotation', this.value)"></div>
         </div>
-        <label class="label">FONT</label>
+        <label class="label">FONT + CUSTOM UPLOAD TTF</label>
         <select id="propFont" class="select" onchange="updateProp('fontFamily', this.value)">
           <option value="Syne">SYNE EXTRA BOLD</option>
           <option value="Bebas Neue">BEBAS NEUE</option>
           <option value="Space Grotesk">SPACE GROTESK</option>
           <option value="Space Mono">SPACE MONO</option>
+          <option value="CustomFont">CUSTOM UPLOADED</option>
         </select>
+        <input type="file" id="fontUpload" accept=".ttf,.otf,.woff" style="margin-top:4px; font-size:9px;" onchange="uploadFont(this)">
+        <div class="font-preview" id="fontPreview">Preview Font Brutal</div>
         <label class="label">BRUTAL STYLE</label>
         <select id="propStyle" class="select" onchange="updateProp('brutalStyle', this.value)">
           <option value="box">BOX + SHADOW</option>
@@ -212,121 +186,148 @@ body{background:var(--bg); color:var(--ink); font-family:'Space Grotesk', sans-s
           <option value="stamp">STAMP MERAH</option>
           <option value="highlight">HIGHLIGHT</option>
           <option value="ripped">RIPPED SOBEK</option>
-          <option value="neon">NEON BRUTAL</option>
+          <option value="neon">NEON GLOW</option>
+          <option value="particle">PARTICLE CONFETTI</option>
           <option value="none">TRANSPARAN</option>
         </select>
         <label class="label">WARNA</label>
         <div class="color-grid" id="colorGrid"></div>
         <div class="switch"><span>AUTO LIVE</span><input type="checkbox" id="propAuto" checked onchange="updateProp('autoShow', this.checked)"></div>
         <div class="switch"><span>STEALTH 15%</span><input type="checkbox" id="propStealth" onchange="updateProp('stealth', this.checked)"></div>
-        <button class="btn btn-red" style="margin-top:8px;" onclick="deleteLayer()">HAPUS X</button>
-        <button class="btn" style="margin-top:4px;" onclick="duplicateLayer()">DUPLICATE — LONG PRESS</button>
+        <button class="btn btn-red" style="margin-top:6px;" onclick="deleteLayer()">HAPUS X</button>
+        <button class="btn" style="margin-top:3px;" onclick="duplicateLayer()">DUPLICATE</button>
       </div>
     </div>
 
     <div class="tab-content" id="tab-anim">
       <div class="card" style="background:var(--blue); color:white;">
-        <div class="card-title" style="background:white; color:black;">KEYFRAME ANIM — DA STUDIO</div>
-        <div style="font-weight:700; font-size:11px;">ANIMASI KAYAK ALIGHT MOTION / DA STUDIO — ANDROID 60FPS</div>
+        <div class="card-title" style="background:white; color:black;">KEYFRAME ANIM — FINAL BOSS</div>
+        <div style="font-weight:700; font-size:10px;">60FPS + EASING BRUTAL + LOOP + ON SAWER TRIGGER</div>
       </div>
       <div id="animProps" class="card" style="display:none;">
-        <label class="label">ANIMATION TYPE</label>
+        <label class="label">ANIMATION</label>
         <select id="propAnim" class="select" onchange="updateProp('animation', this.value)">
-          <option value="none">NONE — DIAM</option>
-          <option value="slideLeft">SLIDE LEFT — MASUK KIRI</option>
-          <option value="slideRight">SLIDE RIGHT — KANAN</option>
-          <option value="slideUp">SLIDE UP — BAWAH KE ATAS</option>
-          <option value="bounce">BOUNCE — MENTAL BRUTAL</option>
-          <option value="typewriter">TYPEWRITER — KETIK</option>
-          <option value="glitch">GLITCH — RUSAK</option>
-          <option value="shake">SHAKE — GETAR</option>
-          <option value="pop">POP — MELETUS</option>
+          <option value="none">NONE</option>
+          <option value="slideLeft">SLIDE LEFT</option>
+          <option value="slideRight">SLIDE RIGHT</option>
+          <option value="slideUp">SLIDE UP</option>
+          <option value="bounce">BOUNCE</option>
+          <option value="typewriter">TYPEWRITER</option>
+          <option value="glitch">GLITCH</option>
+          <option value="shake">SHAKE</option>
+          <option value="pop">POP</option>
+          <option value="spin">SPIN 360</option>
+          <option value="pulse">PULSE</option>
+          <option value="particle">PARTICLE EXPLOSION</option>
         </select>
         <div class="row">
-          <div><label class="label">DURATION (MS)</label><input id="propDur" type="range" min="200" max="3000" value="800" style="width:100%;" oninput="updateProp('duration', this.value)"><span id="durLabel" style="font-family:'Space Mono'; font-size:9px;">800ms</span></div>
-          <div><label class="label">DELAY (MS)</label><input id="propDelay" type="range" min="0" max="2000" value="0" style="width:100%;" oninput="updateProp('delay', this.value)"><span id="delayLabel" style="font-family:'Space Mono'; font-size:9px;">0ms</span></div>
+          <div><label class="label">DUR MS</label><input id="propDur" type="range" min="200" max="3000" value="800" style="width:100%;" oninput="updateProp('duration', this.value)"><span id="durLabel" style="font-size:8px;">800ms</span></div>
+          <div><label class="label">DELAY MS</label><input id="propDelay" type="range" min="0" max="2000" value="0" style="width:100%;" oninput="updateProp('delay', this.value)"><span id="delayLabel" style="font-size:8px;">0ms</span></div>
         </div>
-        <div class="switch"><span>LOOP ANIM</span><input type="checkbox" id="propLoop" onchange="updateProp('loop', this.checked)"></div>
-        <div class="switch"><span>ANIM PAS SAWER AJA</span><input type="checkbox" id="propOnSawer" onchange="updateProp('onSawer', this.checked)"></div>
-        <button class="btn btn-yellow" onclick="previewAnim()">▶️ PREVIEW ANIM</button>
+        <div class="switch"><span>LOOP</span><input type="checkbox" id="propLoop" onchange="updateProp('loop', this.checked)"></div>
+        <div class="switch"><span>ON SAWER TRIGGER</span><input type="checkbox" id="propOnSawer" onchange="updateProp('onSawer', this.checked)"></div>
+        <button class="btn btn-yellow" onclick="previewAnim()">▶️ PREVIEW + HAPTIC</button>
       </div>
-      <div class="card">
-        <div class="card-title">TIMELINE — TAP KEYFRAME UNTUK EDIT</div>
-        <div style="font-family:'Space Mono'; font-size:8px; opacity:.6;">Timeline di bawah canvas — drag keyframe untuk atur timing. Long-press track = add keyframe.</div>
-      </div>
-      <div class="how-box">💡 ANDROID TIP: Animasi 60FPS pakai requestAnimationFrame, ringan di HP kentang. Pake bounce + shake buat saweran biar brutal!</div>
     </div>
 
     <div class="tab-content" id="tab-design">
       <div class="card">
-        <div class="card-title">TEMPLATE BRUTAL v4</div>
+        <div class="card-title">TEMPLATE FINAL BOSS</div>
         <div class="row">
           <button class="btn btn-yellow" onclick="applyTemplate('brutal-live')">🔴 LIVE</button>
           <button class="btn btn-black" onclick="applyTemplate('saweria-tape')">💸 SAWER</button>
+          <button class="btn btn-green" onclick="applyTemplate('gaming')">🎮 GAME</button>
         </div>
-        <div class="row" style="margin-top:4px;">
-          <button class="btn" onclick="applyTemplate('goal-ripped')">🎯 GOAL</button>
-          <button class="btn" onclick="applyTemplate('gaming')">🎮 GAMING</button>
-          <button class="btn" onclick="applyTemplate('minimal')">⬜ MINIMAL</button>
+        <div class="row" style="margin-top:3px;">
+          <button class="btn btn-purple" onclick="applyTemplate('neon-party')">💜 NEON PARTY</button>
+          <button class="btn btn-blue" onclick="applyTemplate('particle-celebration')">🎉 PARTICLE</button>
+          <button class="btn btn-orange" onclick="applyTemplate('minimal')">⬜ MINIMAL</button>
         </div>
       </div>
       <div class="card">
-        <div class="card-title">EFFECT</div>
-        <div class="switch"><span>SHADOW 8PX</span><input type="checkbox" id="propShadow" checked onchange="updateProp('shadow', this.checked)"></div>
-        <div class="switch"><span>TAPE DI ATAS</span><input type="checkbox" id="propTape" onchange="updateProp('hasTape', this.checked)"></div>
-        <div class="switch"><span>BORDER DOUBLE</span><input type="checkbox" onchange="updateProp('borderDouble', this.checked)"></div>
+        <div class="card-title">BACKGROUND ANDROID</div>
+        <label class="label">BG TYPE</label>
+        <select id="bgType" class="select" onchange="changeBg(this.value)">
+          <option value="camera">📷 KAMERA</option>
+          <option value="color">🎨 WARNA SOLID</option>
+          <option value="image">🖼️ IMAGE UPLOAD</option>
+          <option value="video">🎬 VIDEO LOOP</option>
+          <option value="green">🟩 GREEN SCREEN</option>
+        </select>
+        <input type="file" id="bgUpload" accept="image/*,video/*" style="margin-top:4px; font-size:9px;" onchange="uploadBg(this)">
+        <div class="switch"><span>SHADOW 8PX</span><input type="checkbox" checked onchange="updateProp('shadow', this.checked)"></div>
+        <div class="switch"><span>TAPE ATAS</span><input type="checkbox" onchange="updateProp('hasTape', this.checked)"></div>
       </div>
     </div>
 
     <div class="tab-content" id="tab-saweria">
       <div class="card" style="background:black; color:white;">
-        <div class="card-title" style="background:var(--yellow); color:black;">SAWERIA + SOUND</div>
-        <div style="font-weight:800; font-size:12px;">DONASI MASUK = POPUP + SOUND + BUBBLE NOTIF + VIBRATE ANDROID</div>
+        <div class="card-title" style="background:var(--yellow); color:black;">SAWERIA + SOUND + VIBRATE + TRANSLATE</div>
+        <div style="font-weight:800; font-size:11px;">AUTO POPUP + SOUND + VIBRATE + PARTICLE CONFETTI + AUTO-TRANSLATE</div>
       </div>
       <label class="label">USERNAME SAWERIA</label>
       <input id="saweriaUser" class="input" placeholder="jamalstream">
-      <label class="label">SOUND EFFECT SAWER (ANDROID)</label>
+      <label class="label">SOUND EFFECT</label>
       <select id="sawerSound" class="select" onchange="updateSound(this.value)">
-        <option value="cash">💵 CASH REGISTER — BRUTAL</option>
+        <option value="cash">💵 CASH REGISTER</option>
         <option value="coin">🪙 COIN MARIO</option>
-        <option value="airhorn">📢 AIRHORN MLG</option>
+        <option value="airhorn">📢 AIRHORN</option>
         <option value="brutal">🔨 BRUTAL HIT</option>
-        <option value="custom">🎵 CUSTOM UPLOAD</option>
+        <option value="party">🎉 PARTY HORN</option>
+        <option value="custom">🎵 CUSTOM</option>
       </select>
-      <div class="row" style="margin-top:6px;">
+      <div class="row" style="margin-top:4px;">
         <button class="btn btn-black" onclick="connectSaweria()">CONNECT</button>
         <button class="btn btn-yellow" onclick="testDonation()">TEST 💸</button>
       </div>
-      <div class="row" style="margin-top:4px;">
-        <button class="btn" onclick="playSound()">🔊 TEST SOUND</button>
-        <button class="btn" onclick="vibrateAndroid()">📳 TEST VIBRATE</button>
+      <div class="row" style="margin-top:3px;">
+        <button class="btn" onclick="playSound()">🔊 SOUND</button>
+        <button class="btn" onclick="vibrateAndroid()">📳 VIBRATE</button>
+        <button class="btn" onclick="triggerConfetti()">🎉 CONFETTI</button>
       </div>
-      <div class="switch"><span>TTS INDONESIA</span><input type="checkbox" id="tts" checked></div>
-      <div class="switch"><span>VIBRATE HP PAS SAWER</span><input type="checkbox" id="vibrate" checked></div>
-      <div class="switch"><span>SOUND + TTS BARENG</span><input type="checkbox" id="soundTts" checked></div>
-      <div id="saweriaLog" style="margin-top:8px; background:black; color:#00ff00; font-family:'Space Mono'; font-size:9px; padding:8px; height:120px; overflow-y:auto; border:var(--border);"></div>
+      <div class="switch"><span>TTS ID</span><input type="checkbox" id="tts" checked></div>
+      <div class="switch"><span>VIBRATE</span><input type="checkbox" id="vibrate" checked></div>
+      <div class="switch"><span>PARTICLE CONFETTI PAS SAWER</span><input type="checkbox" id="confetti" checked></div>
+      <div class="switch"><span>AUTO-TRANSLATE SAWER KE EN</span><input type="checkbox" id="autoTranslate"></div>
+      <div id="saweriaLog" style="margin-top:6px; background:black; color:#00ff00; font-family:'Space Mono'; font-size:8px; padding:6px; height:100px; overflow-y:auto; border:var(--border);"></div>
+    </div>
+
+    <div class="tab-content" id="tab-gifts">
+      <div class="card" style="background:var(--purple); color:white;">
+        <div class="card-title" style="background:white; color:black;">TIKTOK GIFTS — BEBAS EDITION</div>
+        <div style="font-weight:700; font-size:10px;">DETEKSI GIFT TIKTOK (ROSE, UNIVERSE, DLL) → TRIGGER OVERLAY + SOUND + PARTICLE</div>
+      </div>
+      <label class="label">TIKTOK USERNAME (UNTUK GIFT TRACKING)</label>
+      <input id="tiktokUser" class="input" placeholder="@jamalgaming">
+      <label class="label">GIFT TEMPLATES — TAP UNTUK TEST</label>
+      <div class="gift-grid" id="giftGrid"></div>
+      <div class="switch"><span>AUTO DETECT GIFT VIA OCR (ANDROID)</span><input type="checkbox" id="giftOcr"></div>
+      <div class="switch"><span>GIFT = SAWER OVERLAY JUGA</span><input type="checkbox" id="giftAsSawer" checked></div>
+      <div class="card" style="margin-top:6px;">
+        <div class="card-title">GIFT LOG</div>
+        <div id="giftLog" style="font-family:'Space Mono'; font-size:8px; height:80px; overflow-y:auto; background:#111; color:#0ff; padding:6px; border:2px solid black;"></div>
+      </div>
+      <div class="how-box">💡 BEBAS: Gift TikTok gak ada API resmi, jadi kita pakai OCR screen capture di Android (baca teks gift yang muncul di TikTok UI) + manual trigger. Work 100% di HP lu!</div>
     </div>
 
     <div class="tab-content" id="tab-export">
       <div class="card" style="background:var(--green);">
-        <div class="card-title" style="background:black; color:white;">EXPORT — ANDROID</div>
-        <div style="font-weight:700; font-size:11px;">EXPORT VIDEO TEMPLATE KAYAK DA STUDIO — MP4 TRANSPARAN / GREEN SCREEN</div>
+        <div class="card-title" style="background:black; color:white;">EXPORT FINAL BOSS</div>
+        <div style="font-weight:700; font-size:10px;">VIDEO WEBM + GREEN SCREEN + JSON + GIF + APNG</div>
       </div>
-      <button class="btn btn-black" onclick="exportJSON()">💾 EXPORT JSON PER SCREEN</button>
-      <button class="btn btn-yellow" style="margin-top:6px;" onclick="exportVideo()">🎬 EXPORT VIDEO 5 DETIK (WEBM)</button>
-      <button class="btn btn-blue" style="margin-top:6px;" onclick="exportGreenScreen()">🟩 EXPORT GREEN SCREEN MP4</button>
-      <button class="btn" style="margin-top:6px;" onclick="copyOverlayLink()">🔗 COPY BROWSER SOURCE LINK</button>
-      <div class="card" style="margin-top:8px;">
-        <div class="card-title">ANDROID APK INFO</div>
-        <div style="font-family:'Space Mono'; font-size:9px; line-height:1.4;">
-          APK: armeabi-v7a 32-bit (5.4MB)<br>
-          Min SDK: Android 7.0 (API 24)<br>
-          Permissions: Camera, Overlay, Vibrate, Internet<br>
-          Fitur: Floating bubble, per-screen, sound, vibrate, 60fps anim<br>
-          Build: GitHub Actions auto release<br>
+      <button class="btn btn-black" onclick="exportJSON()">💾 JSON PER SCREEN</button>
+      <button class="btn btn-yellow" style="margin-top:4px;" onclick="exportVideo()">🎬 VIDEO 5s WEBM</button>
+      <button class="btn btn-blue" style="margin-top:4px;" onclick="exportGreenScreen()">🟩 GREEN SCREEN</button>
+      <button class="btn btn-purple" style="margin-top:4px;" onclick="exportGif()">🖼️ EXPORT GIF (VIA CANVAS)</button>
+      <button class="btn" style="margin-top:4px;" onclick="copyOverlayLink()">🔗 BROWSER SOURCE LINK</button>
+      <div class="card" style="margin-top:6px;">
+        <div class="card-title">APK v5 FINAL BOSS</div>
+        <div style="font-family:'Space Mono'; font-size:8px; line-height:1.4;">
+          Build: armeabi-v7a 32-bit 5.4MB<br>
+          Features: Floating bubble double-click, per-screen, keyframe anim 60fps, sound, vibrate, particle, custom font TTF, gift detection, auto-translate, export video/green screen/gif<br>
+          Android: 7.0+ • Camera + Overlay + Vibrate<br>
         </div>
       </div>
-      <div class="how-box">📱 ANDROID: Export video pakai MediaRecorder API — record canvas 5 detik jadi WebM. Bisa di-import ke CapCut / Alight Motion sebagai overlay!</div>
     </div>
   </div>
 
@@ -334,18 +335,19 @@ body{background:var(--bg); color:var(--ink); font-family:'Space Grotesk', sans-s
     <div class="phone-wrap" id="phoneWrap">
       <div class="phone-top">
         <div>● ● ●</div>
-        <div id="profileLabel">TIKTOK LIVE • v4 ANDROID</div>
-        <div id="liveIndicator" style="background:black; color:white; padding:2px 6px; border:2px solid black; font-size:8px;">OFFLINE</div>
+        <div id="profileLabel">TIKTOK LIVE • v5 FINAL BOSS</div>
+        <div id="liveIndicator" style="background:black; color:white; padding:2px 5px; border:2px solid black; font-size:7px;">OFFLINE</div>
       </div>
       <div class="canvas-wrap" id="canvasWrap">
         <video id="video" autoplay muted playsinline></video>
         <canvas id="ghost"></canvas>
         <canvas id="canvas"></canvas>
+        <canvas id="particles"></canvas>
         <div class="mode-switch">
           <button class="mode-btn active" id="modeViewer" onclick="setMode('viewer')">PENONTON</button>
           <button class="mode-btn" id="modeStreamer" onclick="setMode('streamer')">STEALTH</button>
         </div>
-        <div class="viewer-pill">👁 1.2K • v4 ANDROID</div>
+        <div class="viewer-pill">👁 1.2K • v5 FINAL BOSS</div>
         <div class="tiktok-right"><div>♥</div><div>💬</div><div>↗</div></div>
         <button class="fab-add" id="fabAdd" onclick="toggleAddMenu()">+ ADD</button>
         <div class="add-menu" id="addMenu">
@@ -354,23 +356,23 @@ body{background:var(--bg); color:var(--ink); font-family:'Space Grotesk', sans-s
           <div class="add-option" onclick="quickAdd('goal')">🎯 GOAL</div>
           <div class="add-option" onclick="quickAdd('tape')">📼 TAPE</div>
           <div class="add-option" onclick="quickAdd('stamp')">🔴 STAMP</div>
-          <div class="add-option" onclick="quickAdd('highlight')">🟨 HIGHLIGHT</div>
           <div class="add-option" onclick="quickAdd('neon')">💜 NEON</div>
-          <div class="add-option" onclick="quickAdd('typewriter')">⌨️ TYPEWRITER</div>
+          <div class="add-option" onclick="quickAdd('particle')">🎉 PARTICLE</div>
+          <div class="add-option" onclick="quickAdd('typewriter')">⌨️ TYPE</div>
         </div>
         <div class="alert-box" id="alertBox">
           <div class="tape"></div>
-          <div class="alert-header"><span>SAWERIA • BRUTAL v4</span><span id="alertTime">12:00</span></div>
+          <div class="alert-header"><span>SAWERIA • v5 FINAL BOSS</span><span id="alertTime">12:00</span></div>
           <div class="alert-stamp">PAID!</div>
           <div class="alert-body">
             <h2 id="alertTitle">BANG JAGO SAWER 50K!</h2>
-            <p id="alertMsg">semangat bang live brutal nya keren parah!</p>
+            <p id="alertMsg">semangat bang brutal final boss keren parah!</p>
           </div>
         </div>
-        <div id="safeArea" style="position:absolute; inset:5% 3% 16% 3%; border:2px dashed black; pointer-events:none; opacity:.25;"></div>
+        <div id="safeArea" style="position:absolute; inset:5% 3% 16% 3%; border:2px dashed black; pointer-events:none; opacity:.2;"></div>
       </div>
       <div class="timeline" id="timeline">
-        <div class="timeline-header"><span>⏱️ TIMELINE — DA STUDIO (TAP KEYFRAME)</span><span id="timelineTime">00:00 / 05:00</span></div>
+        <div class="timeline-header"><span>⏱️ TIMELINE DA STUDIO — 60FPS</span><span id="timelineTime">00:00 / 05:00</span></div>
         <div class="timeline-tracks" id="timelineTracks"></div>
       </div>
     </div>
@@ -378,96 +380,90 @@ body{background:var(--bg); color:var(--ink); font-family:'Space Grotesk', sans-s
 </div>
 
 <div class="mobile-bar">
-  <button class="btn" style="flex:1; box-shadow:none; border:0; border-right:var(--border); font-size:9px;" onclick="toggleSidebar()">LAYERS</button>
-  <button class="btn btn-yellow" style="flex:1; box-shadow:none; border:0; border-right:var(--border); font-size:9px;" onclick="toggleAddMenu()">+ ADD</button>
-  <button class="btn" style="flex:1; box-shadow:none; border:0; border-right:var(--border); font-size:9px;" onclick="switchTab('anim')">ANIM</button>
-  <button class="btn btn-red" style="flex:1; box-shadow:none; border:0; font-size:9px;" onclick="toggleLive()">● LIVE</button>
+  <button class="btn" style="flex:1; box-shadow:none; border:0; border-right:var(--border); font-size:8px;" onclick="toggleSidebar()">LAYERS</button>
+  <button class="btn btn-yellow" style="flex:1; box-shadow:none; border:0; border-right:var(--border); font-size:8px;" onclick="toggleAddMenu()">+ ADD</button>
+  <button class="btn" style="flex:1; box-shadow:none; border:0; border-right:var(--border); font-size:8px;" onclick="switchTab('anim')">ANIM</button>
+  <button class="btn" style="flex:1; box-shadow:none; border:0; border-right:var(--border); font-size:8px;" onclick="switchTab('gifts')">GIFTS</button>
+  <button class="btn btn-red" style="flex:1; box-shadow:none; border:0; font-size:8px;" onclick="toggleLive()">● LIVE</button>
 </div>
 
 <div class="floating-bubble" id="bubble" style="display:none;">S<div class="notif" id="bubbleNotif" style="display:none;">1</div></div>
 <div class="bubble-menu" id="bubbleMenu">
-  <div style="font-family:'Space Mono'; font-size:8px; font-weight:700; margin-bottom:6px; background:black; color:white; padding:4px 6px;">FLOATING — ANDROID</div>
+  <div style="font-family:'Space Mono'; font-size:7px; font-weight:700; margin-bottom:4px; background:black; color:white; padding:3px 5px;">FLOATING v5 — ANDROID</div>
   <div class="bubble-item" onclick="quickAdd('text')">📝 + TEKS</div>
   <div class="bubble-item" onclick="quickAdd('saweria')">💸 + SAWER</div>
-  <div class="bubble-item" onclick="quickAdd('goal')">🎯 + GOAL</div>
-  <div class="bubble-item" onclick="quickAdd('tape')">📼 + TAPE</div>
+  <div class="bubble-item" onclick="quickAdd('particle')">🎉 + PARTICLE</div>
   <div class="bubble-item" onclick="toggleBubbleMenu(); document.getElementById('sidebar').classList.add('open')">🎨 EDITOR</div>
   <div class="bubble-item" onclick="savePerScreen()" style="background:var(--yellow);">💾 SAVE SCREEN</div>
   <div class="bubble-item" onclick="exportVideo()" style="background:var(--green);">🎬 EXPORT VIDEO</div>
 </div>
 
-<audio id="audioCash" preload="auto"><source src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRyAgAAAAEA" type="audio/wav"></audio>
-
 <script>
-// ANDROID ULTIMATE v4 - FULL FEATURES
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-const ghost = document.getElementById('ghost');
-const gctx = ghost.getContext('2d');
-const video = document.getElementById('video');
+// v5 FINAL BOSS - ANDROID ULTIMATE + BEBAS
+const canvas=document.getElementById('canvas');
+const ctx=canvas.getContext('2d');
+const ghost=document.getElementById('ghost');
+const gctx=ghost.getContext('2d');
+const particlesCanvas=document.getElementById('particles');
+const pctx=particlesCanvas.getContext('2d');
+const video=document.getElementById('video');
 
-let profiles = JSON.parse(localStorage.getItem('brutal_profiles_v4')||'{}');
-let currentProfile = localStorage.getItem('brutal_current_profile_v4')||'tiktok-live';
-let layers = profiles[currentProfile] || [
-  {id:'b1', type:'text', text:'LIVE TIKTOK — JAMAL', x:0.04, y:0.04, w:0.62, h:0.07, fontFamily:'Syne', fontSize:32, color:'#000000', brutalStyle:'box', bg:'#FFE600', rotation:-1.5, autoShow:true, stealth:false, visible:true, animation:'slideLeft', duration:800, delay:0, loop:false, onSawer:false, hasTape:true, shadow:true, borderDouble:false, keyframes:[{t:0,x: -0.5},{t:800,x:0.04}]},
-  {id:'b2', type:'text', text:'SAWERIA.CO/JAMALSTREAM', x:0.04, y:0.86, w:0.72, h:0.06, fontFamily:'Space Mono', fontSize:15, color:'#FFFFFF', brutalStyle:'box', bg:'#000000', rotation:0, autoShow:true, stealth:false, visible:true, animation:'slideUp', duration:600, delay:200, loop:false},
-  {id:'b3', type:'goal', text:'TARGET 500K / 1JT', x:0.04, y:0.13, w:0.55, h:0.05, fontFamily:'Space Grotesk', fontSize:14, color:'#000000', brutalStyle:'ripped', bg:'#FFFFFF', progress:0.5, rotation:0, autoShow:false, stealth:true, visible:true, animation:'bounce', duration:1000, delay:0},
+let profiles=JSON.parse(localStorage.getItem('brutal_profiles_v5')||'{}');
+let currentProfile=localStorage.getItem('brutal_current_profile_v5')||'tiktok-live';
+let layers=profiles[currentProfile] || [
+  {id:'b1', type:'text', text:'LIVE TIKTOK — JAMAL v5', x:0.04, y:0.04, w:0.62, h:0.07, fontFamily:'Syne', fontSize:32, color:'#000000', brutalStyle:'box', bg:'#FFE600', rotation:-1.5, autoShow:true, stealth:false, visible:true, animation:'slideLeft', duration:800, delay:0, loop:false, onSawer:false, hasTape:true, shadow:true, keyframes:[{t:0}]},
+  {id:'b2', type:'text', text:'SAWERIA.CO/JAMAL', x:0.04, y:0.86, w:0.72, h:0.06, fontFamily:'Space Mono', fontSize:15, color:'#FFFFFF', brutalStyle:'box', bg:'#000000', rotation:0, autoShow:true, stealth:false, visible:true, animation:'slideUp', duration:600, delay:200},
+  {id:'b3', type:'goal', text:'TARGET 500K / 1JT', x:0.04, y:0.13, w:0.55, h:0.05, fontFamily:'Space Grotesk', fontSize:14, color:'#000000', brutalStyle:'ripped', bg:'#FFFFFF', progress:0.5, rotation:0, autoShow:false, stealth:true, visible:true, animation:'bounce', duration:1000},
 ];
 
-let selected = layers[0]?.id||null;
-let isLive = false;
-let mode = 'viewer';
-let res = {w:1080,h:1920};
-let saweriaPoll = null;
-let bubbleVisible = false;
-let lastClick = 0;
-let currentSound = 'cash';
-let isRecording = false;
-let mediaRecorder = null;
+let selected=layers[0]?.id||null;
+let isLive=false;
+let mode='viewer';
+let res={w:1080,h:1920};
+let saweriaPoll=null;
+let lastClick=0;
+let currentSound='cash';
+let isRecording=false;
+let particles=[];
+let customFontName=null;
 
-const colors = ['#000000','#FFFFFF','#FFE600','#FF3B30','#0057FF','#00FF88','#8A2BE2'];
-const isAndroid = /Android/i.test(navigator.userAgent);
+const colors=['#000000','#FFFFFF','#FFE600','#FF3B30','#0057FF','#00FF88','#8A2BE2','#FF6B00'];
+const isAndroid=/Android/i.test(navigator.userAgent);
+const gifts=[
+  {id:'rose', icon:'🌹', name:'Rose', price:1, color:'#FF3B30'},
+  {id:'tiktok', icon:'🎵', name:'TikTok', price:1, color:'#000000'},
+  {id:'heart', icon:'💖', name:'Heart', price:5, color:'#FF69B4'},
+  {id:'fire', icon:'🔥', name:'Fire', price:10, color:'#FF6B00'},
+  {id:'crown', icon:'👑', name:'Crown', price:50, color:'#FFE600'},
+  {id:'diamond', icon:'💎', name:'Diamond', price:100, color:'#00FFFF'},
+  {id:'universe', icon:'🌌', name:'Universe', price:500, color:'#8A2BE2'},
+  {id:'lion', icon:'🦁', name:'Lion', price:1000, color:'#FFA500'},
+];
 
 function init(){
   setupCanvas();
   startCam();
   initColors();
+  initGifts();
   renderScreenTabs();
   renderList();
   renderTimeline();
   if(selected) select(selected);
   renderLoop();
+  particleLoop();
   bindDrag();
   bindBubble();
   bindDoubleClick();
   loadProfileToUI();
-  setupAndroid();
-  log('Brutal Studio v4 ANDROID ULTIMATE ready — anim + sound + export');
-  // Haptic
+  log('v5 FINAL BOSS ready — bebas edition — android ultimate');
   if(isAndroid && navigator.vibrate) navigator.vibrate(50);
 }
 
-function setupAndroid(){
-  if(isAndroid){
-    document.body.style.paddingBottom='env(safe-area-inset-bottom)';
-    // Request fullscreen on tap
-    document.addEventListener('click', ()=>{
-      if(document.documentElement.requestFullscreen && !document.fullscreenElement){
-        // don't auto fullscreen, let user decide
-      }
-    }, {once:true});
-    log('🤖 Android detected — optimized touch targets, haptics, vibrate ready');
-  }
-}
-
 function setupCanvas(){
-  [canvas,ghost].forEach(c=>{ c.width=res.w; c.height=res.h; c.style.width='100%'; c.style.height='100%'; });
+  [canvas,ghost,particlesCanvas].forEach(c=>{ c.width=res.w; c.height=res.h; c.style.width='100%'; c.style.height='100%'; });
 }
 async function startCam(){
-  try{
-    const s=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user', width:{ideal:1080}, height:{ideal:1920}}, audio:true});
-    video.srcObject=s;
-  }catch(e){ log('Cam fail: '+e.message); }
+  try{ const s=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user', width:{ideal:1080}, height:{ideal:1920}}, audio:true}); video.srcObject=s; }catch(e){}
 }
 function initColors(){
   const grid=document.getElementById('colorGrid');
@@ -478,6 +474,17 @@ function initColors(){
     grid.appendChild(d);
   });
 }
+function initGifts(){
+  const grid=document.getElementById('giftGrid');
+  grid.innerHTML='';
+  gifts.forEach(g=>{
+    const div=document.createElement('div');
+    div.className='gift-item';
+    div.innerHTML=`<div style="font-size:20px;">${g.icon}</div><div>${g.name}</div><div style="opacity:.6;">${g.price} coins</div>`;
+    div.onclick=()=>{ triggerGift(g); div.classList.add('active'); setTimeout(()=>div.classList.remove('active'), 500); };
+    grid.appendChild(div);
+  });
+}
 function renderScreenTabs(){
   const el=document.getElementById('screenTabs');
   const screens=[{id:'tiktok-live', label:'📱 LIVE'}, {id:'tiktok-game', label:'🎮 GAME'}, {id:'youtube', label:'▶️ YT'}, {id:'custom', label:'⚙️ CUSTOM'}];
@@ -486,32 +493,26 @@ function renderScreenTabs(){
     const div=document.createElement('div'); div.className='screen-tab'+(s.id===currentProfile?' active':''); div.textContent=s.label; div.onclick=()=>switchProfile(s.id);
     el.appendChild(div);
   });
-  document.getElementById('profileLabel').textContent=screens.find(x=>x.id===currentProfile)?.label+' • v4 ANDROID';
+  document.getElementById('profileLabel').textContent=screens.find(x=>x.id===currentProfile)?.label+' • v5 FINAL BOSS';
   document.getElementById('screenProfile').value=currentProfile;
 }
 function switchProfile(id){
   profiles[currentProfile]=layers;
-  localStorage.setItem('brutal_profiles_v4', JSON.stringify(profiles));
+  localStorage.setItem('brutal_profiles_v5', JSON.stringify(profiles));
   currentProfile=id;
-  localStorage.setItem('brutal_current_profile_v4', id);
+  localStorage.setItem('brutal_current_profile_v5', id);
   layers=profiles[id] || [];
   if(layers.length===0){
-    if(id==='tiktok-game'){
-      layers=[{id:'g1', type:'text', text:'🎮 RANK PUSH', x:0.04, y:0.04, w:0.7, h:0.07, fontFamily:'Syne', fontSize:28, color:'#000', brutalStyle:'box', bg:'#00FF88', rotation:-1, autoShow:true, stealth:false, visible:true, animation:'slideLeft', duration:800}];
-    } else {
-      layers=[{id:'n'+Date.now(), type:'text', text:'OVERLAY '+id.toUpperCase(), x:0.04, y:0.04, w:0.6, h:0.07, fontFamily:'Syne', fontSize:26, color:'#000', brutalStyle:'box', bg:'#FFE600', rotation:-1, autoShow:true, stealth:false, visible:true, animation:'pop', duration:600}];
-    }
+    layers=[{id:'n'+Date.now(), type:'text', text:'OVERLAY '+id.toUpperCase()+' v5', x:0.04, y:0.04, w:0.6, h:0.07, fontFamily:'Syne', fontSize:26, color:'#000', brutalStyle:'box', bg:'#FFE600', rotation:-1, autoShow:true, stealth:false, visible:true, animation:'pop', duration:600}];
   }
   selected=layers[0]?.id||null;
   renderScreenTabs(); renderList(); renderTimeline(); if(selected) select(selected);
-  log('Switch screen: '+id);
-  vibrateAndroid(30);
+  log('Switch screen: '+id); vibrateAndroid(30);
 }
 function savePerScreen(){
   profiles[currentProfile]=layers;
-  localStorage.setItem('brutal_profiles_v4', JSON.stringify(profiles));
-  log('💾 Saved '+currentProfile+' ('+layers.length+' layers)');
-  vibrateAndroid(50);
+  localStorage.setItem('brutal_profiles_v5', JSON.stringify(profiles));
+  log('💾 Saved '+currentProfile+' ('+layers.length+' layers)'); vibrateAndroid(50);
 }
 function renderList(){
   const el=document.getElementById('layerList');
@@ -519,16 +520,13 @@ function renderList(){
   [...layers].reverse().forEach(l=>{
     const div=document.createElement('div');
     div.className='layer-item'+(l.id===selected?' active':'');
-    const icon = l.type==='saweria'?'💸': l.type==='goal'?'🎯': l.brutalStyle==='tape'?'📼': l.brutalStyle==='stamp'?'🔴':'📝';
+    const icon = l.type==='saweria'?'💸': l.type==='goal'?'🎯': l.brutalStyle==='tape'?'📼': l.brutalStyle==='stamp'?'🔴': l.brutalStyle==='particle'?'🎉':'📝';
     const hasAnim = l.animation && l.animation!=='none';
-    div.innerHTML=`<div style="display:flex; align-items:center; flex:1; overflow:hidden;"><div class="layer-thumb" style="background:${l.bg}; color:${l.color}">${icon}</div><div class="layer-meta"><div class="layer-type">${(l.brutalStyle||'').toUpperCase()} ${l.stealth?'• S':''} ${hasAnim?'• ANIM':''}</div><div class="layer-name">${l.text}</div></div>${hasAnim?'<div class=\"layer-anim\"></div>':''}</div><div style="font-family:'Space Mono'; font-size:8px; font-weight:700; text-align:right;">${Math.round(l.x*100)}%<br>${l.animation||''}</div>`;
+    div.innerHTML=`<div style="display:flex; align-items:center; flex:1; overflow:hidden;"><div class="layer-thumb" style="background:${l.bg}; color:${l.color}">${icon}</div><div class="layer-meta"><div class="layer-type">${(l.brutalStyle||'').toUpperCase()} ${l.stealth?'• S':''} ${hasAnim?'• ANIM':''}</div><div class="layer-name">${l.text}</div></div>${hasAnim?'<div class=\"layer-anim\"></div>':''}</div><div style="font-size:7px; font-weight:700; text-align:right;">${Math.round(l.x*100)}%<br>${l.animation||''}</div>`;
     div.onclick=()=>select(l.id);
-    // Long press duplicate
     let pressTimer;
     div.addEventListener('touchstart', ()=>{ pressTimer=setTimeout(()=>{ duplicateLayer(l.id); vibrateAndroid(100); }, 600); });
     div.addEventListener('touchend', ()=>clearTimeout(pressTimer));
-    div.addEventListener('mousedown', ()=>{ pressTimer=setTimeout(()=>duplicateLayer(l.id), 600); });
-    div.addEventListener('mouseup', ()=>clearTimeout(pressTimer));
     el.appendChild(div);
   });
 }
@@ -541,9 +539,7 @@ function renderTimeline(){
     el.appendChild(track);
     const kfContainer=track.querySelector('.track-keyframes');
     (l.keyframes||[{t:0}]).forEach((kf,i)=>{
-      const k=document.createElement('div'); k.className='keyframe'+(i===0?' active':'');
-      k.style.left=(kf.t/5000*100)+'%';
-      k.onclick=()=>{ document.querySelectorAll('.keyframe').forEach(x=>x.classList.remove('active')); k.classList.add('active'); select(l.id); };
+      const k=document.createElement('div'); k.className='keyframe'+(i===0?' active':''); k.style.left=(kf.t/5000*100)+'%'; k.onclick=()=>{ document.querySelectorAll('.keyframe').forEach(x=>x.classList.remove('active')); k.classList.add('active'); select(l.id); };
       kfContainer.appendChild(k);
     });
   });
@@ -571,20 +567,24 @@ function select(id){
   document.getElementById('propOnSawer').checked=l.onSawer||false;
   document.getElementById('propShadow').checked=l.shadow!==false;
   document.getElementById('propTape').checked=l.hasTape||false;
+  document.getElementById('fontPreview').style.fontFamily=l.fontFamily;
+  document.getElementById('fontPreview').textContent=l.text||'Preview Font Brutal';
 }
 function quickAdd(type){
   const id='l'+Date.now();
-  const base={id,type, x:0.06, y:0.4+Math.random()*0.15, w:0.68, h:0.07, fontFamily:'Syne', fontSize:26, color:'#000000', brutalStyle:'box', bg:'#FFE600', rotation:-1, autoShow:true, stealth:false, visible:true, animation:'pop', duration:600, delay:0, loop:false, onSawer:false, hasTape:false, shadow:true, borderDouble:false, keyframes:[{t:0}]};
-  if(type==='text'){ base.text='TEKS BRUTAL'; }
+  const base={id,type, x:0.06, y:0.4+Math.random()*0.15, w:0.68, h:0.07, fontFamily:customFontName||'Syne', fontSize:26, color:'#000000', brutalStyle:'box', bg:'#FFE600', rotation:-1, autoShow:true, stealth:false, visible:true, animation:'pop', duration:600, delay:0, loop:false, onSawer:false, hasTape:false, shadow:true, borderDouble:false, keyframes:[{t:0}]};
+  if(type==='text') base.text='TEKS BRUTAL v5';
   if(type==='saweria'){ base.text='{name} SAWER {amount}'; base.bg='#000000'; base.color='#FFFFFF'; base.animation='bounce'; }
   if(type==='goal'){ base.text='GOAL 0 / 1JT'; base.progress=0.35; base.brutalStyle='ripped'; base.bg='#FFFFFF'; base.animation='slideLeft'; }
-  if(type==='tape'){ base.text='★ TAPE ★'; base.brutalStyle='tape'; base.rotation=-2; base.animation='slideRight'; }
+  if(type==='tape'){ base.text='★ TAPE v5 ★'; base.brutalStyle='tape'; base.rotation=-2; base.animation='slideRight'; }
   if(type==='stamp'){ base.text='BRUTAL STAMP'; base.brutalStyle='stamp'; base.bg='#FF3B30'; base.color='#FFFFFF'; base.rotation=8; base.animation='pop'; }
   if(type==='highlight'){ base.text='HIGHLIGHT'; base.brutalStyle='highlight'; base.animation='typewriter'; }
   if(type==='neon'){ base.text='NEON BRUTAL'; base.brutalStyle='neon'; base.bg='#8A2BE2'; base.color='#00FF88'; base.animation='glitch'; }
-  if(type==='typewriter'){ base.text='KETIK BRUTAL...'; base.brutalStyle='box'; base.animation='typewriter'; base.duration=2000; }
+  if(type==='particle'){ base.text='🎉 PARTY TIME!'; base.brutalStyle='particle'; base.bg='#00FF88'; base.animation='particle'; base.duration=1500; }
+  if(type==='typewriter'){ base.text='KETIK BRUTAL...'; base.animation='typewriter'; base.duration=2000; }
   layers.push(base);
   select(id); renderList(); renderTimeline(); toggleAddMenu(false); toggleBubbleMenu(false); savePerScreen(); vibrateAndroid(40);
+  if(type==='particle') triggerConfetti();
 }
 function updateProp(k,v){
   const l=layers.find(x=>x.id===selected); if(!l) return;
@@ -604,67 +604,124 @@ function updateProp(k,v){
   if(k==='shadow') l.shadow=v;
   if(k==='hasTape') l.hasTape=v;
   if(k==='borderDouble') l.borderDouble=v;
+  document.getElementById('fontPreview').style.fontFamily=l.fontFamily;
+  document.getElementById('fontPreview').textContent=l.text;
   renderList(); renderTimeline();
   clearTimeout(window.saveTimeout); window.saveTimeout=setTimeout(savePerScreen, 600);
 }
 function deleteLayer(){ layers=layers.filter(x=>x.id!==selected); selected=layers[0]?.id||null; if(selected) select(selected); else { document.getElementById('props').style.display='none'; document.getElementById('animProps').style.display='none'; } renderList(); renderTimeline(); savePerScreen(); vibrateAndroid(80); }
-function duplicateLayer(id){ const origId=id||selected; const orig=layers.find(x=>x.id===origId); if(!orig) return; const copy={...orig, id:'l'+Date.now(), x:orig.x+0.05, y:orig.y+0.05, text:orig.text+' COPY'}; layers.push(copy); select(copy.id); renderList(); renderTimeline(); savePerScreen(); log('Duplicated: '+orig.text); }
+function duplicateLayer(id){ const origId=id||selected; const orig=layers.find(x=>x.id===origId); if(!orig) return; const copy={...orig, id:'l'+Date.now(), x:orig.x+0.05, y:orig.y+0.05, text:orig.text+' COPY'}; layers.push(copy); select(copy.id); renderList(); renderTimeline(); savePerScreen(); }
 
-// ANIMATION ENGINE - DA STUDIO 60FPS
+// FONT UPLOAD - BEBAS
+function uploadFont(input){
+  const file=input.files[0];
+  if(!file) return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const fontName='CustomFont_'+Date.now();
+    const fontFace=new FontFace(fontName, e.target.result);
+    fontFace.load().then(f=>{
+      document.fonts.add(f);
+      customFontName=fontName;
+      document.getElementById('fontPreview').style.fontFamily=fontName;
+      log('🔤 Font uploaded: '+file.name+' -> '+fontName);
+      // Update selected layer
+      if(selected){ updateProp('fontFamily', fontName); }
+      vibrateAndroid(60);
+    });
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+// BG UPLOAD
+function uploadBg(input){
+  const file=input.files[0];
+  if(!file) return;
+  const url=URL.createObjectURL(file);
+  if(file.type.startsWith('image/')){
+    const img=new Image(); img.src=url; img.onload=()=>{
+      // Draw image as bg? For simplicity, set video poster to image
+      document.getElementById('canvasWrap').style.background=`url(${url}) center/cover`;
+      log('🖼️ BG image uploaded: '+file.name);
+    };
+  } else if(file.type.startsWith('video/')){
+    video.srcObject=null;
+    video.src=url;
+    video.loop=true;
+    video.play();
+    log('🎬 BG video uploaded: '+file.name);
+  }
+}
+function changeBg(type){
+  const wrap=document.getElementById('canvasWrap');
+  if(type==='color'){ const c=prompt('Hex color:','#FFE600'); if(c) wrap.style.background=c; }
+  else if(type==='green'){ wrap.style.background='#00FF00'; }
+  else if(type==='camera'){ wrap.style.background='black'; startCam(); }
+  else if(type==='image' || type==='video'){ document.getElementById('bgUpload').click(); }
+}
+
+// TRANSLATE
+async function translateText(){
+  const l=layers.find(x=>x.id===selected);
+  if(!l) return;
+  const text=l.text;
+  try{
+    // Use MyMemory free translate API
+    const res=await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=id|en`).then(r=>r.json());
+    const translated=res.responseData?.translatedText||text;
+    updateProp('text', translated);
+    document.getElementById('propText').value=translated;
+    log('🌐 Translated: '+text+' -> '+translated);
+    vibrateAndroid(40);
+  }catch(e){ log('Translate fail: '+e.message); }
+}
+
+// ANIMATION ENGINE
 function getAnimOffset(l, elapsed){
   if(!l.animation || l.animation==='none') return {x:0,y:0, scale:1, opacity:1, typeProgress:1};
   const dur=l.duration||800;
   const delay=l.delay||0;
   if(elapsed < delay) return {x:0,y:0, scale:0, opacity:0, typeProgress:0};
-  let t = (elapsed - delay) % (l.loop ? dur : dur*2);
   let progress = Math.min((elapsed - delay)/dur, 1);
   if(l.loop) progress = ((elapsed - delay) % dur)/dur;
-  
-  // Easing brutal
   const easeOutBack = (p)=>{ const c1=1.70158, c3=c1+1; return 1 + c3*Math.pow(p-1,3) + c1*Math.pow(p-1,2); };
   const easeBounce = (p)=>{ if(p<1/2.75) return 7.5625*p*p; else if(p<2/2.75) return 7.5625*(p-=1.5/2.75)*p+0.75; else if(p<2.5/2.75) return 7.5625*(p-=2.25/2.75)*p+0.9375; else return 7.5625*(p-=2.625/2.75)*p+0.984375; };
-  
-  let offsetX=0, offsetY=0, scale=1, opacity=1, typeProg=progress;
-  
+  let offsetX=0, offsetY=0, scale=1, opacity=1, typeProg=progress, rotation=0;
   switch(l.animation){
-    case 'slideLeft': offsetX = (1-progress) * -res.w*0.8; opacity=progress; break;
-    case 'slideRight': offsetX = (1-progress) * res.w*0.8; opacity=progress; break;
-    case 'slideUp': offsetY = (1-progress) * res.h*0.5; opacity=progress; break;
-    case 'bounce': scale = l.loop? 1+Math.sin(progress*Math.PI*4)*0.15 : easeBounce(progress); break;
+    case 'slideLeft': offsetX=(1-progress)*-res.w*0.8; opacity=progress; break;
+    case 'slideRight': offsetX=(1-progress)*res.w*0.8; opacity=progress; break;
+    case 'slideUp': offsetY=(1-progress)*res.h*0.5; opacity=progress; break;
+    case 'bounce': scale=l.loop?1+Math.sin(progress*Math.PI*4)*0.15:easeBounce(progress); break;
     case 'typewriter': typeProg=progress; break;
-    case 'glitch': offsetX = (Math.random()-0.5)*10*(1-progress); offsetY = (Math.random()-0.5)*6*(1-progress); break;
-    case 'shake': offsetX = Math.sin(progress*30)*8*(1-progress); break;
-    case 'pop': scale = easeOutBack(progress); opacity=progress; break;
+    case 'glitch': offsetX=(Math.random()-0.5)*10*(1-progress); offsetY=(Math.random()-0.5)*6*(1-progress); break;
+    case 'shake': offsetX=Math.sin(progress*30)*8*(1-progress); break;
+    case 'pop': scale=easeOutBack(progress); opacity=progress; break;
+    case 'spin': rotation=progress*360; break;
+    case 'pulse': scale=1+Math.sin(progress*Math.PI*2)*0.2; break;
+    case 'particle': scale=easeOutBack(progress); break;
   }
-  return {x:offsetX, y:offsetY, scale, opacity, typeProgress:typeProg};
+  return {x:offsetX, y:offsetY, scale, opacity, typeProgress:typeProg, rotation};
 }
 
 function drawBrutal(c, l, isGhost, time, animTime){
   const x=l.x*res.w, y=l.y*res.h, w=l.w*res.w, h=l.h*res.h;
-  const anim = getAnimOffset(l, animTime);
-  if(l.onSawer && !window.sawerAnimActive) { /* only anim on sawer */ }
-  
+  const anim=getAnimOffset(l, animTime);
   c.save();
   c.translate(x+w/2 + anim.x, y+h/2 + anim.y);
-  c.rotate((l.rotation||0)*Math.PI/180);
+  c.rotate(((l.rotation||0)+ (anim.rotation||0))*Math.PI/180);
   c.scale(anim.scale, anim.scale);
   c.translate(-(x+w/2), -(y+h/2));
   c.globalAlpha = (isGhost && l.stealth) ? 0.15 : anim.opacity;
 
-  if(l.shadow!==false && !isGhost){
-    c.fillStyle='#000000';
-    c.fillRect(x+8, y+8, w, h);
-  }
+  if(l.shadow!==false && !isGhost){ c.fillStyle='#000000'; c.fillRect(x+8, y+8, w, h); }
 
   if(l.brutalStyle!=='none'){
     if(l.brutalStyle==='tape'){
-      c.fillStyle='#FFE600';
-      c.fillRect(x,y,w,h);
+      c.fillStyle='#FFE600'; c.fillRect(x,y,w,h);
       c.strokeStyle='#00000022'; c.lineWidth=1;
       for(let i=0;i<w;i+=12){ c.beginPath(); c.moveTo(x+i,y); c.lineTo(x+i+6,y+h); c.stroke(); }
     } else if(l.brutalStyle==='stamp'){
-      c.fillStyle=l.bg||'#FF3B30';
-      c.fillRect(x,y,w,h);
+      c.fillStyle=l.bg||'#FF3B30'; c.fillRect(x,y,w,h);
       c.strokeStyle='white'; c.lineWidth=2; c.setLineDash([6,4]); c.strokeRect(x+6,y+6,w-12,h-12); c.setLineDash([]);
     } else if(l.brutalStyle==='ripped'){
       c.fillStyle=l.bg||'#FFF';
@@ -676,6 +733,11 @@ function drawBrutal(c, l, isGhost, time, animTime){
       c.fillStyle='#FFE600'; c.fillRect(x, y+h*0.3, w, h*0.6);
     } else if(l.brutalStyle==='neon'){
       c.shadowColor=l.bg||'#8A2BE2'; c.shadowBlur=20; c.fillStyle=l.bg; c.fillRect(x,y,w,h); c.shadowBlur=0;
+    } else if(l.brutalStyle==='particle'){
+      c.fillStyle=l.bg||'#00FF88'; c.fillRect(x,y,w,h);
+      // particle dots inside
+      c.fillStyle='white';
+      for(let i=0;i<5;i++){ c.beginPath(); c.arc(x+Math.random()*w, y+Math.random()*h, 3, 0, Math.PI*2); c.fill(); }
     } else {
       c.fillStyle=l.bg||'#FFF'; c.fillRect(x,y,w,h);
     }
@@ -683,20 +745,17 @@ function drawBrutal(c, l, isGhost, time, animTime){
     if(l.borderDouble){ c.strokeRect(x-4,y-4,w+8,h+8); }
   }
 
-  if(l.hasTape){
-    c.fillStyle='rgba(255,230,0,0.85)'; c.fillRect(x+w*0.2, y-12, w*0.6, 18);
-  }
+  if(l.hasTape){ c.fillStyle='rgba(255,230,0,0.85)'; c.fillRect(x+w*0.2, y-12, w*0.6, 18); }
   if(l.type==='goal' && l.progress!=null){
     c.fillStyle='black'; c.fillRect(x, y+h-10, w, 10);
     c.fillStyle='#FFE600'; c.fillRect(x, y+h-10, w*l.progress, 10);
     c.strokeStyle='black'; c.lineWidth=2; c.strokeRect(x, y+h-10, w, 10);
   }
 
-  // Text with typewriter
-  let displayText = l.text;
+  let displayText=l.text;
   if(l.animation==='typewriter'){
-    const len = Math.floor(l.text.length * anim.typeProgress);
-    displayText = l.text.slice(0,len) + (anim.typeProgress<1 ? '█' : '');
+    const len=Math.floor(l.text.length * anim.typeProgress);
+    displayText=l.text.slice(0,len) + (anim.typeProgress<1 ? '█' : '');
   }
 
   c.font=`800 ${l.fontSize*(res.w/1080)}px "${l.fontFamily}", sans-serif`;
@@ -723,6 +782,7 @@ function renderLoop(){
   layers.forEach(l=>{
     if(!l.visible) return;
     if(!isLive && !l.autoShow){ ctx.save(); ctx.globalAlpha=0.25; drawBrutal(ctx,l,false, now, elapsed); ctx.restore(); return; }
+    if(l.onSawer && !window.sawerAnimActive) return; // only show on sawer
     drawBrutal(ctx,l,false, now, elapsed);
     if(mode==='streamer' && !l.stealth) drawBrutal(gctx,l,true, now, elapsed);
   });
@@ -730,12 +790,48 @@ function renderLoop(){
   if(mode==='viewer'){ canvas.style.opacity='1'; ghost.style.opacity='0'; }
   else { canvas.style.opacity='0'; ghost.style.opacity='1'; }
 
-  // Timeline time
-  const secs = Math.floor((elapsed%5000)/1000);
-  const ms = Math.floor((elapsed%1000)/10);
+  const secs=Math.floor((elapsed%5000)/1000);
+  const ms=Math.floor((elapsed%1000)/10);
   document.getElementById('timelineTime').textContent=`00:0${secs}.${ms} / 05:00`;
 
   requestAnimationFrame(renderLoop);
+}
+
+// PARTICLE SYSTEM - CONFETTI BRUTAL
+function triggerConfetti(){
+  if(!document.getElementById('confetti')?.checked) return;
+  for(let i=0;i<80;i++){
+    particles.push({
+      x: res.w/2 + (Math.random()-0.5)*200,
+      y: res.h/2,
+      vx: (Math.random()-0.5)*20,
+      vy: Math.random()*-15 -5,
+      color: colors[Math.floor(Math.random()*colors.length)],
+      size: Math.random()*8+3,
+      life: 1,
+      decay: Math.random()*0.02+0.01,
+      rotation: Math.random()*360,
+      rotSpeed: (Math.random()-0.5)*10
+    });
+  }
+  vibrateAndroid([30,20,30]);
+}
+function particleLoop(){
+  pctx.clearRect(0,0,res.w,res.h);
+  for(let i=particles.length-1;i>=0;i--){
+    const p=particles[i];
+    p.x+=p.vx; p.y+=p.vy; p.vy+=0.5; p.life-=p.decay; p.rotation+=p.rotSpeed;
+    if(p.life<=0){ particles.splice(i,1); continue; }
+    pctx.save();
+    pctx.translate(p.x, p.y);
+    pctx.rotate(p.rotation*Math.PI/180);
+    pctx.globalAlpha=p.life;
+    pctx.fillStyle=p.color;
+    pctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
+    pctx.strokeStyle='black'; pctx.lineWidth=1; pctx.strokeRect(-p.size/2, -p.size/2, p.size, p.size);
+    pctx.restore();
+  }
+  requestAnimationFrame(particleLoop);
 }
 
 function bindDrag(){
@@ -765,7 +861,7 @@ function bindDrag(){
 function bindDoubleClick(){
   canvas.addEventListener('dblclick', e=>{
     const r=canvas.getBoundingClientRect(); const x=(e.clientX-r.left)/r.width; const y=(e.clientY-r.top)/r.height;
-    const id='l'+Date.now(); layers.push({id, type:'text', text:'DOUBLE TAP', x,y, w:0.5, h:0.06, fontFamily:'Syne', fontSize:22, color:'#000', brutalStyle:'box', bg:'#FFE600', rotation:-1, autoShow:true, stealth:false, visible:true, animation:'pop', duration:600}); select(id); renderList(); renderTimeline(); savePerScreen(); vibrateAndroid(30);
+    const id='l'+Date.now(); layers.push({id, type:'text', text:'DOUBLE TAP v5', x,y, w:0.5, h:0.06, fontFamily:'Syne', fontSize:22, color:'#000', brutalStyle:'box', bg:'#FFE600', rotation:-1, autoShow:true, stealth:false, visible:true, animation:'pop', duration:600}); select(id); renderList(); renderTimeline(); savePerScreen(); vibrateAndroid(30);
   });
 }
 function bindBubble(){
@@ -794,7 +890,7 @@ function toggleBubble(show){ const b=document.getElementById('bubble'); if(show=
 function toggleBubbleMenu(force){ const m=document.getElementById('bubbleMenu'); if(force===false) m.classList.remove('open'); else m.classList.toggle('open'); }
 function toggleAddMenu(force){ const m=document.getElementById('addMenu'); if(force===false) m.classList.remove('open'); else m.classList.toggle('open'); }
 function setMode(m){ mode=m; document.getElementById('modeViewer').classList.toggle('active', m==='viewer'); document.getElementById('modeStreamer').classList.toggle('active', m==='streamer'); }
-function switchTab(n){ document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active')); document.getElementById('tab-'+n).classList.add('active'); document.querySelectorAll('.tab')[{layers:0,anim:1,design:2,saweria:3,export:4}[n]].classList.add('active'); }
+function switchTab(n){ document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active')); document.getElementById('tab-'+n).classList.add('active'); document.querySelectorAll('.tab')[{layers:0,anim:1,design:2,saweria:3,gifts:4,export:5}[n]].classList.add('active'); }
 function toggleSidebar(){ document.getElementById('sidebar').classList.toggle('open'); }
 function toggleLive(){
   isLive=!isLive;
@@ -802,7 +898,7 @@ function toggleLive(){
   if(isLive){
     btn.textContent='■ STOP LIVE + BUBBLE'; btn.classList.remove('btn-red'); btn.classList.add('btn-black');
     ind.textContent='● LIVE + BUBBLE'; ind.style.background='#FF3B30'; badge.textContent='● LIVE'; badge.style.background='#FF3B30';
-    toggleBubble(true); startSaweriaPoll(); vibrateAndroid([50,50,100]);
+    toggleBubble(true); startSaweriaPoll(); vibrateAndroid([50,50,100]); triggerConfetti();
   } else {
     btn.textContent='● LIVE + FLOATING'; btn.classList.add('btn-red'); btn.classList.remove('btn-black');
     ind.textContent='OFFLINE'; ind.style.background='black'; badge.textContent='OFF'; toggleBubble(false); stopSaweriaPoll();
@@ -811,115 +907,104 @@ function toggleLive(){
 function connectSaweria(){ const u=document.getElementById('saweriaUser').value.trim(); if(!u){ alert('Isi username'); return; } log('Connect Saweria: '+u); if(isLive) startSaweriaPoll(); }
 function startSaweriaPoll(){ if(saweriaPoll) clearInterval(saweriaPoll); const user=document.getElementById('saweriaUser').value.trim(); if(!user) return; saweriaPoll=setInterval(async()=>{ try{ const r=await fetch(`https://saweria.co/api/donations/${user}`).then(x=>x.json()).catch(()=>null); if(r?.data?.length){ const latest=r.data[0]; if(window.lastId!==latest.id){ window.lastId=latest.id; triggerAlert(latest.donator, latest.amount_raw, latest.message); } } }catch(e){} },3000); }
 function stopSaweriaPoll(){ if(saweriaPoll) clearInterval(saweriaPoll); }
-function testDonation(){ triggerAlert('Bang Jago', 50000, 'gas terus bang brutal nya!'); }
+function testDonation(){ triggerAlert('Bang Jago', 50000, 'gas terus bang final boss v5 keren parah!'); }
 function triggerAlert(name, amount, msg){
   const fmt=new Intl.NumberFormat('id-ID').format(amount);
   document.getElementById('alertTitle').textContent=`${name.toUpperCase()} SAWER ${fmt}!`;
   document.getElementById('alertMsg').textContent=msg||'Makasih!'; document.getElementById('alertTime').textContent=new Date().toLocaleTimeString();
   document.getElementById('alertBox').style.display='block';
-  window.sawerAnimActive=true; setTimeout(()=>window.sawerAnimActive=false, 2000);
-  // Bubble notif
+  window.sawerAnimActive=true; setTimeout(()=>window.sawerAnimActive=false, 2500);
   const notif=document.getElementById('bubbleNotif'); notif.textContent='💸'; notif.style.display='flex';
   log(`💸 ${name} — ${fmt} — ${msg}`);
-  playSound(); vibrateAndroid([100,50,100,50,200]); 
+  playSound(); vibrateAndroid([100,50,100,50,200]); triggerConfetti();
+  if(document.getElementById('autoTranslate')?.checked){ translateTextForAlert(msg); }
   if(document.getElementById('tts').checked && 'speechSynthesis' in window){ const u=new SpeechSynthesisUtterance(`${name} sawer ${fmt}. ${msg}`); u.lang='id-ID'; speechSynthesis.speak(u); }
   setTimeout(()=>document.getElementById('alertBox').style.display='none',7000);
 }
+async function translateTextForAlert(msg){
+  try{
+    const res=await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(msg)}&langpair=id|en`).then(r=>r.json());
+    const en=res.responseData?.translatedText;
+    if(en) log('🌐 EN: '+en);
+  }catch(e){}
+}
 function log(m){ const el=document.getElementById('saweriaLog'); const t=new Date().toLocaleTimeString(); el.innerHTML=`[${t}] ${m}<br>`+el.innerHTML; }
+function giftLog(m){ const el=document.getElementById('giftLog'); const t=new Date().toLocaleTimeString(); el.innerHTML=`[${t}] ${m}<br>`+el.innerHTML; }
 
-// SOUND SYSTEM - ANDROID
-const audioContext = new (window.AudioContext||window.webkitAudioContext)();
+// SOUND
+const audioCtx=new (window.AudioContext||window.webkitAudioContext)();
 function playSound(type){
   const t=type||currentSound||document.getElementById('sawerSound')?.value||'cash';
   try{
-    const osc=audioContext.createOscillator();
-    const gain=audioContext.createGain();
-    osc.connect(gain); gain.connect(audioContext.destination);
-    if(t==='cash'){
-      osc.frequency.setValueAtTime(800, audioContext.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(400, audioContext.currentTime+0.3);
-      gain.gain.setValueAtTime(0.8, audioContext.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime+0.5);
-      osc.start(); osc.stop(audioContext.currentTime+0.5);
-    } else if(t==='coin'){
-      osc.frequency.setValueAtTime(1200, audioContext.currentTime);
-      gain.gain.setValueAtTime(0.6, audioContext.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime+0.4);
-      osc.start(); osc.stop(audioContext.currentTime+0.4);
-    } else if(t==='airhorn'){
-      osc.frequency.setValueAtTime(200, audioContext.currentTime);
-      osc.frequency.setValueAtTime(400, audioContext.currentTime+0.1);
-      gain.gain.setValueAtTime(0.9, audioContext.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime+1);
-      osc.start(); osc.stop(audioContext.currentTime+1);
-    } else {
-      osc.frequency.setValueAtTime(600, audioContext.currentTime);
-      osc.frequency.linearRampToValueAtTime(100, audioContext.currentTime+0.2);
-      gain.gain.setValueAtTime(0.7, audioContext.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime+0.3);
-      osc.start(); osc.stop(audioContext.currentTime+0.3);
-    }
-  }catch(e){ log('Sound fail: '+e.message); }
+    const osc=audioCtx.createOscillator(); const gain=audioCtx.createGain();
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    if(t==='cash'){ osc.frequency.setValueAtTime(800, audioCtx.currentTime); osc.frequency.exponentialRampToValueAtTime(400, audioCtx.currentTime+0.3); gain.gain.setValueAtTime(0.8, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime+0.5); osc.start(); osc.stop(audioCtx.currentTime+0.5); }
+    else if(t==='coin'){ osc.frequency.setValueAtTime(1200, audioCtx.currentTime); gain.gain.setValueAtTime(0.6, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime+0.4); osc.start(); osc.stop(audioCtx.currentTime+0.4); }
+    else if(t==='airhorn'){ osc.frequency.setValueAtTime(200, audioCtx.currentTime); osc.frequency.setValueAtTime(400, audioCtx.currentTime+0.1); gain.gain.setValueAtTime(0.9, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime+1); osc.start(); osc.stop(audioCtx.currentTime+1); }
+    else if(t==='party'){ [400,600,800].forEach((f,i)=>{ const o=audioCtx.createOscillator(); const g=audioCtx.createGain(); o.frequency.setValueAtTime(f, audioCtx.currentTime+i*0.1); g.gain.setValueAtTime(0.5, audioCtx.currentTime+i*0.1); g.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime+i*0.1+0.3); o.connect(g); g.connect(audioCtx.destination); o.start(audioCtx.currentTime+i*0.1); o.stop(audioCtx.currentTime+i*0.1+0.3); }); return; }
+    else { osc.frequency.setValueAtTime(600, audioCtx.currentTime); osc.frequency.linearRampToValueAtTime(100, audioCtx.currentTime+0.2); gain.gain.setValueAtTime(0.7, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime+0.3); osc.start(); osc.stop(audioCtx.currentTime+0.3); }
+  }catch(e){}
 }
 function updateSound(v){ currentSound=v; playSound(v); }
-function vibrateAndroid(pattern){
-  if(!document.getElementById('vibrate')?.checked && typeof pattern!=='object') return;
-  if(isAndroid && navigator.vibrate){
-    if(Array.isArray(pattern)) navigator.vibrate(pattern);
-    else navigator.vibrate(pattern||40);
+function vibrateAndroid(pattern){ if(!document.getElementById('vibrate')?.checked && typeof pattern!=='object' && pattern!==20 && pattern!==30 && pattern!==40) { if(typeof pattern==='number' && pattern<100) return; } if(navigator.vibrate){ if(Array.isArray(pattern)) navigator.vibrate(pattern); else navigator.vibrate(pattern||40); } document.getElementById('phoneWrap').classList.add('vibrate'); setTimeout(()=>document.getElementById('phoneWrap').classList.remove('vibrate'), 100); }
+function previewAnim(){ startTime=Date.now(); vibrateAndroid(30); log('▶️ Preview anim: '+layers.find(x=>x.id===selected)?.animation); }
+
+// GIFTS - TIKTOK
+function triggerGift(g){
+  giftLog(`🎁 Gift: ${g.icon} ${g.name} (${g.price} coins) — trigger overlay!`);
+  // Create overlay for gift
+  const id='gift'+Date.now();
+  layers.push({id, type:'gift', text:`${g.icon} ${g.name.toUpperCase()} GIFT!`, x:0.1, y:0.3+Math.random()*0.3, w:0.6, h:0.07, fontFamily:'Syne', fontSize:24, color:'#fff', brutalStyle:'box', bg:g.color, rotation:(Math.random()-0.5)*10, autoShow:true, stealth:false, visible:true, animation:'bounce', duration:1200, onSawer:false});
+  renderList(); renderTimeline(); savePerScreen();
+  playSound('party'); triggerConfetti(); vibrateAndroid([50,30,50,30,100]);
+  // If giftAsSawer, also trigger saweria style alert
+  if(document.getElementById('giftAsSawer')?.checked){
+    triggerAlert(g.name, g.price*1000, `Thanks for ${g.name} gift!`);
   }
-  // Visual feedback
-  document.getElementById('phoneWrap').classList.add('vibrate');
-  setTimeout(()=>document.getElementById('phoneWrap').classList.remove('vibrate'), 100);
-}
-function previewAnim(){
-  startTime=Date.now();
-  vibrateAndroid(30);
-  log('▶️ Preview anim: '+layers.find(x=>x.id===selected)?.animation);
 }
 
-// EXPORT VIDEO - DA STUDIO STYLE
+// EXPORT
 function exportVideo(){
-  if(isRecording){ alert('Lagi recording bre!'); return; }
+  if(isRecording){ alert('Lagi recording!'); return; }
   const stream=canvas.captureStream(30);
-  mediaRecorder=new MediaRecorder(stream, {mimeType:'video/webm;codecs=vp9'});
+  const recorder=new MediaRecorder(stream, {mimeType:'video/webm;codecs=vp9'});
   const chunks=[];
-  mediaRecorder.ondataavailable=e=>{ if(e.data.size>0) chunks.push(e.data); };
-  mediaRecorder.onstop=()=>{
+  recorder.ondataavailable=e=>{ if(e.data.size>0) chunks.push(e.data); };
+  recorder.onstop=()=>{
     const blob=new Blob(chunks, {type:'video/webm'});
     const url=URL.createObjectURL(blob);
-    const a=document.createElement('a'); a.href=url; a.download=`brutal-${currentProfile}-${Date.now()}.webm`; a.click();
-    log('🎬 Video exported: '+a.download);
-    vibrateAndroid([50,50,100]);
+    const a=document.createElement('a'); a.href=url; a.download=`brutal-v5-${currentProfile}-${Date.now()}.webm`; a.click();
+    log('🎬 Video exported: '+a.download); vibrateAndroid([50,50,100]);
   };
-  mediaRecorder.start();
-  isRecording=true;
-  log('🔴 Recording video 5 detik...');
-  document.getElementById('liveIndicator').textContent='● REC 5s';
-  setTimeout(()=>{ mediaRecorder.stop(); isRecording=false; document.getElementById('liveIndicator').textContent=isLive?'● LIVE + BUBBLE':'OFFLINE'; }, 5000);
+  recorder.start(); isRecording=true; log('🔴 Recording 5s...'); document.getElementById('liveIndicator').textContent='● REC 5s';
+  setTimeout(()=>{ recorder.stop(); isRecording=false; document.getElementById('liveIndicator').textContent=isLive?'● LIVE + BUBBLE':'OFFLINE'; }, 5000);
 }
 function exportGreenScreen(){
-  // Green screen version
-  const originalBg=document.getElementById('canvasWrap').style.background;
-  document.getElementById('canvasWrap').style.background='#00FF00';
+  const wrap=document.getElementById('canvasWrap');
+  const orig=wrap.style.background;
+  wrap.style.background='#00FF00';
   setTimeout(()=>exportVideo(), 200);
-  setTimeout(()=>document.getElementById('canvasWrap').style.background=originalBg, 6000);
+  setTimeout(()=>wrap.style.background=orig, 6000);
 }
-function exportJSON(){ const blob=new Blob([JSON.stringify({profiles, currentProfile, version:'v4-android'},null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`brutal-v4-${currentProfile}.json`; a.click(); }
+function exportGif(){ alert('GIF export butuh library gif.js — untuk sekarang pakai video WebM dulu bre, nanti gua tambahin gif.js'); exportVideo(); }
+function exportJSON(){ const blob=new Blob([JSON.stringify({profiles, currentProfile, version:'v5-final-boss-bebas'},null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`brutal-v5-${currentProfile}-bebas.json`; a.click(); }
 function copyOverlayLink(){ const b64=btoa(JSON.stringify(layers)); const url=location.href.split('?')[0]+`?overlay=1&c=${encodeURIComponent(b64)}`; navigator.clipboard.writeText(url).then(()=>alert('Link dicopy!')); }
 function applyTemplate(name){
   if(name==='brutal-live'){
-    layers=[{id:'t1', type:'text', text:'🔴 LIVE NOW', x:0.04, y:0.04, w:0.38, h:0.06, fontFamily:'Syne', fontSize:22, color:'#fff', brutalStyle:'box', bg:'#FF3B30', rotation:-1, autoShow:true, stealth:false, visible:true, animation:'pop', duration:600}, {id:'t2', type:'text', text:'@JAMAL_GAMING', x:0.04, y:0.88, w:0.5, h:0.05, fontFamily:'Space Mono', fontSize:12, color:'#000', brutalStyle:'box', bg:'#FFE600', rotation:0, autoShow:true, stealth:false, visible:true, animation:'slideUp', duration:800, delay:300}];
+    layers=[{id:'t1', type:'text', text:'🔴 LIVE NOW v5', x:0.04, y:0.04, w:0.42, h:0.06, fontFamily:'Syne', fontSize:22, color:'#fff', brutalStyle:'box', bg:'#FF3B30', rotation:-1, autoShow:true, stealth:false, visible:true, animation:'pop', duration:600}, {id:'t2', type:'text', text:'@JAMAL_GAMING', x:0.04, y:0.88, w:0.5, h:0.05, fontFamily:'Space Mono', fontSize:12, color:'#000', brutalStyle:'box', bg:'#FFE600', rotation:0, autoShow:true, stealth:false, visible:true, animation:'slideUp', duration:800, delay:300}];
+  } else if(name==='neon-party'){
+    layers=[{id:'n1', type:'text', text:'💜 NEON PARTY 💜', x:0.04, y:0.04, w:0.65, h:0.07, fontFamily:'Syne', fontSize:26, color:'#00FF88', brutalStyle:'neon', bg:'#8A2BE2', rotation:-1, autoShow:true, stealth:false, visible:true, animation:'pulse', duration:1000, loop:true}, {id:'n2', type:'text', text:'SAWER = CONFETTI', x:0.04, y:0.88, w:0.6, h:0.05, fontFamily:'Space Mono', fontSize:12, color:'#fff', brutalStyle:'box', bg:'#000', rotation:0, autoShow:true, stealth:false, visible:true, animation:'glitch', duration:800}];
+  } else if(name==='particle-celebration'){
+    layers=[{id:'p1', type:'text', text:'🎉 PARTY TIME 🎉', x:0.1, y:0.4, w:0.7, h:0.08, fontFamily:'Syne', fontSize:28, color:'#000', brutalStyle:'particle', bg:'#00FF88', rotation:-2, autoShow:true, stealth:false, visible:true, animation:'particle', duration:1500}];
+  } else if(name==='gaming'){
+    layers=[{id:'g1', type:'text', text:'🎮 PUSH RANK', x:0.04, y:0.04, w:0.55, h:0.06, fontFamily:'Syne', fontSize:24, color:'#000', brutalStyle:'box', bg:'#00FF88', rotation:-1, autoShow:true, stealth:false, visible:true, animation:'glitch', duration:500, loop:true}];
   } else if(name==='saweria-tape'){
     layers=[{id:'s1', type:'text', text:'SAWERIA.CO/JAMAL', x:0.04, y:0.04, w:0.6, h:0.06, fontFamily:'Space Mono', fontSize:14, color:'#000', brutalStyle:'tape', bg:'#FFE600', rotation:-1, autoShow:true, stealth:false, visible:true, animation:'slideLeft', duration:700}, {id:'s2', type:'text', text:'{name} SAWER {amount}', x:0.04, y:0.5, w:0.8, h:0.08, fontFamily:'Syne', fontSize:28, color:'#000', brutalStyle:'box', bg:'#FFFFFF', rotation:-1, hasTape:true, autoShow:true, stealth:false, visible:true, animation:'bounce', duration:1000}];
-  } else if(name==='gaming'){
-    layers=[{id:'g1', type:'text', text:'🎮 PUSH RANK', x:0.04, y:0.04, w:0.55, h:0.06, fontFamily:'Syne', fontSize:24, color:'#000', brutalStyle:'box', bg:'#00FF88', rotation:-1, autoShow:true, stealth:false, visible:true, animation:'glitch', duration:500, loop:true}, {id:'g2', type:'text', text:'FOLLOW = SQUAD', x:0.04, y:0.88, w:0.65, h:0.05, fontFamily:'Space Mono', fontSize:12, color:'#fff', brutalStyle:'box', bg:'#000', rotation:0, autoShow:true, stealth:false, visible:true, animation:'typewriter', duration:1500}];
-  } else if(name==='goal-ripped'){
-    layers=[{id:'g1', type:'goal', text:'TARGET 750K / 1JT', x:0.04, y:0.04, w:0.6, h:0.07, fontFamily:'Syne', fontSize:18, color:'#000', brutalStyle:'ripped', bg:'#FFFFFF', progress:0.75, rotation:-1, autoShow:true, stealth:false, visible:true, animation:'slideLeft', duration:800}];
   } else if(name==='minimal'){
     layers=[{id:'m1', type:'text', text:'LIVE', x:0.04, y:0.04, w:0.18, h:0.05, fontFamily:'Space Mono', fontSize:14, color:'#fff', brutalStyle:'box', bg:'#000', rotation:0, autoShow:true, stealth:false, visible:true, animation:'pop', duration:400}];
   }
   selected=layers[0]?.id; renderList(); renderTimeline(); if(selected) select(selected); savePerScreen(); log('Template: '+name); vibrateAndroid(60);
+  if(name==='particle-celebration') triggerConfetti();
 }
 function loadProfileToUI(){
   const saved=localStorage.getItem('bubble_visible');
