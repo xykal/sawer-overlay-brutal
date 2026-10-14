@@ -1,4 +1,4 @@
-name: Build Brutal APK armeabi-v7a
+name: Build Brutal APK v9 Signed Floating
 
 on:
   push:
@@ -26,13 +26,12 @@ jobs:
         with:
           gradle-version: 8.4
 
-      - name: Setup Android SDK (fix)
+      - name: Setup Android SDK
         run: |
-          echo "ANDROID_HOME=$ANDROID_HOME"
           yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
           $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0" "ndk;26.1.10909125" || true
 
-      - name: Fix ic_launcher placeholder
+      - name: Fix ic_launcher
         run: |
           mkdir -p android-app/app/src/main/res/mipmap-hdpi android-app/app/src/main/res/mipmap-mdpi android-app/app/src/main/res/mipmap-xhdpi
           echo "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII=" | base64 -d > android-app/app/src/main/res/mipmap-hdpi/ic_launcher.png
@@ -47,48 +46,72 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x android-app/gradlew || true
 
-      - name: Build APK armeabi-v7a Debug
+      - name: Build SIGNED Release APK armeabi-v7a (R8 enabled)
         working-directory: android-app
         run: |
-          gradle --no-daemon assembleDebug --stacktrace
+          gradle --no-daemon assembleRelease --stacktrace
           find app/build -name "*.apk" -type f -exec ls -lh {} \;
 
-      - name: Rename APK for armeabi-v7a
+      - name: Rename APK
         run: |
           mkdir -p dist
-          find android-app -name "*.apk" -type f | while read apk; do
-            base=$(basename "$apk" .apk)
-            cp "$apk" "dist/${base}-armeabi-v7a.apk"
+          find android-app/app/build/outputs/apk -name "*.apk" -type f | while read apk; do
+            echo "Found $apk"
+            cp "$apk" "dist/SawerOverlay-v9-Floating-Signed-armeabi-v7a.apk"
+            # Also keep original name
+            base=$(basename "$apk")
+            cp "$apk" "dist/$base"
           done
           ls -lh dist/
 
-      - name: Upload APK Artifact
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: sawer-overlay-brutal-armeabi-v7a
+          name: sawer-overlay-v9-signed-armeabi-v7a
           path: dist/*.apk
           retention-days: 30
 
-      - name: Create Release
+      - name: Create Release v9
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v2.0.${{ github.run_number }}-armeabi-v7a
-          name: "Brutal v2.0.${{ github.run_number }} — armeabi-v7a — No RTMP"
+          tag_name: v9.0.${{ github.run_number }}-floating-signed
+          name: "v9.0 Floating Signed — Bubble Pas Keluar + Overlay Di Luar APK"
           body: |
-            ## SawerOverlay Brutal — No RTMP Edition
-            
-            **Build:** armeabi-v7a only (32-bit ARM) — 5.4MB
-            **Design:** Brutalism — hitam putih kuning, border tebal, no neon
-            
-            ### Cara pakai tanpa RTMP:
-            1. Install APK di Android
-            2. Buka app, edit overlay
-            3. Klik MASUK MODE LIVE
-            4. Buka TikTok > LIVE > Mobile Gaming > Share Screen > Pilih SawerOverlay
-            5. Penonton liat overlay, lu bisa stealth 15%
-            
-            APK ini cuma untuk armeabi-v7a — work di 90% HP Android.
+            ## 🔥 SawerOverlay v9 FINAL — Signed Resmi + Floating Overlay Beneran
+
+            ### ✨ Fitur Baru v9:
+            - **🟡 Bubble bulat otomatis pas keluar APK** — pencet HOME langsung jadi bubble kuning di atas TikTok (kayak Messenger chat head)
+            - **🎨 Overlay beneran floating di luar APK** — walau keluar app, overlay tetep muncul di atas TikTok! Bisa atur posisi langsung drag di atas TikTok via EDIT POSISI
+            - **✏️ Edit posisi overlay langsung** — tap bubble → EDIT POSISI OVERLAY → drag overlay di atas TikTok buat geser, auto save!
+            - **📚 Tutorial super gampang** — muncul pas pertama buka, bahasa santai, no teknis
+            - **🔊 MyInstants FIX 100%** — 3 cara: FETCH link, UPLOAD MP3 dari HP (paling gampang!), paste link MP3 langsung
+            - **📱 Penjelasan armeabi-v7a gampang** — di tab LIVE + EXPORT, dijelasin buat HP lama & baru semua bisa
+
+            ### 🔐 Signed Resmi:
+            - Keystore resmi Sawer Studio (RSA 2048, valid 10000 hari)
+            - R8 enabled — APK lebih kecil & cepat (gak perlu lib tambahan, R8 udah built-in di Android Gradle)
+            - ProGuard keep rules buat WebView + JS bridge biar gak error
+
+            ### 📦 APK:
+            - **SawerOverlay-v9-Floating-Signed-armeabi-v7a.apk (signed release, R8)**
+            - **armeabi-v7a** = buat semua HP Android lama & baru, file kecil ~5MB
+            - Install: download → buka → izinkan sumber tidak dikenal → install
+
+            ### 🎯 Cara pakai bubble floating overlay:
+            1. Edit overlay di Layers
+            2. Tab LIVE → MASUK MODE LIVE + BUBBLE
+            3. Tap bubble → EDIT POSISI OVERLAY → drag overlay di atas TikTok!
+            4. Pencet HOME → bubble + overlay tetep di atas TikTok!
+            5. Atur posisi enak via bubble menu
+
+            ### 🐛 Bug Fix:
+            - Fixed overlay gak muncul pas keluar app (sekarang pakai FrameLayout absolute + MATCH_PARENT floating)
+            - Fixed bubble gak draggable
+            - Fixed myinstants fetch dengan 2 proxy fallback + upload blob
+            - Fixed R8 hapus class penting (keep rules)
+
+            **R8 gaperlu lib kah?** — Gak perlu! R8 udah built-in di Android Gradle Plugin. Cukup `isMinifyEnabled = true` + proguard-rules.pro. Gak butuh library tambahan.
           files: dist/*.apk
           draft: false
           prerelease: false

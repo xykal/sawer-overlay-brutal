@@ -7,6 +7,7 @@ import android.graphics.PixelFormat
 import android.os.Build
 import android.os.IBinder
 import android.view.*
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.app.NotificationCompat
@@ -15,24 +16,26 @@ import android.widget.Toast
 import org.json.JSONArray
 import org.json.JSONObject
 import android.graphics.drawable.GradientDrawable
+import android.util.DisplayMetrics
+import android.view.GestureDetector
 
 /**
- * v8 FLOATING BUBBLE — MUNCUL PAS KELUAR APP
+ * v9 FINAL — TRUE FLOATING OVERLAY DI LUAR APK
  * 
- * Cara kerja:
- * - Pas user pencet HOME atau minimize, bubble kuning bulat tetep muncul di atas app lain (TikTok)
- * - Single tap = menu 3 opsi simpel
- * - Double tap = balik ke app utama
- * - Long press = tutup bubble
- * - Drag = pindah posisi bubble
- * - Notifikasi persistent biar gak dimatiin sistem
+ * Fitur v9:
+ * - Overlay beneran floating di atas app lain (TikTok) walau APK keluar
+ * - Setiap overlay bisa digeser posisinya langsung dari floating bubble
+ * - Bubble menu: ADD, EDIT POSISI (drag overlay), HIDE/SHOW, SAVE, BUKA EDITOR, TUTUP
+ * - Overlay pakai FrameLayout absolute position (x,y,w,h persen layar)
+ * - Drag overlay langsung di atas TikTok untuk atur posisi
+ * - Auto save posisi ke SharedPrefs
  */
 
 class FloatingOverlayService : Service() {
 
     private var windowManager: WindowManager? = null
     private var bubbleView: View? = null
-    private var overlayContainer: View? = null
+    private var overlayContainer: FrameLayout? = null
     private var bubbleMenuView: View? = null
     
     private var isStealth = false
@@ -40,29 +43,38 @@ class FloatingOverlayService : Service() {
     private var lastClickTime = 0L
     private var bubbleX = 100
     private var bubbleY = 400
+    private var isEditMode = false // Mode edit posisi overlay
 
     private lateinit var prefs: SharedPreferences
+    private var screenW = 1080
+    private var screenH = 1920
 
     data class BrutalLayer(
-        val id: String,
-        val text: String,
-        val x: Float, val y: Float, val w: Float, val h: Float,
-        val brutalStyle: String,
-        val bg: String,
-        val color: String,
-        val rotation: Float,
-        val stealth: Boolean,
-        val autoShow: Boolean,
-        val hasTape: Boolean = false,
-        val marquee: Boolean = false
+        var id: String,
+        var text: String,
+        var x: Float, var y: Float, var w: Float, var h: Float,
+        var brutalStyle: String,
+        var bg: String,
+        var color: String,
+        var rotation: Float,
+        var stealth: Boolean,
+        var autoShow: Boolean,
+        var hasTape: Boolean = false
     )
 
     private val layersByProfile = mutableMapOf<String, MutableList<BrutalLayer>>()
+    private val overlayViews = mutableMapOf<String, View>()
 
     override fun onCreate() {
         super.onCreate()
         windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
         prefs = getSharedPreferences("brutal_studio_v3", MODE_PRIVATE)
+        
+        // Get screen size
+        val metrics = DisplayMetrics()
+        windowManager?.defaultDisplay?.getMetrics(metrics)
+        screenW = metrics.widthPixels
+        screenH = metrics.heightPixels
         
         createNotificationChannel()
         startForeground(1, createNotification())
@@ -74,8 +86,8 @@ class FloatingOverlayService : Service() {
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel("brutal_v8", "SawerOverlay Bubble v8", NotificationManager.IMPORTANCE_LOW).apply {
-                description = "Bubble bulat muncul pas keluar app"
+            val channel = NotificationChannel("brutal_v9", "SawerOverlay v9 Floating", NotificationManager.IMPORTANCE_LOW).apply {
+                description = "Overlay floating di atas TikTok + bubble menu"
             }
             (getSystemService(NotificationManager::class.java)).createNotificationChannel(channel)
         }
@@ -92,14 +104,20 @@ class FloatingOverlayService : Service() {
         }
         val closePending = PendingIntent.getService(this, 1, closeIntent, PendingIntent.FLAG_IMMUTABLE)
 
-        return NotificationCompat.Builder(this, "brutal_v8")
-            .setContentTitle("🟡 SawerOverlay — Bubble Aktif")
-            .setContentText("Bubble kuning bulat di atas TikTok • Tap bubble = menu • Double tap = buka app")
+        val editIntent = Intent(this, FloatingOverlayService::class.java).apply {
+            putExtra("action", "toggle_edit")
+        }
+        val editPending = PendingIntent.getService(this, 2, editIntent, PendingIntent.FLAG_IMMUTABLE)
+
+        return NotificationCompat.Builder(this, "brutal_v9")
+            .setContentTitle("🟡 SawerOverlay v9 — Floating Aktif")
+            .setContentText("Overlay di atas TikTok • Bubble kuning buat atur posisi • Tap EDIT di notif buat geser overlay")
             .setSmallIcon(android.R.drawable.ic_menu_edit)
             .setContentIntent(openPending)
             .setOngoing(true)
+            .addAction(android.R.drawable.ic_menu_edit, "EDIT POSISI", editPending)
             .addAction(android.R.drawable.ic_menu_view, "BUKA APP", openPending)
-            .addAction(android.R.drawable.ic_delete, "TUTUP BUBBLE", closePending)
+            .addAction(android.R.drawable.ic_delete, "TUTUP", closePending)
             .build()
     }
 
@@ -151,7 +169,6 @@ class FloatingOverlayService : Service() {
     }
 
     private fun showFloatingBubble() {
-        // Bubble bulat kuning — mirip Messenger chat head
         val bubbleContainer = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             gravity = android.view.Gravity.CENTER
@@ -163,7 +180,6 @@ class FloatingOverlayService : Service() {
             setTextColor(Color.BLACK)
             gravity = android.view.Gravity.CENTER
             typeface = android.graphics.Typeface.DEFAULT_BOLD
-            // Background bulat kuning dengan border hitam
             val drawable = GradientDrawable().apply {
                 shape = GradientDrawable.OVAL
                 setColor(Color.parseColor("#FFE600"))
@@ -173,13 +189,12 @@ class FloatingOverlayService : Service() {
             elevation = 12f
         }
 
-        // Tambahkan label kecil di bawah bubble
         val label = TextView(this).apply {
-            text = "TAP 2x = BUKA"
+            text = if (isEditMode) "EDIT MODE" else "TAP 2x=BUKA"
             textSize = 6f
-            setTextColor(Color.WHITE)
+            setTextColor(if (isEditMode) Color.parseColor("#00FF88") else Color.WHITE)
             gravity = android.view.Gravity.CENTER
-            setBackgroundColor(Color.BLACK)
+            setBackgroundColor(if (isEditMode) Color.parseColor("#FF3B30") else Color.BLACK)
             setPadding(6,2,6,2)
             typeface = android.graphics.Typeface.MONOSPACE
         }
@@ -200,7 +215,6 @@ class FloatingOverlayService : Service() {
         params.x = bubbleX
         params.y = bubbleY
 
-        // Gesture lengkap: drag + single tap = menu, double tap = balik app, long press = tutup
         var initialX = 0
         var initialY = 0
         var initialTouchX = 0f
@@ -211,15 +225,6 @@ class FloatingOverlayService : Service() {
 
         val longPressRunnable = Runnable {
             longPressTriggered = true
-            // Long press = tutup bubble
-            Toast.makeText(this, "Long press = tutup bubble", Toast.LENGTH_SHORT).show()
-            // Vibrate
-            val vib = getSystemService(VIBRATOR_SERVICE) as android.os.Vibrator
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                vib.vibrate(android.os.VibrationEffect.createOneShot(100, android.os.VibrationEffect.DEFAULT_AMPLITUDE))
-            }
-            // Show close confirm
-            hideBubbleMenu()
             showCloseConfirm()
         }
 
@@ -253,18 +258,15 @@ class FloatingOverlayService : Service() {
                 MotionEvent.ACTION_UP -> {
                     longPressHandler?.removeCallbacks(longPressRunnable)
                     if (longPressTriggered) {
-                        // Sudah handle long press
                     } else if (!isDragging) {
                         val now = System.currentTimeMillis()
                         if (now - lastClickTime < 300) {
-                            // DOUBLE CLICK = balik ke app
                             val intent = Intent(this, MainActivity::class.java).apply {
                                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                             }
                             startActivity(intent)
                             Toast.makeText(this, "Balik ke Sawer Studio", Toast.LENGTH_SHORT).show()
                         } else {
-                            // SINGLE CLICK = buka menu
                             showBubbleMenu(params.x, params.y)
                         }
                         lastClickTime = now
@@ -282,21 +284,18 @@ class FloatingOverlayService : Service() {
             windowManager?.addView(bubbleContainer, params)
             bubbleView = bubbleContainer
         } catch (e: Exception) {
-            e.printStackTrace()
-            Toast.makeText(this, "Gagal bubble: ${e.message} — kasih izin overlay!", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Gagal bubble: ${e.message}", Toast.LENGTH_LONG).show()
         }
     }
 
     private fun showCloseConfirm() {
         bubbleMenuView?.let { windowManager?.removeView(it) }
-
         val menuLayout = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             setBackgroundColor(Color.WHITE)
             setPadding(16,16,16,16)
             elevation = 12f
         }
-
         val title = TextView(this).apply {
             text = "TUTUP BUBBLE?"
             setBackgroundColor(Color.BLACK)
@@ -306,39 +305,24 @@ class FloatingOverlayService : Service() {
             typeface = android.graphics.Typeface.MONOSPACE
         }
         menuLayout.addView(title)
-
-        val msg = TextView(this).apply {
-            text = "Long press terdeteksi. Mau tutup bubble bulat?"
-            textSize = 9f
-            setPadding(12,8,12,8)
-        }
-        menuLayout.addView(msg)
-
         val yesBtn = TextView(this).apply {
             text = "✅ YA TUTUP"
-            textSize = 11f
             setBackgroundColor(Color.parseColor("#FF3B30"))
             setTextColor(Color.WHITE)
             setPadding(20,16,20,16)
             typeface = android.graphics.Typeface.MONOSPACE
-            setOnClickListener {
-                hideBubbleMenu()
-                stopSelf()
-            }
+            setOnClickListener { hideBubbleMenu(); stopSelf() }
         }
         val noBtn = TextView(this).apply {
             text = "❌ BATAL"
-            textSize = 11f
             setBackgroundColor(Color.WHITE)
             setTextColor(Color.BLACK)
             setPadding(20,16,20,16)
             typeface = android.graphics.Typeface.MONOSPACE
             setOnClickListener { hideBubbleMenu() }
         }
-
         menuLayout.addView(yesBtn, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { setMargins(0,8,0,0) })
         menuLayout.addView(noBtn, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { setMargins(0,8,0,0) })
-
         val menuParams = WindowManager.LayoutParams(
             500, WindowManager.LayoutParams.WRAP_CONTENT,
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY else WindowManager.LayoutParams.TYPE_PHONE,
@@ -346,7 +330,6 @@ class FloatingOverlayService : Service() {
             PixelFormat.TRANSLUCENT
         )
         menuParams.gravity = Gravity.CENTER
-
         try {
             windowManager?.addView(menuLayout, menuParams)
             bubbleMenuView = menuLayout
@@ -364,7 +347,7 @@ class FloatingOverlayService : Service() {
         }
 
         val title = TextView(this).apply {
-            text = "SAWER v8 — 3 MENU GAMPANG"
+            text = "SAWER v9 — FLOATING OVERLAY"
             setBackgroundColor(Color.BLACK)
             setTextColor(Color.WHITE)
             textSize = 9f
@@ -374,22 +357,42 @@ class FloatingOverlayService : Service() {
         menuLayout.addView(title)
 
         val hint = TextView(this).apply {
-            text = "💡 Tap = menu | 2x tap = buka app | tahan = tutup"
+            text = if (isEditMode) "🟢 EDIT MODE: Drag overlay di atas TikTok buat geser!" else "💡 Tap=menu | 2x=balik app | tahan=tutup"
             textSize = 7f
             setPadding(8,4,8,4)
-            setTextColor(Color.GRAY)
+            setTextColor(if (isEditMode) Color.parseColor("#FF3B30") else Color.GRAY)
+            typeface = android.graphics.Typeface.DEFAULT_BOLD
         }
         menuLayout.addView(hint)
 
         val options = listOf(
+            (if (isEditMode) "✅ SELESAI EDIT POSISI" else "✏️ EDIT POSISI OVERLAY") to {
+                isEditMode = !isEditMode
+                Toast.makeText(this, if (isEditMode) "🟢 EDIT MODE ON: Drag overlay di atas TikTok!" else "✅ Edit selesai, posisi disimpan", Toast.LENGTH_LONG).show()
+                showPerScreenOverlays()
+                // Update bubble label
+                bubbleView?.let { windowManager?.removeView(it); showFloatingBubble() }
+                // Update notification
+                (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).notify(1, createNotification())
+            },
             "➕ + OVERLAY BARU" to { addQuickOverlay("text") },
-            "🎨 BUKA EDITOR" to { 
+            "👁️ ${if (overlayContainer?.visibility == View.VISIBLE) "SEMBUNYIKAN" else "TAMPILKAN"} OVERLAY" to {
+                if (overlayContainer?.visibility == View.VISIBLE) {
+                    overlayContainer?.visibility = View.GONE
+                    Toast.makeText(this, "Overlay disembunyikan", Toast.LENGTH_SHORT).show()
+                } else {
+                    overlayContainer?.visibility = View.VISIBLE
+                    showPerScreenOverlays()
+                    Toast.makeText(this, "Overlay ditampilkan", Toast.LENGTH_SHORT).show()
+                }
+            },
+            "🎨 BUKA EDITOR LENGKAP" to { 
                 val intent = Intent(this, MainActivity::class.java).apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK }
                 startActivity(intent)
                 hideBubbleMenu()
             },
-            "💾 SAVE LAYAR INI" to { saveCurrentProfile(); Toast.makeText(this, "Saved: $currentProfile", Toast.LENGTH_SHORT).show() },
-            "❌ TUTUP BUBBLE" to { hideBubbleMenu(); stopSelf() }
+            "💾 SAVE POSISI" to { saveCurrentProfile(); Toast.makeText(this, "✅ Posisi disimpan: $currentProfile", Toast.LENGTH_SHORT).show() },
+            "❌ TUTUP BUBBLE + OVERLAY" to { hideBubbleMenu(); stopSelf() }
         )
 
         options.forEach { (label, action) ->
@@ -397,12 +400,27 @@ class FloatingOverlayService : Service() {
                 text = label
                 textSize = 10f
                 setTextColor(Color.BLACK)
-                setBackgroundColor(if (label.contains("OVERLAY")) Color.parseColor("#FFE600") else Color.WHITE)
+                val bgColor = when {
+                    label.contains("EDIT POSISI") && !isEditMode -> Color.parseColor("#00FF88")
+                    label.contains("SELESAI EDIT") -> Color.parseColor("#FFE600")
+                    label.contains("OVERLAY BARU") -> Color.parseColor("#FFE600")
+                    label.contains("TUTUP") -> Color.parseColor("#FF3B30")
+                    else -> Color.WHITE
+                }
+                setBackgroundColor(bgColor)
+                if (label.contains("TUTUP")) setTextColor(Color.WHITE)
                 setPadding(20,14,20,14)
                 typeface = android.graphics.Typeface.MONOSPACE
                 setOnClickListener { 
                     action()
-                    hideBubbleMenu()
+                    if (!label.contains("EDIT")) hideBubbleMenu()
+                    else {
+                        // Refresh menu to show new state
+                        android.os.Handler(mainLooper).postDelayed({ 
+                            hideBubbleMenu()
+                            showBubbleMenu(bubbleX, bubbleY)
+                        }, 200)
+                    }
                 }
             }
             val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply {
@@ -412,19 +430,19 @@ class FloatingOverlayService : Service() {
         }
 
         val menuParams = WindowManager.LayoutParams(
-            520, WindowManager.LayoutParams.WRAP_CONTENT,
+            560, WindowManager.LayoutParams.WRAP_CONTENT,
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY else WindowManager.LayoutParams.TYPE_PHONE,
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
             PixelFormat.TRANSLUCENT
         )
         menuParams.gravity = Gravity.TOP or Gravity.START
-        menuParams.x = if (bubbleX > 500) bubbleX - 500 else 20
-        menuParams.y = bubbleY + 160
+        menuParams.x = if (bubbleX > 600) bubbleX - 560 else 20
+        menuParams.y = bubbleY + 170
 
         try {
             windowManager?.addView(menuLayout, menuParams)
             bubbleMenuView = menuLayout
-            android.os.Handler(mainLooper).postDelayed({ hideBubbleMenu() }, 6000)
+            android.os.Handler(mainLooper).postDelayed({ hideBubbleMenu() }, 8000)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -439,17 +457,16 @@ class FloatingOverlayService : Service() {
 
     private fun showPerScreenOverlays() {
         overlayContainer?.let { windowManager?.removeView(it) }
+        overlayViews.clear()
         
-        // Container untuk overlay yang muncul di atas TikTok pas bubble aktif
-        val container = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-        }
+        val container = FrameLayout(this)
 
         val params = WindowManager.LayoutParams(
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.MATCH_PARENT,
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY else WindowManager.LayoutParams.TYPE_PHONE,
-            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            if (isEditMode) WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+            else WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
             PixelFormat.TRANSLUCENT
         )
         params.gravity = Gravity.TOP or Gravity.START
@@ -460,7 +477,7 @@ class FloatingOverlayService : Service() {
             val tv = TextView(this).apply {
                 text = layer.text
                 textSize = 13f
-                setPadding(20,10,20,10)
+                setPadding(24,12,24,12)
                 try {
                     setBackgroundColor(Color.parseColor(if(layer.bg.startsWith("#")) layer.bg else "#FFFFFF"))
                     setTextColor(Color.parseColor(if(layer.color.startsWith("#")) layer.color else "#000000"))
@@ -471,8 +488,93 @@ class FloatingOverlayService : Service() {
                 alpha = if (layer.stealth && isStealth) 0.15f else 1.0f
                 rotation = layer.rotation
                 typeface = android.graphics.Typeface.DEFAULT_BOLD
+                // Border
+                val drawable = GradientDrawable().apply {
+                    setColor(Color.parseColor(try { if(layer.bg.startsWith("#")) layer.bg else "#FFFFFF" } catch(e:Exception) { "#FFFFFF" }))
+                    setStroke(if (isEditMode) 4 else 3, if (isEditMode) Color.parseColor("#00FF88") else Color.BLACK)
+                    cornerRadius = 8f
+                }
+                background = drawable
+                
+                if (isEditMode) {
+                    // Tambah label edit
+                    text = "✏️ ${layer.text}"
+                }
             }
+
+            // Position absolute based on percent
+            val lp = FrameLayout.LayoutParams(
+                (layer.w * screenW).toInt(),
+                FrameLayout.LayoutParams.WRAP_CONTENT
+            )
+            lp.leftMargin = (layer.x * screenW).toInt()
+            lp.topMargin = (layer.y * screenH).toInt()
+            tv.layoutParams = lp
+
+            if (isEditMode) {
+                // Make draggable in edit mode
+                var initX = 0
+                var initY = 0
+                var touchX = 0f
+                var touchY = 0f
+                var dragging = false
+
+                tv.setOnTouchListener { v, event ->
+                    when (event.action) {
+                        MotionEvent.ACTION_DOWN -> {
+                            initX = lp.leftMargin
+                            initY = lp.topMargin
+                            touchX = event.rawX
+                            touchY = event.rawY
+                            dragging = false
+                            true
+                        }
+                        MotionEvent.ACTION_MOVE -> {
+                            val dx = (event.rawX - touchX).toInt()
+                            val dy = (event.rawY - touchY).toInt()
+                            if (Math.abs(dx) > 5 || Math.abs(dy) > 5) dragging = true
+                            if (dragging) {
+                                lp.leftMargin = (initX + dx).coerceIn(0, screenW - lp.width)
+                                lp.topMargin = (initY + dy).coerceIn(0, screenH - 200)
+                                v.layoutParams = lp
+                                // Update layer data
+                                layer.x = lp.leftMargin.toFloat() / screenW
+                                layer.y = lp.topMargin.toFloat() / screenH
+                            }
+                            true
+                        }
+                        MotionEvent.ACTION_UP -> {
+                            if (dragging) {
+                                saveCurrentProfile()
+                                Toast.makeText(this, "✅ ${layer.text} posisi disimpan", Toast.LENGTH_SHORT).show()
+                            }
+                            dragging = false
+                            true
+                        }
+                        else -> false
+                    }
+                }
+            }
+
             container.addView(tv)
+            overlayViews[layer.id] = tv
+        }
+
+        // Jika edit mode, tambahkan hint overlay
+        if (isEditMode) {
+            val hint = TextView(this).apply {
+                text = "✏️ EDIT MODE: DRAG OVERLAY BUAT GESER • TAP BUBBLE BUAT SELESAI"
+                textSize = 9f
+                setBackgroundColor(Color.parseColor("#00FF88"))
+                setTextColor(Color.BLACK)
+                setPadding(16,8,16,8)
+                typeface = android.graphics.Typeface.MONOSPACE
+                gravity = Gravity.CENTER
+            }
+            val hintLp = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT)
+            hintLp.gravity = Gravity.BOTTOM
+            hintLp.bottomMargin = 100
+            container.addView(hint, hintLp)
         }
 
         try {
@@ -491,7 +593,7 @@ class FloatingOverlayService : Service() {
         layersByProfile[currentProfile] = list
         saveCurrentProfile()
         showPerScreenOverlays()
-        Toast.makeText(this, "+ overlay di $currentProfile", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "+ overlay di $currentProfile — drag buat atur posisi!", Toast.LENGTH_SHORT).show()
     }
 
     private fun saveCurrentProfile() {
@@ -531,9 +633,18 @@ class FloatingOverlayService : Service() {
                 currentProfile = it.getStringExtra("profile") ?: currentProfile
                 showPerScreenOverlays()
             }
-            if (it.getStringExtra("action") == "close") {
-                stopSelf()
-                return START_NOT_STICKY
+            when (it.getStringExtra("action")) {
+                "close" -> {
+                    stopSelf()
+                    return START_NOT_STICKY
+                }
+                "toggle_edit" -> {
+                    isEditMode = !isEditMode
+                    showPerScreenOverlays()
+                    bubbleView?.let { bv -> windowManager?.removeView(bv); showFloatingBubble() }
+                    (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).notify(1, createNotification())
+                    Toast.makeText(this, if (isEditMode) "✏️ EDIT MODE ON" else "✅ Edit selesai", Toast.LENGTH_SHORT).show()
+                }
             }
         }
         return START_STICKY
@@ -544,7 +655,6 @@ class FloatingOverlayService : Service() {
         bubbleView?.let { try { windowManager?.removeView(it) } catch (e: Exception) {} }
         overlayContainer?.let { try { windowManager?.removeView(it) } catch (e: Exception) {} }
         bubbleMenuView?.let { try { windowManager?.removeView(it) } catch (e: Exception) {} }
-        Toast.makeText(this, "Bubble dimatikan", Toast.LENGTH_SHORT).show()
     }
 
     override fun onBind(intent: Intent?): IBinder? = null

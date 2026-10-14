@@ -11,19 +11,31 @@ android {
         applicationId = "com.saweroverlay.live"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "2.0-brutal-no-rtmp"
+        versionCode = 9
+        versionName = "9.0-bubble-floating-signed"
 
-        // HANYA armeabi-v7a sesuai request
         ndk {
             abiFilters += listOf("armeabi-v7a")
         }
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("sawer-release.keystore")
+            storePassword = "SawerBrutal2024!"
+            keyAlias = "sawerstudio"
+            keyPassword = "SawerBrutal2024!"
+            // Jika di CI, bisa pakai env variable
+            // storePassword = System.getenv("KEYSTORE_PASSWORD") ?: "SawerBrutal2024!"
+        }
+    }
+
     buildTypes {
         release {
-            isMinifyEnabled = false
-            isShrinkResources = false
+            isMinifyEnabled = true // R8 aktif — bikin APK lebih kecil & optimasi
+            isShrinkResources = true // Hapus resource gak kepake
+            isDebuggable = false
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -31,6 +43,8 @@ android {
         }
         debug {
             isDebuggable = true
+            isMinifyEnabled = false
+            isShrinkResources = false
         }
     }
 
@@ -45,8 +59,6 @@ android {
     buildFeatures {
         viewBinding = true
     }
-
-    // Hanya armeabi-v7a - tanpa splits biar gak conflict
 }
 
 dependencies {
@@ -54,6 +66,5 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.webkit:webkit:1.6.1")
-    // Untuk floating overlay brutal
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
 }

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>SAWER STUDIO v8 — BUBBLE PAS KELUAR + TUTORIAL GAMPANG</title>
+<title>SAWER STUDIO v9 — BUBBLE PAS KELUAR + TUTORIAL GAMPANG</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#000000">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
@@ -17,7 +17,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',sans-seri
 .logo-box{background:var(--yellow);color:black;padding:2px 6px;border:2px solid white;transform:rotate(-2deg);box-shadow:2px 2px 0 white;font-size:16px;}
 .header-actions{display:flex;gap:4px;align-items:center;}
 .badge{border:2px solid white;padding:2px 6px;font-family:'Space Mono';font-size:7px;font-weight:700;box-shadow:2px 2px 0 black;}
-.badge-live{background:var(--red);color:white;} .badge-v8{background:var(--green);color:black;}
+.badge-live{background:var(--red);color:white;} .badge-v9{background:var(--green);color:black;}
 .profile-select{background:white;color:black;border:var(--border);padding:4px 6px;font-family:'Space Mono';font-size:8px;font-weight:700;box-shadow:2px 2px 0 black;max-width:80px;}
 .main{flex:1;display:flex;overflow:hidden;position:relative;}
 .sidebar{width:420px;background:var(--paper);border-right:var(--border);display:flex;flex-direction:column;overflow:hidden;z-index:20;}
@@ -187,7 +187,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',sans-seri
 </div>
 
 <div class="header">
-  <div class="logo"><div class="logo-box">SAWER</div>STUDIO v8</div>
+  <div class="logo"><div class="logo-box">SAWER</div>STUDIO v9</div>
   <div class="header-actions">
     <button onclick="showTutorial()" style="background:var(--yellow); color:black; border:2px solid white; padding:4px 8px; font-family:'Space Mono'; font-size:7px; font-weight:800; cursor:pointer; box-shadow:2px 2px 0 black; border-radius:6px;">📚 BANTUAN</button>
     <select id="screenProfile" class="profile-select" onchange="switchProfile(this.value)">
@@ -196,7 +196,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',sans-seri
       <option value="youtube">▶️ YT</option>
       <option value="custom">⚙️ CUSTOM</option>
     </select>
-    <div class="badge badge-v8">v8 BUBBLE</div>
+    <div class="badge badge-v9">v9 BUBBLE</div>
     <div class="badge badge-live" id="liveBadge">OFF</div>
   </div>
 </div>
@@ -254,7 +254,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',sans-seri
 
     <div class="tab-content" id="tab-events">
       <div class="card" style="background:var(--pink); color:white;">
-        <div class="card-title" style="background:white; color:black;">🔔 EVENTS + SUARA MYINSTANTS — FIX v8!</div>
+        <div class="card-title" style="background:white; color:black;">🔔 EVENTS + SUARA MYINSTANTS — FIX v9!</div>
         <div style="font-weight:800; font-size:10px; line-height:1.3;">KALO MYINSTANTS GAGAL, PAKE CARA UPLOAD MP3 DARI HP — PALING GAMPANG & 100% WORK!</div>
       </div>
 
@@ -340,7 +340,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',sans-seri
 
     <div class="tab-content" id="tab-live">
       <div class="card" style="background:var(--green);">
-        <div class="card-title">🔴 LIVE + BUBBLE BULAT — v8 BARU!</div>
+        <div class="card-title">🔴 LIVE + BUBBLE BULAT — v9 BARU!</div>
         <div style="font-weight:800; font-size:11px; line-height:1.3;">PAS KELUAR APP OTOMATIS JADI BUBBLE KUNING BULAT DI ATAS TIKTOK!</div>
       </div>
 
@@ -405,7 +405,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',sans-seri
     <div class="phone-wrap" id="phoneWrap">
       <div class="phone-top">
         <div>● ● ●</div>
-        <div id="profileLabel">TIKTOK LIVE • v8 BUBBLE</div>
+        <div id="profileLabel">TIKTOK LIVE • v9 BUBBLE</div>
         <div id="liveIndicator" style="background:black; color:white; padding:2px 6px; border:2px solid black; font-size:7px; border-radius:4px;">OFFLINE</div>
       </div>
       <div class="canvas-wrap" id="canvasWrap">
@@ -417,7 +417,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',sans-seri
           <button class="mode-btn active" id="modeViewer" onclick="setMode('viewer')">PENONTON</button>
           <button class="mode-btn" id="modeStreamer" onclick="setMode('streamer')">STEALTH</button>
         </div>
-        <div class="viewer-pill">👁 1.2K • v8 BUBBLE PAS KELUAR</div>
+        <div class="viewer-pill">👁 1.2K • v9 BUBBLE PAS KELUAR</div>
         <div class="tiktok-right"><div>♥</div><div>💬</div><div>↗</div></div>
         <button class="fab-add" id="fabAdd" onclick="toggleAddMenu()">+ ADD OVERLAY</button>
         <div class="add-menu" id="addMenu">
@@ -428,7 +428,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',sans-seri
         </div>
         <div class="alert-box" id="alertBox">
           <div class="tape"></div>
-          <div class="alert-header"><span id="alertEventType">FOLLOW • v8</span><span id="alertTime">12:00</span></div>
+          <div class="alert-header"><span id="alertEventType">FOLLOW • v9</span><span id="alertTime">12:00</span></div>
           <div class="alert-stamp" id="alertStamp">NEW!</div>
           <div class="alert-body">
             <h2 id="alertTitle">BANG JAGO FOLLOW!</h2>
@@ -438,7 +438,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',sans-seri
         <div id="safeArea" style="position:absolute; inset:5% 3% 16% 3%; border:2px dashed black; pointer-events:none; opacity:.15;"></div>
       </div>
       <div class="timeline" id="timeline">
-        <div class="timeline-header"><span>⏱️ TIMELINE v8</span><span id="timelineTime">00:00</span></div>
+        <div class="timeline-header"><span>⏱️ TIMELINE v9</span><span id="timelineTime">00:00</span></div>
         <div class="timeline-tracks" id="timelineTracks"></div>
       </div>
     </div>
@@ -474,7 +474,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',sans-seri
 
 <div class="floating-bubble" id="bubble" style="display:none;">S<div class="notif" id="bubbleNotif" style="display:none;">1</div></div>
 <div class="bubble-menu" id="bubbleMenu">
-  <div style="font-size:8px; font-weight:700; background:black; color:white; padding:6px 8px; border-radius:8px; margin-bottom:8px; text-align:center;">v8 BUBBLE BULAT<br>Tap 2x = balik app</div>
+  <div style="font-size:8px; font-weight:700; background:black; color:white; padding:6px 8px; border-radius:8px; margin-bottom:8px; text-align:center;">v9 BUBBLE BULAT<br>Tap 2x = balik app</div>
   <div class="bubble-item highlight" onclick="quickAdd('follow')">➕ ADD OVERLAY</div>
   <div class="bubble-item" onclick="toggleBubbleMenu(); document.getElementById('sidebar').classList.add('open')">🎨 BUKA EDITOR</div>
   <div class="bubble-item" onclick="savePerScreen()" style="background:var(--green);">💾 SAVE LAYAR</div>
@@ -482,7 +482,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',sans-seri
 
 <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 <script>
-// v8 BUBBLE PAS KELUAR + TUTORIAL GAMPANG + MYINSTANTS FIX
+// v9 BUBBLE PAS KELUAR + TUTORIAL GAMPANG + MYINSTANTS FIX
 const canvas=document.getElementById('canvas');
 const ctx=canvas.getContext('2d');
 const ghost=document.getElementById('ghost');
@@ -491,14 +491,14 @@ const particlesCanvas=document.getElementById('particles');
 const pctx=particlesCanvas.getContext('2d');
 const video=document.getElementById('video');
 
-let profiles=JSON.parse(localStorage.getItem('brutal_profiles_v8')||localStorage.getItem('brutal_profiles_v7')||'{}');
-let currentProfile=localStorage.getItem('brutal_current_profile_v8')||localStorage.getItem('brutal_current_profile_v7')||'tiktok-live';
+let profiles=JSON.parse(localStorage.getItem('brutal_profiles_v9')||localStorage.getItem('brutal_profiles_v7')||'{}');
+let currentProfile=localStorage.getItem('brutal_current_profile_v9')||localStorage.getItem('brutal_current_profile_v7')||'tiktok-live';
 let layers=profiles[currentProfile] || [
   {id:'f1', type:'follow', text:'{name} FOLLOWED!', x:0.04, y:0.04, w:0.65, h:0.07, fontFamily:'Syne', fontSize:26, color:'#FFFFFF', brutalStyle:'follow', bg:'#FF2D95', rotation:-1, autoShow:true, stealth:false, visible:true, animation:'pop', duration:800},
-  {id:'b1', type:'text', text:'LIVE TIKTOK — JAMAL v8', x:0.04, y:0.86, w:0.72, h:0.06, fontFamily:'Space Mono', fontSize:14, color:'#FFFFFF', brutalStyle:'box', bg:'#000000', rotation:0, autoShow:true, stealth:false, visible:true, animation:'slideUp', duration:600},
+  {id:'b1', type:'text', text:'LIVE TIKTOK — JAMAL v9', x:0.04, y:0.86, w:0.72, h:0.06, fontFamily:'Space Mono', fontSize:14, color:'#FFFFFF', brutalStyle:'box', bg:'#000000', rotation:0, autoShow:true, stealth:false, visible:true, animation:'slideUp', duration:600},
 ];
 
-let eventsConfig = JSON.parse(localStorage.getItem('events_config_v8')||localStorage.getItem('events_config_v7')||'{}');
+let eventsConfig = JSON.parse(localStorage.getItem('events_config_v9')||localStorage.getItem('events_config_v7')||'{}');
 if(Object.keys(eventsConfig).length===0){
   eventsConfig={
     follow:{enabled:true, text:'{name} FOLLOWED! 🔥', style:'follow', bg:'#FF2D95', color:'#FFFFFF', animation:'pop', duration:1000, soundType:'upload', soundUrl:'', myinstantsUrl:'', volume:0.8, uploadedBlob:null},
@@ -530,7 +530,7 @@ const gifts=[
 
 function showTutorial(){
   document.getElementById('tutorialModal').style.display='flex';
-  localStorage.setItem('tutorial_seen_v8','1');
+  localStorage.setItem('tutorial_seen_v9','1');
 }
 function hideTutorial(){
   document.getElementById('tutorialModal').style.display='none';
@@ -555,11 +555,11 @@ function init(){
   preloadMyInstantsSounds();
   
   // Show tutorial first time
-  if(!localStorage.getItem('tutorial_seen_v8')){
+  if(!localStorage.getItem('tutorial_seen_v9')){
     setTimeout(showTutorial, 800);
   }
   
-  log('v8 BUBBLE PAS KELUAR ready — tutorial gampang!');
+  log('v9 BUBBLE PAS KELUAR ready — tutorial gampang!');
 }
 
 function setupCanvas(){ [canvas,ghost,particlesCanvas].forEach(c=>{ c.width=res.w; c.height=res.h; c.style.width='100%'; c.style.height='100%'; }); }
@@ -595,7 +595,7 @@ function renderScreenTabs(){
     el.appendChild(div);
   });
   const label=document.getElementById('profileLabel');
-  if(label) label.textContent=screens.find(x=>x.id===currentProfile)?.label+' • v8 BUBBLE';
+  if(label) label.textContent=screens.find(x=>x.id===currentProfile)?.label+' • v9 BUBBLE';
   const sel=document.getElementById('screenProfile');
   if(sel) sel.value=currentProfile;
 }
@@ -670,7 +670,7 @@ function handleSoundUpload(eventType, input){
     audioElements[eventType] = audio;
   }catch(e){}
   
-  localStorage.setItem('events_config_v8', JSON.stringify(eventsConfig));
+  localStorage.setItem('events_config_v9', JSON.stringify(eventsConfig));
   renderEvents();
   
   // Auto test
@@ -688,7 +688,7 @@ function updateEventDirectMp3(eventType, url){
   if(!url) return;
   eventsConfig[eventType].soundUrl = url;
   eventsConfig[eventType].soundType = 'direct';
-  localStorage.setItem('events_config_v8', JSON.stringify(eventsConfig));
+  localStorage.setItem('events_config_v9', JSON.stringify(eventsConfig));
   preloadSound(eventType, url);
   renderEvents();
   log(`🔗 Direct MP3 ${eventType}: ${url.slice(0,40)}...`);
@@ -763,7 +763,7 @@ async function fetchMyInstants(eventType){
     if(mp3Url){
       eventsConfig[eventType].soundUrl = mp3Url;
       eventsConfig[eventType].soundType = 'myinstants';
-      localStorage.setItem('events_config_v8', JSON.stringify(eventsConfig));
+      localStorage.setItem('events_config_v9', JSON.stringify(eventsConfig));
       preloadSound(eventType, mp3Url);
       renderEvents();
       log(`✅ MyInstants OK: ${mp3Url}`);
@@ -791,19 +791,19 @@ async function fetchMyInstants(eventType){
 
 function switchProfile(id){
   profiles[currentProfile]=layers;
-  localStorage.setItem('brutal_profiles_v8', JSON.stringify(profiles));
+  localStorage.setItem('brutal_profiles_v9', JSON.stringify(profiles));
   currentProfile=id;
-  localStorage.setItem('brutal_current_profile_v8', id);
+  localStorage.setItem('brutal_current_profile_v9', id);
   layers=profiles[id] || [];
   if(layers.length===0){
-    layers=[{id:'n'+Date.now(), type:'text', text:'OVERLAY '+id.toUpperCase()+' v8', x:0.04, y:0.04, w:0.6, h:0.07, fontFamily:'Syne', fontSize:26, color:'#000', brutalStyle:'box', bg:'#FFE600', rotation:-1, autoShow:true, stealth:false, visible:true, animation:'pop', duration:600}];
+    layers=[{id:'n'+Date.now(), type:'text', text:'OVERLAY '+id.toUpperCase()+' v9', x:0.04, y:0.04, w:0.6, h:0.07, fontFamily:'Syne', fontSize:26, color:'#000', brutalStyle:'box', bg:'#FFE600', rotation:-1, autoShow:true, stealth:false, visible:true, animation:'pop', duration:600}];
   }
   selected=layers[0]?.id||null;
   renderScreenTabs(); renderList(); renderTimeline(); if(selected) select(selected);
 }
 function savePerScreen(){
   profiles[currentProfile]=layers;
-  localStorage.setItem('brutal_profiles_v8', JSON.stringify(profiles));
+  localStorage.setItem('brutal_profiles_v9', JSON.stringify(profiles));
   log('💾 Saved '+currentProfile);
 }
 function renderList(){
@@ -866,12 +866,12 @@ function select(id){
 function quickAdd(type){
   const id='l'+Date.now();
   const base={id,type, x:0.06, y:0.4+Math.random()*0.15, w:0.68, h:0.07, fontFamily:'Syne', fontSize:26, color:'#000000', brutalStyle: type==='follow'?'follow':'box', bg: type==='follow'?'#FF2D95':'#FFE600', rotation:-1, autoShow:true, stealth:false, visible:true, animation:'pop', duration:800};
-  if(type==='text') base.text='TEKS BRUTAL v8';
+  if(type==='text') base.text='TEKS BRUTAL v9';
   if(type==='follow') base.text='{name} FOLLOWED!';
   if(type==='saweria') base.text='{name} SAWER {amount}';
   if(type==='gift') base.text='{name} KIRIM {gift}!';
   if(type==='goal') base.text='GOAL 0 / 1JT';
-  if(type==='tape') base.text='★ TAPE v8 ★';
+  if(type==='tape') base.text='★ TAPE v9 ★';
   if(type==='particle') base.text='🎉 PARTY!';
   layers.push(base);
   select(id); renderList(); renderTimeline(); toggleAddMenu(false); toggleBubbleMenu(false); savePerScreen();
@@ -1005,7 +1005,7 @@ function bindDrag(){
 function bindDoubleClick(){
   canvas.addEventListener('dblclick', e=>{
     const r=canvas.getBoundingClientRect(); const x=(e.clientX-r.left)/r.width; const y=(e.clientY-r.top)/r.height;
-    const id='l'+Date.now(); layers.push({id, type:'text', text:'DOUBLE TAP v8', x,y, w:0.5, h:0.06, fontFamily:'Syne', fontSize:22, color:'#000', brutalStyle:'box', bg:'#FFE600', rotation:-1, autoShow:true, stealth:false, visible:true, animation:'pop', duration:600}); select(id); renderList(); savePerScreen();
+    const id='l'+Date.now(); layers.push({id, type:'text', text:'DOUBLE TAP v9', x,y, w:0.5, h:0.06, fontFamily:'Syne', fontSize:22, color:'#000', brutalStyle:'box', bg:'#FFE600', rotation:-1, autoShow:true, stealth:false, visible:true, animation:'pop', duration:600}); select(id); renderList(); savePerScreen();
   });
 }
 function bindBubble(){
@@ -1084,11 +1084,11 @@ function toggleLive(){
     }
   }
 }
-function toggleEvent(type, enabled){ eventsConfig[type].enabled=enabled; localStorage.setItem('events_config_v8', JSON.stringify(eventsConfig)); renderEvents(); }
+function toggleEvent(type, enabled){ eventsConfig[type].enabled=enabled; localStorage.setItem('events_config_v9', JSON.stringify(eventsConfig)); renderEvents(); }
 function updateEvent(type, key, value){
   eventsConfig[type][key]=value;
   if(key==='volume' || key==='duration') eventsConfig[type][key]=parseFloat(value);
-  localStorage.setItem('events_config_v8', JSON.stringify(eventsConfig));
+  localStorage.setItem('events_config_v9', JSON.stringify(eventsConfig));
   if(key==='soundUrl' && value) preloadSound(type, value);
 }
 function preloadSound(type, url){
@@ -1151,7 +1151,7 @@ function triggerEvent(eventType, data){
   text=text.replace(/{message}/g, data.message||'');
 
   const alertBox=document.getElementById('alertBox');
-  document.getElementById('alertEventType').textContent=`${eventType.toUpperCase()} • v8`;
+  document.getElementById('alertEventType').textContent=`${eventType.toUpperCase()} • v9`;
   document.getElementById('alertTitle').textContent=text;
   document.getElementById('alertMsg').textContent=data.message||'';
   document.getElementById('alertTime').textContent=new Date().toLocaleTimeString();
@@ -1213,7 +1213,7 @@ function connectTikTokLive(isSimulate){
     socketIoConnection.on('connect_error', (err)=>{ log(`❌ Connect error: ${err.message}`); if(st){ st.textContent=`❌ ${err.message} — pake SIMULASI aja`; st.style.background='#FF3B30'; } });
   }catch(e){ log(`❌ ${e.message}`); }
 }
-function exportJSON(){ const blob=new Blob([JSON.stringify({profiles, eventsConfig, currentProfile, version:'v8-bubble-pas-keluar'},null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`brutal-v8-${currentProfile}.json`; a.click(); }
+function exportJSON(){ const blob=new Blob([JSON.stringify({profiles, eventsConfig, currentProfile, version:'v9-bubble-pas-keluar'},null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`brutal-v9-${currentProfile}.json`; a.click(); }
 function exportVideo(){
   const stream=canvas.captureStream(30);
   const recorder=new MediaRecorder(stream, {mimeType:'video/webm;codecs=vp9'});
@@ -1222,7 +1222,7 @@ function exportVideo(){
   recorder.onstop=()=>{
     const blob=new Blob(chunks, {type:'video/webm'});
     const url=URL.createObjectURL(blob);
-    const a=document.createElement('a'); a.href=url; a.download=`brutal-v8-${currentProfile}-${Date.now()}.webm`; a.click();
+    const a=document.createElement('a'); a.href=url; a.download=`brutal-v9-${currentProfile}-${Date.now()}.webm`; a.click();
   };
   recorder.start();
   log('🔴 Recording 5 detik...');
